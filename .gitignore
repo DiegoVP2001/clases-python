@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Claude Code local settings (rutas absolutas de la máquina)
+.claude/settings.local.json
+
+# Archivos de Google Workspace (atajos locales, no son archivos reales)
+*.gslides
+*.gdoc
+*.gsheet
