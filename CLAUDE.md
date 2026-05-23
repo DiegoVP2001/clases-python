@@ -102,6 +102,7 @@ Estas reglas aplican a TODAS las clases y no se negocian sin instrucción explí
 7. **Outputs con etiqueta descriptiva.** Los `print()` en ejercicios y soluciones siempre llevan texto explicativo: `print("¿Te alcanza?", saldo >= precio)` — nunca `print(saldo >= precio)` a secas.
 8. **Enunciados en lenguaje natural, sin revelar el operador.** Los enunciados de ejercicios y los pasos de la guiada describen QUÉ hacer sin mencionar operadores, nombres de variables ni comandos Python. Los ejemplos de input usan lenguaje natural ("si alguien ingresa $80.000"), nunca nombres de variables.
 9. **Haz Ahora: calentamiento o spoiler sutil, nunca adelanto explícito.** El Haz Ahora activa conocimiento previo útil para hoy Y/O hace un spoiler sutil de la clase en lenguaje natural, sin mostrar la sintaxis Python que se enseñará en el ICN.
+10. **El PPT termina en errores típicos.** La Práctica Guiada, Práctica Independiente, Ticket de Salida y Cierre solo se trabajan desde el Colab — nunca se incluyen en el PPT.
 
 ## Cómo iniciar una sesión
 

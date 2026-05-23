@@ -636,6 +636,248 @@ def construir_slide_ticket(prs):
                   auto_size=True)
 
 
+def construir_slide_anatomia(prs):
+    """Anatomía de una expresión Python.
+
+    Layout: expresión grande arriba (terminal verdoso) + hasta 4 tarjetas
+    (label ámbar + fragmento de código + descripción corta) en grilla 2x2 +
+    idea clave abajo. Tarjetas no usadas se ocultan por geometría.
+
+    Placeholders:
+      {{TITULO_SLIDE}} {{SECCION}} {{NUMERO_CLASE}}
+      {{EXPRESION}}                                 — código grande arriba
+      {{PARTE_i_LABEL}} {{PARTE_i_CODIGO}} {{PARTE_i_DESC}}  para i=1..4
+      {{IDEA_CLAVE}}                                — caja ámbar abajo
+    """
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    aplicar_fondo_oscuro(slide)
+    agregar_barra_superior(slide)
+    agregar_titulo_slide(slide)
+
+    # Expresión grande en terminal verdoso
+    EXP_Y = 1.70
+    EXP_H = 0.95
+    agregar_rectangulo(slide, MARGEN_X, EXP_Y,
+                       ANCHO_SLIDE - 2 * MARGEN_X, EXP_H, C["terminal_bg"])
+    agregar_rectangulo(slide, MARGEN_X, EXP_Y,
+                       ANCHO_SLIDE - 2 * MARGEN_X, 0.08, C["turquesa"])
+    agregar_texto(slide, MARGEN_X + 0.25, EXP_Y + 0.18,
+                  ANCHO_SLIDE - 2 * MARGEN_X - 0.5, EXP_H - 0.30,
+                  "{{EXPRESION}}", tamano=26,
+                  color="codigo_color", fuente="Consolas",
+                  anchor_vertical=MSO_ANCHOR.MIDDLE)
+
+    # Grilla 2x2 de partes
+    GRID_Y0 = EXP_Y + EXP_H + 0.25
+    CARD_W = (ANCHO_SLIDE - 2 * MARGEN_X - 0.30) / 2
+    CARD_H = 1.40
+    CARD_GAP_X = 0.30
+    CARD_GAP_Y = 0.20
+
+    posiciones = [
+        (MARGEN_X,                          GRID_Y0),
+        (MARGEN_X + CARD_W + CARD_GAP_X,    GRID_Y0),
+        (MARGEN_X,                          GRID_Y0 + CARD_H + CARD_GAP_Y),
+        (MARGEN_X + CARD_W + CARD_GAP_X,    GRID_Y0 + CARD_H + CARD_GAP_Y),
+    ]
+    colores_borde = ["turquesa", "ambar", "menta", "ambar"]
+
+    for i, ((x, y), color_borde) in enumerate(zip(posiciones, colores_borde),
+                                              start=1):
+        agregar_rectangulo(slide, x, y, CARD_W, CARD_H, C["fondo_bloque"])
+        agregar_rectangulo(slide, x, y, 0.08, CARD_H, C[color_borde])
+        # Label (ámbar, pequeño)
+        agregar_texto(slide, x + 0.20, y + 0.08, CARD_W - 0.3, 0.30,
+                      "{{PARTE_" + str(i) + "_LABEL}}",
+                      tamano=12, color="ambar", negrita=True,
+                      fuente="Calibri")
+        # Código del fragmento (Consolas verdosa)
+        agregar_texto(slide, x + 0.20, y + 0.38, CARD_W - 0.3, 0.40,
+                      "{{PARTE_" + str(i) + "_CODIGO}}",
+                      tamano=18, color="codigo_color", fuente="Consolas",
+                      negrita=True)
+        # Descripción
+        agregar_texto(slide, x + 0.20, y + 0.80, CARD_W - 0.3, CARD_H - 0.85,
+                      "{{PARTE_" + str(i) + "_DESC}}",
+                      tamano=15, color="blanco", fuente="Calibri")
+
+    # Idea clave (compacta abajo)
+    IDEA_Y = ALTO_SLIDE - 0.85
+    IDEA_H = 0.65
+    agregar_rectangulo(slide, MARGEN_X, IDEA_Y,
+                       ANCHO_SLIDE - 2 * MARGEN_X, IDEA_H, C["fondo_bloque"])
+    agregar_rectangulo(slide, MARGEN_X, IDEA_Y, 0.08, IDEA_H, C["ambar"])
+    agregar_texto(slide, MARGEN_X + 0.25, IDEA_Y + 0.05,
+                  ANCHO_SLIDE - 2 * MARGEN_X - 0.4, IDEA_H - 0.10,
+                  f"{E['idea']}  {{{{IDEA_CLAVE}}}}",
+                  tamano=16, color="blanco", negrita=False,
+                  anchor_vertical=MSO_ANCHOR.MIDDLE)
+
+
+def construir_slide_analogia(prs):
+    """Analogía vida real ↔ Python. Hasta 4 filas con conector central.
+
+    Placeholders:
+      {{TITULO_SLIDE}} {{SECCION}} {{NUMERO_CLASE}}
+      {{SUBTITULO_SLIDE}}                                  — opcional
+      {{FILA_i_VIDA_REAL}} {{FILA_i_PYTHON}}  para i=1..4
+      {{IDEA_CLAVE}}
+    """
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    aplicar_fondo_oscuro(slide)
+    agregar_barra_superior(slide)
+    agregar_titulo_slide(slide)
+
+    # Subtítulo
+    agregar_texto(slide, MARGEN_X, 1.65, ANCHO_SLIDE - 2 * MARGEN_X, 0.40,
+                  "{{SUBTITULO_SLIDE}}", tamano=T["subtitulo_stock"],
+                  color="blanco")
+
+    # Cabeceras de columnas
+    COL_VR_X = MARGEN_X
+    COL_VR_W = 5.65
+    CONECTOR_W = 0.50
+    COL_PY_X = COL_VR_X + COL_VR_W + CONECTOR_W
+    COL_PY_W = ANCHO_SLIDE - MARGEN_X - COL_PY_X
+
+    HEADER_Y = 2.20
+    agregar_texto(slide, COL_VR_X, HEADER_Y, COL_VR_W, 0.35,
+                  "🌍  Vida real",
+                  tamano=T["label_bloque"], color="ambar", negrita=True)
+    agregar_texto(slide, COL_PY_X, HEADER_Y, COL_PY_W, 0.35,
+                  "🐍  En Python",
+                  tamano=T["label_bloque"], color="turquesa", negrita=True)
+
+    # Filas
+    FILA_Y0 = 2.65
+    FILA_H = 0.85
+    FILA_GAP = 0.12
+    for i in range(1, 5):
+        y = FILA_Y0 + (i - 1) * (FILA_H + FILA_GAP)
+        agregar_rectangulo(slide, COL_VR_X, y, COL_VR_W, FILA_H,
+                           C["fondo_bloque"])
+        agregar_rectangulo(slide, COL_VR_X, y, 0.06, FILA_H, C["ambar"])
+        agregar_texto(slide, COL_VR_X + 0.18, y + 0.08,
+                      COL_VR_W - 0.3, FILA_H - 0.16,
+                      "{{FILA_" + str(i) + "_VIDA_REAL}}",
+                      tamano=16, color="blanco",
+                      anchor_vertical=MSO_ANCHOR.MIDDLE)
+        # Conector ↔
+        agregar_texto(slide, COL_VR_X + COL_VR_W, y, CONECTOR_W, FILA_H,
+                      "↔", tamano=20, color="turquesa", negrita=True,
+                      alineacion=PP_ALIGN.CENTER,
+                      anchor_vertical=MSO_ANCHOR.MIDDLE)
+        # Tarjeta Python
+        agregar_rectangulo(slide, COL_PY_X, y, COL_PY_W, FILA_H,
+                           C["terminal_bg"])
+        agregar_rectangulo(slide, COL_PY_X, y, 0.06, FILA_H, C["turquesa"])
+        agregar_texto(slide, COL_PY_X + 0.18, y + 0.08,
+                      COL_PY_W - 0.3, FILA_H - 0.16,
+                      "{{FILA_" + str(i) + "_PYTHON}}",
+                      tamano=16, color="codigo_color", fuente="Consolas",
+                      anchor_vertical=MSO_ANCHOR.MIDDLE)
+
+
+def construir_slide_antes_despues(prs):
+    """Comparación antes/después con dos snippets de código paralelos.
+
+    Placeholders:
+      {{TITULO_SLIDE}} {{SECCION}} {{NUMERO_CLASE}}
+      {{SUBTITULO_SLIDE}}                          — opcional
+      {{ANTES_LABEL}} {{ANTES_CODIGO}}
+      {{DESPUES_LABEL}} {{DESPUES_CODIGO}}
+      {{TAKEAWAY}}                                 — footer/conclusión
+    """
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    aplicar_fondo_oscuro(slide)
+    agregar_barra_superior(slide)
+    agregar_titulo_slide(slide)
+
+    # Subtítulo
+    agregar_texto(slide, MARGEN_X, 1.65, ANCHO_SLIDE - 2 * MARGEN_X, 0.40,
+                  "{{SUBTITULO_SLIDE}}", tamano=T["subtitulo_stock"],
+                  color="blanco")
+
+    COL_W = (ANCHO_SLIDE - 2 * MARGEN_X - 0.30) / 2
+    COL_A_X = MARGEN_X
+    COL_B_X = MARGEN_X + COL_W + 0.30
+    BLOQUE_Y = 2.20
+    BLOQUE_H = 3.85
+
+    # Antes (rojo)
+    COLOR_ROJO = RGBColor(0xFC, 0x35, 0x35)
+    agregar_texto(slide, COL_A_X, BLOQUE_Y, COL_W, 0.40,
+                  "{{ANTES_LABEL}}", tamano=T["label_bloque"],
+                  color=COLOR_ROJO, negrita=True)
+    agregar_rectangulo(slide, COL_A_X, BLOQUE_Y + 0.45,
+                       COL_W, BLOQUE_H - 0.45, C["terminal_bg"])
+    agregar_rectangulo(slide, COL_A_X, BLOQUE_Y + 0.45,
+                       COL_W, 0.08, COLOR_ROJO)
+    agregar_texto(slide, COL_A_X + 0.20, BLOQUE_Y + 0.62,
+                  COL_W - 0.3, BLOQUE_H - 0.75,
+                  "{{ANTES_CODIGO}}", tamano=T["codigo"],
+                  color="codigo_color", fuente="Consolas")
+
+    # Después (menta)
+    agregar_texto(slide, COL_B_X, BLOQUE_Y, COL_W, 0.40,
+                  "{{DESPUES_LABEL}}", tamano=T["label_bloque"],
+                  color="menta", negrita=True)
+    agregar_rectangulo(slide, COL_B_X, BLOQUE_Y + 0.45,
+                       COL_W, BLOQUE_H - 0.45, C["terminal_bg"])
+    agregar_rectangulo(slide, COL_B_X, BLOQUE_Y + 0.45,
+                       COL_W, 0.08, C["menta"])
+    agregar_texto(slide, COL_B_X + 0.20, BLOQUE_Y + 0.62,
+                  COL_W - 0.3, BLOQUE_H - 0.75,
+                  "{{DESPUES_CODIGO}}", tamano=T["codigo"],
+                  color="codigo_color", fuente="Consolas")
+
+    # Takeaway
+    TK_Y = BLOQUE_Y + BLOQUE_H + 0.25
+    TK_H = ALTO_SLIDE - TK_Y - 0.25
+    agregar_rectangulo(slide, MARGEN_X, TK_Y,
+                       ANCHO_SLIDE - 2 * MARGEN_X, TK_H, C["fondo_bloque"])
+    agregar_rectangulo(slide, MARGEN_X, TK_Y, 0.08, TK_H, C["ambar"])
+    agregar_texto(slide, MARGEN_X + 0.25, TK_Y + 0.05,
+                  ANCHO_SLIDE - 2 * MARGEN_X - 0.4, TK_H - 0.10,
+                  f"{E['idea']}  {{{{TAKEAWAY}}}}",
+                  tamano=T["cuerpo_stock"], color="blanco",
+                  anchor_vertical=MSO_ANCHOR.MIDDLE)
+
+
+def construir_slide_frase_clave(prs):
+    """Frase clave grande sola — pausa visual.
+
+    Placeholders:
+      {{NUMERO_CLASE}} {{SECCION}}
+      {{FRASE}}             — frase grande centrada
+      {{ATRIBUCION}}        — opcional, debajo en menta
+    """
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    aplicar_fondo_oscuro(slide)
+    agregar_barra_superior(slide)
+
+    # Comilla decorativa grande arriba
+    agregar_texto(slide, MARGEN_X, 1.20, 2.0, 1.5,
+                  "“", tamano=120, color="turquesa",
+                  fuente="Calibri", negrita=True,
+                  anchor_vertical=MSO_ANCHOR.TOP)
+
+    # Frase central grande
+    agregar_texto(slide, MARGEN_X + 0.5, 2.40,
+                  ANCHO_SLIDE - 2 * MARGEN_X - 1.0, 3.20,
+                  "{{FRASE}}", tamano=40, color="blanco", negrita=True,
+                  fuente="Calibri",
+                  alineacion=PP_ALIGN.LEFT,
+                  anchor_vertical=MSO_ANCHOR.MIDDLE,
+                  auto_size=True)
+
+    # Atribución en menta abajo
+    agregar_texto(slide, MARGEN_X + 0.5, 5.80,
+                  ANCHO_SLIDE - 2 * MARGEN_X - 1.0, 0.50,
+                  "— {{ATRIBUCION}}", tamano=18, color="menta",
+                  fuente="Calibri", negrita=True)
+
+
 def construir_slide_cierre(prs):
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     aplicar_fondo_oscuro(slide)
@@ -683,6 +925,10 @@ def main():
     construir_slide_ticket(prs)                 # 7
     construir_slide_cierre(prs)                 # 8
     construir_slide_codigo_resultado_multi(prs) # 9 — apilado (layout estrella)
+    construir_slide_anatomia(prs)               # 10 — ICN: anatomía de sintaxis
+    construir_slide_analogia(prs)               # 11 — ICN: analogía vida real ↔ Python
+    construir_slide_antes_despues(prs)          # 12 — ICN: comparación antes/después
+    construir_slide_frase_clave(prs)            # 13 — ICN: frase clave grande sola
 
     ruta_salida = Path(__file__).parent / "plantilla_marca.pptx"
     prs.save(str(ruta_salida))

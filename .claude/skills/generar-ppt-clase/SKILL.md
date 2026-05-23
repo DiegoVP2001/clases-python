@@ -1,13 +1,13 @@
 ---
 name: generar-ppt-clase
-description: Genera la presentación PowerPoint (03-presentacion.pptx) de una clase a partir del spec aprobado, aplicando una marca visual oscura (fondo #1A1A2E) con identidad de programación. Produce un slide por concepto del ICN cuando el spec está enriquecido, y slides compactos "Código + Resultado apilado" cuando el spec define bloques de Demostración. Usa esta skill después de que el 01-clase.ipynb esté aprobado.
+description: Genera la presentación PowerPoint (03-presentacion.pptx) de una clase a partir del spec aprobado. El PPT cubre desde la bienvenida hasta los errores típicos — todo lo que se trabaja en pantalla antes de abrir el computador. La Práctica Guiada, Independiente, Ticket y Cierre se trabajan desde el Colab. Usa esta skill después de que el 01-clase.ipynb esté aprobado.
 ---
 
 # Skill: Generar presentación PowerPoint (03-presentacion.pptx)
 
 ## Propósito
 
-Producir el archivo `.pptx` de una clase con fondo oscuro consistente, listo para usar en aula. La marca aplica al 100%: paleta azul petróleo + turquesa + ámbar, Consolas para código, identidad `>>>` en la portada.
+Producir el archivo `.pptx` de una clase listo para usar en aula: fondo oscuro `#1A1A2E`, paleta turquesa + ámbar, Consolas para código. El PPT cubre lo que el profesor proyecta para presentar el contenido nuevo — no incluye las actividades que los estudiantes hacen en Colab.
 
 ## Cuándo usar
 
@@ -16,198 +16,171 @@ Actívate cuando Diego diga "Genera el PPT", "Pasemos al PowerPoint" o equivalen
 **Requisitos previos:**
 1. `clases/clase-NN-tema/00-spec.md` existe y está aprobado.
 2. `01-clase.ipynb` está aprobado (idealmente).
-3. `python-pptx` instalado.
+3. `python-pptx` instalado: `pip install python-pptx`.
 
-## Instalación de python-pptx (una sola vez)
+## Alcance del PPT (regla permanente)
 
-```bash
-pip install python-pptx
+**El PPT termina en la tabla de Errores típicos. Nunca incluye Práctica Guiada, Práctica Independiente, Ticket de Salida ni Cierre.** Esas secciones se trabajan desde el Colab.
+
+Estructura fija de slides:
+
+```
+1. Bienvenida
+2. Objetivo / Propósito / Reglas
+3. Haz Ahora
+4..N  ICN — cantidad y composición decidida por el planificador
+N+1.  Errores típicos  ← última slide
 ```
 
-En Windows si falla: `python -m pip install python-pptx`.
+## Arquitectura del generador
 
-## Estructura del PPT generado
+El generador tiene tres capas:
 
-El script genera slides según el contenido del spec. Hay 10 tipos de slide modelo en la plantilla:
+1. **Parser** (`parsear_spec` en `crear_ppt.py`) — lee el spec y produce una estructura semántica. Los demos (`**Demostración:**`) se parsean en el cuerpo de cada concepto para que queden asociados al concepto que los precede en el spec.
 
-| # | Tipo | Cuándo se usa |
-|---:|---|---|
-| 0 | Bienvenida | Portada de la clase |
-| 1 | Objetivo/Propósito/Reglas | Slide 2, marca obligatoria |
-| 2 | Stock título | Haz Ahora, intros, cierres genéricos |
-| 3 | Concepto del ICN | **UN slide por cada concepto** del Contenido Nuevo (definición + ejemplo + idea clave). **No hay límite de conceptos**: si el spec define 3, salen 3 slides; si define 6, salen 6 slides. Cada concepto debe ser pedagógicamente coherente y enfocado. |
-| 4 | Código + Resultado | Práctica guiada, ejemplos con output esperado (UN par código/resultado) |
-| 5 | Tabla | Errores típicos (header oscuro + 3 filas) |
-| 6 | Ejercicio | Práctica independiente (enunciado + resultado esperado) |
-| 7 | Ticket | Ticket de salida con tarea y entrega |
-| 8 | Cierre | Tres preguntas de metacognición listadas |
-| 9 | **Código + Resultado apilado** | **Layout estrella compacto.** Hasta 3 filas en una sola diapositiva, cada una con etiqueta + código (izquierda) + resultado (derecha). Ideal para mostrar variantes de un mismo concepto (`sep`, `end`, combinaciones) sin gastar 3 diapositivas. Se dispara con bloques **Demostración** en el spec (ver más abajo). |
+2. **Planificador** (`planificar_slides.py`) — recibe los conceptos + demos y decide cuántos slides genera la ICN, qué composición tiene cada uno, y dónde intercalar los demos.
 
-**Importante sobre el ICN:** la skill genera tantos slides como conceptos defina el spec. Lo recomendable son 3-5 conceptos por clase, pero técnicamente no hay tope.
+3. **Renderizador** (`crear_ppt.py`) — toma las decisiones del planificador y compone los slides con bloques visuales (cajas de definición, terminal de código, tabla, idea clave, anatomía, analogía).
 
-**Layout adaptativo (v5):** cada slide de concepto y el Haz Ahora adaptan su layout automáticamente según el contenido real del spec — no hay estructura rígida obligatoria:
+## ICN: decisiones del planificador
 
-| Contenido del concepto | Layout generado |
+El planificador aplica estas reglas por concepto:
+
+| Tipo de concepto | Slide generado |
 |---|---|
-| Definición + código + idea clave | Slide estándar de tres zonas |
-| Definición con tabla markdown + idea clave | Zona de código reemplazada por tabla visual estilizada con la marca |
-| Definición + idea clave (sin código) | Zona de código eliminada; definición e idea clave se expanden para usar el espacio |
+| Clásico (definición + código ± idea clave) | `icn_flexible`: bloques compuestos dinámicamente |
+| `Tipo: anatomia` o tiene `**Partes:**` | Slide anatomía (expresión + hasta 4 partes) |
+| `Tipo: analogia` o tiene `**Analogía:**` | Slide analogía (tabla vida real ↔ Python, hasta 4 filas) |
+| `Tipo: antes_despues` o tiene `**Antes:**` + `**Después:**` | Slide antes/después (dos snippets paralelos) |
+| `Tipo: frase_clave` | Slide frase clave grande sola |
+| `**Demostración:**` en el cuerpo del concepto | Slide apilado (hasta 3 filas código + resultado), insertado inmediatamente después del concepto |
 
-**Haz Ahora adaptativo:** si el Haz Ahora no contiene código, la zona de código se elimina automáticamente y el texto se expande para ocupar todo el espacio disponible.
+**Fusión de conceptos clásicos:** si dos conceptos clásicos adyacentes tienen densidad combinada ≤ 14 filas visuales, el planificador los fusiona en un solo slide.
 
-## Formato de código inline (backticks)
+**Presupuesto de densidad:** 14 filas visuales = objetivo cómodo; 16 = referencia (puede superarse si el contenido es pedagógicamente necesario). El planificador registra justificación cuando supera 16.
 
-**Regla general:** cualquier texto del spec que esté entre backticks ` `código` ` se renderiza automáticamente en el PPT con fuente Consolas y color verdoso `#4ADFCB`, sin importar el contexto.
+## ICN flexible: bloques visuales disponibles
 
-Esto aplica a:
-- Definiciones del ICN
-- Ideas clave del ICN
-- Objetivo y Propósito (slide 2)
-- Subtítulo de Práctica Guiada
-- Enunciados de ejercicios
-- Tarea del Ticket de Salida
-- Celdas de la tabla de errores
-- Preguntas del Cierre
-- Cualquier otro texto que pase por reemplazo de placeholder
+Para conceptos clásicos, el slide se compone de bloques apilados verticalmente con alturas proporcionales a su costo:
 
-**Convención al escribir el spec:** usa backticks SIEMPRE que menciones código Python o términos técnicos. Por ejemplo:
-- ✅ "La función `input()` detiene el programa"
-- ❌ "La función input() detiene el programa"
-- ✅ "Devuelve un `TypeError` si los tipos no coinciden"
-- ❌ "Devuelve un TypeError si los tipos no coinciden"
+| Bloque | Apariencia | Se genera cuando |
+|---|---|---|
+| `definicion` | Caja fondo oscuro, borde turquesa, label "Definición" | El concepto tiene `- Definición:` |
+| `codigo` | Terminal negro, franja turquesa, fuente Consolas autoajustada | El concepto tiene `- Ejemplo:` con ```python``` |
+| `idea_clave` | Caja fondo oscuro, borde ámbar, label "Idea clave" | El concepto tiene `- Idea clave:` |
+| `separador` | Espacio visual entre dos conceptos fusionados | Fusión de dos conceptos |
 
-Estructura típica de un PPT generado (clase 7, formato enriquecido):
+Los bloques se distribuyen en el área 1.65"–7.20" con alturas proporcionales a su densidad estimada.
 
-```
-Slide 1:  Bienvenida
-Slide 2:  Objetivo/Propósito/Reglas
-Slide 3:  Haz Ahora
-Slide 4:  Concepto 1 del ICN ← UN slide rico por concepto
-Slide 5:  Concepto 2 del ICN
-Slide 6:  Concepto 3 del ICN
-Slide 7:  Demostración apilada (sep/end) ← tipo 9, si el spec la define
-Slide 8:  Tabla de errores típicos
-Slide 9:  Práctica guiada
-Slide 10: Ejercicio 1
-Slide 11: Ejercicio 2
-Slide 12: Ticket de salida
-Slide 13: Cierre con preguntas
-```
+## Haz Ahora flexible
 
-Nota: los slides de **Demostración apilada** (tipo 9) se generan justo después de los conceptos y la tabla de errores, dentro del bloque de Contenido Nuevo.
+El slide de Haz Ahora se compone dinámicamente según el tipo de actividad:
 
-## Formato del spec enriquecido (CRÍTICO)
+**Tipo `situaciones`** (más común): el spec tiene ítems numerados (`1. ... 2. ...`). El slide tiene:
+- Caja intro (borde ámbar) con la instrucción — altura calculada según largo del texto
+- Caja grande (borde turquesa) con las situaciones numeradas — 20pt si ≤6 ítems, 18pt si más
+- Nota de cierre en gris al fondo
 
-Para que la skill genere un slide rico por concepto, el spec debe tener el ICN así:
+**Tipo `libre`**: sin ítems numerados. Todo el texto va en una sola caja grande con borde ámbar.
 
+**Caso futuro (TODO en código):** Haz Ahora con código Python y preguntas asociadas → tipo `codigo_preguntas`, pendiente de implementar.
+
+## Orden de demos en el PPT
+
+Los bloques `**Demostración:**` del spec se insertan **inmediatamente después del concepto al que pertenecen** (el que los precede en el texto del spec), no al final de todos los conceptos. Esto asegura que la analogía, si aparece como último concepto, quede justo antes de los errores típicos.
+
+## Sintaxis del spec (resumen)
+
+### Concepto clásico
 ```markdown
-### 2. Introducción al Contenido Nuevo
-
-**Concepto 1: [nombre breve]**
-- Definición: [1-2 frases claras]
+**Concepto 1: Tipo booleano**
+- Definición: En Python existe un tipo `bool` que solo puede ser `True` o `False`.
 - Ejemplo:
   ```python
-  [código mínimo, 2-4 líneas]
+  tiene_stock = True
+  print(type(tiene_stock))
   ```
-- Idea clave: [frase memorable]
-
-**Concepto 2: [nombre breve]**
-- Definición: ...
-- Ejemplo: ...
-- Idea clave: ...
-
-**Errores típicos:**
-| Error | Qué ocurre | Cómo corregirlo |
-|---|---|---|
-| ... | ... | ... |
+- Idea clave: `True` y `False` siempre con mayúscula.
 ```
 
-Si el spec usa el formato antiguo (`**Conceptos:** 1. ... 2. ...` con `**Ejemplos a usar:**`), la skill lo parsea en modo compatibilidad y produce slides básicos, **pero el resultado es mucho más pobre**. Si Diego acaba de migrar al sistema, recomiéndale enriquecer el spec antes de regenerar el PPT.
-
-## Slide compacto "Código + Resultado apilado" (tipo 9)
-
-Este es el **layout estrella para contenido denso**: una sola diapositiva con hasta 3 filas, cada una con código a la izquierda y su resultado a la derecha. Sirve para mostrar variantes de un mismo concepto de un vistazo (por ejemplo `sep`, `end` y su combinación), en lugar de gastar 3 diapositivas separadas. Engancha más a estudiantes de enseñanza media porque el "¿y esto qué imprime?" queda resuelto en la misma pantalla.
-
-**Cómo se dispara desde el spec.** Dentro de la sección `### 2. Introducción al Contenido Nuevo`, agrega uno o más bloques `**Demostración: ...**`. Cada bloque genera UNA diapositiva apilada. El formato recomendado (con bloque de código) es:
-
+### Anatomía
 ```markdown
-**Demostración: "sep" y "end"**
-Subtítulo: Dos parámetros que cambian cómo se ve la salida.
-- Fila: sep — separa los elementos
-  ```python
-  print("a", "b", "c", sep=" | ")
-  ```
-  Resultado: a | b | c
-- Fila: end — cómo termina el print()
-  ```python
-  print("Hola", end=" ")
-  print("mundo")
-  ```
-  Resultado: Hola mundo
-- Fila: combinados
-  ```python
-  print(1, 2, sep="-", end="!")
-  ```
-  Resultado: 1-2!
+**Concepto 2: Operadores de comparación**
+Tipo: anatomia
+- Definición: Comparan dos valores y devuelven `True` o `False`.
+- **Expresión:** `saldo >= precio`
+- **Partes:**
+  - `saldo` | operando izquierdo
+  - `>=` | el operador — define el tipo de comparación
+  - `precio` | operando derecho
+  - Resultado | siempre `True` o `False`
+- Idea clave: Una comparación siempre devuelve `True` o `False`.
 ```
 
-Reglas y límites del slide apilado:
-- **Máximo 3 filas por slide.** Si una demostración necesita más, divídela en dos bloques `**Demostración: ...**` (saldrán dos diapositivas).
-- **Las filas no usadas se ocultan solas.** Si defines 2 filas, la tercera no aparece (sin cajas vacías ni placeholders).
-- **Etiquetas cortas.** El texto después de `Fila:` es la etiqueta ámbar. Mantenla corta (`sep`, `end`, `sep + end`); etiquetas muy largas se extienden sobre la columna de resultado.
-- **El subtítulo es opcional** (línea `Subtítulo:`). Si no lo pones, el slide queda con más aire.
-- **Regla mixta de fuente (automática).** El código se renderiza a 20 pt por defecto y baja a 18 o 16 pt **solo si la línea es demasiado larga para caber**. No tienes que hacer nada: el script mide la línea más larga y elige el tamaño. Aun así, conviene mantener cada línea de código por debajo de ~45 caracteres para que se lea a 20 pt desde el fondo de la sala.
-- **Formato en línea (`R`).** El parámetro destacado (como `sep=" | "`) no se resalta automáticamente en negrita dentro del bloque de código apilado; si quieres énfasis, ponlo en la etiqueta de la fila.
-
-Formato alternativo en una sola línea (para código corto, sin bloque ```python```):
-
+### Analogía
 ```markdown
-**Demostración: Operadores compuestos**
-- Fila: suma | cuenta += 1000 | aumenta el valor
-- Fila: resta | cuenta -= 500 | disminuye el valor
+**Concepto 4: Booleanos en la vida real**
+Tipo: analogia
+- Definición: Las comparaciones de Python reflejan preguntas cotidianas.
+- **Analogía:** Lo que te preguntas tú, Python lo resuelve con `True` o `False`.
+  - ¿Te alcanza el saldo? | `saldo >= precio` → `True` o `False`
+  - ¿Hay unidades? | `unidades != 0` → `True` o `False`
 ```
 
-(En este formato, `\n` literal dentro del campo de código fuerza un salto de línea.)
+### Demostración apilada
+```markdown
+**Demostración: Operadores == != >**
+Subtítulo: Comparando saldo = 45000 con precio = 60000.
+- Fila: == | 45000 == 60000 | False — no son iguales
+- Fila: != | 45000 != 60000 | True — sí son distintos
+- Fila: >  | 45000 > 60000  | False — el saldo no supera el precio
+```
 
 ## Cómo se ejecuta
 
-```bash
-python .claude/skills/generar-ppt-clase/crear_ppt.py clases/clase-NN-tema/00-spec.md clases/clase-NN-tema/03-presentacion.pptx
+```powershell
+python ".claude/skills/generar-ppt-clase/crear_ppt.py" "clases/clase-NN-tema/00-spec.md" "clases/clase-NN-tema/03-presentacion.pptx"
 ```
 
-En Windows: usar comillas si las rutas tienen espacios.
+**Flags de preview** (para validar una sección antes del PPT completo):
+```powershell
+# Solo slides de ICN:
+python crear_ppt.py spec.md preview-icn.pptx --preview-icn
 
-## Después de generar
+# Solo slide de Haz Ahora:
+python crear_ppt.py spec.md preview-ha.pptx --preview-hazahora
+```
 
-1. Confirma a Diego que el archivo se creó.
-2. Sugiere abrirlo en PowerPoint/Keynote/Google Slides para revisar.
-3. Si Diego pide ajustes, edita el spec y regenera; no edites el .pptx directamente.
+**Debug de decisiones del planificador:**
+```powershell
+$env:DEBUG_PPT=1; python crear_ppt.py spec.md salida.pptx
+```
+
+## Código inline con backticks
+
+Cualquier texto entre backticks `` `código` `` en el spec se renderiza en el PPT con fuente Consolas y color verdoso `#4ADFCB`, automáticamente, en cualquier bloque de texto (definición, idea clave, tabla de errores, etc.).
 
 ## Iteración
 
-- **Cambio de contenido:** editar `00-spec.md` + regenerar.
-- **Cambio de marca visual** (colores, posiciones, tamaños): editar `construir_plantilla.py` y volverlo a correr para regenerar `plantilla_marca.pptx`. Después regenerar todos los PPT afectados.
-- **Cambio de lógica del script** (qué slides se generan, cómo): editar `crear_ppt.py`.
+- **Cambio de contenido:** editar `00-spec.md` y regenerar.
+- **Cambio de marca visual** (colores, tipografías, posiciones): editar `construir_plantilla.py` y correrlo para regenerar `plantilla_marca.pptx`. Luego regenerar los PPT afectados.
+- **Cambio de lógica de planificación:** editar `planificar_slides.py`.
+- **Cambio de renderizado:** editar `crear_ppt.py`.
 
 ## Archivos en esta carpeta
 
-- `SKILL.md` — este archivo
-- `crear_ppt.py` — el generador del PPT (lo invoca Claude)
-- `construir_plantilla.py` — script que reconstruye la plantilla desde cero (se corre solo si se cambia la marca)
-- `plantilla_marca.pptx` — la plantilla con los 9 slides modelo
+| Archivo | Rol |
+|---|---|
+| `SKILL.md` | Este archivo |
+| `crear_ppt.py` | Orquestador: parser + renderizador + constructores de slide |
+| `planificar_slides.py` | Capa de planificación pedagógica (cuántos slides, qué composición) |
+| `construir_plantilla.py` | Define paleta, tipografías y helpers visuales; regenera `plantilla_marca.pptx` |
+| `plantilla_marca.pptx` | Plantilla con slides modelo (bienvenida, objetivo, tabla, anatomía, analogía, apilado, etc.) |
 
 ## Reglas críticas
 
-1. **No editar el .pptx generado directamente** y esperar regenerar — los cambios se pierden.
-2. **El spec es la fuente de verdad** del contenido.
-3. **La plantilla es la fuente de verdad** del estilo.
-4. **Tildes obligatorias** en todo texto en español.
-5. **Si una slide queda apretada o cortada** después de generar: en los slides de concepto, ejercicio o ticket, suele ser el spec demasiado largo (acorta el texto). En los slides apilados (tipo 9), el código se autoajusta de tamaño, pero si una **etiqueta de fila** es muy larga o pones más de 3 filas, divide la demostración en dos bloques `**Demostración: ...**`.
-
-## Limitaciones conocidas
-
-- El bloque de definición y de idea clave en los slides de concepto tienen alto fijo; si el texto es muy largo, puede desbordarse. Mantén definiciones < 200 caracteres e ideas clave < 120 caracteres.
-- La tabla de errores soporta hasta 3 filas de datos.
-- Las preguntas del cierre soportan exactamente 3 (si hay menos quedan en blanco, si hay más se ignoran las extras).
-- El slide apilado (tipo 9) soporta **hasta 3 filas**; las filas extra se ignoran. Usa otro bloque `**Demostración: ...**` para más variantes.
-- En los slides apilados, el **código** aplica una regla mixta de fuente (20 → 18 → 16 pt) que evita el desborde horizontal automáticamente. El texto narrativo (definición, idea clave, enunciado) sigue usando el auto-fit de PowerPoint, que a veces lo hace más pequeño de lo ideal; si lo notas frecuentemente, ajusta los tamaños en `construir_plantilla.py` y regenera.
+1. **El PPT termina en errores típicos.** Guiada/Independiente/Ticket/Cierre solo en Colab.
+2. **El spec es la fuente de verdad del contenido.** No edites el `.pptx` generado directamente.
+3. **La plantilla es la fuente de verdad del estilo.** La marca no se toca clase a clase.
+4. **Los demos siguen al concepto al que pertenecen** en el spec, no van al final.
+5. **Si una slide queda apretada:** el texto del spec es demasiado largo — acórtalo en el spec y regenera.
