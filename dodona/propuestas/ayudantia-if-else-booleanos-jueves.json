@@ -1,0 +1,252 @@
+{
+  "set_slug": "ayudantia-if-else-booleanos-jueves",
+  "set_title": "Ayudantía — if/else y Booleanos",
+  "source_classes": [
+    "clases/clase-08a-booleano-comparaciones",
+    "clases/clase-08b-operadores-logicos",
+    "clases/clase-09-if-else"
+  ],
+  "purpose": "competencia",
+  "exercises": [
+    {
+      "slug": "demo-dodona",
+      "title": "Prueba — ¡Hola, Dodona!",
+      "focus_class": null,
+      "type": "io",
+      "difficulty": "trivial",
+      "topics": ["str", "input", "print", "concatenacion"],
+      "statement_md": "Este ejercicio te ayuda a conocer cómo funciona Dodona antes de entrar a los desafíos reales.\n\nTu programa pedirá con `input()` un dato:\n\n1. Un nombre cualquiera.\n   Ejemplo: `Valentina`.\n\nLuego debe imprimir exactamente:\n\n```text\n¡Hola, Valentina!\n```\n\nSi tu salida coincide con la esperada, verás un ticket verde ✓.\nNo escribas texto dentro del `input()`, o sea déjalo vacío.",
+      "sample": {
+        "stdin": "Valentina\n",
+        "stdout": "¡Hola, Valentina!\n"
+      },
+      "tests": [
+        {
+          "name": "caso visible — nombre Valentina",
+          "stdin": "Valentina\n",
+          "stdout": "¡Hola, Valentina!\n"
+        },
+        {
+          "name": "caso oculto — nombre Sofía",
+          "stdin": "Sofía\n",
+          "stdout": "¡Hola, Sofía!\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — nombre Diego",
+          "stdin": "Diego\n",
+          "stdout": "¡Hola, Diego!\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "nombre = input()\nprint(\"¡Hola, \" + nombre + \"!\")\n"
+    },
+    {
+      "slug": "torneo-brawl-stars",
+      "title": "Torneo de Brawl Stars",
+      "focus_class": "clase-08a-booleano-comparaciones",
+      "type": "io",
+      "difficulty": "base",
+      "topics": ["int", "input", "comparacion", "print"],
+      "statement_md": "El curso organizó un torneo interno de Brawl Stars. Para inscribirse, cada jugador necesita tener al menos 1.000 trofeos en su cuenta.\n\nTu programa pedirá con `input()` un dato:\n\n1. Los trofeos del jugador.\n   Respuestas posibles: cualquier número entero (ejemplo: `1200`).\n\nSegún lo que respondió el usuario, tu programa debe imprimir:\n\n| Situación | Lo que imprime tu programa |\n|---|---|\n| Clasifica para el torneo | `¿Clasificas para el torneo? True` |\n| No clasifica | `¿Clasificas para el torneo? False` |\n\nNo escribas texto dentro del `input()`, o sea déjalo vacío.",
+      "sample": {
+        "stdin": "1200\n",
+        "stdout": "¿Clasificas para el torneo? True\n"
+      },
+      "tests": [
+        {
+          "name": "caso visible — 1200 trofeos",
+          "stdin": "1200\n",
+          "stdout": "¿Clasificas para el torneo? True\n"
+        },
+        {
+          "name": "caso oculto — 999 trofeos (justo debajo del mínimo)",
+          "stdin": "999\n",
+          "stdout": "¿Clasificas para el torneo? False\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — exactamente 1000 trofeos",
+          "stdin": "1000\n",
+          "stdout": "¿Clasificas para el torneo? True\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — 50 trofeos",
+          "stdin": "50\n",
+          "stdout": "¿Clasificas para el torneo? False\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "trofeos = int(input())\nprint(\"¿Clasificas para el torneo?\", trofeos >= 1000)\n"
+    },
+    {
+      "slug": "stand-feria-maipo",
+      "title": "Stand en la Feria de Isla de Maipo",
+      "focus_class": "clase-08b-operadores-logicos",
+      "type": "io",
+      "difficulty": "base",
+      "topics": ["str", "int", "input", "and", "comparacion", "print"],
+      "statement_md": "La Feria de Emprendedores de Isla de Maipo permite inscribir un stand solo si el emprendedor tiene su ficha municipal al día y quedan puestos disponibles. Si falta alguna de las dos condiciones, la inscripción no es posible.\n\nTu programa pedirá con `input()` dos datos en este orden:\n\n1. Si la ficha municipal está al día.\n   Respuestas posibles: `si` o `no`.\n\n2. Cuántos puestos quedan disponibles.\n   Respuestas posibles: cualquier número entero (ejemplo: `3`).\n\nSegún lo que respondió el usuario, tu programa debe imprimir:\n\n| Situación | Lo que imprime tu programa |\n|---|---|\n| Puede inscribir su stand | `¿Puede inscribir su stand? True` |\n| No puede inscribir su stand | `¿Puede inscribir su stand? False` |\n\nNo escribas texto dentro del `input()`, o sea déjalo vacío.",
+      "sample": {
+        "stdin": "si\n3\n",
+        "stdout": "¿Puede inscribir su stand? True\n"
+      },
+      "tests": [
+        {
+          "name": "caso visible — ficha al día y puestos disponibles",
+          "stdin": "si\n3\n",
+          "stdout": "¿Puede inscribir su stand? True\n"
+        },
+        {
+          "name": "caso oculto — ficha al día pero sin puestos",
+          "stdin": "si\n0\n",
+          "stdout": "¿Puede inscribir su stand? False\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — sin ficha, con puestos",
+          "stdin": "no\n5\n",
+          "stdout": "¿Puede inscribir su stand? False\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — sin ficha y sin puestos",
+          "stdin": "no\n0\n",
+          "stdout": "¿Puede inscribir su stand? False\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — ficha al día, exactamente 1 puesto",
+          "stdin": "si\n1\n",
+          "stdout": "¿Puede inscribir su stand? True\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "ficha_al_dia = input() == \"si\"\npuestos = int(input())\nprint(\"¿Puede inscribir su stand?\", ficha_al_dia and puestos > 0)\n"
+    },
+    {
+      "slug": "micro-a-talagante",
+      "title": "El micro a Talagante",
+      "focus_class": "clase-09-if-else",
+      "type": "io",
+      "difficulty": "media",
+      "topics": ["int", "input", "if", "else", "comparacion", "print"],
+      "statement_md": "Diego necesita tomar el micro a Talagante, que sale puntualmente a las 7:30 de la mañana. Para registrar la hora de llegada al paradero se usa un número entero que representa cuántos minutos han pasado desde la medianoche. Por ejemplo, si llegó a las 7:20, el número es 440. Si llegó a las 7:30 exactas, el número es 450. Si llegó a las 7:31, el número es 451.\n\nTu programa pedirá con `input()` un dato:\n\n1. Los minutos de llegada al paradero.\n   Respuestas posibles: cualquier número entero (ejemplo: `440`).\n\nSegún lo que respondió el usuario, tu programa debe imprimir:\n\n| Situación | Lo que imprime tu programa |\n|---|---|\n| Llegó a tiempo | `¡Alcanzaste el micro! Buen viaje a Talagante.` |\n| Llegó tarde | `El micro ya pasó. Próxima salida en una hora.` |\n\nNo escribas texto dentro del `input()`, o sea déjalo vacío.",
+      "sample": {
+        "stdin": "440\n",
+        "stdout": "¡Alcanzaste el micro! Buen viaje a Talagante.\n"
+      },
+      "tests": [
+        {
+          "name": "caso visible — llegó a las 7:20 (440 min)",
+          "stdin": "440\n",
+          "stdout": "¡Alcanzaste el micro! Buen viaje a Talagante.\n"
+        },
+        {
+          "name": "caso oculto — exactamente a las 7:30 (450 min)",
+          "stdin": "450\n",
+          "stdout": "¡Alcanzaste el micro! Buen viaje a Talagante.\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — un minuto tarde (451 min)",
+          "stdin": "451\n",
+          "stdout": "El micro ya pasó. Próxima salida en una hora.\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — llegó muy tarde (500 min = 8:20)",
+          "stdin": "500\n",
+          "stdout": "El micro ya pasó. Próxima salida en una hora.\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — llegó muy temprano (0 min = medianoche)",
+          "stdin": "0\n",
+          "stdout": "¡Alcanzaste el micro! Buen viaje a Talagante.\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "minutos = int(input())\nif minutos <= 450:\n    print(\"¡Alcanzaste el micro! Buen viaje a Talagante.\")\nelse:\n    print(\"El micro ya pasó. Próxima salida en una hora.\")\n"
+    },
+    {
+      "slug": "torneo-basquet",
+      "title": "Torneo de básquetbol del Mario Bertero",
+      "focus_class": "clase-09-if-else",
+      "type": "io",
+      "difficulty": "media-alta",
+      "topics": ["str", "input", "if", "else", "and", "comparacion-string", "print"],
+      "statement_md": "Para participar en el torneo de básquetbol del Mario Bertero, el estudiante debe estar matriculado en el liceo y pertenecer a un equipo registrado. Si falla alguna de las dos condiciones, no puede jugar.\n\nTu programa pedirá con `input()` dos datos en este orden:\n\n1. Si el estudiante está matriculado en el liceo.\n   Respuestas posibles: `si` o `no`.\n\n2. Si pertenece a un equipo registrado.\n   Respuestas posibles: `si` o `no`.\n\nSegún lo que respondió el usuario, tu programa debe imprimir:\n\n| Situación | Lo que imprime tu programa |\n|---|---|\n| Cumple ambas condiciones | `¡Clasificado para el torneo! Nos vemos en la cancha.` |\n| No cumple alguna condición | `No cumples los requisitos para participar en el torneo.` |\n\nNo escribas texto dentro del `input()`, o sea déjalo vacío.",
+      "sample": {
+        "stdin": "si\nsi\n",
+        "stdout": "¡Clasificado para el torneo! Nos vemos en la cancha.\n"
+      },
+      "tests": [
+        {
+          "name": "caso visible — matriculado y en equipo",
+          "stdin": "si\nsi\n",
+          "stdout": "¡Clasificado para el torneo! Nos vemos en la cancha.\n"
+        },
+        {
+          "name": "caso oculto — matriculado pero sin equipo",
+          "stdin": "si\nno\n",
+          "stdout": "No cumples los requisitos para participar en el torneo.\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — no matriculado pero en equipo",
+          "stdin": "no\nsi\n",
+          "stdout": "No cumples los requisitos para participar en el torneo.\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — ninguna condición cumplida",
+          "stdin": "no\nno\n",
+          "stdout": "No cumples los requisitos para participar en el torneo.\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "matriculado = input() == \"si\"\nen_equipo = input() == \"si\"\nif matriculado and en_equipo:\n    print(\"¡Clasificado para el torneo! Nos vemos en la cancha.\")\nelse:\n    print(\"No cumples los requisitos para participar en el torneo.\")\n"
+    },
+    {
+      "slug": "almuerzo-liceo",
+      "title": "Almuerzo en el liceo",
+      "focus_class": "clase-09-if-else",
+      "type": "io",
+      "difficulty": "alta",
+      "topics": ["str", "input", "if", "else", "or", "comparacion-string", "print"],
+      "statement_md": "En un liceo, la cafetería tiene una política simple: cualquier estudiante de 4to medio almuerza gratis. También almuerza gratis quien tenga un ticket especial, aunque no sea de 4to medio. Y si alguien cumple las dos condiciones a la vez, igual paga $0. Solo quien no cumpla ninguna de las dos condiciones paga el precio normal de $1.500.\n\nTu programa pedirá con `input()` dos datos en este orden:\n\n1. Si el estudiante es de 4to medio.\n   Respuestas posibles: `si` o `no`.\n\n2. Si tiene un ticket especial.\n   Respuestas posibles: `si` o `no`.\n\nSegún lo que respondió el usuario, tu programa debe imprimir:\n\n| Situación | Lo que imprime tu programa |\n|---|---|\n| Al menos una respuesta es `si` | `Almuerzo subvencionado: $0` |\n| Las dos respuestas son `no` | `Almuerzo valor normal: $1.500` |\n\nNo escribas texto dentro del `input()`, o sea déjalo vacío.",
+      "sample": {
+        "stdin": "si\nno\n",
+        "stdout": "Almuerzo subvencionado: $0\n"
+      },
+      "tests": [
+        {
+          "name": "caso visible — es 4to medio (sin ticket)",
+          "stdin": "si\nno\n",
+          "stdout": "Almuerzo subvencionado: $0\n"
+        },
+        {
+          "name": "caso oculto — no es 4to medio pero tiene ticket",
+          "stdin": "no\nsi\n",
+          "stdout": "Almuerzo subvencionado: $0\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — es 4to medio y tiene ticket",
+          "stdin": "si\nsi\n",
+          "stdout": "Almuerzo subvencionado: $0\n",
+          "hidden": true
+        },
+        {
+          "name": "caso oculto — ninguna condición cumplida",
+          "stdin": "no\nno\n",
+          "stdout": "Almuerzo valor normal: $1.500\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "es_4to = input() == \"si\"\ntiene_ticket = input() == \"si\"\nif es_4to or tiene_ticket:\n    print(\"Almuerzo subvencionado: $0\")\nelse:\n    print(\"Almuerzo valor normal: $1.500\")\n"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "set_slug": "piloto-ayudantia-input-booleanos-if",
+  "set_title": "Piloto ayudantia - input, booleanos e if else",
+  "source_classes": [
+    "clases/clase-07-input",
+    "clases/clase-08a-booleano-comparaciones",
+    "clases/clase-09-if-else"
+  ],
+  "purpose": "refuerzo de ayudantia",
+  "exercises": [
+    {
+      "slug": "puntos-de-partida",
+      "title": "Puntos de partida",
+      "focus_class": "clase-07-input",
+      "type": "io",
+      "difficulty": "base",
+      "topics": [
+        "input",
+        "int",
+        "division entera",
+        "print"
+      ],
+      "statement_md": "Escribe un programa que lea tres datos, en este orden:\n\n1. El nombre de un jugador.\n2. Su nivel inicial, como numero entero.\n3. Los puntos que gano en una partida, como numero entero.\n\nCada 100 puntos sube 1 nivel. Calcula el nivel final usando division entera y muestra exactamente dos lineas:\n\n```text\nJugador: <nombre>\nNivel final: <nivel_final>\n```\n\nNo agregues prompts largos en `input()` para que Dodona pueda corregir tu salida.",
+      "sample": {
+        "stdin": "Valen\n12\n250\n",
+        "stdout": "Jugador: Valen\nNivel final: 14\n"
+      },
+      "tests": [
+        {
+          "name": "visible - sube dos niveles",
+          "stdin": "Valen\n12\n250\n",
+          "stdout": "Jugador: Valen\nNivel final: 14\n"
+        },
+        {
+          "name": "visible - no sube",
+          "stdin": "Tomi\n5\n80\n",
+          "stdout": "Jugador: Tomi\nNivel final: 5\n"
+        },
+        {
+          "name": "oculto - caso exacto 100",
+          "stdin": "Cata\n3\n100\n",
+          "stdout": "Jugador: Cata\nNivel final: 4\n",
+          "hidden": true
+        },
+        {
+          "name": "oculto - cero puntos",
+          "stdin": "Nico\n9\n0\n",
+          "stdout": "Jugador: Nico\nNivel final: 9\n",
+          "hidden": true
+        },
+        {
+          "name": "oculto - varios niveles",
+          "stdin": "Sofi\n1\n999\n",
+          "stdout": "Jugador: Sofi\nNivel final: 10\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "nombre = input()\nnivel_inicial = int(input())\npuntos = int(input())\n\nniveles_ganados = puntos // 100\nnivel_final = nivel_inicial + niveles_ganados\n\nprint(\"Jugador:\", nombre)\nprint(\"Nivel final:\", nivel_final)\n"
+    },
+    {
+      "slug": "compra-con-cuenta-rut",
+      "title": "Compra con Cuenta RUT",
+      "focus_class": "clase-08a-booleano-comparaciones",
+      "type": "io",
+      "difficulty": "base",
+      "topics": [
+        "input",
+        "int",
+        "comparaciones",
+        "booleanos",
+        "print"
+      ],
+      "statement_md": "Escribe un programa que lea dos datos, en este orden:\n\n1. El saldo disponible en una Cuenta RUT, como numero entero.\n2. El precio de un producto, como numero entero.\n\nEl programa debe imprimir tres comparaciones booleanas, exactamente con este formato:\n\n```text\nAlcanza para comprar? <True/False>\nQueda saldo positivo? <True/False>\nSaldo exacto al precio? <True/False>\n```\n\nConsidera que queda saldo positivo solo si despues de comprar sobra mas de 0 pesos.",
+      "sample": {
+        "stdin": "35000\n20000\n",
+        "stdout": "Alcanza para comprar? True\nQueda saldo positivo? True\nSaldo exacto al precio? False\n"
+      },
+      "tests": [
+        {
+          "name": "visible - alcanza con vuelto",
+          "stdin": "35000\n20000\n",
+          "stdout": "Alcanza para comprar? True\nQueda saldo positivo? True\nSaldo exacto al precio? False\n"
+        },
+        {
+          "name": "visible - no alcanza",
+          "stdin": "12000\n18000\n",
+          "stdout": "Alcanza para comprar? False\nQueda saldo positivo? False\nSaldo exacto al precio? False\n"
+        },
+        {
+          "name": "oculto - caso limite exacto",
+          "stdin": "15000\n15000\n",
+          "stdout": "Alcanza para comprar? True\nQueda saldo positivo? False\nSaldo exacto al precio? True\n",
+          "hidden": true
+        },
+        {
+          "name": "oculto - saldo cero",
+          "stdin": "0\n5000\n",
+          "stdout": "Alcanza para comprar? False\nQueda saldo positivo? False\nSaldo exacto al precio? False\n",
+          "hidden": true
+        },
+        {
+          "name": "oculto - precio alto",
+          "stdin": "60000\n95000\n",
+          "stdout": "Alcanza para comprar? False\nQueda saldo positivo? False\nSaldo exacto al precio? False\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "saldo = int(input())\nprecio = int(input())\n\nprint(\"Alcanza para comprar?\", saldo >= precio)\nprint(\"Queda saldo positivo?\", saldo - precio > 0)\nprint(\"Saldo exacto al precio?\", saldo == precio)\n"
+    },
+    {
+      "slug": "entrada-al-cine",
+      "title": "Entrada al cine",
+      "focus_class": "clase-09-if-else",
+      "type": "io",
+      "difficulty": "base",
+      "topics": [
+        "input",
+        "int",
+        "if",
+        "else",
+        "print"
+      ],
+      "statement_md": "La entrada al cine cuesta $8000.\n\nEscribe un programa que lea cuanto dinero trae una persona, como numero entero. Si le alcanza para comprar la entrada, debe imprimir:\n\n```text\nPuedes entrar al cine.\n```\n\nSi no le alcanza, debe imprimir:\n\n```text\nNo alcanza para la entrada.\n```\n\nUsa `if` y `else` para decidir cual de los dos mensajes mostrar.",
+      "sample": {
+        "stdin": "10000\n",
+        "stdout": "Puedes entrar al cine.\n"
+      },
+      "tests": [
+        {
+          "name": "visible - alcanza",
+          "stdin": "10000\n",
+          "stdout": "Puedes entrar al cine.\n"
+        },
+        {
+          "name": "visible - no alcanza",
+          "stdin": "7500\n",
+          "stdout": "No alcanza para la entrada.\n"
+        },
+        {
+          "name": "oculto - caso limite exacto",
+          "stdin": "8000\n",
+          "stdout": "Puedes entrar al cine.\n",
+          "hidden": true
+        },
+        {
+          "name": "oculto - muy bajo",
+          "stdin": "0\n",
+          "stdout": "No alcanza para la entrada.\n",
+          "hidden": true
+        },
+        {
+          "name": "oculto - muy alto",
+          "stdin": "50000\n",
+          "stdout": "Puedes entrar al cine.\n",
+          "hidden": true
+        }
+      ],
+      "solution_py": "dinero = int(input())\nentrada = 8000\n\nif dinero >= entrada:\n    print(\"Puedes entrar al cine.\")\nelse:\n    print(\"No alcanza para la entrada.\")\n"
+    }
+  ]
+}
