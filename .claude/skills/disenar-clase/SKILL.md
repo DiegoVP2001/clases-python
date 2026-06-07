@@ -23,10 +23,16 @@ NO te actives cuando Diego pida directamente "genera el Colab" o "genera el PPT"
 
 ### Paso 1 — Confirmar contexto
 
-Antes de proponer nada, asegúrate de tener:
+**Antes que cualquier otra cosa, lee `clases/Historial-Curricular.md`.** Este archivo es la fuente de verdad de lo que Diego efectivamente ha enseñado, en su numeración real — que puede divergir de la numeración Picuino cuando una clase se profundiza, se divide en partes (8a/8b/8c) o se inserta como refuerzo. Te dice:
+- Qué número real corresponde a la próxima clase (sección "Próxima clase disponible").
+- Qué contenidos y carpetas existen hasta ahora, para no adelantar nada que no se haya visto realmente.
 
-1. **Número de clase Picuino** (1 a 33). Consulta la skill `referencia-curriculo` para ver foco, conceptos y actividades de esa clase.
-2. **Contenidos previos.** Por defecto, asume que se vieron las clases 1 a N-1. Si Diego no ha sido explícito, confirma brevemente: "Asumo que ya vieron las clases 1 a N-1, ¿correcto?".
+No asumas la numeración real a partir de la numeración Picuino — pueden no coincidir. Si Diego menciona un número que no calza con lo que dice el archivo, pregunta para resolver la discrepancia antes de avanzar.
+
+Luego, asegúrate de tener:
+
+1. **Clase Picuino de referencia** (1 a 33). Consulta la skill `referencia-curriculo` para ver foco, conceptos y actividades de esa clase. Recuerda que el número real (de `Historial-Curricular.md`) y el número Picuino de referencia son cosas distintas — regístralos por separado.
+2. **Contenidos previos.** Usa `Historial-Curricular.md` para confirmar exactamente qué se ha visto hasta ahora (no asumas "1 a N-1" mecánicamente). Si hay ambigüedad, confirma brevemente con Diego.
 3. **Contexto temático preferido** (opcional). Si Diego no indica, propón 2-3 contextos posibles usando `referencia-intereses-estudiantes`. Si Diego pide contexto de Isla de Maipo o algo local/cotidiano de la comuna, consulta `referencia-isla-de-maipo` para extraer escenarios auténticos (transporte, fiestas, viñas, río, comercio, etc.).
 4. **Foco específico.** Si la clase Picuino cubre varios subconceptos, pregunta cuál priorizar. Por ejemplo, la clase 9 (if-else) podría enfocarse en condicionales simples o ya incluir lógica compuesta.
 
@@ -265,12 +271,17 @@ Crea también la carpeta y un `Clase NN - Tema - Historial.md` inicial:
 - [notas relevantes del proceso]
 ```
 
-Confirma a Diego que la spec está guardada y dónde. Luego di: *"Antes de continuar al Colab de clase, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando confirme, activa la skill `generar-colab-clase`.
+**Actualiza también `clases/Historial-Curricular.md`:**
+1. Agrega una fila nueva a la tabla "Clases dictadas (orden real)" con: N° real, tema, carpeta, clase Picuino de referencia, estado y fecha.
+2. Recalcula "Próxima clase disponible" (N° real + 1), dejando el tema como "sin definir todavía" salvo que Diego ya haya adelantado cuál sigue.
+
+Confirma a Diego que la spec y el historial curricular quedaron guardados, y dónde. Luego di: *"Antes de continuar al Colab de clase, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando confirme, activa la skill `generar-colab-clase`.
 
 ## Consultas a skills de referencia
 
 Durante este flujo, consulta proactivamente:
 
+- **`clases/Historial-Curricular.md`**: SIEMPRE primero, antes que cualquier skill — es la fuente de verdad de qué se ha enseñado realmente y con qué numeración. No es una skill, es un archivo de memoria del proyecto; léelo directo.
 - **`referencia-curriculo`**: SIEMPRE al inicio, para ver qué dice Picuino sobre esta clase específica (foco, conceptos, sintaxis, actividades originales).
 - **`referencia-bloom`**: cuando estés calibrando el verbo del objetivo o evaluando si el ticket de salida tiene la misma demanda cognitiva que el objetivo.
 - **`referencia-clase-que-sonamos`**: cuando necesites profundizar en el modelo de 5 pasos, planificación a la inversa o protagonismo estudiantil.

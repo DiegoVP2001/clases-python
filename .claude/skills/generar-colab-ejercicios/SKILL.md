@@ -1,9 +1,9 @@
 ---
 name: generar-colab-ejercicios
-description: Genera el Jupyter notebook de ejercicios adicionales (02-ejercicios.ipynb) de una clase. Usa esta skill después de que el Colab principal (01-clase.ipynb) esté aprobado. Sigue un flujo de dos fases: primero propone los ejercicios en chat para aprobación, luego genera el .ipynb final con soluciones ocultas en <details>. Los ejercicios usan solo conceptos vistos hasta la clase actual.
+description: Genera el Jupyter notebook de ejercicios adicionales (Clase NN - Tema - Ejercicios.ipynb) de una clase. Usa esta skill después de que el Colab principal (Clase NN - Tema - Clase.ipynb) esté aprobado. Sigue un flujo de dos fases: primero propone los ejercicios en chat para aprobación, luego genera el .ipynb final con soluciones ocultas en <details>. Los ejercicios usan solo conceptos vistos hasta la clase actual.
 ---
 
-# Skill: Generar Colab de ejercicios (02-ejercicios.ipynb)
+# Skill: Generar Colab de ejercicios (Clase NN - Tema - Ejercicios.ipynb)
 
 ## Propósito
 
@@ -19,8 +19,8 @@ Actívate cuando Diego diga cosas como:
 - "Ya aprobé el Colab de clase, sigamos"
 
 **Requisitos previos:**
-1. Debe existir `clases/clase-NN-tema/00-spec.md` aprobado.
-2. Debe existir `clases/clase-NN-tema/01-clase.ipynb` aprobado (o al menos generado).
+1. Debe existir `clases/clase-NN-tema/Clase NN - Tema - Spec.md` aprobado.
+2. Debe existir `clases/clase-NN-tema/Clase NN - Tema - Clase.ipynb` aprobado (o al menos generado).
 3. Python con `nbformat` instalado.
 
 Si falta alguno de los dos primeros, NO procedas: indícale a Diego qué falta y vuelve al paso correspondiente.
@@ -71,31 +71,35 @@ Resultado esperado: [una línea]
 
 ### Fase 2 — Generar el archivo intermedio y el .ipynb
 
-1. **Escribe el archivo intermedio** `clases/clase-NN-tema/ejercicios.md` con la propuesta aprobada completa (enunciados completos, pistas si aplica, resultado esperado, solución funcional). Sigue exactamente el formato de `plantilla_ejercicios.md`.
+1. **Escribe el archivo intermedio** `clases/clase-NN-tema/Clase NN - Tema - Ejercicios propuesta.md` con la propuesta aprobada completa (enunciados completos, pistas si aplica, resultado esperado, solución funcional). Sigue exactamente el formato de `plantilla_ejercicios.md`.
 
 2. **Ejecuta el script** para convertir el archivo intermedio en el `.ipynb`:
 
-   ```bash
-   python .claude/skills/generar-colab-ejercicios/crear_colab_ejercicios.py clases/clase-NN-tema/ejercicios.md clases/clase-NN-tema/02-ejercicios.ipynb
-   ```
-
-   En Windows con rutas con espacios:
-
    ```powershell
-   python ".claude/skills/generar-colab-ejercicios/crear_colab_ejercicios.py" "clases/clase-NN-tema/ejercicios.md" "clases/clase-NN-tema/02-ejercicios.ipynb"
+   python -X utf8 ".claude/skills/generar-colab-ejercicios/crear_colab_ejercicios.py" "clases/clase-NN-tema/Clase NN - Tema - Ejercicios propuesta.md" "clases/clase-NN-tema/Clase NN - Tema - Ejercicios.ipynb"
    ```
 
-3. **Confirma a Diego** que el archivo se generó y dale las instrucciones para subirlo a Colab.
+3. **Ejecuta el notebook para verificar que el código corre sin errores**, antes de mostrárselo a Diego:
 
-4. **Registra en `historial.md`:**
+   ```bash
+   jupyter nbconvert --to notebook --execute --output <mismo-archivo> "Clase NN - Tema - Ejercicios.ipynb"
+   ```
+
+   Si alguna celda (enunciado, solución oculta en `<details>` ejecutada como prueba, etc.) lanza una excepción o produce un output distinto al documentado, corrige y repite — no presentes el notebook con errores sin detectar.
+
+4. **Confirma a Diego** que el archivo se generó, se ejecutó sin errores, y dale las instrucciones para subirlo a Colab.
+
+5. **Registra en `Clase NN - Tema - Historial.md`:**
 
    ```markdown
    ## [fecha] — Colab de ejercicios generado
-   - Archivo: 02-ejercicios.ipynb
+   - Archivo: Clase NN - Tema - Ejercicios.ipynb
    - Total ejercicios: N (X de práctica base + Y desafíos opcionales)
    - Contextos usados: [lista]
    - [notas si hubo iteraciones relevantes]
    ```
+
+6. Después de registrar, di: *"Antes de continuar al PPT, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando Diego confirme, activa la skill `generar-ppt-clase`.
 
 ## Modo rápido (sin propuesta intermedia)
 
@@ -119,7 +123,7 @@ El script produce:
 
 ## Iteración después de generar
 
-- **Cambios menores en un enunciado o solución:** edita el `ejercicios.md` y regenera el `.ipynb`. NO edites el notebook directamente porque la próxima regeneración lo sobrescribe.
+- **Cambios menores en un enunciado o solución:** edita el `Clase NN - Tema - Ejercicios propuesta.md` y regenera el `.ipynb`. NO edites el notebook directamente porque la próxima regeneración lo sobrescribe.
 - **Cambios estructurales (agregar/quitar ejercicio completo):** vuelve a Fase 1, repropón, aprueba, regenera.
 - **Cambios sistémicos (que aplicarían a todas las clases futuras):** edita el script `crear_colab_ejercicios.py` y avisa a Diego.
 
@@ -127,7 +131,7 @@ El script produce:
 
 1. **Nunca uses conceptos no vistos.** Esta es la regla más fácil de violar y la más dañina pedagógicamente. Si dudas, simplifica el ejercicio.
 2. **Nunca generes el .ipynb sin propuesta aprobada** (salvo modo rápido explícito).
-3. **El archivo intermedio `ejercicios.md` es la fuente de verdad.** Si hay discrepancia entre `.md` y `.ipynb`, regenera el `.ipynb`.
+3. **El archivo intermedio `Clase NN - Tema - Ejercicios propuesta.md` es la fuente de verdad.** Si hay discrepancia entre `.md` y `.ipynb`, regenera el `.ipynb`.
 4. **Soluciones al final, no inline.** Las soluciones van agrupadas en una sección "📋 Soluciones" al final del notebook, cada una en su propio `<details>`. Nunca poner la solución inmediatamente después del ejercicio.
 5. **Pistas sí van inline, pero solo cuando el ejercicio lo justifica.** No poner pistas en todos los ejercicios — solo donde la dificultad lo amerita. Una pista orienta sin revelar la respuesta.
 6. **No copies literalmente los ejercicios del spec.** El Colab de clase ya tiene la práctica independiente; el de ejercicios trae ejercicios DISTINTOS, aunque del mismo nivel.

@@ -70,13 +70,18 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
 
 ## Después de generar
 
-1. Confirma a Diego que el archivo se creó y dónde está.
-2. **Recomienda subirlo a Google Colab** para revisarlo en el entorno real antes de aprobar:
+1. **Ejecuta el notebook para verificar que el código corre sin errores**, antes de presentárselo a Diego:
+   ```bash
+   jupyter nbconvert --to notebook --execute --output <mismo-archivo> "Clase NN - Tema - Clase.ipynb"
+   ```
+   Si una celda lanza una excepción (`NameError`, `SyntaxError`, etc.) o el output no calza con el `>>` documentado en el spec, corrige el notebook y vuelve a ejecutar — no se lo muestres a Diego con errores sin detectar. Esto atrapa bugs de variables mal escritas o lógica incorrecta antes de que lleguen al aula. Si `nbconvert`/`nbclient` no está disponible, instala con `pip install nbconvert` o avisa a Diego.
+2. Confirma a Diego que el archivo se creó, se ejecutó sin errores, y dónde está.
+3. **Recomienda subirlo a Google Colab** para revisarlo en el entorno real antes de aprobar:
    - Abrir https://colab.research.google.com
    - `Archivo` → `Subir cuaderno`
    - Seleccionar el `.ipynb` recién generado
-3. **Espera el feedback de Diego antes de avanzar al Colab de ejercicios.**
-4. Cuando Diego apruebe, registra en `Clase NN - Tema - Historial.md`:
+4. **Espera el feedback de Diego antes de avanzar al Colab de ejercicios.**
+5. Cuando Diego apruebe, registra en `Clase NN - Tema - Historial.md`:
 
 ```markdown
 ## [fecha] — Colab de clase aprobado
@@ -85,7 +90,7 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
 - [notas de iteraciones si las hubo]
 ```
 
-5. Después de registrar, di: *"Antes de continuar al Colab de ejercicios, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando Diego confirme, activa la skill `generar-colab-ejercicios`.
+6. Después de registrar, di: *"Antes de continuar al Colab de ejercicios, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando Diego confirme, activa la skill `generar-colab-ejercicios`.
 
 ## Iteración sobre el .ipynb
 

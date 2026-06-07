@@ -6,7 +6,7 @@ aliases:
   - demanda-cognitiva
   - niveles-cognitivos
   - verbos-bloom
-summary: Skill de referencia para clasificar, diseñar y ajustar objetivos, actividades, preguntas, tickets de salida, evaluaciones y rúbricas según la Taxonomía de Bloom.
+description: Consulta la Taxonomía de Bloom para calibrar el nivel cognitivo de objetivos, preguntas, tickets de salida, evaluaciones y rúbricas. Usa esta skill cuando necesites elegir un verbo observable para un objetivo de aprendizaje, verificar que un ticket de salida exija la misma demanda cognitiva que el objetivo, o clasificar una actividad según su nivel (recordar, comprender, aplicar, analizar, evaluar, crear).
 ---
 
 # Skill: Taxonomía de Bloom como referencia para diseño pedagógico

@@ -15,14 +15,16 @@ Esta skill cubre el **path por defecto** del workflow de ayudantías: salida en 
 
 ## Flujo obligatorio
 
-1. **Identificar clases foco.** Si Diego no las indicó, pregunta. Acepta nombres de carpeta (`clase-07-input`), números Picuino o temas.
+1. **Identificar clases foco.** Lee primero `clases/Historial-Curricular.md` — es la fuente de verdad de qué clases existen y en qué orden real se dictaron (puede no coincidir con la numeración Picuino). Si Diego no indicó las clases foco, pregunta usando esa lista como referencia. Acepta nombres de carpeta (`clase-07-input`), números reales o temas.
 2. **Leer evidencia local.** Revisa `Spec.md`, `Ejercicios propuesta.md` y notebooks de esas clases. Consulta `referencia-curriculo` para verificar contenidos vistos. **Consulta `referencia-intereses-estudiantes` y `referencia-isla-de-maipo` antes de redactar enunciados** — los contextos deben ser significativos.
 3. **Fijar alcance.** Pregunta solo lo esencial si falta: cantidad de ejercicios, propósito (`refuerzo`, `avance autónomo`, `evaluación corta`, `desafío`) y dificultad (`base`, `mixta`, `con desafíos`).
 4. **Proponer en chat.** Presenta cada ejercicio con el formato definido abajo.
 5. **Esperar aprobación explícita.** No generes archivos hasta que Diego apruebe.
 6. **Guardar JSON aprobado** en `ayudantias/propuestas/<slug>.json`. Ese JSON es la fuente de verdad.
+
+   **Regla de naming del slug:** basa el slug en el **tema o las clases foco** del set (ej. `if-else-booleanos`, `loops-for-range`). **Nunca incluyas el día de la semana ni la fecha** (nada de `-jueves`, `-martes`, `-06-06`) — el slug debe seguir siendo válido sin importar cuándo se dicte la sesión, y la fecha ya queda registrada en el historial.
 7. **Avisar** que el siguiente paso es activar `generar-ayudantia-ejercicios`.
-8. **Confirmar registro en historial.** Después de que `generar-ayudantia-ejercicios` produzca los notebooks, verifica que haya quedado registrado en `ayudantias/<slug>/historial.md` (fecha + descripción del set generado y de cualquier feedback aplicado).
+8. **Confirmar registro en historial.** Después de que `generar-ayudantia-ejercicios` produzca los notebooks, verifica que haya quedado registrado en `ayudantias/<slug>/historial.md` (fecha + descripción del set generado y de cualquier feedback aplicado) **y** que se haya agregado una fila a la tabla "Ayudantías realizadas" de `clases/Historial-Curricular.md`.
 
 ## Criterios pedagógicos
 

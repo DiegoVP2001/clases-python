@@ -85,9 +85,18 @@ Los ejercicios con `difficulty: trivial` se omiten de ambos notebooks (son ejerc
 
 ## Después de generar
 
-1. Confirma a Diego que ambos notebooks se crearon y dónde están.
-2. Recuérdale subir `<slug>-ejercicios.ipynb` a Google Colab y `<slug>-solucionario.ipynb` a Classroom (después de la sesión).
-3. Crea o actualiza `ayudantias/<slug>/historial.md` con una entrada:
+1. **Ejecuta ambos notebooks para verificar que el código corre sin errores**, antes de presentarlos a Diego:
+
+   ```bash
+   jupyter nbconvert --to notebook --execute --output <mismo-archivo> "<slug>-ejercicios.ipynb"
+   jupyter nbconvert --to notebook --execute --output <mismo-archivo> "<slug>-solucionario.ipynb"
+   ```
+
+   Si alguna celda lanza una excepción o el output no calza con el esperado, corrige el JSON de la propuesta, regenera y vuelve a ejecutar — no entregues notebooks con errores sin detectar.
+
+2. Confirma a Diego que ambos notebooks se crearon, se ejecutaron sin errores, y dónde están.
+3. Recuérdale subir `<slug>-ejercicios.ipynb` a Google Colab y `<slug>-solucionario.ipynb` a Classroom (después de la sesión).
+4. Crea o actualiza `ayudantias/<slug>/historial.md` con una entrada:
 
 ```markdown
 ## [fecha] — Set de ayudantía generado
@@ -97,4 +106,5 @@ Los ejercicios con `difficulty: trivial` se omiten de ambos notebooks (son ejerc
 - [notas de iteraciones o feedback si las hubo]
 ```
 
-4. Si Diego pide ajustes después, edita el JSON de la propuesta y regenera con `--force`; agrega una nueva entrada al `historial.md` describiendo el cambio.
+5. **Registra el set en `clases/Historial-Curricular.md`**: agrega una fila a la tabla "Ayudantías realizadas" con slug, clases foco, tema, propósito y fecha. Esto lo mantiene como fuente de verdad consultable por `disenar-clase` y `disenar-ayudantia-ejercicios` para futuras sesiones.
+6. Si Diego pide ajustes después, edita el JSON de la propuesta y regenera con `--force`; agrega una nueva entrada al `historial.md` describiendo el cambio.
