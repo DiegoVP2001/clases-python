@@ -82,3 +82,19 @@ Los campos requeridos por el generador:
 ```
 
 Los ejercicios con `difficulty: trivial` se omiten de ambos notebooks (son ejercicios de demo/introducción que no aplican para la ayudantía en Jupyter).
+
+## Después de generar
+
+1. Confirma a Diego que ambos notebooks se crearon y dónde están.
+2. Recuérdale subir `<slug>-ejercicios.ipynb` a Google Colab y `<slug>-solucionario.ipynb` a Classroom (después de la sesión).
+3. Crea o actualiza `ayudantias/<slug>/historial.md` con una entrada:
+
+```markdown
+## [fecha] — Set de ayudantía generado
+- Set: <slug>
+- Propuesta: ayudantias/propuestas/<slug>.json
+- Generado con la skill generar-ayudantia-ejercicios
+- [notas de iteraciones o feedback si las hubo]
+```
+
+4. Si Diego pide ajustes después, edita el JSON de la propuesta y regenera con `--force`; agrega una nueva entrada al `historial.md` describiendo el cambio.

@@ -9,6 +9,10 @@ description: Diseña propuestas de ejercicios de práctica para ayudantías, org
 
 Proponer ejercicios de práctica organizados por clases foco. Esta skill solo diseña y espera aprobación; la generación de notebooks la hace `generar-ayudantia-ejercicios`.
 
+## Cuándo usar el path Dodona en vez de este
+
+Esta skill cubre el **path por defecto** del workflow de ayudantías: salida en Jupyter/Colab. Si Diego pide explícitamente que los ejercicios vayan a la plataforma Dodona ("súbelo a Dodona", "para Dodona", "que quede autocorregible en la plataforma"), no actives esta skill — activa `disenar-dodona-ejercicios` en su lugar. Ante cualquier duda, confirma con Diego cuál es el destino antes de proponer.
+
 ## Flujo obligatorio
 
 1. **Identificar clases foco.** Si Diego no las indicó, pregunta. Acepta nombres de carpeta (`clase-07-input`), números Picuino o temas.
@@ -18,6 +22,7 @@ Proponer ejercicios de práctica organizados por clases foco. Esta skill solo di
 5. **Esperar aprobación explícita.** No generes archivos hasta que Diego apruebe.
 6. **Guardar JSON aprobado** en `ayudantias/propuestas/<slug>.json`. Ese JSON es la fuente de verdad.
 7. **Avisar** que el siguiente paso es activar `generar-ayudantia-ejercicios`.
+8. **Confirmar registro en historial.** Después de que `generar-ayudantia-ejercicios` produzca los notebooks, verifica que haya quedado registrado en `ayudantias/<slug>/historial.md` (fecha + descripción del set generado y de cualquier feedback aplicado).
 
 ## Criterios pedagógicos
 

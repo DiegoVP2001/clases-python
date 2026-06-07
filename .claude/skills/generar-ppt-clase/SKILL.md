@@ -1,9 +1,9 @@
 ---
 name: generar-ppt-clase
-description: Genera la presentación PowerPoint (03-presentacion.pptx) de una clase a partir del spec aprobado. El PPT cubre desde la bienvenida hasta los errores típicos — todo lo que se trabaja en pantalla antes de abrir el computador. La Práctica Guiada, Independiente, Ticket y Cierre se trabajan desde el Colab. Usa esta skill después de que el 01-clase.ipynb esté aprobado.
+description: Genera la presentación PowerPoint (Clase NN - Tema - Presentación.pptx) de una clase a partir del spec aprobado. El PPT cubre desde la bienvenida hasta los errores típicos — todo lo que se trabaja en pantalla antes de abrir el computador. La Práctica Guiada, Independiente, Ticket y Cierre se trabajan desde el Colab. Usa esta skill después de que el Clase NN - Tema - Clase.ipynb esté aprobado.
 ---
 
-# Skill: Generar presentación PowerPoint (03-presentacion.pptx)
+# Skill: Generar presentación PowerPoint (Clase NN - Tema - Presentación.pptx)
 
 ## Propósito
 
@@ -14,9 +14,13 @@ Producir el archivo `.pptx` de una clase listo para usar en aula: fondo oscuro `
 Actívate cuando Diego diga "Genera el PPT", "Pasemos al PowerPoint" o equivalente.
 
 **Requisitos previos:**
-1. `clases/clase-NN-tema/00-spec.md` existe y está aprobado.
-2. `01-clase.ipynb` está aprobado (idealmente).
+1. `clases/clase-NN-tema/Clase NN - Tema - Spec.md` existe y está aprobado.
+2. `Clase NN - Tema - Clase.ipynb` está aprobado. Si no existe o no ha sido aprobado, avisa a Diego y pregunta si quiere generarlo primero con `generar-colab-clase` antes de continuar — el PPT se basa en el spec, pero el Colab aprobado es la señal de que el contenido ya está validado.
 3. `python-pptx` instalado: `pip install python-pptx`.
+
+## Previews — regla de uso
+
+**No generes previews (`--preview-icn`, `--preview-hazahora`) salvo que tengas una razón técnica concreta** (ej.: necesitas validar que un bloque nuevo renderiza antes de continuar con el PPT completo). Diego solo quiere el archivo final `Clase NN - Tema - Presentación.pptx`. Los previews son para depuración interna del skill, no para el flujo normal.
 
 ## Alcance del PPT (regla permanente)
 
@@ -79,11 +83,9 @@ El slide de Haz Ahora se compone dinámicamente según el tipo de actividad:
 **Tipo `situaciones`** (más común): el spec tiene ítems numerados (`1. ... 2. ...`). El slide tiene:
 - Caja intro (borde ámbar) con la instrucción — altura calculada según largo del texto
 - Caja grande (borde turquesa) con las situaciones numeradas — 20pt si ≤6 ítems, 18pt si más
-- Nota de cierre en gris al fondo
+- Nota de cierre en gris al fondo — **nunca incluye las respuestas esperadas**; la nota es solo logística ("¿Listo? Avísale a tu profe" o similar)
 
 **Tipo `libre`**: sin ítems numerados. Todo el texto va en una sola caja grande con borde ámbar.
-
-**Caso futuro (TODO en código):** Haz Ahora con código Python y preguntas asociadas → tipo `codigo_preguntas`, pendiente de implementar.
 
 ## Orden de demos en el PPT
 
@@ -139,16 +141,13 @@ Subtítulo: Comparando saldo = 45000 con precio = 60000.
 ## Cómo se ejecuta
 
 ```powershell
-python ".claude/skills/generar-ppt-clase/crear_ppt.py" "clases/clase-NN-tema/00-spec.md" "clases/clase-NN-tema/03-presentacion.pptx"
+python -X utf8 ".claude/skills/generar-ppt-clase/crear_ppt.py" "clases/clase-NN-tema/Clase NN - Tema - Spec.md" "clases/clase-NN-tema/Clase NN - Tema - Presentación.pptx"
 ```
 
-**Flags de preview** (para validar una sección antes del PPT completo):
+**Flags de preview** (solo si hay necesidad técnica concreta — ver sección "Previews"):
 ```powershell
-# Solo slides de ICN:
-python crear_ppt.py spec.md preview-icn.pptx --preview-icn
-
-# Solo slide de Haz Ahora:
-python crear_ppt.py spec.md preview-ha.pptx --preview-hazahora
+python -X utf8 ".claude/skills/generar-ppt-clase/crear_ppt.py" spec.md preview.pptx --preview-icn
+python -X utf8 ".claude/skills/generar-ppt-clase/crear_ppt.py" spec.md preview.pptx --preview-hazahora
 ```
 
 **Debug de decisiones del planificador:**
@@ -162,7 +161,7 @@ Cualquier texto entre backticks `` `código` `` en el spec se renderiza en el PP
 
 ## Iteración
 
-- **Cambio de contenido:** editar `00-spec.md` y regenerar.
+- **Cambio de contenido:** editar `Clase NN - Tema - Spec.md` y regenerar.
 - **Cambio de marca visual** (colores, tipografías, posiciones): editar `construir_plantilla.py` y correrlo para regenerar `plantilla_marca.pptx`. Luego regenerar los PPT afectados.
 - **Cambio de lógica de planificación:** editar `planificar_slides.py`.
 - **Cambio de renderizado:** editar `crear_ppt.py`.
@@ -177,6 +176,10 @@ Cualquier texto entre backticks `` `código` `` en el spec se renderiza en el PP
 | `construir_plantilla.py` | Define paleta, tipografías y helpers visuales; regenera `plantilla_marca.pptx` |
 | `plantilla_marca.pptx` | Plantilla con slides modelo (bienvenida, objetivo, tabla, anatomía, analogía, apilado, etc.) |
 
+## Limitaciones conocidas
+
+- **Haz Ahora con código Python y preguntas asociadas (`codigo_preguntas`):** el planificador no tiene un tipo dedicado para esto todavía. Si el spec trae un Haz Ahora de este tipo, el generador lo trata como tipo `libre` (todo el texto en una sola caja con borde ámbar). Si el resultado queda apretado o poco legible, avisa a Diego — puede que convenga reformular el Haz Ahora como `situaciones` o `libre` en el spec, o pausar para implementar el tipo dedicado en `planificar_slides.py`.
+
 ## Reglas críticas
 
 1. **El PPT termina en errores típicos.** Guiada/Independiente/Ticket/Cierre solo en Colab.
@@ -184,3 +187,6 @@ Cualquier texto entre backticks `` `código` `` en el spec se renderiza en el PP
 3. **La plantilla es la fuente de verdad del estilo.** La marca no se toca clase a clase.
 4. **Los demos siguen al concepto al que pertenecen** en el spec, no van al final.
 5. **Si una slide queda apretada:** el texto del spec es demasiado largo — acórtalo en el spec y regenera.
+6. **El slide de Reglas siempre incluye "🦻 No ocupen audífonos"** como ítem fijo. Agrégalo al construir ese slide, independiente de lo que diga el spec.
+7. **Sin Markdown en el texto del PPT.** El PPT no renderiza Markdown: `**palabra**` aparece literal con los asteriscos. La negrita se aplica vía `run.font.bold = True` en python-pptx donde el diseño lo requiere, nunca con `**...**` en el texto plano.
+8. **En demos/ejemplos de código, mostrar el output con `>>`** en la línea siguiente al `print()`. Ejemplo: `print("¿Te alcanza?", True)` → línea siguiente `>> ¿Te alcanza? True`. Esto va en el texto del bloque terminal del slide.

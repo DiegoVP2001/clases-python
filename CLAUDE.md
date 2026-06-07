@@ -26,6 +26,7 @@ Cuando Diego inicie el diseño de una clase, sigue este flujo estrictamente. No 
 6. OFRECER Reel de contenido (.mp4) — OPCIONAL
    ↓  Preguntar: "¿Quieres generar el Reel de contenido para esta clase?"
    ↓  Si acepta → preguntar cuántos errores mostrar (1, 2 o 3) → activa generar-reel-clase
+   ↓  Si rechaza → registrar en Historial.md: "[fecha] — Reel no generado." → clase ✅ completa
 ```
 
 En cada etapa con aprobación, guarda el estado en la carpeta `clases/clase-NN-tema/` (ver sección "Organización de archivos").
@@ -48,15 +49,17 @@ Después de cada gate de aprobación, Claude debe pedir a Diego que ejecute `/co
 
 Claude nunca salta al siguiente artefacto sin haber pedido el `/compact`. Si Diego omite ejecutarlo y dice "dale", continúa sin bloquearse — la regla es recordarlo, no bloquearlo.
 
+El texto del mensaje de `/compact` definido arriba es canónico — los SKILL.md individuales deben usarlo sin modificarlo, adaptando solo la referencia a la siguiente fase.
+
 ## Activación de skills según etapa
 
-- **Etapa 1-2 (diseño)**: activa `disenar-clase`. Consulta `referencia-curriculo` para los conceptos Picuino, `referencia-bloom` para calibrar el nivel cognitivo del objetivo, `referencia-clase-que-sonamos` para la estructura pedagógica, e `referencia-intereses-estudiantes` para contextualizar ejemplos.
+- **Etapa 1-2 (diseño)**: activa `disenar-clase`. Consulta `referencia-curriculo` para los conceptos Picuino, `referencia-bloom` para calibrar el nivel cognitivo del objetivo, `referencia-clase-que-sonamos` para la estructura pedagógica, `referencia-intereses-estudiantes` para contextualizar ejemplos, y `referencia-isla-de-maipo` cuando Diego pida contextos locales o de la comuna.
 - **Etapa 3**: activa `generar-colab-clase`.
 - **Etapa 4**: activa `generar-colab-ejercicios`.
 - **Etapa 5**: activa `generar-ppt-clase`.
 - **Etapa 6 (opcional)**: si Diego confirma que quiere el reel, activa `generar-reel-clase`. Siempre ofrecer después del PPT aprobado.
 
-## Workflow independiente: ayudantías en Jupyter
+## Workflow independiente: ayudantías y práctica autónoma
 
 Este workflow es posterior y paralelo al diseño de clases. No forma parte del flujo maestro y no se activa automáticamente. Diego lo iniciará con frases como:
 
@@ -64,8 +67,11 @@ Este workflow es posterior y paralelo al diseño de clases. No forma parte del f
 - "Quiero ejercicios para el jueves"
 - "Genera ejercicios de práctica"
 - "Hagamos un set de ejercicios para refuerzo"
+- "Subamos esto a Dodona"
 
-Flujo obligatorio:
+**Por defecto, la salida es Jupyter/Colab** (path por defecto, abajo). El path Dodona es una rama alternativa: solo se activa cuando Diego lo pide explícitamente con frases como "en Dodona", "para Dodona" o "súbelo a la plataforma". Ante cualquier ambigüedad, asume Jupyter/Colab y confirma con Diego si corresponde Dodona.
+
+### Path por defecto — Jupyter/Colab
 
 ```
 1. IDENTIFICAR clases foco ya existentes en `clases/`
@@ -78,7 +84,9 @@ Flujo obligatorio:
    ↓
 5. GENERAR dos notebooks con `generar-ayudantia-ejercicios`
    ↓
-6. DEJAR listos para que Diego suba a Colab y Classroom
+6. REGISTRAR en `ayudantias/<slug>/historial.md`
+   ↓
+7. DEJAR listos para que Diego suba a Colab y Classroom
 ```
 
 Artefactos de salida:
@@ -89,7 +97,8 @@ ayudantias/
 │   └── <slug>.json                          # Fuente de verdad aprobada
 └── <slug>/
     ├── <slug>-ejercicios.ipynb              # Para estudiantes → subir a Colab
-    └── <slug>-solucionario.ipynb            # Para el profesor → subir a Classroom después
+    ├── <slug>-solucionario.ipynb            # Para el profesor → subir a Classroom después
+    └── historial.md                         # Registro de iteraciones y feedback de Diego
 ```
 
 Activación de skills:
@@ -97,25 +106,72 @@ Activación de skills:
 - **Diseño/propuesta**: activa `disenar-ayudantia-ejercicios`.
 - **Generación de notebooks**: activa `generar-ayudantia-ejercicios` solo después de aprobación explícita.
 
-Preguntas iniciales:
+### Path alternativo — Dodona
+
+Solo se recorre cuando Diego pide explícitamente que los ejercicios vayan a Dodona (plataforma autocorrectora externa). El formato pedagógico de los enunciados (narrativa + tablas) se conserva; lo que cambia es el contrato técnico (TESTed) y el destino de salida.
+
+```
+1. IDENTIFICAR clases foco ya existentes en `clases/`
+   ↓
+2. REVISAR specs, notebooks y ejercicios de esas clases
+   ↓
+3. PROPONER ejercicios en chat (sin bloque "Vista en Dodona")
+   ↓  ESPERAR APROBACIÓN
+4. GUARDAR propuesta aprobada en `dodona/propuestas/<slug>.json`
+   ↓
+5. GENERAR carpetas Dodona + notebook con `generar-dodona-ejercicios`
+   ↓
+6. VALIDAR con `validar-dodona-ejercicios`
+   ↓
+7. PUBLICAR (commit + push a `dodona-ejercicios-profesor/`) solo con autorización explícita de Diego
+```
+
+Artefactos de salida:
+
+```
+dodona/
+├── propuestas/
+│   └── <slug>.json                            # Fuente de verdad aprobada
+└── <set_slug>/
+    └── <set_slug>-ejercicios.ipynb            # Notebook de respaldo, generado automáticamente
+
+dodona-ejercicios-profesor/                    # Repo externo (GitHub: DiegoVP2001/dodona-ejercicios-profesor)
+├── dirconfig.json
+└── <set_slug>/
+    └── <exercise_slug>/
+        ├── config.json
+        ├── description/
+        ├── evaluation/
+        └── solution/
+```
+
+Activación de skills:
+
+- **Diseño/propuesta**: activa `disenar-dodona-ejercicios`.
+- **Generación**: activa `generar-dodona-ejercicios` solo después de aprobación explícita.
+- **Validación**: activa `validar-dodona-ejercicios` antes de cualquier commit/push.
+
+### Preguntas iniciales (ambos paths)
 
 - Clases foco: carpeta(s), número(s) Picuino o tema(s).
 - Cantidad de ejercicios.
 - Propósito: refuerzo, práctica autónoma, evaluación corta o desafío.
 - Dificultad: base, mixta o con desafíos.
+- Destino: Jupyter/Colab (por defecto) o Dodona (solo si Diego lo pide explícitamente).
 
-Reglas:
+### Reglas (ambos paths)
 
-1. **No mezclar con el flujo de clases.** Las ayudantías se trabajan solo cuando Diego lo pida como tarea aparte.
-2. **No generar archivos sin propuesta aprobada.** Primero se propone en chat; luego se guarda el JSON.
-3. **Fuente de verdad:** `ayudantias/propuestas/<slug>.json`. Si hay que cambiar un ejercicio, edita el JSON y regenera con `--force`.
+1. **No mezclar con el flujo de clases.** Las ayudantías y ejercicios autónomos se trabajan solo cuando Diego lo pida como tarea aparte.
+2. **No generar archivos sin propuesta aprobada.** Primero se propone en chat; luego se guarda el JSON (`ayudantias/propuestas/` o `dodona/propuestas/` según el path).
+3. **Fuente de verdad:** el JSON aprobado. Si hay que cambiar un ejercicio, edita el JSON y regenera con `--force`; no edites los artefactos generados a mano.
 4. **No copiar literalmente ejercicios de Colab.** Adaptar contenido y dificultad, cambiando contexto o datos.
-5. **Enunciados con formato aprobado:** narrativa de 3-4 líneas + tabla de inputs con "Respuestas posibles" + tabla de output. No mencionar operadores (`and`, `or`, `if`) ni nombres de variables en el enunciado. Ver skill `disenar-ayudantia-ejercicios` para el formato exacto.
+5. **Enunciados con formato aprobado:** narrativa de 3-4 líneas + tabla de inputs con "Respuestas posibles" + tabla de output. No mencionar operadores (`and`, `or`, `if`) ni nombres de variables en el enunciado. Ver skill `disenar-ayudantia-ejercicios` (Jupyter) o `disenar-dodona-ejercicios` (Dodona) para el formato exacto.
 6. **Contextos reales:** consultar `referencia-intereses-estudiantes` y `referencia-isla-de-maipo` antes de redactar. Mínimo 3-4 líneas narrativas; nunca enunciados genéricos de una línea.
-7. **Ejercicios triviales (difficulty: trivial):** el generador los omite de ambos notebooks. Úsalos solo si hay un ejercicio de introducción a la plataforma o herramienta.
-8. **Solucionario:** incluye criterios de corrección auto-generados y todos los casos de prueba (visibles y ocultos). Diego lo sube a Classroom después de la ayudantía.
-9. **Tests en el JSON:** mantener los campos `tests` con casos `"hidden": true/false`. Son la fuente de verdad para el solucionario.
-10. **No hacer push a ningún repositorio externo** para este workflow.
+7. **Ejercicios triviales (difficulty: trivial):** en el path Jupyter, el generador los omite de ambos notebooks. Úsalos solo si hay un ejercicio de introducción a la plataforma o herramienta.
+8. **Solucionario / soluciones oficiales:** en Jupyter, el solucionario incluye criterios de corrección auto-generados y todos los casos de prueba (visibles y ocultos), y Diego lo sube a Classroom. En Dodona, la solución oficial vive en `solution/solution.py` y debe ejecutarse contra los casos del JSON antes de publicar.
+9. **Tests en el JSON:** mantener los campos `tests` con casos `"hidden": true/false`. Son la fuente de verdad tanto para el solucionario Jupyter como para los tabs ocultos de TESTed en Dodona.
+10. **Registrar historial.** Cada set generado (Jupyter o Dodona) debe quedar registrado con fecha y descripción del cambio: `ayudantias/<slug>/historial.md` o, en Dodona, en el `Historial.md` de la clase foco si no existe uno propio del set.
+11. **Push a repositorios externos solo con autorización explícita.** Esto aplica en particular al path Dodona (`dodona-ejercicios-profesor/`); el path Jupyter no requiere push a ningún repositorio externo.
 
 ## Defaults del curso (3ro y 4to medio, Santiago)
 
@@ -177,7 +233,27 @@ ayudantias/
 │   └── <slug>.json                           # Fuente de verdad aprobada
 └── <slug>/
     ├── <slug>-ejercicios.ipynb               # Para estudiantes → subir a Colab
-    └── <slug>-solucionario.ipynb             # Para el profesor → subir a Classroom
+    ├── <slug>-solucionario.ipynb             # Para el profesor → subir a Classroom
+    └── historial.md                          # Registro de iteraciones y feedback de Diego
+```
+
+Los ejercicios para Dodona (path alternativo, solo si Diego lo pide explícitamente) viven en `dodona/` dentro de este repo, más un repo externo:
+
+```
+dodona/
+├── propuestas/
+│   └── <slug>.json                           # Fuente de verdad aprobada
+└── <set_slug>/
+    └── <set_slug>-ejercicios.ipynb           # Notebook de respaldo, generado automáticamente
+
+dodona-ejercicios-profesor/                    # Repo externo (GitHub: DiegoVP2001/dodona-ejercicios-profesor)
+├── dirconfig.json
+└── <set_slug>/
+    └── <exercise_slug>/
+        ├── config.json
+        ├── description/
+        ├── evaluation/
+        └── solution/
 ```
 
 ## Convenciones de iteración y feedback

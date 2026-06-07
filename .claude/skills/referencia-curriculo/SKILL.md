@@ -28,6 +28,14 @@ Actívate cuando:
 - Estés diseñando ejercicios y quieras revisar las actividades originales que propone Picuino para inspirarte (no para copiar literal)
 - Quieras consultar la sintaxis exacta que introduce Picuino para un tema
 
+## Cuándo omitir esta skill
+
+No es necesario consultarla cuando:
+
+- Diego ya indicó explícitamente el número de clase Picuino y el foco, y no hay ambigüedad sobre qué conceptos corresponden (ej: ya se confirmó en una sesión reciente y no cambió el alcance).
+- La tarea es puramente cosmética o de iteración menor sobre un artefacto ya generado (typos, ajustes de redacción, formato visual) y no toca qué conceptos se enseñan.
+- Estás trabajando en un workflow paralelo (ayudantías, revisión de evaluaciones) que ya tiene su propia validación de contenidos vistos contra clases foco existentes en `clases/`.
+
 ## Cómo consultar el documento
 
 El archivo `curriculo_picuino_completo.md` tiene dos secciones grandes:

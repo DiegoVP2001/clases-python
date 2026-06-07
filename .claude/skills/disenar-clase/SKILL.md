@@ -1,13 +1,13 @@
 ---
 name: disenar-clase
-description: Diseña la especificación pedagógica de una clase de Python siguiendo el flujo de 5 pasos (Haz Ahora, Introducción al Contenido Nuevo, Práctica Guiada, Práctica Independiente, Ticket de Salida). Usa esta skill cuando Diego pida diseñar, planificar, estructurar o iterar una clase del currículo Picuino. Produce un archivo de especificación (00-spec.md) que sirve como contrato para las skills posteriores de generación de Colab y PPT.
+description: Diseña la especificación pedagógica de una clase de Python siguiendo el flujo de 5 pasos (Haz Ahora, Introducción al Contenido Nuevo, Práctica Guiada, Práctica Independiente, Ticket de Salida). Usa esta skill cuando Diego pida diseñar, planificar, estructurar o iterar una clase del currículo Picuino. Produce un archivo de especificación (Clase NN - Tema - Spec.md) que sirve como contrato para las skills posteriores de generación de Colab y PPT.
 ---
 
 # Skill: Diseñar clase de Python (flujo 5 pasos)
 
 ## Propósito
 
-Producir una especificación pedagógica completa y aprobada para una clase de Python, antes de generar cualquier artefacto. Esta especificación se guarda en `clases/clase-NN-tema/00-spec.md` y es el contrato que consumen las skills generadoras (`generar-colab-clase`, `generar-colab-ejercicios`, `generar-ppt-clase`).
+Producir una especificación pedagógica completa y aprobada para una clase de Python, antes de generar cualquier artefacto. Esta especificación se guarda en `clases/clase-NN-tema/Clase NN - Tema - Spec.md` y es el contrato que consumen las skills generadoras (`generar-colab-clase`, `generar-colab-ejercicios`, `generar-ppt-clase`).
 
 ## Cuándo usar esta skill
 
@@ -17,7 +17,7 @@ Actívate cuando Diego:
 - Pida iterar sobre un objetivo o estructura ya propuesta
 - Quiera cambiar el foco o el contexto de una clase ya especificada
 
-NO te actives cuando Diego pida directamente "genera el Colab" o "genera el PPT". En esos casos, debe existir ya una `00-spec.md` aprobada. Si no existe, indícale que primero hay que diseñar la clase.
+NO te actives cuando Diego pida directamente "genera el Colab" o "genera el PPT". En esos casos, debe existir ya una `Clase NN - Tema - Spec.md` aprobada. Si no existe, indícale que primero hay que diseñar la clase.
 
 ## Flujo obligatorio (NO saltes pasos)
 
@@ -27,10 +27,10 @@ Antes de proponer nada, asegúrate de tener:
 
 1. **Número de clase Picuino** (1 a 33). Consulta la skill `referencia-curriculo` para ver foco, conceptos y actividades de esa clase.
 2. **Contenidos previos.** Por defecto, asume que se vieron las clases 1 a N-1. Si Diego no ha sido explícito, confirma brevemente: "Asumo que ya vieron las clases 1 a N-1, ¿correcto?".
-3. **Contexto temático preferido** (opcional). Si Diego no indica, propón 2-3 contextos posibles para que elija.
+3. **Contexto temático preferido** (opcional). Si Diego no indica, propón 2-3 contextos posibles usando `referencia-intereses-estudiantes`. Si Diego pide contexto de Isla de Maipo o algo local/cotidiano de la comuna, consulta `referencia-isla-de-maipo` para extraer escenarios auténticos (transporte, fiestas, viñas, río, comercio, etc.).
 4. **Foco específico.** Si la clase Picuino cubre varios subconceptos, pregunta cuál priorizar. Por ejemplo, la clase 9 (if-else) podría enfocarse en condicionales simples o ya incluir lógica compuesta.
 
-**Defaults** (ver `CLAUDE.md`): no preguntes duración, plataforma, modalidad ni evidencia. Asume 90 min, Google Colab, individual, entrega por Classroom.
+**Defaults** (ver `CLAUDE.md`): no preguntes duración, plataforma, modalidad ni evidencia. Asume 80 min, Google Colab, individual, entrega por Classroom.
 
 ### Paso 2 — Detectar sobrecarga de contenidos
 
@@ -54,11 +54,11 @@ Espera respuesta. No avances con sobrecarga si Diego no lo aprueba explícitamen
 Propón el objetivo de aprendizaje con esta estructura:
 
 ```
-Objetivo: [Verbo observable de Bloom] [contenido específico] [contexto/medio] [propósito].
+Objetivo: [Verbo observable de Bloom] [contenido específico] [para + propósito], [actitud].
 
 Ejemplo: Demostrar el uso de condicionales if-else en Python mediante la
 construcción de programas que tomen decisiones simples, para automatizar
-respuestas según datos de entrada.
+respuestas según datos de entrada, con perseverancia.
 ```
 
 Verbos recomendados (consulta `referencia-bloom` si necesitas calibrar nivel):
@@ -68,7 +68,7 @@ Verbos recomendados (consulta `referencia-bloom` si necesitas calibrar nivel):
 
 Evita verbos no observables: "comprender", "saber", "conocer", "entender".
 
-El **propósito** debe estar escrito para estudiantes y responder "¿para qué sirve esto?". Conecta con usos reales: automatización, juegos, análisis de datos, comunicación de resultados.
+El **propósito** debe estar escrito para estudiantes y responder "¿para qué sirve esto?", proyectándose **más allá del aula y de la programación misma**. No basta con conectar el contenido con otros programas o ejercicios — el propósito debe mostrar cómo lo aprendido se aplica a decisiones, sistemas o situaciones de la vida real fuera del liceo (apps de banco, semáforos, música, deportes, trabajo, etc.). Diego aprobó explícitamente esta orientación: el propósito es agencia y proyección, no solo utilidad técnica.
 
 Presenta objetivo + propósito y espera aprobación o ajuste antes de avanzar.
 
@@ -81,7 +81,7 @@ Estructura obligatoria:
 ```markdown
 ## Estructura propuesta — Clase NN: [tema]
 
-**Duración total:** 90 min
+**Duración total:** 80 min
 
 ### 1. Haz Ahora (5-8 min)
 Tiene dos funciones (pueden coexistir):
@@ -121,15 +121,17 @@ Tipo: [comprensión / escritura / análisis]
 Pregunta o tarea: [descripción]
 Cómo se entrega: [+ Text en Colab, captura, código, etc.]
 
-### Cierre y metacognición (5 min)
-2-3 preguntas breves de reflexión.
+### Cierre (5 min)
+**Objetivo de la clase:** [copiar el objetivo aprobado]
+**Pregunta 1 — Metacognición (escala 1-5):** [donde 1 es "no entendí nada" y 5 es "puedo explicárselo a otro"]
+**Pregunta 2 — Actitud proyectada al futuro:** [pregunta conectada a la actitud del objetivo]
 ```
 
 Presenta esta estructura completa. **Espera aprobación explícita.** Diego puede pedir ajustes (cambiar contexto, redistribuir tiempos, modificar dificultad). Itera hasta que apruebe.
 
 ### Paso 5 — Guardar la especificación
 
-Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/00-spec.md` con TODO lo aprobado más metadatos. Usa esta plantilla:
+Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/Clase NN - Tema - Spec.md` con TODO lo aprobado más metadatos. Usa esta plantilla:
 
 ```markdown
 # Clase NN — [Tema]
@@ -141,7 +143,7 @@ Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/00-spe
 ## Contexto
 
 - **Curso:** 4to medio
-- **Duración:** 90 min
+- **Duración:** 80 min
 - **Modalidad:** [individual / parejas / grupos]
 - **Plataforma:** Google Colab
 - **Entrega:** Google Classroom
@@ -241,16 +243,18 @@ Resultado esperado: ...
 [Enunciado completo del ticket]
 
 ### Cierre (5 min)
-1. ¿Qué aprendiste a hacer hoy?
-2. [pregunta adicional alineada al foco]
-3. ¿Dónde podrías usar esto fuera de la clase?
+**Objetivo de la clase:** [copiar el objetivo aprobado]
+
+**Pregunta 1 — Metacognición (escala 1-5):** [ej: "¿Qué tan seguro/a te sientes usando [tema]?, donde 1 es 'no entendí nada' y 5 es 'puedo explicárselo a otro'"]
+
+**Pregunta 2 — Actitud proyectada al futuro:** [ej: "¿En qué situación real — en otro ramo, en tu vida diaria — podrías usar lo que aprendiste hoy?"]
 
 ## Decisiones de diseño relevantes
 
 [Cualquier decisión que valga la pena registrar: por qué este contexto, por qué este nivel de dificultad, qué se descartó y por qué]
 ```
 
-Crea también la carpeta y un `historial.md` inicial:
+Crea también la carpeta y un `Clase NN - Tema - Historial.md` inicial:
 
 ```markdown
 # Historial — Clase NN
@@ -261,7 +265,7 @@ Crea también la carpeta y un `historial.md` inicial:
 - [notas relevantes del proceso]
 ```
 
-Confirma a Diego que la spec está guardada y pregúntale si quiere proceder al Colab de clase (eso activa la skill `generar-colab-clase`).
+Confirma a Diego que la spec está guardada y dónde. Luego di: *"Antes de continuar al Colab de clase, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando confirme, activa la skill `generar-colab-clase`.
 
 ## Consultas a skills de referencia
 
@@ -276,13 +280,13 @@ No es necesario consultar todas en cada clase. Consulta lo que aplique.
 
 ## Iteración sobre clases ya especificadas
 
-Si Diego pide ajustar una clase que ya tiene `00-spec.md`:
+Si Diego pide ajustar una clase que ya tiene `Clase NN - Tema - Spec.md`:
 
 1. Lee el spec actual.
 2. Aplica el cambio solicitado.
 3. Actualiza la fecha del spec.
-4. Registra el cambio en `historial.md`.
-5. Si el cambio afecta artefactos ya generados (`01-clase.ipynb`, etc.), avisa a Diego que esos archivos están desactualizados y pregunta si quiere regenerarlos.
+4. Registra el cambio en `Clase NN - Tema - Historial.md`.
+5. Si el cambio afecta artefactos ya generados (`Clase NN - Tema - Clase.ipynb`, etc.), avisa a Diego que esos archivos están desactualizados y pregunta si quiere regenerarlos.
 
 ## Reglas críticas
 
