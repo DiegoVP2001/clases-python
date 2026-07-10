@@ -1,0 +1,42 @@
+# Resumen Final — Evaluacion 1 — Clases 1 a 7
+
+Estudiantes con entrega: 21  |  (excluye ausentes y casos de deshonestidad académica)
+
+## Tabla de puntajes
+
+| Nombre | Ej1 (10p) | Ej2 (10p) | Ej3 (15p) | Ej4 (15p) | Ej5 (15p) | Ej6 (15p) | Ej7 (20p) | Total | Nota 50% | Nota 60% |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Héctor _ | 10 | 10 | 15 | 15 | 14 | 12 | 19 | 95 | 6.7 | 6.6 |
+| Felipe Aravena | 10 | 10 | 15 | 12 | 15 | 12 | 20 | 94 | 6.6 | 6.5 |
+| Diego Peña | 10 | 8 | 9 | 15 | 15 | 15 | 19 | 91 | 6.5 | 6.3 |
+| Eduardo Eleazarth Pacco Ríos | 10 | 10 | 15 | 10 | 14 | 12 | 20 | 91 | 6.5 | 6.3 |
+| francisco vega | 7 | 10 | 15 | 15 | 15 | 12 | 11 | 85 | 6.1 | 5.9 |
+| Cristóbal Muñoz | 10 | 9 | 9 | 15 | 14 | 15 | 10 | 82 | 5.9 | 5.7 |
+| Felipe Roman Brito | 8 | 9 | 9 | 9 | 12 | 15 | 18 | 80 | 5.8 | 5.5 |
+| Luckas Letelier | 5 | 7 | 9 | 15 | 15 | 9 | 20 | 80 | 5.8 | 5.5 |
+| Alex | 7 | 9 | 7 | 4 | 2 | 12 | 1 | 42 | 3.7 | 3.4 |
+| Maura Isabel Muñoz Gutierrez | 8 | 6 | 1 | 3 | 2 | 15 | 5 | 40 | 3.6 | 3.3 |
+| polar tv | 2 | 8 | 7 | 2 | 3 | 15 | 3 | 40 | 3.6 | 3.3 |
+| Vicho 11 | 7 | 3 | 2 | 2 | 2 | 15 | 1 | 32 | 3.3 | 3.1 |
+| Sebastian Ulloa | 8 | 4 | 7 | 4 | 0 | 0 | 0 | 23 | 2.9 | 2.8 |
+| Vicente Benítez | 5 | 0 | 3 | 0 | 0 | 15 | 0 | 23 | 2.9 | 2.8 |
+| Diego Cifuentes | 2 | 2 | 2 | 0 | 0 | 15 | 0 | 21 | 2.8 | 2.7 |
+| Damián Silva | 3 | 9 | 2 | 1 | 0 | 0 | 0 | 15 | 2.6 | 2.5 |
+| francisca parra | 2 | 2 | 1 | 0 | 0 | 9 | 0 | 14 | 2.6 | 2.5 |
+| Diego Donoso | 3 | 2 | 0 | 1 | 0 | 6 | 0 | 12 | 2.5 | 2.4 |
+| Diego Vargas | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 4 | 2.2 | 2.1 |
+| Lucas gaspar Valenzuela donoso | 1 | 2 | 0 | 0 | 0 | 0 | 0 | 3 | 2.1 | 2.1 |
+| Benjamín Diaz | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 2.1 | 2.1 |
+
+## Estadisticas del curso
+
+| Metrica | Valor |
+| --- | --- |
+| Estudiantes con entrega | 21 |
+| Promedio puntaje | 46.1 pts |
+| Maximo | 95 pts |
+| Minimo | 2 pts |
+| Aprobados con exigencia 50% | 8 / 21 (38%) |
+| Aprobados con exigencia 60% | 8 / 21 (38%) |
+| Promedio nota (50%) | 4.13 |
+| Promedio nota (60%) | 3.97 |

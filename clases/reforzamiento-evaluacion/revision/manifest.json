@@ -1,0 +1,307 @@
+{
+  "evaluacion": "Evaluacion 1 — Clases 1 a 7",
+  "fecha_preparacion": "2026-06-03",
+  "total": 37,
+  "ok": 33,
+  "vacios": 0,
+  "duplicados": 4,
+  "advertencias": [],
+  "estudiantes": [
+    {
+      "nombre": "Alain Moyano",
+      "nombre_base": "Alain Moyano",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Alain Moyano - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Alain Moyano.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Alex Saravia",
+      "nombre_base": "Alex Saravia",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Alex Saravia - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Alex Saravia.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "alonso YT",
+      "nombre_base": "alonso YT",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\alonso YT - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\alonso YT.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Benjamín Diaz",
+      "nombre_base": "Benjamín Diaz",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Benjamín Diaz - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Benjamín Diaz.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Cristóbal Muñoz",
+      "nombre_base": "Cristóbal Muñoz",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Cristóbal Muñoz - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Cristóbal Muñoz.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Damián Silva",
+      "nombre_base": "Damián Silva",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Damián Silva - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Damián Silva.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Diego Cifuentes",
+      "nombre_base": "Diego Cifuentes",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Diego Cifuentes - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Cifuentes.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Diego Donoso",
+      "nombre_base": "Diego Donoso",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Diego Donoso - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Donoso.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Diego Peña",
+      "nombre_base": "Diego Peña",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Diego Peña - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Peña.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Diego Peña (entrega 2)",
+      "nombre_base": "Diego Peña",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Diego Peña - Evaluación 1 de python(1)",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Peña (entrega 2).ipynb",
+      "estado": "duplicado"
+    },
+    {
+      "nombre": "Diego Vargas",
+      "nombre_base": "Diego Vargas",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Diego Vargas - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Vargas.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "diego vargas (entrega 2)",
+      "nombre_base": "diego vargas",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\diego vargas - Evaluación 1 de python(1)",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\diego vargas (entrega 2).ipynb",
+      "estado": "duplicado"
+    },
+    {
+      "nombre": "Eduardo Eleazarth Pacco Ríos",
+      "nombre_base": "Eduardo Eleazarth Pacco Ríos",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Eduardo Eleazarth Pacco Ríos - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Eduardo Eleazarth Pacco Ríos.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Estudiante Profesor Diego 1",
+      "nombre_base": "Estudiante Profesor Diego 1",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Estudiante Profesor Diego 1 - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Estudiante Profesor Diego 1.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Felipe Aravena",
+      "nombre_base": "Felipe Aravena",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Felipe Aravena - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Felipe Aravena.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Felipe Roman Brito",
+      "nombre_base": "Felipe Roman Brito",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Felipe Roman Brito - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Felipe Roman Brito.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "francisca parra",
+      "nombre_base": "francisca parra",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\francisca parra - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\francisca parra.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "francisco vega",
+      "nombre_base": "francisco vega",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\francisco vega - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\francisco vega.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Héctor _",
+      "nombre_base": "Héctor _",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Héctor _ - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Héctor _.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Julian Sandoval",
+      "nombre_base": "Julian Sandoval",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Julian Sandoval - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Julian Sandoval.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Julian Sandoval (entrega 2)",
+      "nombre_base": "Julian Sandoval",
+      "tipo_fuente": "ipynb_con_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Julian Sandoval - Evaluación.ipynb",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Julian Sandoval (entrega 2).ipynb",
+      "estado": "duplicado"
+    },
+    {
+      "nombre": "katalina dominguez",
+      "nombre_base": "katalina dominguez",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\katalina dominguez - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\katalina dominguez.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Kti",
+      "nombre_base": "Kti",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Kti - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Kti.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Lucas gaspar Valenzuela donoso",
+      "nombre_base": "Lucas gaspar Valenzuela donoso",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Lucas gaspar Valenzuela donoso - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Lucas gaspar Valenzuela donoso.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Luckas Letelier",
+      "nombre_base": "Luckas Letelier",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Luckas Letelier - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Luckas Letelier.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Martin Sanchez",
+      "nombre_base": "Martin Sanchez",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Martin Sanchez - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Martin Sanchez.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Maura Isabel Muñoz Gutierrez",
+      "nombre_base": "Maura Isabel Muñoz Gutierrez",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Maura Isabel Muñoz Gutierrez - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Maura Isabel Muñoz Gutierrez.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Paulino González",
+      "nombre_base": "Paulino González",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Paulino González - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Paulino González.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Pauu Uuuu",
+      "nombre_base": "Pauu Uuuu",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Pauu Uuuu - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Pauu Uuuu.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "polar tv",
+      "nombre_base": "polar tv",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\polar tv - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\polar tv.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Santino Garcia",
+      "nombre_base": "Santino Garcia",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Santino Garcia - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Santino Garcia.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Sebastian Ulloa",
+      "nombre_base": "Sebastian Ulloa",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Sebastian Ulloa - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Sebastian Ulloa.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "simon abrahams",
+      "nombre_base": "simon abrahams",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\simon abrahams - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\simon abrahams.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "tomas diaz",
+      "nombre_base": "tomas diaz",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\tomas diaz - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\tomas diaz.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "tomas diaz (entrega 2)",
+      "nombre_base": "tomas diaz",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\tomas diaz - Evaluación 1 de python(1)",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\tomas diaz (entrega 2).ipynb",
+      "estado": "duplicado"
+    },
+    {
+      "nombre": "Vicente Benítez",
+      "nombre_base": "Vicente Benítez",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Vicente Benítez - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Vicente Benítez.ipynb",
+      "estado": "ok"
+    },
+    {
+      "nombre": "Vicho 11",
+      "nombre_base": "Vicho 11",
+      "tipo_fuente": "notebook_sin_extension",
+      "archivo_fuente": "C:\\Users\\diego\\OneDrive\\Escritorio\\claude_codex\\clases\\claude_python\\clases-python-4tomedio\\clases\\reforzamiento-evaluacion\\cuadernos_ev_estudiantes\\Vicho 11 - Evaluación 1 de python",
+      "archivo_revision": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Vicho 11.ipynb",
+      "estado": "ok"
+    }
+  ]
+}

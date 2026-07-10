@@ -1,0 +1,1436 @@
+{
+  "metadata": {
+    "nombre": "Evaluacion 1 — Clases 1 a 7",
+    "puntaje_maximo": 100,
+    "ejercicios": {
+      "ej1": {
+        "nombre": "Promedio de notas",
+        "maximo": 10
+      },
+      "ej2": {
+        "nombre": "Reporte feria escolar",
+        "maximo": 10
+      },
+      "ej3": {
+        "nombre": "Simulador ahorro mensual",
+        "maximo": 15
+      },
+      "ej4": {
+        "nombre": "Calculadora de descuento",
+        "maximo": 15
+      },
+      "ej5": {
+        "nombre": "Reparto ganancias dulces",
+        "maximo": 15
+      },
+      "ej6": {
+        "nombre": "Depuracion 5 errores",
+        "maximo": 15
+      },
+      "ej7": {
+        "nombre": "Registro semanal de gastos",
+        "maximo": 20
+      }
+    },
+    "fecha_revision": null,
+    "criterios_calibracion": {
+      "ej1": {
+        "regla": "No descontar por prints creativos o extravagantes. Solo verificar que los datos requeridos esten presentes (3 notas con etiqueta + promedio con etiqueta).",
+        "max": 10
+      },
+      "ej2": {
+        "regla": "Tolerar separador distinto a | si el concepto de sep esta presente. Descontar SOLO si falta el titulo del reporte (encabezado principal). No descontar por columnas con separador diferente.",
+        "max": 10
+      },
+      "ej3": {
+        "regla": "La instruccion decia usar UNA SOLA variable que se actualiza (+=/-=). Usar multiples variables: 4/10 en calculos aunque los resultados sean correctos. Los prints se califican normalmente (5/5 si estan todos con etiqueta).",
+        "penalizacion_multiples_variables": "4/10 calculos + N/5 prints",
+        "max": 15
+      },
+      "ej4": {
+        "regla": "No descontar por formato de print. Verificar: input() con tipos correctos, calculo del descuento y precio final, que los valores requeridos aparezcan en el output.",
+        "max": 15
+      },
+      "ej5": {
+        "regla": "float o int para integrantes: ambos aceptados. No descontar por formato de print. Verificar calculos de ganancia neta y por persona.",
+        "max": 15
+      },
+      "ej6": {
+        "regla": "5 errores x 3 pts = 15 pts. Errores: (1) nota modulo con espacio, (2) indentacion nota_proyecto, (3) notaparticipacion sin guion, (4) + en vez de * en nota_modulo, (5) falta coma en print. Sin bono adicional.",
+        "errores": [
+          "nota modulo -> nota_modulo (espacio en nombre)",
+          "nota_proyecto indentado incorrectamente",
+          "notaparticipacion -> nota_participacion (falta guion bajo)",
+          "nota_modulo + 0.30 -> nota_modulo * 0.30 (operador incorrecto)",
+          "falta coma en print Participacion"
+        ],
+        "max": 15
+      },
+      "ej7": {
+        "regla": "Descontar 1 pt si falta el header --- RESUMEN SEMANAL ---. No descontar por el orden o formato de los otros prints si los datos estan. Verificar: input 6 valores, total acumulado, promedio, saldo restante.",
+        "max": 20
+      },
+      "general": {
+        "ausentes": "Puntaje 0 en todos los ejercicios.",
+        "formato_prints": "No descontar por creatividad o extravagancia en prints EXCEPTO cuando el formato es el objetivo del ejercicio (Ej2: sep=\" | \", estructura de tabla).",
+        "headers_resumen": "Descontar 1 pt si falta el separador --- en ejercicios que lo piden (Ej4, Ej5, Ej7).",
+        "snake_case": "Descontar en Ej1 si usan PascalCase u otro estilo incorrecto (3 pts variables)."
+      }
+    }
+  },
+  "estudiantes": {
+    "Alain Moyano": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Alain Moyano.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "alonso YT": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\alonso YT.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 7,
+          "maximo": 10,
+          "comentario": "Faltan 3 prints individuales (-2), promedio sin etiqueta (-1)."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Titulo, encabezado columnas, sep, total: todo correcto."
+        },
+        "ej3": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Usa una sola variable saldo con += y -= en cada paso. Caso ideal."
+        },
+        "ej4": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "input float ok, descuento y precio final correctos, datos en output."
+        },
+        "ej5": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "Calculos correctos. Olvidó prefijo f en f-strings: prints muestran texto literal en vez de valores (-3)."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos."
+        },
+        "ej7": {
+          "obtenido": 20,
+          "maximo": 20,
+          "comentario": "6 inputs, total, promedio, saldo y header --- RESUMEN SEMANAL --- presentes."
+        }
+      },
+      "total": 94
+    },
+    "Benjamín Diaz": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Benjamín Diaz.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "print(primera_nota=5.5) -> TypeError. Promedio hardcodeado. Intento visible pero nada funciona."
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Sintaxis completamente rota."
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Usa $20000 con signo pesos: no es Python valido."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ningún error corregido."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacio."
+        }
+      },
+      "total": 2
+    },
+    "Cristóbal Muñoz": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Cristóbal Muñoz.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "3 variables snake_case, promedio calculado, 4 prints con etiqueta."
+        },
+        "ej2": {
+          "obtenido": 9,
+          "maximo": 10,
+          "comentario": "sep ok, encabezado columnas ok, total ok. Falta titulo principal del reporte (-1)."
+        },
+        "ej3": {
+          "obtenido": 9,
+          "maximo": 15,
+          "comentario": "Multiples variables en vez de una sola (4/10 calc). Prints con etiqueta (5/5)."
+        },
+        "ej4": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "input float ok, calculos correctos, datos en output."
+        },
+        "ej5": {
+          "obtenido": 14,
+          "maximo": 15,
+          "comentario": "Ganancia neta y por persona calculadas inline. Todos los datos en output. Falta separador --- (-1)."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos."
+        },
+        "ej7": {
+          "obtenido": 10,
+          "maximo": 20,
+          "comentario": "6 inputs ok. Bugs: gasto_viernes sumado dos veces, divisor 4 en vez de 5, saldo_inicial undefined (NameError), falta header (-1)."
+        }
+      },
+      "total": 82
+    },
+    "Damián Silva": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Damián Silva.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 3,
+          "maximo": 10,
+          "comentario": "3 variables definidas, promedio no calculado. Imprime nota_uno etiquetado como promedio."
+        },
+        "ej2": {
+          "obtenido": 9,
+          "maximo": 10,
+          "comentario": "sep ok, encabezado columnas ok, valores hardcodeados pero correctos. Falta titulo (-1)."
+        },
+        "ej3": {
+          "obtenido": 2,
+          "maximo": 15,
+          "comentario": "Flujo correcto pero valores hardcodeados, prints sin etiqueta."
+        },
+        "ej4": {
+          "obtenido": 1,
+          "maximo": 15,
+          "comentario": "Un print(input(...)) sin calculos."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ningún error corregido."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacio."
+        }
+      },
+      "total": 15
+    },
+    "Diego Cifuentes": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Cifuentes.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Variables definidas. promedio = sin valor: error de sintaxis."
+        },
+        "ej2": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Variables y total calculados, seccion de prints vacia."
+        },
+        "ej3": {
+          "obtenido": 2,
+          "maximo": 15,
+          "comentario": "Multiples variables hardcodeadas, calculos inline, sin etiquetas."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacio."
+        }
+      },
+      "total": 21
+    },
+    "Diego Donoso": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Donoso.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 3,
+          "maximo": 10,
+          "comentario": "PascalCase (-2). Promedio = suma sin dividir. Print hardcodeado con valor incorrecto."
+        },
+        "ej2": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Variables y total calculados. Prints vacios."
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Solo saldo_inical = 20000, nada mas."
+        },
+        "ej4": {
+          "obtenido": 1,
+          "maximo": 15,
+          "comentario": "Valores hardcodeados, un input sin usar, sin calculo real."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej6": {
+          "obtenido": 6,
+          "maximo": 15,
+          "comentario": "Errores 1 y 2 corregidos (nota_modulo sin espacio, indentacion ok). Errores 3, 4, 5 sin corregir (2 x 3 = 6 pts)."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacio."
+        }
+      },
+      "total": 12
+    },
+    "Diego Peña": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Peña.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Variables correctas, promedio correcto, prints con datos requeridos."
+        },
+        "ej2": {
+          "obtenido": 8,
+          "maximo": 10,
+          "comentario": "sep=\" | \" en filas ok, total ok. Falta fila encabezado de columnas (-2)."
+        },
+        "ej3": {
+          "obtenido": 9,
+          "maximo": 15,
+          "comentario": "Calculos correctos pero uso multiples variables en vez de una sola (4/10). Prints con etiqueta ok (5/5)."
+        },
+        "ej4": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "input() ok, calculos ok, prints con datos presentes."
+        },
+        "ej5": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "input() con tipos correctos, calculos ok, prints con datos presentes."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos. Resultado 6.175 ok."
+        },
+        "ej7": {
+          "obtenido": 19,
+          "maximo": 20,
+          "comentario": "Todo correcto. -1 por falta separador --- RESUMEN SEMANAL ---."
+        }
+      },
+      "total": 91
+    },
+    "Diego Vargas": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Diego Vargas.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Prints de strings hardcodeados, IndentationError en línea 3, sin variables definidas ni cálculo."
+        },
+        "ej2": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Total calculado pero prints solo dicen 'empanadas', 'bebidas', 'sopaipillas'. Sin título, encabezado ni total impreso."
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "print(var) =valor es sintaxis rota. Sin variables ni operaciones válidas."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "input(precio_producto)=59990 es sintaxis inválida. Nada ejecuta."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacío."
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Conserva todos los errores originales y agrega código adicional roto (x en vez de *)."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacío (solo el comentario del enunciado)."
+        }
+      },
+      "total": 4
+    },
+    "Eduardo Eleazarth Pacco Ríos": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Eduardo Eleazarth Pacco Ríos.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "nota1, nota2, nota3 definidas, promedio calculado, 4 prints con etiqueta. Perfecto."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Título presente (distinto pero válido), encabezado columnas, sep, total: todo correcto."
+        },
+        "ej3": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Variable única saldo con +=/-= para cada operación. 6 prints con etiqueta. Caso ideal."
+        },
+        "ej4": {
+          "obtenido": 10,
+          "maximo": 15,
+          "comentario": "input() para precio ok, pero pide el monto del descuento directamente en vez del porcentaje. Sin cálculo %. 3 valores en output."
+        },
+        "ej5": {
+          "obtenido": 14,
+          "maximo": 15,
+          "comentario": "3 inputs, ganancia_neta y por_persona calculadas correctamente. Todos los datos en output. Falta título '--- REPARTO DEL PUESTO ---' (-1)."
+        },
+        "ej6": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "Errores 1-4 corregidos. Error 5 (coma faltante en print Participación) sin corregir."
+        },
+        "ej7": {
+          "obtenido": 20,
+          "maximo": 20,
+          "comentario": "6 inputs, total, promedio, saldo y header '------RESUMEN SEMANA-------' presentes. Perfecto."
+        }
+      },
+      "total": 91
+    },
+    "Estudiante Profesor Diego 1": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Estudiante Profesor Diego 1.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 7,
+          "maximo": 10,
+          "comentario": "Variables definidas, promedio calculado. Solo print(promedio) sin etiqueta. Faltan 3 prints individuales (-2), promedio sin etiqueta (-1)."
+        },
+        "ej2": {
+          "obtenido": 9,
+          "maximo": 10,
+          "comentario": "Encabezado columnas ok, sep ok, total ok. Falta título principal del reporte (-1)."
+        },
+        "ej3": {
+          "obtenido": 7,
+          "maximo": 15,
+          "comentario": "Múltiples variables hardcodeadas como estados (tras_sueldo=105000, etc.), no como montos. Fórmula de saldo_final incorrecta (suma estados). Falta paso servicios_básicos. Prints con etiquetas en 5 de 6 estados."
+        },
+        "ej4": {
+          "obtenido": 4,
+          "maximo": 15,
+          "comentario": "Valores hardcodeados, 2 inputs() no almacenados, precio_final calculado correctamente, pero solo 1 de 3 valores impreso."
+        },
+        "ej5": {
+          "obtenido": 2,
+          "maximo": 15,
+          "comentario": "Valores hardcodeados, 4 inputs() no almacenados, sin cálculo de ganancia_neta. Solo 1 de 5 valores impreso (ganancia_por_persona hardcodeada)."
+        },
+        "ej6": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "Errores 1-4 corregidos. Error 5 (coma faltante en print Participación) sin corregir."
+        },
+        "ej7": {
+          "obtenido": 1,
+          "maximo": 20,
+          "comentario": "Solo 2 llamadas a int(input()) sin almacenar. Sin variables, cálculos ni output."
+        }
+      },
+      "total": 42
+    },
+    "Felipe Aravena": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Felipe Aravena.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "nota1, nota2, nota3 definidas, promedio calculado con round(), 4 prints con etiqueta. Perfecto."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Título exacto con emoji, encabezado columnas, sep, 3 filas con variables, total. Perfecto."
+        },
+        "ej3": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Variable única saldo_inicial con +=/-= en cada paso. 6 prints con etiqueta. Caso ideal."
+        },
+        "ej4": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "input() para precio ok. Descuento hardcodeado al 20% sin pedir porcentaje por input (-3). Cálculo correcto, 3 valores en output, título presente."
+        },
+        "ej5": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "3 inputs, ganancia_neta y por_persona calculadas, título y 5 datos en output. Perfecto."
+        },
+        "ej6": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "Errores 1-4 corregidos. Error 5 (coma faltante en print Participación) sin corregir."
+        },
+        "ej7": {
+          "obtenido": 20,
+          "maximo": 20,
+          "comentario": "6 inputs, total, promedio, saldo y header '---RESUMEN SEMANAL---' presentes. Perfecto."
+        }
+      },
+      "total": 94
+    },
+    "Felipe Roman Brito": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Felipe Roman Brito.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 8,
+          "maximo": 10,
+          "comentario": "Variables ok, promedio ok. Solo imprime el promedio, faltan los 3 prints de notas individuales (-2)."
+        },
+        "ej2": {
+          "obtenido": 9,
+          "maximo": 10,
+          "comentario": "sep usado (con / en vez de |, tolerado). Tiene encabezado de columnas. Falta titulo del reporte (-1). Total ok."
+        },
+        "ej3": {
+          "obtenido": 9,
+          "maximo": 15,
+          "comentario": "Calculos correctos pero uso multiples variables encadenadas en vez de una sola (4/10). Prints con etiqueta ok (5/5)."
+        },
+        "ej4": {
+          "obtenido": 9,
+          "maximo": 15,
+          "comentario": "input() ok, calcula precio final correcto pero no guarda descuento como variable separada (4/6). Solo imprime precio final, faltan precio original y monto descuento (1/5)."
+        },
+        "ej5": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "float para integrantes aceptado. Calculos ok. Faltan header y prints de total/gastos en output (2/5)."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos. Resultado 6.175 ok."
+        },
+        "ej7": {
+          "obtenido": 18,
+          "maximo": 20,
+          "comentario": "input ok, calculos ok. Falta header --- y presupuesto inicial en output (-2 prints)."
+        }
+      },
+      "total": 80
+    },
+    "francisca parra": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\francisca parra.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Nota_1, Nota_2, Nota_3 en PascalCase (-3). promedio_notas = input(suma) es uso incorrecto de input(). Sin prints."
+        },
+        "ej2": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Variables y total calculados pero sin ningún print() escrito."
+        },
+        "ej3": {
+          "obtenido": 1,
+          "maximo": 15,
+          "comentario": "Usa ':' en vez de '=' (anotaciones de tipo, no asignaciones). Sin prints ni operaciones."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacío."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacío."
+        },
+        "ej6": {
+          "obtenido": 9,
+          "maximo": 15,
+          "comentario": "Errores 1, 2, 3 corregidos. Error 4 (nota_final destruida con print() en la fórmula) y error 5 (coma faltante) sin corregir."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacío."
+        }
+      },
+      "total": 14
+    },
+    "francisco vega": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\francisco vega.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 7,
+          "maximo": 10,
+          "comentario": "nota_1, nota_2, nota_3 definidas, promedio calculado. Solo print(promedio) sin etiqueta. Faltan 3 prints individuales (-2), promedio sin etiqueta (-1)."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Título presente ('% REPORTE..'), encabezado columnas, sep, 3 filas con variables, total. Perfecto."
+        },
+        "ej3": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Variable única saldo_inicial con +=/-=. 6 prints con etiqueta (typo 'supermemrcado' en texto). Caso ideal."
+        },
+        "ej4": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "2 inputs (precio + porcentaje), cálculo descuento = precio*(pct/100) correcto, precio_final ok, 3 valores en output, título. Perfecto."
+        },
+        "ej5": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "3 inputs, ganancia_neta y por_persona calculadas, título y 5 datos en output. Perfecto."
+        },
+        "ej6": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "Errores 1, 2, 4, 5 corregidos. Error 3 (notaparticipacion sin underscore) sin corregir aunque el código funciona."
+        },
+        "ej7": {
+          "obtenido": 11,
+          "maximo": 20,
+          "comentario": "6 inputs ok, promedio correcto (sum/5). gasto_total calculado como presupuesto-gastos en vez de solo la suma de gastos. NameError en saldo (presupuesto_inicial1 typo). Header presente."
+        }
+      },
+      "total": 85
+    },
+    "Héctor _": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Héctor _.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "nota1, nota2, nota3 definidas, promedio calculado correctamente, 4 prints con etiqueta. Perfecto."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Título, encabezado columnas, sep, 3 filas con variables, total. Perfecto."
+        },
+        "ej3": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Variable única Saldo_inicial con +=/-= en cada paso. 6 prints con etiqueta. Caso ideal."
+        },
+        "ej4": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "2 inputs (precio + porcentaje), cálculo precio*pct/100 correcto, 3 valores en output. Perfecto."
+        },
+        "ej5": {
+          "obtenido": 14,
+          "maximo": 15,
+          "comentario": "3 inputs, ganancia_neta y por_persona calculadas correctamente. 5 datos en output. Sin título '--- REPARTO DEL PUESTO ---' (-1)."
+        },
+        "ej6": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "Errores 1-4 corregidos. Error 5 (coma faltante en print Participación) sin corregir."
+        },
+        "ej7": {
+          "obtenido": 19,
+          "maximo": 20,
+          "comentario": "6 inputs, total, promedio, saldo correctos. Sin header de resumen (-1)."
+        }
+      },
+      "total": 95
+    },
+    "katalina dominguez": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\katalina dominguez.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "Kti": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Kti.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "Lucas gaspar Valenzuela donoso": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Lucas gaspar Valenzuela donoso.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 1,
+          "maximo": 10,
+          "comentario": "':' en vez de '=' (anotaciones de tipo, no asignaciones). Promedio sin /3. Prints con variables mezcladas. Unterminated string."
+        },
+        "ej2": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "Variables y total calculados. Print section: una sola línea con nombres de productos sin encabezado ni filas estructuradas."
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacío."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacío."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacío."
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Conserva todos los errores originales sin modificar."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacío."
+        }
+      },
+      "total": 3
+    },
+    "Luckas Letelier": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Luckas Letelier.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 5,
+          "maximo": 10,
+          "comentario": "3 variables definidas. Promedio divide por 4 en vez de 3 (-2). Prints imprimen literales no variables (-1). Print promedio roto: imprime solo el texto, no el valor (-2)."
+        },
+        "ej2": {
+          "obtenido": 7,
+          "maximo": 10,
+          "comentario": "Título (con typo), encabezado, filas con variables propias. Total hardcodeado e incorrecto (63000 vs 75000) (-2). Sin sep parameter (-1)."
+        },
+        "ej3": {
+          "obtenido": 9,
+          "maximo": 15,
+          "comentario": "Múltiples variables separadas (4/10 calc). Valores calculados correctamente. 6 prints con etiqueta (5/5)."
+        },
+        "ej4": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "2 inputs (precio + porcentaje), cálculo correcto, 3 valores en output con título. Label dinámico del % en el print. Perfecto."
+        },
+        "ej5": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "3 inputs, ganancia y por_persona calculadas, título y 5 datos en output. Perfecto."
+        },
+        "ej6": {
+          "obtenido": 9,
+          "maximo": 15,
+          "comentario": "Errores 1, 2, 3 corregidos. Error 4 (+ en vez de *) y error 5 (coma faltante) sin corregir."
+        },
+        "ej7": {
+          "obtenido": 20,
+          "maximo": 20,
+          "comentario": "6 inputs, gasto_total, promedio, saldo calculados correctamente, header 'resumen semanal' presente. Perfecto."
+        }
+      },
+      "total": 80
+    },
+    "Martin Sanchez": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Martin Sanchez.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "Maura Isabel Muñoz Gutierrez": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Maura Isabel Muñoz Gutierrez.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 8,
+          "maximo": 10,
+          "comentario": "3 variables definidas, 4 prints con etiqueta. Promedio sin paréntesis: nota_1+nota_2+nota_3/3 solo divide nota_3 por 3 (-2)."
+        },
+        "ej2": {
+          "obtenido": 6,
+          "maximo": 10,
+          "comentario": "Variables definidas, total calculado, sep y 3 filas presentes. Sin título (-2). Print de total muestra unidades en vez de total_recaudado (-2)."
+        },
+        "ej3": {
+          "obtenido": 1,
+          "maximo": 15,
+          "comentario": "Variables iniciales definidas pero código incompleto: referencias undefined, tras_bono sin valor. Sin prints."
+        },
+        "ej4": {
+          "obtenido": 3,
+          "maximo": 15,
+          "comentario": "2 inputs presentes. Fórmula completamente incorrecta (descuento = precio + pct). precio_final también errado. 3 prints con valores incorrectos."
+        },
+        "ej5": {
+          "obtenido": 2,
+          "maximo": 15,
+          "comentario": "3 inputs presentes. Sin cálculo de ganancia_neta ni por_persona. Prints muestran strings literales, no valores."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos. Única en el curso que corrigió el error 5 (coma en print Participación)."
+        },
+        "ej7": {
+          "obtenido": 5,
+          "maximo": 20,
+          "comentario": "6 inputs presentes, total_gastado calculado. Promedio divide por 6 en vez de 5. Sin prints, sin saldo, sin header."
+        }
+      },
+      "total": 40
+    },
+    "Paulino González": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Paulino González.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "Pauu Uuuu": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Pauu Uuuu.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "polar tv": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\polar tv.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 2,
+          "maximo": 10,
+          "comentario": "3 variables definidas. notafinal = suma sin /3 (promedio incorrecto). Solo 1 print con valor incorrecto."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Título presente, sep usado, total con variable. Rúbrica: no descontar si título presente."
+        },
+        "ej3": {
+          "obtenido": 7,
+          "maximo": 15,
+          "comentario": "Múltiples variables (4/10 calc). Fórmula saldo_final usa deposito_sueldo dos veces en vez de deposito_bono. 6 prints con etiqueta."
+        },
+        "ej4": {
+          "obtenido": 5,
+          "maximo": 15,
+          "comentario": "2 inputs float ✓. Fórmula usa precio_original (undefined, bug de tipeo). Descuento directo sin porcentaje. 1 print."
+        },
+        "ej5": {
+          "obtenido": 5,
+          "maximo": 15,
+          "comentario": "Título ✓, 2 inputs reales float ✓. ganancia_neta pedida por input. integrantes hardcodeado. 2 prints."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos, incluyendo error 5 (coma en print Participación)."
+        },
+        "ej7": {
+          "obtenido": 6,
+          "maximo": 20,
+          "comentario": "Header ✓, 3 inputs float ✓, saldo calculado ✓. total y promedio pedidos por input. 2 prints."
+        }
+      },
+      "total": 50
+    },
+    "Santino Garcia": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Santino Garcia.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "Sebastian Ulloa": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Sebastian Ulloa.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 8,
+          "maximo": 10,
+          "comentario": "3 variables via float(input()), promedio calculado correctamente. Solo 1 print con etiqueta (-2 por faltar 3 prints individuales)."
+        },
+        "ej2": {
+          "obtenido": 4,
+          "maximo": 10,
+          "comentario": "Título y header presentes. Todo hardcodeado como strings, sin variables ni sep parameter. Total 63000 incorrecto (debería ser 75000)."
+        },
+        "ej3": {
+          "obtenido": 7,
+          "maximo": 15,
+          "comentario": "6 variables hardcodeadas con valores correctos, 6 prints con etiqueta. Sin ninguna operación +=/-=."
+        },
+        "ej4": {
+          "obtenido": 4,
+          "maximo": 15,
+          "comentario": "2 inputs, descuento_calculado = precio*porcentaje/100 correcto. Código incompleto: sin precio_final ni prints."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacío."
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Conserva todos los errores originales sin modificar."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacío."
+        }
+      },
+      "total": 23
+    },
+    "simon abrahams": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\simon abrahams.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "tomas diaz": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\tomas diaz.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Ausente"
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Ausente"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Ausente"
+        }
+      },
+      "total": 0,
+      "ausente": true
+    },
+    "Vicente Benítez": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Vicente Benítez.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 5,
+          "maximo": 10,
+          "comentario": "Variables PascalCase en vez de snake_case (-2). Promedio ok. Solo imprime promedio sin label, sin prints individuales (-3)."
+        },
+        "ej2": {
+          "obtenido": 0,
+          "maximo": 10,
+          "comentario": "Vacio."
+        },
+        "ej3": {
+          "obtenido": 3,
+          "maximo": 15,
+          "comentario": "Solo 3 de 6 pasos, con valores hardcodeados en vez de variables. Sin prints."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Vacio."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos correctamente. Resultado 6.175 ok."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Vacio."
+        }
+      },
+      "total": 23
+    },
+    "Vicho 11": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Vicho 11.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 7,
+          "maximo": 10,
+          "comentario": "nota_1, nota_2, nota_3 definidas, promedio calculado correctamente. Solo print(promedio) sin etiqueta. Faltan 3 prints individuales (-2), promedio sin etiqueta (-1)."
+        },
+        "ej2": {
+          "obtenido": 3,
+          "maximo": 10,
+          "comentario": "Variables y total calculados. Prints muestran solo números en orden inverso: sin título, sin encabezado, sin sep, sin etiquetas."
+        },
+        "ej3": {
+          "obtenido": 2,
+          "maximo": 15,
+          "comentario": "Múltiples variables PascalCase hardcodeadas. Solo 1 print (saldo_final). Fórmula omite saldo_inicial y servicios_básicos. Resultado incorrecto."
+        },
+        "ej4": {
+          "obtenido": 2,
+          "maximo": 15,
+          "comentario": "Todo hardcodeado: precio_original y descuento como literales, sin inputs. precio_final calculado. 1 print sin etiqueta."
+        },
+        "ej5": {
+          "obtenido": 2,
+          "maximo": 15,
+          "comentario": "Valores hardcodeados. ganancias_netas = 24000/4 (24000 hardcodeado, no computado). Solo 1 print. Sin inputs."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Los 5 errores corregidos, incluyendo error 5 (coma en print Participación)."
+        },
+        "ej7": {
+          "obtenido": 1,
+          "maximo": 20,
+          "comentario": "input(var = value) y print(var = value) son sintaxis inválida. Nada ejecuta. Intento visible de estructura correcta con 6 inputs y 4 prints."
+        }
+      },
+      "total": 32
+    },
+    "Julian Sandoval": {
+      "archivo": "clases\\reforzamiento-evaluacion\\revision\\notebooks\\Julian Sandoval rev.ipynb",
+      "revisado": true,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "nota1, nota2, nota3 en snake_case, promedio con /3, 4 prints con etiqueta. Perfecto."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Título con emoji, sep usado, header y total calculado. Rúbrica: no descontar si título presente."
+        },
+        "ej3": {
+          "obtenido": 14,
+          "maximo": 15,
+          "comentario": "Variable única saldo_inicial con +=/-= correcta. Variables de tracking extra no usadas en cálculos. Un print usa \"deposito\" en vez de \"saldo_inicial\" (-1). Output exacto."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Sin código funcional. Celda vacía."
+        },
+        "ej5": {
+          "obtenido": 4,
+          "maximo": 15,
+          "comentario": "Título ✓, 3 input() intentados (sintaxis incorrecta con 2 args). NameError por typo \"total_recudado\". Prints etiquetados presentes pero sin ejecución."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Versión jueves (4 errores). Los 4 errores corregidos: nombre, indentación, underscore, operador. nota_final = 6.175 ✓"
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Sin código funcional. Celda vacía."
+        }
+      },
+      "total": 53
+    }
+  }
+}

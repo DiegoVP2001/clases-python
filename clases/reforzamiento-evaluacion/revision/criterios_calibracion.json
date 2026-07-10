@@ -1,0 +1,44 @@
+{
+  "ej1": {
+    "regla": "No descontar por prints creativos o extravagantes. Solo verificar que los datos requeridos esten presentes (3 notas con etiqueta + promedio con etiqueta).",
+    "max": 10
+  },
+  "ej2": {
+    "regla": "Tolerar separador distinto a | si el concepto de sep esta presente. Descontar SOLO si falta el titulo del reporte (encabezado principal). No descontar por columnas con separador diferente.",
+    "max": 10
+  },
+  "ej3": {
+    "regla": "La instruccion decia usar UNA SOLA variable que se actualiza (+=/-=). Usar multiples variables: 4/10 en calculos aunque los resultados sean correctos. Los prints se califican normalmente (5/5 si estan todos con etiqueta).",
+    "penalizacion_multiples_variables": "4/10 calculos + N/5 prints",
+    "max": 15
+  },
+  "ej4": {
+    "regla": "No descontar por formato de print. Verificar: input() con tipos correctos, calculo del descuento y precio final, que los valores requeridos aparezcan en el output.",
+    "max": 15
+  },
+  "ej5": {
+    "regla": "float o int para integrantes: ambos aceptados. No descontar por formato de print. Verificar calculos de ganancia neta y por persona.",
+    "max": 15
+  },
+  "ej6": {
+    "regla": "5 errores x 3 pts = 15 pts. Errores: (1) nota modulo con espacio, (2) indentacion nota_proyecto, (3) notaparticipacion sin guion, (4) + en vez de * en nota_modulo, (5) falta coma en print. Sin bono adicional.",
+    "errores": [
+      "nota modulo -> nota_modulo (espacio en nombre)",
+      "nota_proyecto indentado incorrectamente",
+      "notaparticipacion -> nota_participacion (falta guion bajo)",
+      "nota_modulo + 0.30 -> nota_modulo * 0.30 (operador incorrecto)",
+      "falta coma en print Participacion"
+    ],
+    "max": 15
+  },
+  "ej7": {
+    "regla": "Descontar 1 pt si falta el header --- RESUMEN SEMANAL ---. No descontar por el orden o formato de los otros prints si los datos estan. Verificar: input 6 valores, total acumulado, promedio, saldo restante.",
+    "max": 20
+  },
+  "general": {
+    "ausentes": "Puntaje 0 en todos los ejercicios.",
+    "formato_prints": "No descontar por creatividad o extravagancia en prints EXCEPTO cuando el formato es el objetivo del ejercicio (Ej2: sep=\" | \", estructura de tabla).",
+    "headers_resumen": "Descontar 1 pt si falta el separador --- en ejercicios que lo piden (Ej4, Ej5, Ej7).",
+    "snake_case": "Descontar en Ej1 si usan PascalCase u otro estilo incorrecto (3 pts variables)."
+  }
+}

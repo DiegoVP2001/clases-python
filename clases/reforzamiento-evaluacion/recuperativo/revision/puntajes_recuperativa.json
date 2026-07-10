@@ -1,0 +1,226 @@
+{
+  "metadata": {
+    "nombre": "Evaluacion Recuperativa — Clases 1 a 7",
+    "puntaje_maximo": 100,
+    "ejercicios": {
+      "ej1": { "nombre": "Promedio de tiempos de entrenamiento", "maximo": 10 },
+      "ej2": { "nombre": "Reporte de inventario del kiosco",     "maximo": 10 },
+      "ej3": { "nombre": "Tarjeta de transporte",                "maximo": 15 },
+      "ej4": { "nombre": "Recargo por servicio",                 "maximo": 15 },
+      "ej5": { "nombre": "Repartir fondos del curso",            "maximo": 15 },
+      "ej6": { "nombre": "Depurar promedio ponderado",           "maximo": 15 },
+      "ej7": { "nombre": "Registro semanal de estudio",          "maximo": 20 }
+    }
+  },
+  "estudiantes": {
+    "Martin Sanchez": {
+      "revisado": true,
+      "bonus_decimas": 3,
+      "total": 17,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 7,
+          "maximo": 10,
+          "comentario": "Variables correctas en snake_case y cálculo del promedio bien hecho. Falta imprimir los 3 tiempos con etiqueta: solo se imprimió el resultado final sin texto descriptivo."
+        },
+        "ej2": {
+          "obtenido": 6,
+          "maximo": 10,
+          "comentario": "El encabezado y el valor total están bien. El problema es que `sep` se importó como función de rutas (`from posixpath import sep`) pero no se usó como parámetro de print(). Las columnas están hardcodeadas como texto, no separadas con sep=."
+        },
+        "ej3": {
+          "obtenido": 4,
+          "maximo": 15,
+          "comentario": "El saldo final (16800) es correcto, pero la instrucción pedía actualizar UNA sola variable paso a paso. Se crearon variables separadas para cada movimiento y se calculó todo en una línea — penalización por eso: 4/10 en cálculo. Además faltaron los 6 prints con el saldo tras cada operación."
+        },
+        "ej4": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "El código tiene un SyntaxError: `10%` no es sintaxis válida en Python. Además no se usó input() para pedir los datos. El ejercicio no ejecutó."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Sin respuesta."
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Se entregó el código original con todos los errores sin corregir. Los 5 errores eran: (1) espacio en `nota ejercicios`, (2) indentación en `nota_bitacora`, (3) `notabitacora` sin guion, (4) suma en vez de multiplicación en `nota_desafio + 0.25`, (5) falta coma en el último print."
+        },
+        "ej7": {
+          "obtenido": 0,
+          "maximo": 20,
+          "comentario": "Sin respuesta."
+        }
+      }
+    },
+    "Benjamín Mejías": {
+      "revisado": true,
+      "bonus_decimas": 3,
+      "total": 97,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 9,
+          "maximo": 10,
+          "comentario": "Variables correctas, cálculo del promedio bien hecho, 3 tiempos impresos. La etiqueta del tercer print dice 'Tiempo 2:' en vez de 'Tiempo 3:'. Detalle menor."
+        },
+        "ej2": {
+          "obtenido": 9,
+          "maximo": 10,
+          "comentario": "Usa sep correctamente, valor total correcto, columnas bien formadas. La fila de Jugos imprime precio_3 (850) en vez de precio_1 (750). Detalle menor."
+        },
+        "ej3": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Perfecto: variable única saldo_in, operadores += y -= correctos, 6 prints con saldo actualizado."
+        },
+        "ej4": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "input() correcto, cálculo del recargo correcto, precio final correcto. Detalles de formato menores."
+        },
+        "ej5": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Perfecto: input() para los 3 datos, cálculo correcto, todos los prints coinciden con el formato esperado."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Todos los errores corregidos, promedio final 6.07 correcto, todos los prints correctos."
+        },
+        "ej7": {
+          "obtenido": 19,
+          "maximo": 20,
+          "comentario": "input() correcto para los 6 datos, cálculos correctos. Agrega 'minutos' al final de faltantes ('45 minutos' en vez de '45'). Detalle menor."
+        }
+      }
+    },
+    "Santino": {
+      "revisado": true,
+      "bonus_decimas": 1,
+      "total": 75,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Variables correctas, cálculo del promedio correcto, prints con valores correctos."
+        },
+        "ej2": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Usa sep, valor total correcto, columnas bien formadas."
+        },
+        "ej3": {
+          "obtenido": 7,
+          "maximo": 15,
+          "comentario": "Los 6 prints muestran valores correctos, pero se usan múltiples variables (suma1, resta1, resta2, suma2) en vez de actualizar una sola. Viola la regla central del ejercicio."
+        },
+        "ej4": {
+          "obtenido": 13,
+          "maximo": 15,
+          "comentario": "Resultado correcto. Descuento por no seguir el formato de print esperado (falta header '--- RESUMEN ---', formato de línea Recargo difiere)."
+        },
+        "ej5": {
+          "obtenido": 8,
+          "maximo": 15,
+          "comentario": "Valores y cálculos correctos pero hardcodeados: no usa input() para capturar los datos. Falta el input requerido por el enunciado."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Promedio final 6.07 correcto, todos los prints correctos."
+        },
+        "ej7": {
+          "obtenido": 12,
+          "maximo": 20,
+          "comentario": "Lógica y valores correctos pero falta usar input() para capturar los datos de cada día de la semana. Variables hardcodeadas."
+        }
+      }
+    },
+    "Alain Moyano": {
+      "revisado": true,
+      "total": 47,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 9,
+          "maximo": 10,
+          "comentario": "Variables correctas en snake_case (3), cálculo correcto (4), 4 prints con estructura correcta pero strings sin comillas — crédito parcial por intención (2/3)."
+        },
+        "ej2": {
+          "obtenido": 7,
+          "maximo": 10,
+          "comentario": "Intenta usar sep= en todas las filas de la tabla (3/4 por sintaxis incorrecta en el valor del sep), encabezado presente (2/3), valor total hardcodeado con etiqueta (2/3)."
+        },
+        "ej3": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Sin respuesta: la celda del ej3 contiene una copia del código del ej2 (kiosco), sin desarrollar."
+        },
+        "ej4": {
+          "obtenido": 14,
+          "maximo": 15,
+          "comentario": "Tiene dos versiones; la segunda tiene sintaxis Python correcta con input(), float(), fórmulas correctas. Último print() cortado en la fotografía (4/5 en prints)."
+        },
+        "ej5": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "No aparece en ninguna fotografía proporcionada."
+        },
+        "ej6": {
+          "obtenido": 0,
+          "maximo": 15,
+          "comentario": "Entregó el código original con los 5 errores sin corregir."
+        },
+        "ej7": {
+          "obtenido": 17,
+          "maximo": 20,
+          "comentario": "input() para meta y 5 días con int() (4/5 por falta de comillas), acumulación correcta (5), cálculos correctos (5), 4 prints con estructura correcta (3/5)."
+        }
+      }
+    },
+    "Tomás Díaz": {
+      "revisado": true,
+      "bonus_decimas": 1,
+      "total": 74,
+      "puntajes": {
+        "ej1": {
+          "obtenido": 10,
+          "maximo": 10,
+          "comentario": "Variables correctas, cálculo del promedio correcto, todos los prints correctos."
+        },
+        "ej2": {
+          "obtenido": 5,
+          "maximo": 10,
+          "comentario": "Tiene 'from os import sep' innecesario. Fila de galletas sin '$'. Valor total hardcodeado en 54000 (debería ser 54300). Sin emoji de encabezado."
+        },
+        "ej3": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Perfecto: variable única saldo, forma larga correcta, 6 prints con saldo actualizado."
+        },
+        "ej4": {
+          "obtenido": 12,
+          "maximo": 15,
+          "comentario": "input() correcto, fórmula correcta, resultado correcto. Formato del print del recargo difiere: '( 10.0 %)' en vez de '(10%)'."
+        },
+        "ej5": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Perfecto: input() para los 3 datos, cálculo correcto, todos los prints coinciden."
+        },
+        "ej6": {
+          "obtenido": 15,
+          "maximo": 15,
+          "comentario": "Promedio final 6.07 correcto, todos los prints correctos."
+        },
+        "ej7": {
+          "obtenido": 2,
+          "maximo": 20,
+          "comentario": "No calcula nada: usa input() para pedir directamente las respuestas ya calculadas (meta, total, faltantes, porcentaje) en vez de pedir los datos de cada día y computarlos. No muestra comprensión del flujo input→proceso→output."
+        }
+      }
+    }
+  }
+}

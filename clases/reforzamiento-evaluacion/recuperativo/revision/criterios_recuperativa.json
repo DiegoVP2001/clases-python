@@ -1,0 +1,82 @@
+{
+  "evaluacion": "Evaluacion Recuperativa — Clases 1 a 7",
+  "ej1": {
+    "nombre": "Promedio de tiempos de entrenamiento",
+    "max": 10,
+    "criterios": [
+      "3 pts: define 3 variables con nombres descriptivos en snake_case en español",
+      "4 pts: calcula el promedio correctamente (suma de 3 tiempos / 3)",
+      "3 pts: imprime cada tiempo con etiqueta Y el promedio al final con etiqueta"
+    ],
+    "notas": "No descontar por nombres creativos si son snake_case y descriptivos. Los 3 pts de impresión requieren TODOS los prints con etiqueta: los 3 tiempos individuales más el promedio."
+  },
+  "ej2": {
+    "nombre": "Reporte de inventario del kiosco",
+    "max": 10,
+    "criterios": [
+      "4 pts: usa sep= en los print() de las filas de la tabla para separar columnas",
+      "3 pts: imprime el encabezado principal y la fila de títulos correctamente",
+      "3 pts: imprime el valor total del inventario con etiqueta"
+    ],
+    "notas": "Tolerar cualquier separador claro en sep= (no exige exactamente ' | '). 0/4 si no usa sep= como parámetro de print() aunque el output visual se vea bien. No descontar por diferencias de formato en encabezado (emoji, mayúsculas, etc.) si el título y la fila de nombres está presente."
+  },
+  "ej3": {
+    "nombre": "Tarjeta de transporte",
+    "max": 15,
+    "criterios": [
+      "10 pts: las 5 actualizaciones son correctas, en orden, usando UNA SOLA variable de saldo",
+      "5 pts: imprime el saldo tras cada operación (6 prints en total) con etiqueta"
+    ],
+    "penalizacion_multiples_variables": "Si usa variables separadas para cada movimiento en vez de actualizar una sola: máximo 4/10 en cálculo aunque los resultados sean correctos. Los 5 pts de impresión se califican normalmente.",
+    "notas": "Saldo final correcto: 16800. Válido usar += / -= o forma larga variable = variable + valor."
+  },
+  "ej4": {
+    "nombre": "Recargo por servicio",
+    "max": 15,
+    "criterios": [
+      "4 pts: usa input() para precio base y porcentaje, con conversión de tipo correcta (float)",
+      "6 pts: calcula correctamente el monto del recargo (precio * porcentaje / 100) y el precio final",
+      "5 pts: imprime el resumen con etiquetas claras (precio base, recargo, precio final)"
+    ],
+    "notas": "No exigir que el porcentaje aparezca dinámico en el print(); se acepta 'Recargo: $'. No descontar por formato de encabezado --- si los datos están. Con 18000 y 10%: recargo=1800.0, precio_final=19800.0."
+  },
+  "ej5": {
+    "nombre": "Repartir fondos de una actividad de curso",
+    "max": 15,
+    "criterios": [
+      "4 pts: usa input() para los 3 datos con conversión correcta (float para dinero, int o float para personas)",
+      "6 pts: calcula correctamente el dinero restante y el monto por persona",
+      "5 pts: imprime el resumen con las 5 líneas y etiquetas claras"
+    ],
+    "notas": "float o int para participantes: ambos aceptados. Con 64000, 22000, 7 personas: restante=42000.0, por persona=6000.0."
+  },
+  "ej6": {
+    "nombre": "Depurar cálculo de promedio ponderado",
+    "max": 15,
+    "criterios": [
+      "3 pts: error 1 — nota ejercicios → nota_ejercicios (espacio en nombre de variable)",
+      "3 pts: error 2 — nota_bitacora con indentación incorrecta → sin indentación",
+      "3 pts: error 3 — notabitacora → nota_bitacora (falta guion bajo en el cálculo)",
+      "3 pts: error 4 — nota_desafio + 0.25 → nota_desafio * 0.25 (suma en vez de multiplicación)",
+      "3 pts: error 5 — falta coma entre 'Participación (15%)' y nota_participacion en el print"
+    ],
+    "notas": "3 pts por cada error correctamente identificado y corregido. Se otorgan los 3 pts aunque el estudiante no ejecute el código, si identifica el error con un comentario o explicación clara. Sin bonificación adicional."
+  },
+  "ej7": {
+    "nombre": "Registro semanal de estudio",
+    "max": 20,
+    "criterios": [
+      "5 pts: usa input() para la meta semanal y los 5 días, con conversión de tipo correcta (int o float)",
+      "5 pts: acumula el total estudiado correctamente (puede ser variable acumuladora o suma de variables)",
+      "5 pts: calcula minutos faltantes (meta - total) y porcentaje de avance (total / meta * 100) correctamente",
+      "5 pts: imprime el resumen con las 4 líneas y etiquetas claras"
+    ],
+    "notas": "Aceptable guardar cada día en su propia variable y luego sumarlos. Descontar 1 pt si falta el encabezado --- RESUMEN DE ESTUDIO ---. Con meta 300, días 45+60+50+55+45: total=255, faltantes=45, porcentaje=85.0%."
+  },
+  "general": {
+    "formato_prints": "No descontar por creatividad en prints EXCEPTO cuando el formato es el objetivo del ejercicio (Ej2: sep=, estructura de tabla).",
+    "snake_case": "Descontar los 3 pts de variables en Ej1 si usan PascalCase u otro estilo incorrecto.",
+    "ausentes": "Puntaje 0 en todos los ejercicios.",
+    "syntax_error": "Si el código tiene SyntaxError y no ejecuta, revisar la intención del código para otorgar crédito parcial solo en criterios que sean claramente verificables sin ejecución (ej: definición de variables). Cálculos y prints que no se ejecutan = 0."
+  }
+}
