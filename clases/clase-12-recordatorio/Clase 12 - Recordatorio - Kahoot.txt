@@ -1,0 +1,148 @@
+KAHOOT — Diagnóstico post-vacaciones
+Clase 10: Recordatorio de Python
+=====================================
+
+
+── BLOQUE 1: Variables y tipos ──────────────────────────────
+
+
+Pregunta 1:
+¿Qué tipo de dato es "hola"?
+int
+float
+str
+bool
+Respuesta correcta: str
+
+
+Pregunta 2:
+¿Qué tipo de dato guarda la variable x?
+        x = 10 + 5
+str
+float
+bool
+int
+Respuesta correcta: int
+
+
+Pregunta 3:
+¿Qué imprime este código?
+        nombre = "Javiera"
+        print("Hola", nombre)
+Hola
+Hola nombre
+Hola Javiera
+nombre
+Respuesta correcta: Hola Javiera
+
+
+── BLOQUE 2: Booleanos y comparaciones ──────────────────────
+
+
+Pregunta 4:
+¿5 > 3 es True o False?
+True
+False
+Error
+None
+Respuesta correcta: True
+
+
+Pregunta 5:
+¿Qué devuelve 10 == "10"?
+True
+False
+10
+Error
+Respuesta correcta: False
+
+
+Pregunta 6:
+¿Qué operador va en el espacio para que el resultado sea True?
+        saldo = 50000
+        precio = 30000
+        print(saldo ___ precio)
+==
+!=
+<
+>
+Respuesta correcta: >
+
+
+── BLOQUE 3: Operadores lógicos ─────────────────────────────
+
+
+Pregunta 7:
+¿Qué devuelve True and False?
+True
+False
+None
+Error
+Respuesta correcta: False
+
+
+Pregunta 8:
+¿Qué devuelve True or False?
+True
+False
+None
+Error
+Respuesta correcta: True
+
+
+── BLOQUE 4: if / else ──────────────────────────────────────
+
+
+Pregunta 9:
+¿Qué imprime este código?
+        puntos = 75
+        if puntos >= 60:
+            print("Aprobado")
+        else:
+            print("Reprobado")
+Aprobado
+Reprobado
+75
+No imprime nada
+Respuesta correcta: Aprobado
+
+
+Pregunta 10:
+¿Qué pasa al ejecutar este código?
+        edad = 18
+        if edad >= 18:
+        print("Mayor de edad")
+Imprime "Mayor de edad"
+No imprime nada
+Error de sintaxis
+Imprime False
+Respuesta correcta: Error de sintaxis
+
+
+Pregunta 11:
+¿Qué imprime este código?
+        saldo = 15000
+        precio = 20000
+        if saldo >= precio:
+            print("Compra realizada")
+        else:
+            print("Saldo insuficiente")
+Compra realizada
+Saldo insuficiente
+Las dos líneas
+Nada
+Respuesta correcta: Saldo insuficiente
+
+
+Pregunta 12:
+¿Qué va en el espacio para que imprima "Hace frío"?
+        temperatura = 12
+        if temperatura >= 20:
+            print("Hace calor")
+        else:
+            ___
+print(Hace frío)
+print("Hace frío")
+print = "Hace frío"
+"Hace frío"
+Respuesta correcta: print("Hace frío")
