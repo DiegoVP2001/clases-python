@@ -61,4 +61,4 @@
 - Se revisó también el diagnóstico de medio semestre (`clases/compu/evaluacion_medio_semestre.md`, banco Enseña Chile, clases 7–14) para contrastar cobertura.
 - Se descartó incluir el contraste "`if` independientes en cadena vs. cadena `elif`" (probado en la pregunta 18 de ese diagnóstico) porque no se practicó a profundidad en clase.
 - Se amplió el Bloque 2 con más variantes de combinación de paréntesis (`and`/`or`/`not`) y se agregó la comparación de strings al Bloque 1, ambas confirmadas por ese mismo diagnóstico.
-- Pendiente: generar el HTML de estudio para estudiantes a partir de este temario (aprobado, no generado aún).
+- 2026-07-13: generado el PDF de estudio para estudiantes a partir de este temario (`Clase 17.5 - Evaluación Condicionales - Temario de Evaluación.pdf`, vía `generar_guia_estudio.py`), sin "Clases que cubre" ni referencias a clases Picuino en los subtítulos, y sin la sección de formato de evaluación. Listo para compartir y subir a Classroom.
