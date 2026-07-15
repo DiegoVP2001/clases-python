@@ -20,31 +20,48 @@
 | **12** | **Recordatorio post-vacaciones** | `clase-12-recordatorio` | N/A — clase de consolidación (regreso de vacaciones) | ✅ Completa | 2026-06-29 | OA1, OA3 \| OAa |
 | **13** | **if anidadas** | `clase-13-if-anidadas` | N°11 — Sentencias if anidadas | ✅ Completa | 2026-06-29 | OA1, OA3 |
 | **14** | **elif** | `clase-14-elif` | N°12 — Sentencia elif | Spec aprobada | 2026-06-30 | OA1, OA3 |
-| **15** | **Diagnóstico medio semestre (Enseña Chile)** | `clase-15-diagnostico` | N/A — evaluación externa, sin clase Picuino asociada (cubre contenidos de clases 7 a 14, sin for/while ni listas) | Generada — pendiente de aplicar (prueba sorpresa) | jul 2026 | OA1, OA2, OA3 \| OAd |
-| **16** | **for + range()** | `clase-16-for-range` | N°13, N°14 — Sentencia for + range() | Spec aprobada | 2026-07-08 | OA1, OA3 |
-| **17** | **Ejercitación Condicionales (if / if anidados / elif)** | `clase-17-ejercitacion-condicionales` | N/A — clase de consolidación (repaso en parejas de if/else, if anidados y elif, con décimas por ejercicio) | Spec aprobada | 2026-07-09 | OA1, OA3 \| OAd |
-| **18** | **continue, break, for anidado** | `clase-18-for-avanzado` | N°15, N°16, N°17 — Sentencia continue + break + for anidadas | Planificada | sep 2026 | OA1, OA3 |
-| **19** | **while** | `clase-19-while` | N°18 — Sentencia while | Planificada | sep 2026 | OA1, OA3 |
-| **20** | **Funciones — def, parámetros, return** | `clase-20-funciones` | N°19, N°20 — Definición de funciones + parámetros por omisión | Planificada | sep 2026 | OA1, OA3 |
-| **21** | **Strings — indexing y slicing** | `clase-21-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
-| **22** | **Strings — métodos y f-strings** | `clase-22-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | oct 2026 | OA2, OA3 |
-| **23** | **Listas — creación y acceso** | `clase-23-listas` | N°25, N°26 — Listas + índices de listas | Planificada | oct 2026 | OA1, OA2, OA3 |
-| **24** | **Listas — iteración y métodos** | `clase-24-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | oct 2026 | OA1, OA3 |
-| **25** | **Listas + funciones — integración** | `clase-25-integracion` | N/A — clase de integración | Planificada | oct 2026 | OA1, OA3 |
-| **26** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | nov 2026 | OA1, OA3, OA4 |
-| **27** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | nov 2026 | OA1, OA3, OA4 |
-| **28** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | nov 2026 | OA1, OA5, OA6 |
-| **29** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | nov 2026 | OA1, OA5, OA6 |
-| **30** | **Proyecto OA5 — Git + GitHub Pages** | `proyecto-app-ia` | N/A — proyecto | Planificada | dic 2026 | OA1, OA5, OA6 |
-| **31** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | dic 2026 | OA4, OA5, OA6 |
+| **15** | **Diagnóstico medio semestre (Enseña Chile)** | `clase-15-diagnostico` | N/A — evaluación externa, sin clase Picuino asociada (cubre contenidos de clases 7 a 14, sin for/while ni listas); **meramente diagnóstica, no suma nota** | Programada para hoy | **2026-07-13** | OA1, OA2, OA3 \| OAd |
+| **17** | **Ejercitación Condicionales (if / if anidados / elif)** | `clase-17-ejercitacion-condicionales` | N/A — clase de consolidación (repaso en parejas de if/else, if anidados y elif, con décimas por ejercicio) | Spec aprobada — programada para dictarse | **2026-07-14** | OA1, OA3 \| OAd |
+| **16** | **for + range()** | `clase-16-for-range` | N°13, N°14 — Sentencia for + range() | Spec aprobada (Colab+PPT+Reel ya generados) — programada para dictarse | **2026-07-20** | OA1, OA3 |
+| **18** | **Reforzamiento — repaso Clase 17 + nueva guía rápida** | *(pendiente de generar)* | N/A — clase de consolidación (repaso previo a la evaluación) | Planificada | sep 2026 | OA1, OA3 \| OAd |
+| **19** | **🎯 Evaluación individual — Condicionales** (if/else, if anidadas, elif) | `clase-19-evaluacion-condicionales` | N/A — evaluación sumativa individual | Spec + Evaluación + Solucionario generados | **2026-07-21** | OA1, OA3 \| OAd |
+| **20** | **continue, break, for anidado** | `clase-20-for-avanzado` | N°15, N°16, N°17 — Sentencia continue + break + for anidadas | Planificada | sep 2026 | OA1, OA3 |
+| **21** | **while** | `clase-21-while` | N°18 — Sentencia while | Planificada | sep 2026 | OA1, OA3 |
+| **21.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | sep 2026 | OA1, OA3 |
+| **22** | **Funciones — def, parámetros, return** | `clase-22-funciones` | N°19, N°20 — Definición de funciones + parámetros por omisión | Planificada | sep 2026 | OA1, OA3 |
+| **23** | **Strings — indexing y slicing** | `clase-23-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
+| **24** | **Strings — métodos y f-strings** | `clase-24-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | oct 2026 | OA2, OA3 |
+| **25** | **Listas — creación y acceso** | `clase-25-listas` | N°25, N°26 — Listas + índices de listas | Planificada | oct 2026 | OA1, OA2, OA3 |
+| **26** | **Listas — iteración y métodos** | `clase-26-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | oct 2026 | OA1, OA3 |
+| **27** | **Listas + funciones — integración** | `clase-27-integracion` | N/A — clase de integración | Planificada | oct 2026 | OA1, OA3 |
+| **27.5** | **🎯 Evaluación individual — Funciones + Strings + Listas** | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | oct 2026 | OA1, OA2, OA3 |
+| **28** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | nov 2026 | OA1, OA3, OA4 |
+| **29** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | nov 2026 | OA1, OA3, OA4 |
+| **30** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | nov 2026 | OA1, OA5, OA6 |
+| **31** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | nov 2026 | OA1, OA5, OA6 |
+| **32** | **Proyecto OA5 — Git + GitHub Pages** | `proyecto-app-ia` | N/A — proyecto | Planificada | dic 2026 | OA1, OA5, OA6 |
+| **33** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | dic 2026 | OA4, OA5, OA6 |
 
 ## Próxima clase disponible
 
-**N° 17 — Ejercitación Condicionales** (`clase-17-ejercitacion-condicionales`). Spec aprobada — sigue el Colab de clase.
+**Calendario confirmado de esta semana y la siguiente** (acordado con Diego el 2026-07-13):
 
-> Después de clase 17, continúa **N° 18 — continue, break, for anidado** (`clase-18-for-avanzado`), retomando la progresión Picuino. C16 (for + range()) ya tiene spec aprobada.
+| Día | Fecha | Qué se dicta |
+|---|---|---|
+| Lunes (hoy) | 2026-07-13 | N° 15 — Diagnóstico medio semestre (Enseña Chile) — meramente diagnóstico |
+| Martes | 2026-07-14 | N° 17 — Ejercitación Condicionales |
+| Lunes | 2026-07-20 | N° 16 — for + range() |
+| Martes | 2026-07-21 | N° 19 — 🎯 Evaluación individual — Condicionales |
 
-> La clase 15 (`clase-15-diagnostico`) es una evaluación externa de medio semestre para Enseña Chile ("prueba sorpresa"), ya generada (docx estudiante + solucionario) y pendiente de aplicar. No sigue el flujo de 5 pasos de `disenar-clase` — no requiere spec ni Colab/PPT propios.
+> Nota de orden: N° 17 se dicta antes que N° 16 en el calendario real (la ejercitación de condicionales estaba lista y hacía falta consolidar antes de introducir loops), aunque el spec de C16 se aprobó primero. La numeración N° real no se altera — identifica el artefacto, no necesariamente el orden estricto de dictado.
+
+> **Renumeración 2026-07-15:** la evaluación de Condicionales pasó de N°17.5 a **N°19**, dejando **N°18** reservado para un Reforzamiento (repaso de Clase 17 + nueva guía rápida, pendiente de generar en otra sesión). Todo lo que venía después se corrió +1: for avanzado (N°20), while (N°21), Evaluación de Ciclos (N°21.5), funciones (N°22), strings (N°23–24), listas (N°25–26), integración (N°27), Evaluación Funciones+Strings+Listas (N°27.5), proyectos (N°28–33).
+
+> Después de la evaluación de condicionales (2026-07-21), continúa **N° 18 — Reforzamiento** (pendiente), luego **N° 20 — continue, break, for anidado** (`clase-20-for-avanzado`), retomando la progresión Picuino, y luego N° 21 (while) + **N° 21.5 — Evaluación individual de Ciclos**.
+
+> La clase 15 (`clase-15-diagnostico`) es una evaluación externa de medio semestre para Enseña Chile, ya generada (docx estudiante + solucionario). Es **meramente diagnóstica — no suma nota**. No sigue el flujo de 5 pasos de `disenar-clase` — no requiere spec ni Colab/PPT propios.
+
+> **Evaluaciones individuales sumativas acordadas (2026-07-13):** tres en total, una por bloque de contenidos — Condicionales (N°19, post-17/18, 2026-07-21), Ciclos (N°21.5, post-21), y Funciones+Strings+Listas (N°27.5, post-27, aprovechando que esa clase ya integra listas+funciones). Ninguna de las últimas dos tiene fecha exacta ni notebook generado todavía.
 
 ## Bloques temáticos del año
 
@@ -53,12 +70,13 @@
 | Fundamentos | 7–8c | I/O, variables, tipos de datos | OA2, OA3 |
 | Lógica y control | 8a–14, 17 | Booleanos, condicionales completos, ejercitación | OA1, OA3 \| OAd |
 | Evaluación | 15 | Diagnóstico medio semestre (Enseña Chile) | OA1, OA2, OA3 \| OAd |
-| Iteración | 16, 18–19 | Bucles for y while | OA1, OA3 |
-| Abstracción | 20 | Funciones | OA1, OA3 |
-| Datos textuales | 21–22 | Strings | OA2, OA3 |
-| Datos colección | 23–25 | Listas | OA1, OA2, OA3 |
-| Proyecto análisis | 26–27 | Análisis estadístico con Python | OA1, OA3, **OA4** |
-| Proyecto app | 28–31 | App móvil con IA + Git | OA1, **OA4, OA5, OA6** |
+| Consolidación + evaluación | 18–19 | Reforzamiento de condicionales + Evaluación individual | OA1, OA3 \| OAd |
+| Iteración | 16, 20–21 | Bucles for y while | OA1, OA3 |
+| Abstracción | 22 | Funciones | OA1, OA3 |
+| Datos textuales | 23–24 | Strings | OA2, OA3 |
+| Datos colección | 25–27 | Listas | OA1, OA2, OA3 |
+| Proyecto análisis | 28–29 | Análisis estadístico con Python | OA1, OA3, **OA4** |
+| Proyecto app | 30–33 | App móvil con IA + Git | OA1, **OA4, OA5, OA6** |
 
 ## Ayudantías realizadas
 
