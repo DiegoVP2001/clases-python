@@ -44,11 +44,13 @@ En vez de 1 ítem por cada uno de los 7 bloques, la guía se concentra solo en *
 - **Contextos usados (todos nuevos, sin repetir Clase 17, apoyo individual de Maura, ni la evaluación real de Clase 19):** clima (Ítem 1), streaming musical (Ítem 2), veterinaria/mascotas (Ítem 3, arregla el bug), notas/promedio (Desafío final), batería de celular y descuento de streaming de películas (Propuestos 1 y 2).
 - **Extensión:** deliberadamente más corta que el apoyo individual de Maura — repaso express de 10-15 min, no un curso condensado.
 
-**Archivo generado:** `Clase 18 - Reforzamiento Condicionales - Guía de Repaso.ipynb` (vía `generar_guia_repaso.py`, fuente de verdad — no editar el `.ipynb` a mano). Autocheck de los 3 ítems verificado contra la solución correcta antes de entregar — 2026-07-15.
+**Archivo generado:** `Clase 18 - Reforzamiento Condicionales - Guía de Repaso.ipynb` (vía `generar_guia_repaso.py`, fuente de verdad — no editar el `.ipynb` a mano). Sin autocheck (feedback de Diego, 2026-07-15): las 6 soluciones (Ítems 1-3, Desafío final, Propuestos 1-2) viven plegadas en una única sección `<details>` al final, sin encabezado markdown para que no aparezca en el índice de Colab.
+
+**Estado:** ✅ ambos entregables generados, commiteados y pusheados a `origin/master` (commit `96b85fc`) — 2026-07-15.
 
 ## Pendiente
 
 - [x] Generar `Clase 18 - Reforzamiento Condicionales - Dinámica.md` (Entregable 1) — 2026-07-15.
-- [x] Generar `Clase 18 - Reforzamiento Condicionales - Guía de Repaso.ipynb` (Entregable 2) — 2026-07-15. Pendiente de que Diego la revise antes de subir a Colab/Classroom.
-- [ ] Registrar en `Historial-Curricular.md` cuando Diego confirme ambos entregables (fila 26, columna "Notebook").
-- [ ] Confirmar fecha de dictado: **lunes 20 de julio de 2026** (un día antes de la evaluación del 21).
+- [x] Generar `Clase 18 - Reforzamiento Condicionales - Guía de Repaso.ipynb` (Entregable 2) — 2026-07-15.
+- [x] Registrar en `Historial-Curricular.md` (fila N°18: carpeta + estado + fecha 2026-07-20) — 2026-07-15.
+- [x] Confirmar fecha de dictado: **lunes 20 de julio de 2026** (un día antes de la evaluación del 21) — confirmada por Diego.
