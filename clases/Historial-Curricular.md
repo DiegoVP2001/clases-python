@@ -23,7 +23,7 @@
 | **15** | **Diagnóstico medio semestre (Enseña Chile)** | `clase-15-diagnostico` | N/A — evaluación externa, sin clase Picuino asociada (cubre contenidos de clases 7 a 14, sin for/while ni listas); **meramente diagnóstica, no suma nota** | Programada para hoy | **2026-07-13** | OA1, OA2, OA3 \| OAd |
 | **17** | **Ejercitación Condicionales (if / if anidados / elif)** | `clase-17-ejercitacion-condicionales` | N/A — clase de consolidación (repaso en parejas de if/else, if anidados y elif, con décimas por ejercicio) | Spec aprobada — programada para dictarse | **2026-07-14** | OA1, OA3 \| OAd |
 | **16** | **for + range()** | `clase-16-for-range` | N°13, N°14 — Sentencia for + range() | Spec aprobada (Colab+PPT+Reel ya generados) — programada para dictarse | **2026-07-20** | OA1, OA3 |
-| **18** | **Reforzamiento — repaso Clase 17 + nueva guía rápida** | *(pendiente de generar)* | N/A — clase de consolidación (repaso previo a la evaluación) | Planificada | sep 2026 | OA1, OA3 \| OAd |
+| **18** | **Reforzamiento — repaso Clase 17 + nueva guía rápida** | `clase-18-reforzamiento-condicionales` | N/A — clase de consolidación (repaso previo a la evaluación) | Dinámica + Guía de Repaso generadas — programada para dictarse | **2026-07-20** | OA1, OA3 \| OAd |
 | **19** | **🎯 Evaluación individual — Condicionales** (if/else, if anidadas, elif) | `clase-19-evaluacion-condicionales` | N/A — evaluación sumativa individual | Spec + Evaluación + Solucionario generados | **2026-07-21** | OA1, OA3 \| OAd |
 | **20** | **continue, break, for anidado** | `clase-20-for-avanzado` | N°15, N°16, N°17 — Sentencia continue + break + for anidadas | Planificada | sep 2026 | OA1, OA3 |
 | **21** | **while** | `clase-21-while` | N°18 — Sentencia while | Planificada | sep 2026 | OA1, OA3 |
@@ -57,7 +57,7 @@
 
 > **Renumeración 2026-07-15:** la evaluación de Condicionales pasó de N°17.5 a **N°19**, dejando **N°18** reservado para un Reforzamiento (repaso de Clase 17 + nueva guía rápida, pendiente de generar en otra sesión). Todo lo que venía después se corrió +1: for avanzado (N°20), while (N°21), Evaluación de Ciclos (N°21.5), funciones (N°22), strings (N°23–24), listas (N°25–26), integración (N°27), Evaluación Funciones+Strings+Listas (N°27.5), proyectos (N°28–33).
 
-> Después de la evaluación de condicionales (2026-07-21), continúa **N° 18 — Reforzamiento** (pendiente), luego **N° 20 — continue, break, for anidado** (`clase-20-for-avanzado`), retomando la progresión Picuino, y luego N° 21 (while) + **N° 21.5 — Evaluación individual de Ciclos**.
+> **N° 18 — Reforzamiento** se dicta el 2026-07-20, un día antes de la evaluación de condicionales (N°19, 2026-07-21). Después de la evaluación, continúa **N° 20 — continue, break, for anidado** (`clase-20-for-avanzado`), retomando la progresión Picuino, y luego N° 21 (while) + **N° 21.5 — Evaluación individual de Ciclos**.
 
 > La clase 15 (`clase-15-diagnostico`) es una evaluación externa de medio semestre para Enseña Chile, ya generada (docx estudiante + solucionario). Es **meramente diagnóstica — no suma nota**. No sigue el flujo de 5 pasos de `disenar-clase` — no requiere spec ni Colab/PPT propios.
 
