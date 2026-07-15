@@ -20,7 +20,9 @@ Esta evaluación pasa a ser **N° 19** (antes N° 17.5 en `Historial-Curricular.
 - **Sección 1 sin `input()`**: variables ya definidas, para ir rápido armando condiciones y arreglando bugs.
 - **Sin autocheck**: a diferencia de la Ejercitación de Clase 17.5, esta es una evaluación sumativa — no hay verificación `✅/❌` en vivo. La corrección es posterior, con la pauta del Solucionario.
 - **Sin Práctica Guiada** dentro del documento — va directo de instrucciones a los ejercicios.
-- **Contextos 100% nuevos**, sin repetir ninguno de Clase 17 (kiosco, teatro, ajedrez, transporte), del apoyo individual (tienda online, VIP, estacionamiento, cine, parque, delivery, biblioteca, gimnasio), de Clase 14 (viaje de estudio, cuotas, batería, reacción) ni de Clase 11/13 (pasaje, licencia, parque de juegos). Se usan contextos de videojuegos, música, redes sociales, tecnología/robots, deportes, Isla de Maipo (Vendimia, transporte) y finanzas simuladas.
+- **Contextos revisados dos veces (2026-07-15)** para no repetir ninguno de Clase 17 (kiosco, teatro, ajedrez, transporte, taller de música, feria de emprendedores Isla de Maipo, fútbol escolar, biblioteca, e-sports, cine, laboratorio de computación, sala de ensayo, taller de robótica, maratón de baile), del apoyo individual, de Clase 14 ni de Clase 11/13. Se usan contextos de videojuegos, música/eventos, redes sociales, tecnología, deportes, Isla de Maipo (transporte) y ahorro en dólares. Detalle de los reemplazos en `Historial.md`.
+- **Montos en pesos siempre enteros** (el peso chileno no usa decimales); cuando el ejercicio necesita probar `float()` con `input()`, se usa un contexto en dólares (Ejercicio 3) en vez de forzar decimales en pesos.
+- **Enunciados de Sección 2 con los desenlaces enumerados**: cada ejercicio con más de 2 caminos posibles (Ejercicio 2, 3 y 4) incluye un punteo con el mensaje exacto de cada caso — no solo los 2 que aparecen en la tabla de ejemplos — para que el estudiante sepa qué imprimir en todos los caminos, no solo en los que se ilustran. Esto es información de comportamiento (qué debe pasar), nunca de implementación (cómo programarlo): nunca se nombra `elif`, anidamiento, ni ninguna estructura de control específica en el enunciado — solo se exige explícitamente el uso de `input()` para pedir los datos.
 
 ---
 
@@ -48,56 +50,58 @@ Esta evaluación pasa a ser **N° 19** (antes N° 17.5 en `Historial-Curricular.
 
 ## Sección 1 — Ítems cortos (30 pts, sin `input()`, sin autocheck)
 
-Variables ya definidas. En "Arma la condición" el estudiante completa la línea que falta; en "Arregla el bug" corrige el único error del fragmento.
+Variables ya definidas. Reorganizada en dos subsecciones explícitas (mismo patrón que la Ejercitación de Clase 17): **1A — Arma la condición** primero, **1B — Arregla el bug** después. En el notebook de estudiante el ítem NO muestra "Bloque N" ni el patrón técnico (ej. `and` simple) — esos metadatos quedan solo en el Solucionario, para no regalar de antemano qué construcción se evalúa.
 
-### Ítem 1.1 — Bloque 1 (Booleanos y comparaciones) — Arregla el bug (4 pts)
+**Contextos revisados 2026-07-15:** 4 de los 7 ítems originales se cambiaron por ser demasiado parecidos a los de la Ejercitación de Clase 17 (mismo patrón de código/clave de acceso, mismo evento "feria de Isla de Maipo", ambos "elegibilidad de cuenta gamer", o ambos literalmente "robot"). Ver Historial.md para el detalle de qué se reemplazó.
 
-**Narrativa:** El servidor privado de Discord del club de videojuegos del liceo solo deja entrar a quien escribe el código de invitación correcto.
+### 1A.1 — Arma la condición, `and` simple (4 pts)
 
-**Bug:** `if codigo_ingresado = codigo_correcto:` (falta el segundo `=`). Corrección: `==`.
-
-```python
-codigo_correcto = 4821
-codigo_ingresado = 4821
-
-if codigo_ingresado = codigo_correcto:
-    mensaje_discord = "Acceso concedido al servidor."
-else:
-    mensaje_discord = "Código incorrecto."
-
-print(mensaje_discord)
-```
-
-### Ítem 1.2 — Bloque 2 (Operadores lógicos) — Arma la condición, `and` simple (4 pts)
-
-**Narrativa:** En la Feria de la Vendimia de Isla de Maipo, puede instalar su stand de comida quien tenga **permiso municipal** Y haya **pagado el arriendo** del espacio.
+**Narrativa:** El concurso de fotografía de Instagram del liceo solo acepta la publicación de quien tenga la **cuenta pública** Y haya usado el **hashtag oficial** del concurso.
 
 ```python
-tiene_permiso_municipal = True
-pago_arriendo_stand = False
+cuenta_publica = True
+uso_hashtag_oficial = False
 
-puede_instalar_stand =    # completar
+participa_concurso =    # completar
 
-print("¿Puede instalar el stand?", puede_instalar_stand)
+print("¿Participa en el concurso?", participa_concurso)
 ```
 Esperado: `False`.
 
-### Ítem 1.3 — Bloque 2 (Operadores lógicos) — Arma la condición, `var1 and (var2 or var3)` (4 pts)
+### 1A.2 — Arma la condición, `var1 and (var2 or var3)` (4 pts)
 
-**Narrativa:** En el modo clasificatorio de un videojuego, puede entrar a la partida quien tenga la **cuenta verificada** Y además (haya alcanzado el **rango mínimo** O tenga una **invitación** de un jugador de rango alto).
+**Narrativa:** Para entrar al backstage de un festival de música, se necesita la **pulsera VIP** Y además (tener **acreditación de prensa** O **invitación del staff**).
 
 ```python
-cuenta_verificada = True
-alcanzo_rango_minimo = False
-tiene_invitacion_rango_alto = True
+tiene_pulsera_vip = True
+tiene_acreditacion_prensa = False
+tiene_invitacion_staff = True
 
-puede_entrar_clasificatoria =    # completar
+puede_entrar_backstage =    # completar
 
-print("¿Puede entrar a la clasificatoria?", puede_entrar_clasificatoria)
+print("¿Puede entrar al backstage?", puede_entrar_backstage)
 ```
 Esperado: `True`.
 
-### Ítem 1.4 — Bloque 3 (Análisis de condiciones, caso límite) — Arregla el bug (5 pts)
+### 1B.1 — Bloque 1 (Booleanos y comparaciones) — Arregla el bug (4 pts)
+
+**Narrativa:** La máquina expendedora de bebidas del liceo solo entrega el producto cuando el monto insertado es exactamente igual al precio (no da vuelto).
+
+**Bug:** `if monto_insertado = precio_bebida:` (falta el segundo `=`). Corrección: `==`.
+
+```python
+precio_bebida = 900
+monto_insertado = 900
+
+if monto_insertado = precio_bebida:
+    mensaje_maquina = "Bebida entregada."
+else:
+    mensaje_maquina = "Monto incorrecto, no se entrega vuelto."
+
+print(mensaje_maquina)
+```
+
+### 1B.2 — Bloque 3 (Análisis de condiciones, caso límite) — Arregla el bug (5 pts)
 
 **Narrativa:** En el torneo de básquetbol del liceo, un equipo clasifica a semifinales cuando su puntaje **alcanza** el mínimo de la fase de grupos (no solo cuando lo supera).
 
@@ -115,7 +119,7 @@ else:
 print(mensaje_torneo)
 ```
 
-### Ítem 1.5 — Bloque 4 (if / else) — Arregla el bug (4 pts)
+### 1B.3 — Bloque 4 (if / else) — Arregla el bug (4 pts)
 
 **Narrativa:** Antes de publicar un video en TikTok, el sistema revisa si pasó la verificación de derechos de autor.
 
@@ -132,28 +136,28 @@ else:
 print(mensaje_tiktok)
 ```
 
-### Ítem 1.6 — Bloque 5 (if anidados) — Arregla el bug (4 pts)
+### 1B.4 — Bloque 5 (if anidados) — Arregla el bug (4 pts)
 
-**Narrativa:** Un robot aspirador doméstico revisa primero si está **encendido**, y solo entonces si **detecta un obstáculo** en el camino.
+**Narrativa:** Un parlante inteligente revisa primero si está **conectado a internet**, y solo entonces si **reconoció el comando de voz**.
 
-**Bug:** indentación incorrecta en la rama `if detecto_obstaculo:`.
+**Bug:** indentación incorrecta en la rama `if reconocio_comando:`.
 
 ```python
-robot_encendido = True
-detecto_obstaculo = False
+conectado_internet = True
+reconocio_comando = False
 
-if robot_encendido:
-    if detecto_obstaculo:
-    mensaje_robot = "El robot esquiva el obstáculo."
+if conectado_internet:
+    if reconocio_comando:
+    mensaje_parlante = "El parlante ejecuta la acción pedida."
     else:
-        mensaje_robot = "El robot sigue limpiando."
+        mensaje_parlante = "El parlante no entendió el comando."
 else:
-    mensaje_robot = "El robot está apagado."
+    mensaje_parlante = "El parlante está desconectado."
 
-print(mensaje_robot)
+print(mensaje_parlante)
 ```
 
-### Ítem 1.7 — Bloque 6 (elif) — Arregla el bug (5 pts)
+### 1B.5 — Bloque 6 (elif) — Arregla el bug (5 pts)
 
 **Narrativa:** Una app de hábitos de estudio clasifica la racha de días seguidos estudiando en categorías, de la más exigente a la más básica.
 
@@ -179,7 +183,7 @@ Esperado (con el orden corregido y `racha_dias_estudio = 12`): `"Buena constanci
 
 ## Sección 2 — Programas completos (70 pts, con `input()`)
 
-### Ejercicio 1 — Modo Fiesta de una playlist ⭐ Fácil — if/else simple (12 pts, ~10 min)
+### Ejercicio 1 — Modo Fiesta de una playlist — if/else simple (12 pts, ~10 min)
 
 **Narrativa:** Una playlist compartida arma automáticamente el "Modo Fiesta": cualquier canción con un nivel de energía alto entra a la lista; el resto se guarda para otro momento. Escribe el programa que, dado el nivel de energía de una canción, informe si entra o no al Modo Fiesta.
 
@@ -203,15 +207,18 @@ else:
     print("Se guarda para otro momento.")
 ```
 
-### Ejercicio 2 — Micro a Talagante ⭐⭐ Media — if anidados (16 pts, ~13 min)
+### Ejercicio 2 — Micro a Talagante — if anidados (16 pts, ~13 min)
 
 **Narrativa:** Para subir al micro que va desde Isla de Maipo hasta Talagante, el sistema revisa primero si la persona tiene pase escolar vigente; si no lo tiene, revisa si el saldo de su tarjeta bip alcanza para pagar el pasaje. Escribe el programa que, según esos datos, muestre cómo puede subir la persona.
 
 **El programa debe:**
 - Pedir con `input()` si tiene **pase escolar vigente** (la persona responde **exactamente** "si" o "no")
-- Si **no** tiene pase, pedir además con `input()` el **saldo de la tarjeta bip** (**puede tener decimales**, en pesos)
+- Si **no** tiene pase, pedir además con `input()` el **saldo de la tarjeta bip** (un **número entero**, en pesos — el peso chileno no tiene decimales)
 - Verificar primero el pase escolar; solo si no lo tiene, verificar si el saldo **alcanza** el costo del pasaje (\$800)
-- Mostrar un **mensaje distinto** para cada uno de los tres caminos posibles
+- Mostrar el mensaje que corresponda a cada uno de estos tres caminos:
+  - Tiene pase escolar vigente → `"Sube gratis con su pase escolar."`
+  - No tiene pase Y el saldo alcanza el pasaje → `"Paga el pasaje con la tarjeta bip."`
+  - No tiene pase Y el saldo no alcanza → `"No le alcanza el saldo para el pasaje."`
 
 | Ejemplo 1 | Ejemplo 2 |
 |---|---|
@@ -225,50 +232,57 @@ tiene_pase_escolar = input("¿Tiene pase escolar vigente? (si/no): ")
 if tiene_pase_escolar == "si":
     print("Sube gratis con su pase escolar.")
 else:
-    saldo_tarjeta_bip = float(input("Ingresa el saldo de la tarjeta bip: "))
+    saldo_tarjeta_bip = int(input("Ingresa el saldo de la tarjeta bip: "))
     if saldo_tarjeta_bip >= 800:
         print("Paga el pasaje con la tarjeta bip.")
     else:
         print("No le alcanza el saldo para el pasaje.")
 ```
 
-### Ejercicio 3 — Ahorro semanal ⭐⭐ Media-alta — elif con 4 categorías (18 pts, ~14 min)
+### Ejercicio 3 — Ahorro semanal en dólares — elif con 4 categorías (18 pts, ~14 min)
 
-**Narrativa:** Una app ficticia de ahorro semanal clasifica cuánto guardaste esta semana en cuatro niveles, para motivarte a seguir ahorrando. Escribe el programa que, dado el monto ahorrado, muestre el nivel correspondiente.
+**Narrativa:** Una alcancía digital lleva el registro de cuánto ahorras en dólares cada semana — varias personas en Chile prefieren ahorrar en esta moneda para protegerse de la fluctuación del peso. Escribe el programa que, dado el monto ahorrado, muestre el nivel correspondiente.
 
 **El programa debe:**
-- Pedir con `input()` el **monto ahorrado esta semana** (**puede tener decimales**, en pesos)
-- Clasificar el monto en **cuatro niveles**, del más bajo al más alto
-- Mostrar un **mensaje claro** con el nivel obtenido
+- Pedir con `input()` el **monto ahorrado esta semana, en dólares** (**puede tener decimales**)
+- Clasificar el monto en estos 4 niveles:
+  - Menos de 10 dólares → `"Nivel: Recién empezando."`
+  - Entre 10 y 29,99 dólares → `"Nivel: En camino."`
+  - Entre 30 y 59,99 dólares → `"Nivel: Buen ahorro."`
+  - 60 dólares o más → `"Nivel: ¡Excelente semana!"`
 
 | Ejemplo 1 | Ejemplo 2 |
 |---|---|
-| 📥 El usuario ingresa: `8000` | 📥 El usuario ingresa: `31000.50` |
+| 📥 El usuario ingresa: `15` | 📥 El usuario ingresa: `62.5` |
 | 📤 Imprime: `Nivel: En camino.` | 📤 Imprime: `Nivel: ¡Excelente semana!` |
 
 **Solución:**
 ```python
-monto_ahorrado_semana = float(input("Ingresa el monto ahorrado esta semana: "))
+monto_ahorrado_semana = float(input("Ingresa cuántos dólares ahorraste esta semana: "))
 
-if monto_ahorrado_semana < 5000:
+if monto_ahorrado_semana < 10:
     print("Nivel: Recién empezando.")
-elif monto_ahorrado_semana < 15000:
+elif monto_ahorrado_semana < 30:
     print("Nivel: En camino.")
-elif monto_ahorrado_semana < 30000:
+elif monto_ahorrado_semana < 60:
     print("Nivel: Buen ahorro.")
 else:
     print("Nivel: ¡Excelente semana!")
 ```
 
-### Ejercicio 4 — Salas de matchmaking (desafío) ⭐⭐⭐ Difícil — Bloque 7: elif + anidado (24 pts, ~17 min)
+### Ejercicio 4 — Sala de juego según tu rango — Bloque 7: elif + anidado (24 pts, ~17 min)
 
-**Narrativa:** El sistema de emparejamiento de un videojuego arma las salas según el rango del jugador. Para el rango más alto, además revisa si el jugador tiene una racha de victorias activa, porque eso le da una sala especial. Escribe el programa que, dado el rango del jugador y —cuando corresponda— si tiene racha activa, muestre en qué sala queda.
+**Narrativa:** El sistema de un videojuego arma la sala de partida según el rango del jugador. Para el rango más alto, además revisa si el jugador tiene una racha de victorias activa, porque eso le da una sala especial. Escribe el programa que, dado el rango del jugador y —cuando corresponda— si tiene racha activa, muestre en qué sala queda.
 
 **El programa debe:**
 - Pedir con `input()` el **rango del jugador** (la persona responde **exactamente** una de estas palabras: "bronce", "plata" u "oro")
-- Si el rango es **"oro"**, pedir además con `input()` si tiene **racha de victorias activa** (responde **exactamente** "si" o "no")
-- Asignar la sala usando `elif` para los tres rangos, y anidar la pregunta de la racha solo dentro de la rama "oro"
-- Mostrar un **mensaje distinto** con la sala asignada para cada camino posible
+- Si el rango es **"oro"**, pedir además con `input()` si tiene **racha de victorias activa** (responde **exactamente** "si" o "no") — esta pregunta no se hace para los otros rangos
+- Mostrar el mensaje que corresponda a cada uno de estos casos:
+  - rango "bronce" → `"Sala de nivel bronce."`
+  - rango "plata" → `"Sala de nivel plata."`
+  - rango "oro" sin racha activa → `"Sala de nivel oro."`
+  - rango "oro" con racha activa → `"Sala especial de racha activa."`
+- **Nota de diseño:** no se le dice explícitamente al estudiante que use `elif` ni que anide la pregunta de la racha — solo se le exige usar `input()` para pedir los datos. Que descubra la estructura de control es parte de lo que se evalúa (el tercer caso, "bronce", perfectamente puede resolverse con un `else` en vez de un tercer `elif`).
 
 | Ejemplo 1 | Ejemplo 2 |
 |---|---|
@@ -290,6 +304,19 @@ elif rango_jugador == "plata":
 else:
     print("Sala de nivel bronce.")
 ```
+
+---
+
+## Criterios de corrección (agregado al Solucionario, sección "🎯 Criterios de corrección")
+
+La pauta prioriza la lógica de las condiciones por sobre la forma exacta del código:
+- Acepta cualquier redacción de `print()` que distinga correctamente los casos — no exige el mensaje literal del ejemplo.
+- Acepta nombres de variable distintos a los del ejemplo, siempre que sean coherentes, en español y bien usados.
+- Acepta estructuras equivalentes (ej. `if/elif/else` en vez de `if` anidados) si logran la misma partición de casos, salvo que el enunciado pida explícitamente una técnica.
+- Resta puntos solo por errores de lógica reales: operador de comparación incorrecto, caso límite mal manejado, rama faltante, tipo de dato mal leído desde `input()`, o código que no ejecuta.
+- No resta puntos por estilo de `print()` (comas vs. f-string), mensajes distintos si igual distinguen los casos, ni por el orden de definición de variables.
+
+Es un punto de partida, no reemplaza la calibración de rúbrica caso a caso que hace la skill `revisar-evaluacion` con Diego antes de corregir.
 
 ---
 

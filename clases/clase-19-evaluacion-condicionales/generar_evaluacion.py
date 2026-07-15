@@ -53,71 +53,74 @@ def notebook(cells: list, colab_name: str) -> dict:
 
 
 # ── Sección 1 — Ítems cortos (sin input, sin autocheck) ──────────────────────
+# Orden: primero los 1A (Arma la condición), luego los 1B (Arregla el bug).
+# "bloque" y "patron" son metadatos internos para el profesor (Solucionario);
+# nunca se muestran en el notebook de estudiante.
 
 ITEMS_1 = [
     dict(
-        id="1.1", bloque="Bloque 1 — Booleanos y comparaciones", tipo="bug", pts=4,
-        narrativa=(
-            "El servidor privado de Discord del club de videojuegos del liceo "
-            "solo deja entrar a quien escribe el **código de invitación** correcto."
-        ),
-        buggy=(
-            "codigo_correcto = 4821\n"
-            "codigo_ingresado = 4821\n"
-            "\n"
-            "if codigo_ingresado = codigo_correcto:\n"
-            "    mensaje_discord = \"Acceso concedido al servidor.\"\n"
-            "else:\n"
-            "    mensaje_discord = \"Código incorrecto.\"\n"
-            "\n"
-            "print(mensaje_discord)"
-        ),
-        fixed=(
-            "codigo_correcto = 4821\n"
-            "codigo_ingresado = 4821\n"
-            "\n"
-            "if codigo_ingresado == codigo_correcto:\n"
-            "    mensaje_discord = \"Acceso concedido al servidor.\"\n"
-            "else:\n"
-            "    mensaje_discord = \"Código incorrecto.\"\n"
-            "\n"
-            "print(mensaje_discord)"
-        ),
-        expected="Acceso concedido al servidor.",
-    ),
-    dict(
-        id="1.2", bloque="Bloque 2 — Operadores lógicos", tipo="arma", pts=4,
+        id="1A.1", bloque="Bloque 2 — Operadores lógicos", tipo="arma", pts=4,
         patron="`and` simple",
         narrativa=(
-            "En la Feria de la Vendimia de Isla de Maipo, puede instalar su "
-            "stand de comida quien tenga **permiso municipal** Y haya "
-            "**pagado el arriendo** del espacio."
+            "El concurso de fotografía de Instagram del liceo solo acepta la "
+            "publicación de quien tenga la **cuenta pública** Y haya usado el "
+            "**hashtag oficial** del concurso."
         ),
-        setup="tiene_permiso_municipal = True\npago_arriendo_stand = False",
-        var="puede_instalar_stand", print_label="¿Puede instalar el stand?",
-        expr="tiene_permiso_municipal and pago_arriendo_stand",
+        setup="cuenta_publica = True\nuso_hashtag_oficial = False",
+        var="participa_concurso", print_label="¿Participa en el concurso?",
+        expr="cuenta_publica and uso_hashtag_oficial",
         expected=False,
     ),
     dict(
-        id="1.3", bloque="Bloque 2 — Operadores lógicos", tipo="arma", pts=4,
+        id="1A.2", bloque="Bloque 2 — Operadores lógicos", tipo="arma", pts=4,
         patron="`var1 and (var2 or var3)`",
         narrativa=(
-            "En el modo clasificatorio de un videojuego, puede entrar a la "
-            "partida quien tenga la **cuenta verificada** Y además (haya "
-            "alcanzado el **rango mínimo** O tenga una **invitación** de un "
-            "jugador de rango alto)."
+            "Para entrar al backstage de un festival de música, se necesita "
+            "la **pulsera VIP** Y además (tener **acreditación de prensa** O "
+            "**invitación del staff**)."
         ),
         setup=(
-            "cuenta_verificada = True\n"
-            "alcanzo_rango_minimo = False\n"
-            "tiene_invitacion_rango_alto = True"
+            "tiene_pulsera_vip = True\n"
+            "tiene_acreditacion_prensa = False\n"
+            "tiene_invitacion_staff = True"
         ),
-        var="puede_entrar_clasificatoria", print_label="¿Puede entrar a la clasificatoria?",
-        expr="cuenta_verificada and (alcanzo_rango_minimo or tiene_invitacion_rango_alto)",
+        var="puede_entrar_backstage", print_label="¿Puede entrar al backstage?",
+        expr="tiene_pulsera_vip and (tiene_acreditacion_prensa or tiene_invitacion_staff)",
         expected=True,
     ),
     dict(
-        id="1.4", bloque="Bloque 3 — Análisis de condiciones (caso límite)", tipo="bug", pts=5,
+        id="1B.1", bloque="Bloque 1 — Booleanos y comparaciones", tipo="bug", pts=4,
+        narrativa=(
+            "La máquina expendedora de bebidas del liceo solo entrega el "
+            "producto cuando el monto insertado es **exactamente igual** al "
+            "precio (no da vuelto)."
+        ),
+        buggy=(
+            "precio_bebida = 900\n"
+            "monto_insertado = 900\n"
+            "\n"
+            "if monto_insertado = precio_bebida:\n"
+            "    mensaje_maquina = \"Bebida entregada.\"\n"
+            "else:\n"
+            "    mensaje_maquina = \"Monto incorrecto, no se entrega vuelto.\"\n"
+            "\n"
+            "print(mensaje_maquina)"
+        ),
+        fixed=(
+            "precio_bebida = 900\n"
+            "monto_insertado = 900\n"
+            "\n"
+            "if monto_insertado == precio_bebida:\n"
+            "    mensaje_maquina = \"Bebida entregada.\"\n"
+            "else:\n"
+            "    mensaje_maquina = \"Monto incorrecto, no se entrega vuelto.\"\n"
+            "\n"
+            "print(mensaje_maquina)"
+        ),
+        expected="Bebida entregada.",
+    ),
+    dict(
+        id="1B.2", bloque="Bloque 3 — Análisis de condiciones (caso límite)", tipo="bug", pts=5,
         narrativa=(
             "En el torneo de básquetbol del liceo, un equipo clasifica a "
             "semifinales cuando su puntaje **alcanza** el mínimo de la fase "
@@ -148,7 +151,7 @@ ITEMS_1 = [
         expected="El equipo clasifica a semifinales.",
     ),
     dict(
-        id="1.5", bloque="Bloque 4 — if / else", tipo="bug", pts=4,
+        id="1B.3", bloque="Bloque 4 — if / else", tipo="bug", pts=4,
         narrativa=(
             "Antes de publicar un video en TikTok, el sistema revisa si "
             "pasó la verificación de **derechos de autor**."
@@ -176,44 +179,43 @@ ITEMS_1 = [
         expected="Video publicado con éxito.",
     ),
     dict(
-        id="1.6", bloque="Bloque 5 — if anidados", tipo="bug", pts=4,
+        id="1B.4", bloque="Bloque 5 — if anidados", tipo="bug", pts=4,
         narrativa=(
-            "Un robot aspirador doméstico revisa primero si está "
-            "**encendido**, y solo entonces si **detecta un obstáculo** en "
-            "el camino."
+            "Un parlante inteligente revisa primero si está **conectado a "
+            "internet**, y solo entonces si **reconoció el comando de voz**."
         ),
         buggy=(
-            "robot_encendido = True\n"
-            "detecto_obstaculo = False\n"
+            "conectado_internet = True\n"
+            "reconocio_comando = False\n"
             "\n"
-            "if robot_encendido:\n"
-            "    if detecto_obstaculo:\n"
-            "    mensaje_robot = \"El robot esquiva el obstáculo.\"\n"
+            "if conectado_internet:\n"
+            "    if reconocio_comando:\n"
+            "    mensaje_parlante = \"El parlante ejecuta la acción pedida.\"\n"
             "    else:\n"
-            "        mensaje_robot = \"El robot sigue limpiando.\"\n"
+            "        mensaje_parlante = \"El parlante no entendió el comando.\"\n"
             "else:\n"
-            "    mensaje_robot = \"El robot está apagado.\"\n"
+            "    mensaje_parlante = \"El parlante está desconectado.\"\n"
             "\n"
-            "print(mensaje_robot)"
+            "print(mensaje_parlante)"
         ),
         fixed=(
-            "robot_encendido = True\n"
-            "detecto_obstaculo = False\n"
+            "conectado_internet = True\n"
+            "reconocio_comando = False\n"
             "\n"
-            "if robot_encendido:\n"
-            "    if detecto_obstaculo:\n"
-            "        mensaje_robot = \"El robot esquiva el obstáculo.\"\n"
+            "if conectado_internet:\n"
+            "    if reconocio_comando:\n"
+            "        mensaje_parlante = \"El parlante ejecuta la acción pedida.\"\n"
             "    else:\n"
-            "        mensaje_robot = \"El robot sigue limpiando.\"\n"
+            "        mensaje_parlante = \"El parlante no entendió el comando.\"\n"
             "else:\n"
-            "    mensaje_robot = \"El robot está apagado.\"\n"
+            "    mensaje_parlante = \"El parlante está desconectado.\"\n"
             "\n"
-            "print(mensaje_robot)"
+            "print(mensaje_parlante)"
         ),
-        expected="El robot sigue limpiando.",
+        expected="El parlante no entendió el comando.",
     ),
     dict(
-        id="1.7", bloque="Bloque 6 — elif", tipo="bug", pts=5,
+        id="1B.5", bloque="Bloque 6 — elif", tipo="bug", pts=5,
         narrativa=(
             "Una app de hábitos de estudio clasifica la racha de días "
             "seguidos estudiando en categorías, de la más exigente a la "
@@ -253,10 +255,11 @@ ITEMS_1 = [
 
 
 # ── Sección 2 — Programas completos (con input()) ────────────────────────────
+# Sin estrellas ni etiquetas de dificultad — solo título y puntaje.
 
 EJERCICIOS_2 = [
     dict(
-        num=1, titulo="Modo Fiesta de una playlist", estrellas="⭐ Fácil", pts=12,
+        num=1, titulo="Modo Fiesta de una playlist", pts=12,
         narrativa=(
             "Una playlist compartida arma automáticamente el \"Modo Fiesta\": "
             "cualquier canción con un nivel de energía alto entra a la lista; "
@@ -282,7 +285,7 @@ EJERCICIOS_2 = [
         ),
     ),
     dict(
-        num=2, titulo="Micro a Talagante", estrellas="⭐⭐ Media", pts=16,
+        num=2, titulo="Micro a Talagante", pts=16,
         narrativa=(
             "Para subir al micro que va desde Isla de Maipo hasta Talagante, "
             "el sistema revisa primero si la persona tiene pase escolar "
@@ -294,11 +297,14 @@ EJERCICIOS_2 = [
             "Pedir con `input()` si tiene **pase escolar vigente** (la "
             "persona responde **exactamente** \"si\" o \"no\")",
             "Si **no** tiene pase, pedir además con `input()` el **saldo de "
-            "la tarjeta bip** (**puede tener decimales**, en pesos)",
+            "la tarjeta bip** (un **número entero**, en pesos)",
             "Verificar primero el pase escolar; solo si no lo tiene, "
             "verificar si el saldo **alcanza** el costo del pasaje (\\$800)",
-            "Mostrar un **mensaje distinto** para cada uno de los tres "
-            "caminos posibles",
+            "Mostrar el mensaje que corresponda a cada uno de estos tres "
+            "caminos:\n"
+            "  - Tiene pase escolar vigente → `\"Sube gratis con su pase escolar.\"`\n"
+            "  - No tiene pase Y el saldo alcanza el pasaje → `\"Paga el pasaje con la tarjeta bip.\"`\n"
+            "  - No tiene pase Y el saldo no alcanza → `\"No le alcanza el saldo para el pasaje.\"`",
         ],
         ej1_in="si", ej1_out="Sube gratis con su pase escolar.",
         ej2_in="no<br>500", ej2_out="No le alcanza el saldo para el pasaje.",
@@ -308,7 +314,7 @@ EJERCICIOS_2 = [
             "if tiene_pase_escolar == \"si\":\n"
             "    print(\"Sube gratis con su pase escolar.\")\n"
             "else:\n"
-            "    saldo_tarjeta_bip = float(input(\"Ingresa el saldo de la tarjeta bip: \"))\n"
+            "    saldo_tarjeta_bip = int(input(\"Ingresa el saldo de la tarjeta bip: \"))\n"
             "    if saldo_tarjeta_bip >= 800:\n"
             "        print(\"Paga el pasaje con la tarjeta bip.\")\n"
             "    else:\n"
@@ -316,43 +322,47 @@ EJERCICIOS_2 = [
         ),
     ),
     dict(
-        num=3, titulo="Ahorro semanal", estrellas="⭐⭐ Media-alta", pts=18,
+        num=3, titulo="Ahorro semanal en dólares", pts=18,
         narrativa=(
-            "Una app ficticia de ahorro semanal clasifica cuánto guardaste "
-            "esta semana en cuatro niveles, para motivarte a seguir "
-            "ahorrando. Escribe el programa que, dado el monto ahorrado, "
+            "Una alcancía digital lleva el registro de cuánto ahorras en "
+            "dólares cada semana — varias personas en Chile prefieren "
+            "ahorrar en esta moneda para protegerse de la fluctuación del "
+            "peso. Escribe el programa que, dado el monto ahorrado, "
             "muestre el nivel correspondiente."
         ),
         debe=[
-            "Pedir con `input()` el **monto ahorrado esta semana** (**puede "
-            "tener decimales**, en pesos)",
-            "Clasificar el monto en **cuatro niveles**, del más bajo al más alto",
-            "Mostrar un **mensaje claro** con el nivel obtenido",
+            "Pedir con `input()` el **monto ahorrado esta semana, en "
+            "dólares** (**puede tener decimales**)",
+            "Clasificar el monto en estos 4 niveles:\n"
+            "  - Menos de 10 dólares → `\"Nivel: Recién empezando.\"`\n"
+            "  - Entre 10 y 29,99 dólares → `\"Nivel: En camino.\"`\n"
+            "  - Entre 30 y 59,99 dólares → `\"Nivel: Buen ahorro.\"`\n"
+            "  - 60 dólares o más → `\"Nivel: ¡Excelente semana!\"`",
         ],
-        ej1_in="8000", ej1_out="Nivel: En camino.",
-        ej2_in="31000.50", ej2_out="Nivel: ¡Excelente semana!",
+        ej1_in="15", ej1_out="Nivel: En camino.",
+        ej2_in="62.5", ej2_out="Nivel: ¡Excelente semana!",
         solucion=(
-            "monto_ahorrado_semana = float(input(\"Ingresa el monto ahorrado esta semana: \"))\n"
+            "monto_ahorrado_semana = float(input(\"Ingresa cuántos dólares ahorraste esta semana: \"))\n"
             "\n"
-            "if monto_ahorrado_semana < 5000:\n"
+            "if monto_ahorrado_semana < 10:\n"
             "    print(\"Nivel: Recién empezando.\")\n"
-            "elif monto_ahorrado_semana < 15000:\n"
+            "elif monto_ahorrado_semana < 30:\n"
             "    print(\"Nivel: En camino.\")\n"
-            "elif monto_ahorrado_semana < 30000:\n"
+            "elif monto_ahorrado_semana < 60:\n"
             "    print(\"Nivel: Buen ahorro.\")\n"
             "else:\n"
             "    print(\"Nivel: ¡Excelente semana!\")"
         ),
     ),
     dict(
-        num=4, titulo="Salas de matchmaking (desafío)", estrellas="⭐⭐⭐ Difícil", pts=24,
+        num=4, titulo="Sala de juego según tu rango", pts=24,
         narrativa=(
-            "El sistema de emparejamiento de un videojuego arma las salas "
-            "según el rango del jugador. Para el rango más alto, además "
-            "revisa si el jugador tiene una racha de victorias activa, "
-            "porque eso le da una sala especial. Escribe el programa que, "
-            "dado el rango del jugador y —cuando corresponda— si tiene "
-            "racha activa, muestre en qué sala queda."
+            "El sistema de un videojuego arma la sala de partida según el "
+            "rango del jugador. Para el rango más alto, además revisa si "
+            "el jugador tiene una racha de victorias activa, porque eso le "
+            "da una sala especial. Escribe el programa que, dado el rango "
+            "del jugador y —cuando corresponda— si tiene racha activa, "
+            "muestre en qué sala queda."
         ),
         debe=[
             "Pedir con `input()` el **rango del jugador** (la persona "
@@ -360,11 +370,12 @@ EJERCICIOS_2 = [
             "\"plata\" u \"oro\")",
             "Si el rango es **\"oro\"**, pedir además con `input()` si "
             "tiene **racha de victorias activa** (responde **exactamente** "
-            "\"si\" o \"no\")",
-            "Asignar la sala usando `elif` para los tres rangos, y anidar "
-            "la pregunta de la racha solo dentro de la rama \"oro\"",
-            "Mostrar un **mensaje distinto** con la sala asignada para "
-            "cada camino posible",
+            "\"si\" o \"no\") — esta pregunta no se hace para los otros rangos",
+            "Mostrar el mensaje que corresponda a cada uno de estos casos:\n"
+            "  - rango \"bronce\" → `\"Sala de nivel bronce.\"`\n"
+            "  - rango \"plata\" → `\"Sala de nivel plata.\"`\n"
+            "  - rango \"oro\" sin racha activa → `\"Sala de nivel oro.\"`\n"
+            "  - rango \"oro\" con racha activa → `\"Sala especial de racha activa.\"`",
         ],
         ej1_in="oro<br>si", ej1_out="Sala especial de racha activa.",
         ej2_in="plata", ej2_out="Sala de nivel plata.",
@@ -412,12 +423,16 @@ def puntaje_tabla_md(rows, total_label="Total") -> str:
     return "\n".join(lines)
 
 
+def tipo_label(item) -> str:
+    return "Arma la condición" if item["tipo"] == "arma" else "Arregla el bug"
+
+
 # ── Notebook de estudiantes ───────────────────────────────────────────────────
 
 def build_student_notebook() -> dict:
-    puntaje_rows = [(item["id"], item["bloque"], item["pts"]) for item in ITEMS_1]
+    puntaje_rows = [(item["id"], tipo_label(item), item["pts"]) for item in ITEMS_1]
     puntaje_rows += [
-        (f"2.{ej['num']}", f"{ej['titulo']} ({ej['estrellas']})", ej["pts"])
+        (f"2.{ej['num']}", ej["titulo"], ej["pts"])
         for ej in EJERCICIOS_2
     ]
 
@@ -450,17 +465,28 @@ def build_student_notebook() -> dict:
         ),
         md_cell(
             "---\n\n## 🔥 Sección 1 — Ítems cortos (30 pts)\n\n"
-            "Las variables ya están definidas. En **Arma la condición**, "
-            "completa solo la línea que falta. En **Arregla el bug**, "
-            "corrige el único error del fragmento."
+            "Repaso rápido de condicionales, dividido en dos partes."
         ),
     ]
 
+    last_tipo = None
     for item in ITEMS_1:
-        tipo_label = "Arma la condición" if item["tipo"] == "arma" else "Arregla el bug"
-        header = f"**Ítem {item['id']}** — {item['bloque']} — {tipo_label} ({item['pts']} pts)"
-        if item["tipo"] == "arma":
-            header += f"\n\n*{item['patron']}*"
+        if item["tipo"] != last_tipo:
+            if item["tipo"] == "arma":
+                cells.append(md_cell(
+                    "### 1A — Arma la condición\n\n"
+                    "Las variables ya están definidas. Escribe **solo la "
+                    "línea que falta** con la condición pedida."
+                ))
+            else:
+                cells.append(md_cell(
+                    "### 1B — Arregla el bug\n\n"
+                    "Cada fragmento tiene un solo error. Corrígelo "
+                    "directamente en la misma celda."
+                ))
+            last_tipo = item["tipo"]
+
+        header = f"**Ítem {item['id']}** ({item['pts']} pts)"
         cells.append(md_cell(f"---\n\n{header}\n\n{item['narrativa']}"))
         if item["tipo"] == "arma":
             cells.append(code_cell(
@@ -481,7 +507,7 @@ def build_student_notebook() -> dict:
     for ej in EJERCICIOS_2:
         cells.append(md_cell(
             f"---\n\n## 🎯 Ejercicio {ej['num']} — {ej['titulo']} "
-            f"{ej['estrellas']} ({ej['pts']} pts)\n\n"
+            f"({ej['pts']} pts)\n\n"
             f"{ej['narrativa']}\n\n"
             "**El programa debe:**\n"
             + "\n".join(f"- {d}" for d in ej["debe"])
@@ -493,7 +519,7 @@ def build_student_notebook() -> dict:
     cells.append(md_cell(
         "---\n\n## 🏁 Fin de la evaluación\n\n"
         "Revisa que todas las celdas se ejecuten sin errores antes de "
-        "compartir el Colab con el profesor."
+        "compartir el Colab."
     ))
 
     return notebook(cells, "Clase 19 - Evaluación Condicionales - Evaluación")
@@ -501,10 +527,33 @@ def build_student_notebook() -> dict:
 
 # ── Solucionario ──────────────────────────────────────────────────────────────
 
+CRITERIOS_CORRECCION_MD = (
+    "---\n\n## 🎯 Criterios de corrección\n\n"
+    "**Enfoque de esta pauta: se evalúa la lógica de las condiciones, no la "
+    "forma exacta del código.**\n\n"
+    "- Acepta cualquier redacción de `print()` que distinga correctamente "
+    "los casos — no exijas el mensaje literal del ejemplo.\n"
+    "- Acepta nombres de variable distintos a los del ejemplo, siempre que "
+    "sean coherentes, en español y se usen bien.\n"
+    "- Acepta estructuras equivalentes (por ejemplo `if/elif/else` en vez "
+    "de `if` anidados) si logran la misma partición de casos, salvo que el "
+    "enunciado pida explícitamente una técnica.\n"
+    "- Resta puntos solo por errores de lógica: operador de comparación "
+    "incorrecto, caso límite mal manejado, rama faltante, tipo de dato mal "
+    "leído desde `input()`, o código que no ejecuta.\n"
+    "- No restes puntos por estilo de `print()` (comas vs. f-string), "
+    "mensajes distintos si igual distinguen los casos, o el orden en que "
+    "se definen variables antes del bloque condicional.\n\n"
+    "*Nota: esto es un punto de partida. Al corregir, sigue calibrando la "
+    "rúbrica en conjunto con Diego caso a caso — no asumas criterios de "
+    "evaluaciones anteriores.*"
+)
+
+
 def build_solucionario_notebook() -> dict:
     puntaje_rows = [(item["id"], item["bloque"], item["pts"]) for item in ITEMS_1]
     puntaje_rows += [
-        (f"2.{ej['num']}", f"{ej['titulo']} ({ej['estrellas']})", ej["pts"])
+        (f"2.{ej['num']}", ej["titulo"], ej["pts"])
         for ej in EJERCICIOS_2
     ]
 
@@ -513,6 +562,7 @@ def build_solucionario_notebook() -> dict:
             "# ✅ Solucionario — Evaluación Individual Condicionales\n\n"
             "Solo para el profesor. Incluye soluciones y pauta de puntaje."
         ),
+        md_cell(CRITERIOS_CORRECCION_MD),
         md_cell(
             "---\n\n## 📊 Distribución de puntaje (total 100 pts, exigencia 50%)\n\n"
             + puntaje_tabla_md(puntaje_rows)
@@ -524,9 +574,8 @@ def build_solucionario_notebook() -> dict:
     ]
 
     for item in ITEMS_1:
-        tipo_label = "Arma la condición" if item["tipo"] == "arma" else "Arregla el bug"
         cells.append(md_cell(
-            f"**Ítem {item['id']}** — {item['bloque']} — {tipo_label} "
+            f"**Ítem {item['id']}** — {item['bloque']} — {tipo_label(item)} "
             f"({item['pts']} pts) — solución esperada:"
         ))
         if item["tipo"] == "arma":
@@ -542,8 +591,7 @@ def build_solucionario_notebook() -> dict:
 
     for ej in EJERCICIOS_2:
         cells.append(md_cell(
-            f"### Ejercicio {ej['num']} — {ej['titulo']} {ej['estrellas']} "
-            f"({ej['pts']} pts)"
+            f"### Ejercicio {ej['num']} — {ej['titulo']} ({ej['pts']} pts)"
         ))
         cells.append(code_cell(ej["solucion"]))
 

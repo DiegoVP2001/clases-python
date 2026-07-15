@@ -1,5 +1,43 @@
 # Historial — Clase 19 - Evaluación Condicionales
 
+## 2026-07-15 — Revisión 2: niveles enumerados, dólares, sin jerga técnica
+
+**Motivo:** tras revisar la Revisión 1, Diego pidió 4 ajustes más a Sección 2, y pidió revisar el resto de los ejercicios por si tenían el mismo problema. Se aplicó en dos pasos aprobados por separado: primero el Colab de estudiante, después el Solucionario.
+
+**Revisión propia detectada (no pedida explícitamente, pero con el mismo defecto que el Ejercicio 3):** el Ejercicio 2 (Micro a Talagante) tenía 3 caminos posibles pero la tabla de ejemplos solo mostraba 2 mensajes — el tercero ("Paga el pasaje con la tarjeta bip.") nunca aparecía en el enunciado, solo en la pauta del profesor. Se corrigió junto con el resto.
+
+**Cambios aplicados (en `generar_evaluacion.py`, regenerados ambos `.ipynb`):**
+1. **Ejercicio 2 — Micro a Talagante:** saldo de la tarjeta bip pasa de `float()` a `int()` (los pesos chilenos no tienen decimales — la app real de bip tampoco los muestra). Se agregó un punteo con los 3 mensajes exactos posibles.
+2. **Ejercicio 3 — ahora "Ahorro semanal en dólares":** cambio de contexto de pesos a dólares (así los decimales tienen sentido real — muchas personas en Chile ahorran en USD para protegerse de la fluctuación del peso). Se agregó un punteo con los 4 niveles y sus umbrales exactos (antes solo decía "cuatro niveles, del más bajo al más alto" sin definirlos).
+3. **Ejercicio 4 — ahora "Sala de juego según tu rango":** se sacó "matchmaking" del título y del enunciado (anglicismo que puede no ser conocido). Se sacó la frase que decía explícitamente "asigna la sala usando `elif`... anida la pregunta de la racha dentro de la rama oro" — revelaba la técnica de antemano. Se agregó en su lugar un punteo con los 4 casos posibles y su mensaje exacto, más la aclaración de que la pregunta de la racha solo se hace si el rango es "oro" (información de comportamiento, no de implementación). Único requisito explícito de forma: usar `input()` para pedir los datos.
+4. **Ejercicio 1:** revisado, sin cambios — ya tenía sus 2 únicos desenlaces posibles completamente documentados en la tabla de ejemplos.
+
+**Puntaje:** no cambió (100 pts, misma distribución).
+
+**Verificación:** se probaron los 7 ítems de Sección 1 y **las 13 combinaciones de entrada** de los 4 ejercicios de Sección 2 (incluyendo los caminos que no aparecen en la tabla de ejemplos, como "paga con bip" en el Ej. 2 y "oro sin racha" en el Ej. 4) contra el Solucionario — todos coinciden con el mensaje documentado en el punteo del enunciado.
+
+## 2026-07-15 — Revisión 1: subsecciones, contextos, sin dificultad, rúbrica flexible
+
+**Motivo:** Diego pidió 5 ajustes tras revisar la primera versión.
+
+**Cambios aplicados (en `generar_evaluacion.py`, regenerados ambos `.ipynb`):**
+1. **Sección 1 reordenada en subsecciones explícitas** — `### 1A — Arma la condición` (2 ítems) y `### 1B — Arregla el bug` (5 ítems), en vez de ir mezclados por bloque. Mismo patrón que ya usa la Ejercitación de Clase 17.
+2. **Quitado "Bloque N — Tema" y el patrón técnico (ej. `` `and` simple ``) de cada ítem en el notebook de estudiante** — un ítem ahora es solo `**Ítem 1A.1** (4 pts)` + narrativa, para no regalar de antemano qué construcción se está evaluando. Esos metadatos se mantienen en el Solucionario (uso interno del profesor).
+3. **4 de los 7 ítems de Sección 1 cambiaron de contexto** por ser demasiado parecidos a los de la Ejercitación de Clase 17 (mismo patrón de "código/clave de acceso", mismo evento "feria de Isla de Maipo", ambos "elegibilidad de cuenta gamer", o ambos literalmente "robot"):
+   - 1B.1 (antes "código Discord") → máquina expendedora, monto exacto sin vuelto.
+   - 1A.1 (antes "Feria de la Vendimia") → concurso de fotografía en Instagram (cuenta pública + hashtag).
+   - 1A.2 (antes "clasificatoria de videojuego") → backstage de un festival de música (pulsera VIP + prensa/staff).
+   - 1B.4 (antes "robot aspirador") → parlante inteligente (conectado a internet + reconoció comando).
+   - Los otros 3 (básquetbol, TikTok, racha de estudio) y los 4 ejercicios de Sección 2 se mantuvieron: su dominio ya difiere lo suficiente del de Clase 17 (la similitud estructural que queda es inevitable, la exige la técnica evaluada, no el contexto).
+4. **Quitadas las estrellitas y etiquetas de dificultad de Sección 2** (`⭐ Fácil`, `⭐⭐ Media`, `⭐⭐⭐ Difícil`, `(desafío)`) — los títulos ahora son solo `Ejercicio N — Título (pts)`.
+5. **Cierre:** "...antes de compartir el Colab con el profesor." → "...antes de compartir el Colab."
+
+**Rúbrica de corrección flexible:** se agregó una sección `## 🎯 Criterios de corrección` al inicio del Solucionario (después del título) indicando que la corrección debe enfocarse en la lógica de las condiciones — acepta mensajes de `print()`, nombres de variable o estructuras equivalentes distintas al ejemplo, y resta puntos solo por errores de lógica reales (operador incorrecto, caso límite mal manejado, rama faltante, tipo de dato mal leído, código que no ejecuta). Sirve como punto de partida para cuando la skill `revisar-evaluacion` calibre la pauta con Diego — no la reemplaza.
+
+**Puntaje:** no cambió (100 pts, misma distribución por ítem/ejercicio, solo renumerados 1.1–1.7 → 1A.1/1A.2 + 1B.1–1B.5).
+
+**Verificación:** las 7 soluciones de Sección 1 y las 4 de Sección 2 del Solucionario se ejecutaron (con `input()` simulado en Sección 2) y los resultados coinciden con el valor esperado documentado en cada celda.
+
 ## 2026-07-15 — Creación
 
 **Motivo:** construir la evaluación individual sumativa de Condicionales (2026-07-21), pensada para 75 minutos efectivos, a partir del temario (`Clase 17.5 - Evaluación Condicionales - Temario.md`), el Solucionario de la Ejercitación de Clase 17 y el repaso de apoyo individual — sin introducir formatos de pregunta nuevos ni contenidos no trabajados.
