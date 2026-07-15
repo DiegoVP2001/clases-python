@@ -1,5 +1,18 @@
 # Historial — Clase 19 - Evaluación Condicionales
 
+## 2026-07-15 — Revisión 3: rúbrica flexible por ítem para el agente revisor
+
+**Motivo:** Diego pidió actualizar el Solucionario para que quede pensado como fuente de verdad para un agente que corrige (skill `revisar-evaluacion`), no solo para el profesor humano. El pedido explícito: que el agente sepa tomar una postura flexible ante la diversidad de "codeo" de los estudiantes — lo importante es la funcionalidad, no la forma exacta — y que cuando un estudiante no escriba exactamente lo pedido pero diga en esencia lo mismo, el error sea tan mínimo que no se le resten puntos, o a lo más 1-2.
+
+**Cambios aplicados (en `generar_evaluacion.py`, solo Solucionario — Evaluación.ipynb sin cambios de contenido):**
+1. **Rúbrica de 3 niveles por ítem/ejercicio** (campo `rubrica` en cada dict de `ITEMS_1` y `EJERCICIOS_2`, 11 en total): `acepta` (variantes sin descuento, específicas a la lógica de ese ítem — más allá de lo genérico), `parcial` (descuenta 1-2 pts por un detalle menor donde la esencia está bien pero algo quedó impreciso — tope explícito de 2 pts) y `full` (errores de lógica reales que sí cuestan la mayoría o todo el puntaje del ítem). Varios ítems de Sección 1 (1B.2, 1B.3, 1B.4) no tienen nivel `parcial` natural — se documentó explícitamente que ahí no hay término medio (o la lógica clave está bien, o hay error real).
+2. **`CRITERIOS_CORRECCION_MD` reescrito** dirigiéndose directamente al agente que corrige ("Si estás revisando esta evaluación..."), explicando el sistema de 3 niveles como marco general y agregando una "regla de oro": ante la duda de si algo es un error, no lo es; solo bajar de nivel 1 cuando se pueda señalar con precisión qué caso de entrada distinto daría un resultado equivocado.
+3. **Nueva función `rubrica_md()`** que renderiza el bloque de cada ítem (`🔍 Rúbrica flexible para este ítem`) justo después de la celda de solución, en vez de dejar todo el criterio solo en la sección general del inicio.
+
+**Verificación:** se comparó cada solución del Solucionario contra `Evaluación.ipynb` antes de tocar nada — ya coincidían 1:1 (11 ítems, 100 pts, mismos contextos), así que no fue necesario corregir ninguna solución de referencia. Se regeneraron ambos notebooks y se confirmó por diff que `Evaluación.ipynb` no cambió su contenido (solo IDs de celda, que `generar_evaluacion.py` regenera al azar en cada corrida — ruido esperado, no una diferencia real).
+
+**Puntaje:** no cambió (100 pts, misma distribución).
+
 ## 2026-07-15 — Revisión 2: niveles enumerados, dólares, sin jerga técnica
 
 **Motivo:** tras revisar la Revisión 1, Diego pidió 4 ajustes más a Sección 2, y pidió revisar el resto de los ejercicios por si tenían el mismo problema. Se aplicó en dos pasos aprobados por separado: primero el Colab de estudiante, después el Solucionario.
