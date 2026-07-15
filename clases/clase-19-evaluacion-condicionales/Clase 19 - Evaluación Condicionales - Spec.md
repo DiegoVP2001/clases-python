@@ -307,16 +307,17 @@ else:
 
 ---
 
-## Criterios de corrección (agregado al Solucionario, sección "🎯 Criterios de corrección")
+## Criterios de corrección (Revisión 3, 2026-07-15 — agregado al Solucionario)
 
-La pauta prioriza la lógica de las condiciones por sobre la forma exacta del código:
-- Acepta cualquier redacción de `print()` que distinga correctamente los casos — no exige el mensaje literal del ejemplo.
-- Acepta nombres de variable distintos a los del ejemplo, siempre que sean coherentes, en español y bien usados.
-- Acepta estructuras equivalentes (ej. `if/elif/else` en vez de `if` anidados) si logran la misma partición de casos, salvo que el enunciado pida explícitamente una técnica.
-- Resta puntos solo por errores de lógica reales: operador de comparación incorrecto, caso límite mal manejado, rama faltante, tipo de dato mal leído desde `input()`, o código que no ejecuta.
-- No resta puntos por estilo de `print()` (comas vs. f-string), mensajes distintos si igual distinguen los casos, ni por el orden de definición de variables.
+El Solucionario está pensado como fuente de verdad para el agente que corrige (skill `revisar-evaluacion`), no solo para el profesor humano. La pauta prioriza la lógica de las condiciones y que el programa funcione por sobre la forma exacta del código, con un sistema de **3 niveles de descuento** aplicado a cada uno de los 11 ítems/ejercicios:
 
-Es un punto de partida, no reemplaza la calibración de rúbrica caso a caso que hace la skill `revisar-evaluacion` con Diego antes de corregir.
+1. **✅ Acepta sin descuento** — variantes que logran lo mismo que la solución (nombres de variable, redacción del `print()`, estructuras equivalentes como `if/elif/else` vs. anidados, orden de definición de variables, etc.).
+2. **⚠️ Descuenta 1-2 pts** — la lógica central está bien pero algo quedó impreciso (tipo de dato no exacto, caso límite no probado en los ejemplos mal cubierto, un `input()` de más). Tope explícito de 2 pts; ante la duda entre 0 y 1-2, se prefiere 0.
+3. **❌ Descuenta la mayoría o todo el puntaje** — errores de lógica reales: operador de comparación incorrecto, rama faltante, tipo de dato mal leído que rompe el programa, código que no ejecuta.
+
+El detalle específico de qué variación cae en cada nivel, ítem por ítem, vive en el bloque `🔍 Rúbrica flexible para este ítem` de cada solución en `Solucionario.ipynb` (no se duplica aquí para no mantenerlo en dos lugares).
+
+Es un punto de partida ya calibrado a este solucionario — no reemplaza que la skill `revisar-evaluacion` siga afinando con Diego si aparece un patrón nuevo no cubierto.
 
 ---
 
