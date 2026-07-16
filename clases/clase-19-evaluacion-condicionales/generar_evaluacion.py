@@ -70,6 +70,10 @@ ITEMS_1 = [
         var="participa_concurso", print_label="¿Participa en el concurso?",
         expr="cuenta_publica and uso_hashtag_oficial",
         expected=False,
+        criterio=(
+            "Que la condición exigiera **ambas** variables a la vez (no bastaba "
+            "con que se cumpliera solo una de las dos)."
+        ),
         rubrica=dict(
             acepta=[
                 "Orden invertido: `uso_hashtag_oficial and cuenta_publica` (mismo resultado, `and` es conmutativo).",
@@ -98,6 +102,11 @@ ITEMS_1 = [
         var="puede_entrar_backstage", print_label="¿Puede entrar al backstage?",
         expr="tiene_pulsera_vip and (tiene_acreditacion_prensa or tiene_invitacion_staff)",
         expected=True,
+        criterio=(
+            "Que la pulsera VIP fuera **obligatoria** y que, además, bastara con "
+            "**una** de las otras dos condiciones (prensa o staff) — no las dos "
+            "juntas."
+        ),
         rubrica=dict(
             acepta=[
                 "Reescribe con la distribución equivalente: `(tiene_pulsera_vip and tiene_acreditacion_prensa) or (tiene_pulsera_vip and tiene_invitacion_staff)` — matemáticamente igual, aunque menos elegante.",
@@ -141,6 +150,10 @@ ITEMS_1 = [
             "print(mensaje_maquina)"
         ),
         expected="Bebida entregada.",
+        criterio=(
+            "Que la comparación fuera de **igualdad exacta** (no un rango tipo "
+            "\"suficiente o más\"), ya que la máquina no da vuelto."
+        ),
         rubrica=dict(
             acepta=[
                 "Usa `!=` invirtiendo las ramas (`if monto_insertado != precio_bebida:` mensaje de error, `else:` entregada) — misma partición de casos.",
@@ -184,6 +197,10 @@ ITEMS_1 = [
             "print(mensaje_torneo)"
         ),
         expected="El equipo clasifica a semifinales.",
+        criterio=(
+            "Que el caso límite (puntaje **igual** al mínimo) quedara incluido "
+            "en la clasificación, no solo los puntajes que lo superan."
+        ),
         rubrica=dict(
             acepta=[
                 "Reescribe como `not (puntaje_equipo < puntaje_minimo_clasificacion)` — equivalente lógico.",
@@ -221,6 +238,10 @@ ITEMS_1 = [
             "print(mensaje_tiktok)"
         ),
         expected="Video publicado con éxito.",
+        criterio=(
+            "Que la sintaxis del `if` quedara completa (con `:` al final) y que "
+            "el resultado no cambiara respecto al esperado."
+        ),
         rubrica=dict(
             acepta=[
                 "Cualquier corrección que agregue los dos puntos y mantenga la lógica intacta.",
@@ -267,6 +288,10 @@ ITEMS_1 = [
             "print(mensaje_parlante)"
         ),
         expected="El parlante no entendió el comando.",
+        criterio=(
+            "Que se mantuviera la **dependencia** entre las dos condiciones: la "
+            "pregunta por el comando solo se hace si hay conexión a internet."
+        ),
         rubrica=dict(
             acepta=[
                 "Cualquier indentación consistente que preserve el anidamiento correcto (4 espacios, tabs, etc. — no importa el estilo, solo que sea consistente).",
@@ -314,6 +339,11 @@ ITEMS_1 = [
             "print(mensaje_racha)"
         ),
         expected="Buena constancia.",
+        criterio=(
+            "Que las condiciones quedaran ordenadas de **mayor a menor** "
+            "exigencia, para que ningún caso quedara mal clasificado por una "
+            "condición más amplia evaluada antes de tiempo."
+        ),
         rubrica=dict(
             acepta=[
                 "Cualquier orden de `if/elif` siempre que vaya de mayor a menor umbral (>=14, >=7, >=3, else) — lo que importa es el orden de evaluación, no la redacción exacta de los mensajes.",
@@ -357,6 +387,11 @@ EJERCICIOS_2 = [
             "    print(\"¡Entra al Modo Fiesta! 🎉\")\n"
             "else:\n"
             "    print(\"Se guarda para otro momento.\")"
+        ),
+        criterio=(
+            "Que el dato pedido con `input()` se leyera como número, que el "
+            "umbral (70) quedara incluido como \"alcanza\" (no solo \"supera\"), "
+            "y que cada camino mostrara su mensaje correspondiente."
         ),
         rubrica=dict(
             acepta=[
@@ -408,6 +443,11 @@ EJERCICIOS_2 = [
             "    else:\n"
             "        print(\"No le alcanza el saldo para el pasaje.\")"
         ),
+        criterio=(
+            "Que se verificara **primero** el pase escolar, que la pregunta por "
+            "el saldo solo apareciera cuando correspondía (sin pase), y que los "
+            "**tres** caminos posibles mostraran su mensaje exacto."
+        ),
         rubrica=dict(
             acepta=[
                 "Compara la respuesta con `.lower()` u otra variante que además acepte \"Si\"/\"SI\" — mejora robustez, no se exige pero tampoco se penaliza.",
@@ -454,6 +494,10 @@ EJERCICIOS_2 = [
             "    print(\"Nivel: Buen ahorro.\")\n"
             "else:\n"
             "    print(\"Nivel: ¡Excelente semana!\")"
+        ),
+        criterio=(
+            "Que las **4 categorías** quedaran bien delimitadas, sin huecos ni "
+            "superposiciones en los límites entre un nivel y el siguiente."
         ),
         rubrica=dict(
             acepta=[
@@ -507,6 +551,12 @@ EJERCICIOS_2 = [
             "    print(\"Sala de nivel plata.\")\n"
             "else:\n"
             "    print(\"Sala de nivel bronce.\")"
+        ),
+        criterio=(
+            "Que la pregunta por la racha de victorias solo se hiciera para el "
+            "rango \"oro\" (no para los otros), y que las **cuatro** "
+            "combinaciones posibles (bronce, plata, oro sin racha, oro con "
+            "racha) mostraran su mensaje correcto."
         ),
         rubrica=dict(
             acepta=[
@@ -810,6 +860,7 @@ def build_solucionario_estudiantes_notebook() -> dict:
             ))
         else:
             cells.append(code_cell(item["fixed"] + f"\n# Esperado: {item['expected']}"))
+        cells.append(md_cell(f"🔎 **Qué se revisó:** {item['criterio']}"))
 
     cells.append(md_cell("---\n\n## 💻 Sección 2 — Programas completos (70 pts)"))
 
@@ -823,6 +874,7 @@ def build_solucionario_estudiantes_notebook() -> dict:
             + tabla_html(ej["ej1_in"], ej["ej1_out"], ej["ej2_in"], ej["ej2_out"])
         ))
         cells.append(code_cell(ej["solucion"]))
+        cells.append(md_cell(f"🔎 **Qué se revisó:** {ej['criterio']}"))
 
     cells.append(md_cell(
         "---\n\n## 🏁 Fin del solucionario\n\n"

@@ -1,5 +1,13 @@
 # Historial — Clase 19 - Evaluación Condicionales
 
+## 2026-07-16 — Revisión: agregar "Qué se revisó" al Solucionario Estudiantes
+
+**Motivo:** Diego pidió que el Solucionario Estudiantes indicara el criterio de revisión de cada ítem/ejercicio (qué se evaluó en la lógica), sin mencionar puntos.
+
+**Cambio aplicado:** se agregó un campo `criterio` a cada uno de los 11 ítems/ejercicios en `generar_evaluacion.py` (una o dos frases describiendo qué exigía la lógica evaluada, ej. "que la condición exigiera ambas variables a la vez"). `build_solucionario_estudiantes_notebook()` ahora agrega un bloque `🔎 **Qué se revisó:** ...` justo después de cada solución — sin números de puntos ni el lenguaje de descuento del Solucionario del profesor.
+
+**Verificación:** se regeneraron los 3 notebooks; diff confirmó que `Evaluación.ipynb` no cambió contenido (solo IDs) y `Solucionario.ipynb` tampoco (los criterios nuevos solo se usan en el notebook de estudiantes).
+
 ## 2026-07-16 — Solucionario para publicar a estudiantes
 
 **Motivo:** Diego pidió un solucionario para publicar directamente a los estudiantes, distinto del `Solucionario.ipynb` existente (ese es fuente de verdad para el profesor/agente corrector — trae la rúbrica flexible de 3 niveles con lenguaje de descuento de puntos, que no corresponde mostrarle al curso).
