@@ -762,6 +762,79 @@ def build_solucionario_notebook() -> dict:
     return notebook(cells, "Clase 19 - Evaluación Condicionales - Solucionario")
 
 
+# ── Solucionario para publicar a estudiantes (sin rúbrica de corrección) ──────
+
+def build_solucionario_estudiantes_notebook() -> dict:
+    puntaje_rows = [(item["id"], tipo_label(item), item["pts"]) for item in ITEMS_1]
+    puntaje_rows += [
+        (f"2.{ej['num']}", ej["titulo"], ej["pts"])
+        for ej in EJERCICIOS_2
+    ]
+
+    cells = [
+        md_cell(
+            "# ✅ Solucionario — Evaluación Individual Condicionales\n\n"
+            "Revisa aquí la solución de cada ítem y ejercicio, con el "
+            "resultado esperado. Si tu código llegaba a un resultado "
+            "distinto por otro camino (otros nombres de variable, otra "
+            "forma de escribir la condición), no significa necesariamente "
+            "que estuviera mal — conversa cualquier duda puntual con el "
+            "profesor."
+        ),
+        md_cell(
+            "---\n\n## 📊 Distribución de puntaje (total 100 pts, exigencia 50%)\n\n"
+            + puntaje_tabla_md(puntaje_rows)
+        ),
+        md_cell("---\n\n## 🔥 Sección 1 — Ítems cortos (30 pts)"),
+    ]
+
+    last_tipo = None
+    for item in ITEMS_1:
+        if item["tipo"] != last_tipo:
+            cells.append(md_cell(
+                "### 1A — Arma la condición" if item["tipo"] == "arma"
+                else "### 1B — Arregla el bug"
+            ))
+            last_tipo = item["tipo"]
+
+        cells.append(md_cell(
+            f"---\n\n**Ítem {item['id']}** ({item['pts']} pts)\n\n"
+            f"{item['narrativa']}"
+        ))
+        if item["tipo"] == "arma":
+            cells.append(code_cell(
+                f"{item['setup']}\n\n"
+                f"{item['var']} = {item['expr']}\n\n"
+                f"print(\"{item['print_label']}\", {item['var']})  "
+                f"# Esperado: {item['expected']}"
+            ))
+        else:
+            cells.append(code_cell(item["fixed"] + f"\n# Esperado: {item['expected']}"))
+
+    cells.append(md_cell("---\n\n## 💻 Sección 2 — Programas completos (70 pts)"))
+
+    for ej in EJERCICIOS_2:
+        cells.append(md_cell(
+            f"---\n\n### Ejercicio {ej['num']} — {ej['titulo']} ({ej['pts']} pts)\n\n"
+            f"{ej['narrativa']}\n\n"
+            "**El programa debe:**\n"
+            + "\n".join(f"- {d}" for d in ej["debe"])
+            + "\n\n"
+            + tabla_html(ej["ej1_in"], ej["ej1_out"], ej["ej2_in"], ej["ej2_out"])
+        ))
+        cells.append(code_cell(ej["solucion"]))
+
+    cells.append(md_cell(
+        "---\n\n## 🏁 Fin del solucionario\n\n"
+        "¿Alguna respuesta no te calzó? Pregúntale al profesor antes de la "
+        "próxima clase."
+    ))
+
+    return notebook(
+        cells, "Clase 19 - Evaluación Condicionales - Solucionario Estudiantes"
+    )
+
+
 if __name__ == "__main__":
     import json
     import os
@@ -770,6 +843,9 @@ if __name__ == "__main__":
 
     student_path = os.path.join(base, "Clase 19 - Evaluación Condicionales - Evaluación.ipynb")
     sol_path = os.path.join(base, "Clase 19 - Evaluación Condicionales - Solucionario.ipynb")
+    sol_estudiantes_path = os.path.join(
+        base, "Clase 19 - Evaluación Condicionales - Solucionario Estudiantes.ipynb"
+    )
 
     with open(student_path, "w", encoding="utf-8") as f:
         json.dump(build_student_notebook(), f, ensure_ascii=False, indent=1)
@@ -777,5 +853,9 @@ if __name__ == "__main__":
     with open(sol_path, "w", encoding="utf-8") as f:
         json.dump(build_solucionario_notebook(), f, ensure_ascii=False, indent=1)
 
+    with open(sol_estudiantes_path, "w", encoding="utf-8") as f:
+        json.dump(build_solucionario_estudiantes_notebook(), f, ensure_ascii=False, indent=1)
+
     print("Generado:", student_path)
     print("Generado:", sol_path)
+    print("Generado:", sol_estudiantes_path)

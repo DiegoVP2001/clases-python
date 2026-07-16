@@ -1,5 +1,15 @@
 # Historial — Clase 19 - Evaluación Condicionales
 
+## 2026-07-16 — Solucionario para publicar a estudiantes
+
+**Motivo:** Diego pidió un solucionario para publicar directamente a los estudiantes, distinto del `Solucionario.ipynb` existente (ese es fuente de verdad para el profesor/agente corrector — trae la rúbrica flexible de 3 niveles con lenguaje de descuento de puntos, que no corresponde mostrarle al curso).
+
+**Advertencia hecha a Diego:** la evaluación se rinde el 2026-07-21 y esto se generó y publicó el 2026-07-16, es decir **antes** de rendirse — el repo es público, así que el solucionario queda expuesto a quien tenga el link desde ahora. Diego confirmó explícitamente que quiere publicarlo de inmediato, no esperar a después de la evaluación.
+
+**Artefacto nuevo:** `Clase 19 - Evaluación Condicionales - Solucionario Estudiantes.ipynb`, generado por una nueva función (`build_solucionario_estudiantes_notebook()`) en `generar_evaluacion.py`. Reutiliza narrativas y soluciones de `ITEMS_1`/`EJERCICIOS_2` (misma fuente de verdad), pero omite: el encabezado "Solo para el profesor", el bloque `CRITERIOS_CORRECCION_MD` (instrucciones para el agente que corrige) y el bloque `🔍 Rúbrica flexible` de cada ítem/ejercicio. Incluye solo: narrativa, tabla de ejemplos (en Sección 2), código solución y resultado esperado.
+
+**Verificación:** se regeneraron los 3 notebooks (`Evaluación.ipynb`, `Solucionario.ipynb`, `Solucionario Estudiantes.ipynb`); diff confirmó que `Evaluación.ipynb` y `Solucionario.ipynb` no cambiaron contenido (solo IDs de celda, ruido esperado).
+
 ## 2026-07-15 — Revisión 3: rúbrica flexible por ítem para el agente revisor
 
 **Motivo:** Diego pidió actualizar el Solucionario para que quede pensado como fuente de verdad para un agente que corrige (skill `revisar-evaluacion`), no solo para el profesor humano. El pedido explícito: que el agente sepa tomar una postura flexible ante la diversidad de "codeo" de los estudiantes — lo importante es la funcionalidad, no la forma exacta — y que cuando un estudiante no escriba exactamente lo pedido pero diga en esencia lo mismo, el error sea tan mínimo que no se le resten puntos, o a lo más 1-2.
