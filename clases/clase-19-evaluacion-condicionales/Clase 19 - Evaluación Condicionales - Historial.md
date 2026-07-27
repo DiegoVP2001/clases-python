@@ -1,5 +1,19 @@
 # Historial — Clase 19 - Evaluación Condicionales
 
+## 2026-07-27 — Auditoría pre-examen: fecha desincronizada + ambigüedad coma/punto decimal
+
+**Motivo:** Diego pidió auditar `Evaluación.ipynb` en busca de enunciados poco claros, sin sentido o que evaluaran contenido no visto. Se detectaron dos problemas (ninguno de contenido curricular — la cobertura contra el Temario de Clase 17.5 y los Bloques 1-7 se verificó completa y correcta).
+
+**Hallazgo 1 — fecha desincronizada:** el `.ipynb` vivo mostraba "martes 28 de julio, 2026" en el encabezado (con el "**75 minutos**" ya quitado de esa línea), pero `generar_evaluacion.py` y este Spec seguían generando "martes 21 de julio, 2026" — evidencia de una edición manual directa al notebook, sin pasar por el script (contra la convención de este proyecto). Como el examen efectivamente se rindió/rinde el 28 (hoy es 27, un día antes), se sincronizó el script y el Spec con esa fecha, preservando el ajuste ya hecho a mano.
+
+**Hallazgo 2 — Ejercicio 3 (Ahorro semanal en dólares), ambigüedad coma/punto decimal:** el enunciado escribía los umbrales con notación chilena de coma decimal ("Entre 10 y 29,99 dólares", "Entre 30 y 59,99 dólares"), mientras el único ejemplo de input mostrado usa punto (`62.5`, formato que exige Python). Riesgo real: un estudiante podía escribir `29,99` literal en su código (se interpreta como tupla `(29, 99)`, `TypeError` al comparar) o tipearlo así en el `input()` (`ValueError` en `float()`). Ningún contenido previo aclaró la diferencia coma/punto. La solución oficial ni siquiera necesita ese literal (usa `< 30` directamente).
+
+**Cambio aplicado (en `generar_evaluacion.py`, regenerados los 3 notebooks):**
+- Umbrales de Ejercicio 3 reformulados sin decimales exactos: "Entre 10 y menos de 30 dólares" / "Entre 30 y menos de 60 dólares", en vez de "29,99"/"59,99". Coincide ahora con los límites `< 30` / `< 60` de la solución de referencia.
+- Encabezado de fecha sincronizado a "martes 28 de julio, 2026" en el script (se quitó también el `| **75 minutos**` sobrante de esa línea, ya redundante con las Instrucciones generales).
+
+**Verificación:** diff post-regeneración confirmó que los únicos cambios de contenido en los 3 notebooks fueron estos dos (más ruido esperado de IDs de celda). `Solucionario.ipynb` (profesor) no cambió texto porque no incluye la narrativa/lista "El programa debe" de los ejercicios, solo código y rúbrica.
+
 ## 2026-07-16 — Revisión: agregar "Qué se revisó" al Solucionario Estudiantes
 
 **Motivo:** Diego pidió que el Solucionario Estudiantes indicara el criterio de revisión de cada ítem/ejercicio (qué se evaluó en la lógica), sin mencionar puntos.

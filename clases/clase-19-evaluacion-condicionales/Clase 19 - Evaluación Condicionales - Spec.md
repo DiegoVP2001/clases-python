@@ -1,6 +1,6 @@
 # Clase 19 — Evaluación Individual de Condicionales — Spec
 
-**Fecha:** martes 21 de julio, 2026
+**Fecha:** martes 28 de julio, 2026 (reprogramada — originalmente 21 de julio)
 **Modalidad:** individual, en Google Colab (entrega vía Classroom)
 **Duración:** 75 minutos efectivos
 **Puntaje:** 100 pts, exigencia 50% (nota 4.0 al 50% de logro, escala 1.0–7.0)
@@ -247,8 +247,8 @@ else:
 - Pedir con `input()` el **monto ahorrado esta semana, en dólares** (**puede tener decimales**)
 - Clasificar el monto en estos 4 niveles:
   - Menos de 10 dólares → `"Nivel: Recién empezando."`
-  - Entre 10 y 29,99 dólares → `"Nivel: En camino."`
-  - Entre 30 y 59,99 dólares → `"Nivel: Buen ahorro."`
+  - Entre 10 y menos de 30 dólares → `"Nivel: En camino."`
+  - Entre 30 y menos de 60 dólares → `"Nivel: Buen ahorro."`
   - 60 dólares o más → `"Nivel: ¡Excelente semana!"`
 
 | Ejemplo 1 | Ejemplo 2 |

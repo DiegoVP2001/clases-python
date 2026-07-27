@@ -477,8 +477,8 @@ EJERCICIOS_2 = [
             "dólares** (**puede tener decimales**)",
             "Clasificar el monto en estos 4 niveles:\n"
             "  - Menos de 10 dólares → `\"Nivel: Recién empezando.\"`\n"
-            "  - Entre 10 y 29,99 dólares → `\"Nivel: En camino.\"`\n"
-            "  - Entre 30 y 59,99 dólares → `\"Nivel: Buen ahorro.\"`\n"
+            "  - Entre 10 y menos de 30 dólares → `\"Nivel: En camino.\"`\n"
+            "  - Entre 30 y menos de 60 dólares → `\"Nivel: Buen ahorro.\"`\n"
             "  - 60 dólares o más → `\"Nivel: ¡Excelente semana!\"`",
         ],
         ej1_in="15", ej1_out="Nivel: En camino.",
@@ -616,7 +616,7 @@ def build_student_notebook() -> dict:
     cells = [
         md_cell(
             "# 📝 Evaluación Individual — Condicionales\n\n"
-            "**Fecha:** martes 21 de julio, 2026  |  **75 minutos**\n\n"
+            "**Fecha:** martes 28 de julio, 2026\n\n"
             "📅 **Fecha:** ___________________________  \n"
             "👤 **Nombre:** ___________________________  \n"
             "📌 **Curso:** ___________________________"
