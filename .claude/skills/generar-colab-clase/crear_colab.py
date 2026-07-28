@@ -392,17 +392,18 @@ def parsear_ticket_mcq(texto: str) -> list:
 
     Cada pregunta en el spec sigue el formato:
         **Pregunta N:** [enunciado]
-        - 1 dedo: [alternativa]
-        - 2 dedos: [alternativa]
-        - 3 dedos: [alternativa]
-        - 4 dedos: [alternativa]
-        **Respuesta correcta:** [1/2/3/4 dedos]
+        - A: [alternativa]
+        - B: [alternativa]
+        - C: [alternativa]
+        - D: [alternativa]
+        **Respuesta correcta:** [A/B/C/D]
         **Justificación:** [texto]
 
-    Las alternativas se rotulan por cantidad de dedos (no A/B/C/D) para mantener
-    el mismo vocabulario que se usa en clase; se responden vía el Google Form de
-    registro, no en voz alta y no antes de que termine la última pregunta, para
-    evitar el efecto arrastre (ver CLAUDE.md regla 17).
+    Las alternativas se rotulan A/B/C/D (desde 2026-07-28 — antes se rotulaban
+    por cantidad de dedos, mecanismo obsoleto desde que el TdS migró a Google
+    Form). Se responden vía el Google Form de registro, no en voz alta y no
+    antes de que termine la última pregunta, para evitar el efecto arrastre
+    (ver CLAUDE.md regla 17).
     Estas preguntas NO van al Clase.ipynb del estudiante — solo al Solucionario.
     Las respuestas correctas (sin enunciado ni justificación) se replican además
     en un JSON liviano — ver `construir_ticket_respuestas()` — para que el agente
@@ -416,14 +417,14 @@ def parsear_ticket_mcq(texto: str) -> list:
         numero = bloques[i].strip()
         cuerpo = bloques[i + 1]
 
-        match_enunciado = re.search(r"^(.*?)(?=\n\s*-\s*\d\s*dedos?:)", cuerpo, re.DOTALL)
+        match_enunciado = re.search(r"^(.*?)(?=\n\s*-\s*[A-D]\s*:)", cuerpo, re.DOTALL)
         enunciado = match_enunciado.group(1).strip() if match_enunciado else cuerpo.strip()
 
         alternativas = {}
-        for match_alt in re.finditer(r"-\s*(\d)\s*dedos?:\s*(.+)", cuerpo):
+        for match_alt in re.finditer(r"-\s*([A-D])\s*:\s*(.+)", cuerpo):
             alternativas[match_alt.group(1)] = match_alt.group(2).strip()
 
-        match_correcta = re.search(r"\*\*Respuesta correcta:\*\*\s*(\d)", cuerpo)
+        match_correcta = re.search(r"\*\*Respuesta correcta:\*\*\s*([A-D])", cuerpo)
         correcta = match_correcta.group(1).strip() if match_correcta else None
 
         match_justif = re.search(r"\*\*Justificación:\*\*\s*(.+?)(?=\*\*Pregunta|\Z)", cuerpo, re.DOTALL)
@@ -897,17 +898,16 @@ def construir_solucionario(spec: dict) -> nbformat.NotebookNode:
     if secciones_clase:
         nb.cells.append(new_markdown_cell(secciones_clase))
 
-    ETIQUETAS_DEDOS = {"1": "1 dedo", "2": "2 dedos", "3": "3 dedos", "4": "4 dedos"}
     if spec.get("ticket_mcq"):
         nb.cells.append(new_markdown_cell("## 🎫 Ticket de Salida"))
         for pregunta in spec["ticket_mcq"]:
             bloque = f"### Pregunta {pregunta['numero']}\n\n{pregunta['enunciado']}\n\n"
-            for numero_dedo in ["1", "2", "3", "4"]:
-                texto_alt = pregunta["alternativas"].get(numero_dedo, "")
+            for letra in ["A", "B", "C", "D"]:
+                texto_alt = pregunta["alternativas"].get(letra, "")
                 if not texto_alt:
                     continue
-                marca = " ✅" if numero_dedo == pregunta.get("correcta") else ""
-                bloque += f"**✋ {ETIQUETAS_DEDOS[numero_dedo]}:** {texto_alt}{marca}\n\n"
+                marca = " ✅" if letra == pregunta.get("correcta") else ""
+                bloque += f"**{letra}:** {texto_alt}{marca}\n\n"
             if pregunta.get("justificacion"):
                 bloque += f"> 💡 {pregunta['justificacion']}\n"
             nb.cells.append(new_markdown_cell(bloque))

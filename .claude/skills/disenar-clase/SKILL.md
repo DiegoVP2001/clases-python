@@ -55,16 +55,17 @@ Si detectas sobrecarga, antes de proponer la estructura di algo como:
 
 Espera respuesta. No avances con sobrecarga si Diego no lo aprueba explícitamente.
 
-### Paso 3 — Proponer objetivo y propósito
+### Paso 3 — Elegir actitud, y proponer objetivo y propósito
 
-Propón el objetivo de aprendizaje con esta estructura:
+**Primero, ofrece opciones de actitud (obligatorio — no propongas una sola).** Presenta 3-4 actitudes candidatas (ej. Orden, Precisión, Paciencia, Método, Perseverancia, Criterio) con una descripción breve de por qué cada una calza con el contenido específico de la clase, y espera que Diego elija una antes de redactar el objetivo. Usa `AskUserQuestion` o una lista simple en el chat, lo que calce mejor con el resto de la conversación.
+
+Con la actitud elegida, propón el objetivo de aprendizaje con esta estructura:
 
 ```
-Objetivo: [Verbo observable de Bloom] [contenido específico] [para + propósito], [actitud].
+Objetivo: [Verbo observable de Bloom] [contenido específico], [actitud].
 
-Ejemplo: Demostrar el uso de condicionales if-else en Python mediante la
-construcción de programas que tomen decisiones simples, para automatizar
-respuestas según datos de entrada, con perseverancia.
+Ejemplo: Construir programas con ciclos `for` anidados que generen tablas
+y patrones organizados en filas y columnas, con orden.
 ```
 
 Verbos recomendados (consulta `referencia-bloom` si necesitas calibrar nivel):
@@ -74,14 +75,13 @@ Verbos recomendados (consulta `referencia-bloom` si necesitas calibrar nivel):
 
 Evita verbos no observables: "comprender", "saber", "conocer", "entender".
 
-El **propósito** debe estar escrito para estudiantes y responder "¿para qué sirve esto?", proyectándose **más allá del aula y de la programación misma**. No basta con conectar el contenido con otros programas o ejercicios — el propósito debe mostrar cómo lo aprendido se aplica a decisiones, sistemas o situaciones de la vida real fuera del liceo (apps de banco, semáforos, música, deportes, trabajo, etc.). Diego aprobó explícitamente esta orientación: el propósito es agencia y proyección, no solo utilidad técnica.
+**Propósito — formato corto (default vigente desde 2026-07-28, Clase 20):** el propósito debe estar escrito para estudiantes, conectar explícitamente con la actitud elegida, y mantenerse **muy concreto y corto — 2 frases, sin enumeraciones ni ejemplos intercalados**:
+1. Frase que define la actitud en términos cotidianos para un estudiante de 3ro/4to medio ("El orden es organizar el trabajo en pasos claros, uno dentro de otro, sin mezclarlos.")
+2. Frase breve que conecta directamente con el contenido de la clase de hoy ("Hoy lo practicamos anidando ciclos `for`.")
 
-**Regla crítica — actitud y propósito deben estar conectados:** La actitud del objetivo (ej: `con perseverancia`, `con orden`, `con criterio`) no es decorativa. El propósito **debe nombrarla explícitamente al inicio**, explicar qué significa en lenguaje cotidiano para un estudiante de 3ro y 4to medio, y cerrar mostrando cómo la clase de hoy la ejercita concretamente. Estructura canónica del propósito — **exactamente 3 frases, sin enumeraciones ni ejemplos entre guiones intercalados** (mantenerlo breve y fluido, no una lista de casos):
-1. Frase que define la actitud en términos cotidianos ("El orden es la capacidad de...")
-2. Frase que la proyecta más allá del liceo, **en plural** — el curso se piensa como colectivo, nunca "te sirve" sino "nos sirve" ("Esa habilidad nos sirve en cualquier proceso real que...")
-3. Frase que conecta con la clase de hoy ("Hoy la vamos a ejercitar con `for` y `range()`, donde...")
+Ejemplo del formato vigente (2 frases, corto): "El orden es organizar el trabajo en pasos claros, uno dentro de otro, sin mezclarlos. Hoy lo practicamos anidando ciclos `for`." (Clase 20, actitud "Orden".)
 
-Ejemplo del formato vigente (3 frases, plural, sin listas intercaladas): "El orden es la capacidad de escribir y organizar el código de manera clara, estructurada y fácil de seguir. Esa habilidad nos sirve en cualquier proceso real que se repita muchas veces, donde la claridad evita errores costosos. Hoy la vamos a ejercitar con `for` y `range()`, construyendo bucles ordenados para generar secuencias numéricas." Specs anteriores a esta fecha (ej. `clase-13-if-anidadas`) usan el formato antiguo en singular — no son la referencia vigente.
+> **Formato anterior (superado por el default corto, usado hasta Clase 19):** 3 frases — definición de la actitud, proyección **en plural** más allá del liceo ("Esa habilidad nos sirve en cualquier proceso real que..."), y conexión con la clase de hoy. Ofrécelo solo si Diego pide explícitamente un propósito más desarrollado que proyecte la actitud a situaciones de la vida real fuera de la programación — no es el default. Specs anteriores a 2026-07-28 (ej. `clase-13-if-anidadas`, `clase-16-for-range`) usan este formato de 3 frases o el aún más antiguo en singular — no son la referencia vigente.
 
 Presenta objetivo + propósito y espera aprobación o ajuste antes de avanzar.
 
@@ -134,9 +134,9 @@ Contextos: [variados entre los 2 ejercicios]
 Criterio de logro: [qué evidencia el aprendizaje]
 
 ### 5. Ticket de Salida (5-8 min)
-2-3 preguntas de alternativas (4 opciones, rotuladas 1 dedo/2 dedos/3 dedos/4 dedos) sobre lo más importante de la clase. Se responden mostrando los dedos todos al mismo tiempo (conteo + revelación simultánea, ver CLAUDE.md regla 17) — las preguntas y alternativas NO se incluyen en el Colab de clase (solo un aviso de que se proyectan en la tele), van completas solo en el Solucionario.
+2-3 preguntas de alternativas (4 opciones, rotuladas A/B/C/D) sobre lo más importante de la clase. Se responden vía Google Form (ver CLAUDE.md regla 17) — las preguntas y alternativas NO se incluyen en el Colab de clase (solo un aviso de que se proyectan en la tele), van completas solo en el Solucionario.
 Cantidad de preguntas: [2 si el ICN tiene 1-2 conceptos centrales relacionados; 3 si cubre 3+ conceptos o si dos conceptos son claramente independientes — no preguntar, decidir con este criterio]
-Preguntas: [enunciado + 4 alternativas (1-4 dedos) + cuál es correcta + justificación breve, para cada una]
+Preguntas: [enunciado + 4 alternativas (A/B/C/D) + cuál es correcta + justificación breve, para cada una]
 
 ### Cierre (5 min)
 **Objetivo de la clase:** [copiar el objetivo aprobado]
@@ -268,19 +268,19 @@ Resultado esperado: ...
 
 ### 5. Ticket de Salida (5-8 min)
 **Pregunta 1:** [enunciado]
-- 1 dedo: [alternativa]
-- 2 dedos: [alternativa]
-- 3 dedos: [alternativa]
-- 4 dedos: [alternativa]
-**Respuesta correcta:** [1/2/3/4 dedos]
+- A: [alternativa]
+- B: [alternativa]
+- C: [alternativa]
+- D: [alternativa]
+**Respuesta correcta:** [A/B/C/D]
 **Justificación:** [explicación breve, para que Diego la use al revelar la respuesta en vivo]
 
 **Pregunta 2:** [enunciado]
-- 1 dedo: [alternativa]
-- 2 dedos: [alternativa]
-- 3 dedos: [alternativa]
-- 4 dedos: [alternativa]
-**Respuesta correcta:** [1/2/3/4 dedos]
+- A: [alternativa]
+- B: [alternativa]
+- C: [alternativa]
+- D: [alternativa]
+**Respuesta correcta:** [A/B/C/D]
 **Justificación:** [explicación breve]
 
 [Agregar **Pregunta 3** solo si el ICN de esta clase cubre 3+ conceptos, o si dos conceptos son claramente independientes y ambos ameritan verificación separada — ver criterio en CLAUDE.md.]
