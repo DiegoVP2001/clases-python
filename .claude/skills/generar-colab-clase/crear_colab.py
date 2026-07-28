@@ -399,10 +399,14 @@ def parsear_ticket_mcq(texto: str) -> list:
         **Respuesta correcta:** [1/2/3/4 dedos]
         **Justificación:** [texto]
 
-    Las alternativas se rotulan por cantidad de dedos (no A/B/C/D) porque se
-    responden mostrando los dedos todos al mismo tiempo tras un conteo, para
-    evitar el efecto arrastre de responder en voz alta (ver CLAUDE.md regla 17).
+    Las alternativas se rotulan por cantidad de dedos (no A/B/C/D) para mantener
+    el mismo vocabulario que se usa en clase; se responden vía el Google Form de
+    registro, no en voz alta y no antes de que termine la última pregunta, para
+    evitar el efecto arrastre (ver CLAUDE.md regla 17).
     Estas preguntas NO van al Clase.ipynb del estudiante — solo al Solucionario.
+    Las respuestas correctas (sin enunciado ni justificación) se replican además
+    en un JSON liviano — ver `construir_ticket_respuestas()` — para que el agente
+    que cruza las respuestas del Form no tenga que leer este notebook completo.
     """
     preguntas = []
     bloques = re.split(r"\*\*Pregunta\s+(\d+)\s*:\*\*", texto)
@@ -756,6 +760,29 @@ def derivar_tema_breve_form(nombre_carpeta: str) -> str:
     return slug.replace("-", " ")
 
 
+def construir_ticket_respuestas(spec: dict) -> dict:
+    """Arma el JSON liviano con SOLO las respuestas correctas del Ticket de
+    Salida (sin enunciado ni justificación), pensado para que un agente lo lea
+    rápido al cruzar las respuestas del Google Form sin abrir el Solucionario
+    completo. Las llaves replican tal cual el nombre de columna que el Form usa
+    en la Sheet de respuestas ("Respuestas a ticket [1]".."[4]") — así el
+    cruce hace match directo columna-a-llave, sin traducir. Si la clase tuvo
+    menos de 4 preguntas, los espacios sobrantes quedan "No se preguntó".
+    """
+    llaves = [f"Respuestas a ticket [{n}]" for n in range(1, 5)]
+    preguntas = spec.get("ticket_mcq", [])
+    respuestas = {}
+    for llave, pregunta in zip(llaves, preguntas):
+        respuestas[llave] = pregunta.get("correcta") or "No se preguntó"
+    for llave in llaves[len(preguntas):]:
+        respuestas[llave] = "No se preguntó"
+    return {
+        "clase": spec.get("numero_clase"),
+        "tema": spec.get("tema_breve_form", ""),
+        "respuestas": respuestas,
+    }
+
+
 def generar_seccion_ticket_placeholder(spec: dict) -> str:
     nombre_breve = spec.get("tema_breve_form", spec.get("tema", ""))
     return (
@@ -948,6 +975,18 @@ def main():
                 nbformat.write(nb_solucionario, f)
             print(f"💾 Solucionario guardado en: {ruta_solucionario}")
             print("🔒 Solo para el profesor — se sube a Classroom recién después de dictar la clase.")
+
+    if spec.get("ticket_mcq"):
+        ruta_respuestas = ruta_salida.parent / ruta_salida.name.replace(
+            " - Clase.ipynb", " - Ticket de Salida Respuestas.json"
+        )
+        if ruta_respuestas == ruta_salida:
+            print("⚠️  No se pudo derivar el nombre del JSON de respuestas — "
+                  "el archivo de salida debe seguir el patrón 'Clase NN - Tema - Clase.ipynb'.")
+        else:
+            with ruta_respuestas.open("w", encoding="utf-8") as f:
+                json.dump(construir_ticket_respuestas(spec), f, ensure_ascii=False, indent=2)
+            print(f"💾 JSON de respuestas del Ticket de Salida guardado en: {ruta_respuestas}")
 
 
 if __name__ == "__main__":

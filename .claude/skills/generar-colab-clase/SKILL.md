@@ -66,7 +66,7 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
 | n+k | Markdown | Sección "🎫 Ticket de Salida" — anuncio de que se proyecta en la tele + link al Form + nombre breve a escribir en "Tema de la clase de hoy", sin preguntas (ver regla abajo) |
 | último | Markdown | Cierre y preguntas de reflexión |
 
-**Este notebook NO contiene ninguna solución, ni siquiera oculta con `<details>`.** Ni el Ticket de Salida, ni las respuestas del Haz Ahora, ni la solución de la Guiada, ni las de Independiente. Todo eso se genera en un segundo archivo, `Clase NN - Tema - Solucionario.ipynb`, en el mismo paso — ver sección "Solucionario (todas las soluciones)" más abajo.
+**Este notebook NO contiene ninguna solución, ni siquiera oculta con `<details>`.** Ni el Ticket de Salida, ni las respuestas del Haz Ahora, ni la solución de la Guiada, ni las de Independiente. Todo eso se genera en un segundo archivo, `Clase NN - Tema - Solucionario.ipynb`, en el mismo paso — ver sección "Solucionario (todas las soluciones)" más abajo. Si la clase tiene Ticket de Salida, además se genera un tercer archivo liviano, `Clase NN - Tema - Ticket de Salida Respuestas.json`, solo con las respuestas correctas — ver sección "JSON de respuestas del Ticket de Salida" más abajo.
 
 **Práctica Guiada — nunca lleva celda "Mis respuestas".** Diego siempre escribe el código directamente en la celda de código (`# Tu programa`), nunca respuestas de texto aparte. El notebook pasa directo del enunciado/pasos guiados a la celda de código vacía. (Esto es específico de la Guiada — la celda "Mis respuestas — Parte A" de ejercicios Independiente con análisis de error, y la celda "Mis respuestas" del Haz Ahora y del Cierre, no cambian.)
 
@@ -180,7 +180,23 @@ Cuando la situación de la guiada incluye una tabla de correspondencia (ej: rang
 Esto garantiza que se renderice correctamente en Colab y tenga el mismo nivel visual que las tablas de los ejercicios independientes.
 
 **Ticket de Salida — preguntas solo en el Solucionario, placeholder en Clase.ipynb**
-Las preguntas y alternativas del Ticket de Salida nunca se renderizan en `Clase.ipynb`. El parser las extrae (`**Pregunta N:**` + alternativas `- 1 dedo:`..`- 4 dedos:` + `**Respuesta correcta:**` + `**Justificación:**`) desde la sección `### 5. Ticket de Salida` del spec y las escribe únicamente en `Clase NN - Tema - Solucionario.ipynb`. Las alternativas se rotulan por cantidad de dedos (no A/B/C/D) porque se responden mostrando los dedos todos al mismo tiempo tras un conteo, no en voz alta — ver CLAUDE.md regla 17. En `Clase.ipynb`, si el spec tiene `ticket_mcq`, se agrega automáticamente una sección `## 🎫 Ticket de Salida` justo antes del Cierre con el aviso de que se proyecta en la tele, el link al Google Form de registro y el nombre breve a escribir en "Tema de la clase de hoy" — no requiere nada en el spec, el generador la arma sola (ver `derivar_tema_breve_form()` y `generar_seccion_ticket_placeholder()` en `crear_colab.py`). Ver sección "Solucionario (todas las soluciones)" más abajo.
+Las preguntas y alternativas del Ticket de Salida nunca se renderizan en `Clase.ipynb`. El parser las extrae (`**Pregunta N:**` + alternativas `- 1 dedo:`..`- 4 dedos:` + `**Respuesta correcta:**` + `**Justificación:**`) desde la sección `### 5. Ticket de Salida` del spec y las escribe únicamente en `Clase NN - Tema - Solucionario.ipynb`. Las alternativas se rotulan por cantidad de dedos (no A/B/C/D) para mantener el vocabulario que ya se usa en clase; se responden vía el Google Form de registro (no en voz alta, ni antes de terminar la última pregunta) — ver CLAUDE.md regla 17. En `Clase.ipynb`, si el spec tiene `ticket_mcq`, se agrega automáticamente una sección `## 🎫 Ticket de Salida` justo antes del Cierre con el aviso de que se proyecta en la tele, el link al Google Form de registro y el nombre breve a escribir en "Tema de la clase de hoy" — no requiere nada en el spec, el generador la arma sola (ver `derivar_tema_breve_form()` y `generar_seccion_ticket_placeholder()` en `crear_colab.py`). Ver sección "Solucionario (todas las soluciones)" más abajo.
+
+**JSON de respuestas del Ticket de Salida (`Clase NN - Tema - Ticket de Salida Respuestas.json`)**
+Si el spec tiene `ticket_mcq`, el generador también escribe un JSON aparte junto al Solucionario, vía `construir_ticket_respuestas()` en `crear_colab.py`. Es intencionalmente liviano — solo las respuestas correctas, sin enunciado ni justificación — para que el agente que cruce las respuestas del Google Form (ver [[tds-trazabilidad-sheet]] en memoria) lo lea rápido sin abrir el Solucionario ni el `.py`. Formato fijo:
+```json
+{
+  "clase": 16,
+  "tema": "for range",
+  "respuestas": {
+    "Respuestas a ticket [1]": "2",
+    "Respuestas a ticket [2]": "1",
+    "Respuestas a ticket [3]": "No se preguntó",
+    "Respuestas a ticket [4]": "No se preguntó"
+  }
+}
+```
+`tema` es el mismo nombre breve que se le pide al estudiante escribir en el Form (`tema_breve_form`), así el cruce hace match directo por texto. Las llaves de `respuestas` replican tal cual el nombre de columna que el Form genera en la Sheet ("Respuestas a ticket [1]".."[4]") — así el agente que cruza matchea columna-a-llave sin traducir nada. `respuestas` siempre trae las 4 llaves — las preguntas reales ocupan las primeras en orden y las que sobran (si la clase tuvo menos de 4 preguntas) quedan como `"No se preguntó"`, nunca se omiten, para que el agente que cruza no tenga que manejar casos de llaves faltantes.
 
 **Haz Ahora — respuestas esperadas multiline**
 El campo `**Respuestas esperadas:**` en el spec captura todo el texto hasta el fin de la sección Haz Ahora (no solo la primera línea). Escríbelas con items numerados, uno por línea. El generador las mueve automáticamente a `Solucionario.ipynb`.
