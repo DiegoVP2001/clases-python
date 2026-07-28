@@ -1,0 +1,312 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R] /Count 5 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 3091 >>
+stream
+BT /F2 18 Tf 46 796 Td (Banco de preguntas tipo Kahoot) Tj ET
+BT /F2 12 Tf 46 772 Td (Python - corte curricular hasta if / else) Tj ET
+BT /F1 10 Tf 46 754 Td (30 preguntas de respuesta rápida, 4 alternativas cada una. Contenidos: fundamentos, variables, comentarios,) Tj ET
+BT /F1 10 Tf 46 740 Td (print\(\), input\(\), conversiones, booleanos, comparadores, operadores lógicos, casos límite, if / else e) Tj ET
+BT /F1 10 Tf 46 726 Td (indentación.) Tj ET
+BT /F1 10 Tf 46 712 Td (Tiempo sugerido por pregunta: 20 a 30 segundos.) Tj ET
+BT /F2 14 Tf 46 694 Td (Preguntas) Tj ET
+BT /F2 10.5 Tf 46 672 Td (1. ¿Qué instrucción muestra un mensaje en pantalla?) Tj ET
+BT /F1 9.5 Tf 58 658 Td (A\) input\(\)) Tj ET
+BT /F1 9.5 Tf 58 645 Td (B\) print\(\)) Tj ET
+BT /F1 9.5 Tf 58 632 Td (C\) int\(\)) Tj ET
+BT /F1 9.5 Tf 58 619 Td (D\) bool\(\)) Tj ET
+BT /F1 5 Tf 46 606 Td () Tj ET
+BT /F2 10.5 Tf 46 600 Td (2. ¿Qué imprime este código? print\('Hola', 'curso'\)) Tj ET
+BT /F1 9.5 Tf 58 586 Td (A\) Holacurso) Tj ET
+BT /F1 9.5 Tf 58 573 Td (B\) Hola curso) Tj ET
+BT /F1 9.5 Tf 58 560 Td (C\) Hola, curso) Tj ET
+BT /F1 9.5 Tf 58 547 Td (D\) 'Hola' 'curso') Tj ET
+BT /F1 5 Tf 46 534 Td () Tj ET
+BT /F2 10.5 Tf 46 528 Td (3. ¿Qué hace el parámetro sep en print\(\)?) Tj ET
+BT /F1 9.5 Tf 58 514 Td (A\) Define el separador entre valores impresos) Tj ET
+BT /F1 9.5 Tf 58 501 Td (B\) Convierte texto a número) Tj ET
+BT /F1 9.5 Tf 58 488 Td (C\) Detiene el programa) Tj ET
+BT /F1 9.5 Tf 58 475 Td (D\) Borra una variable) Tj ET
+BT /F1 5 Tf 46 462 Td () Tj ET
+BT /F2 10.5 Tf 46 456 Td (4. ¿Qué logra end=' ' en un print\(\)?) Tj ET
+BT /F1 9.5 Tf 58 442 Td (A\) Que el siguiente print continúe en la misma línea) Tj ET
+BT /F1 9.5 Tf 58 429 Td (B\) Que el texto se convierta en entero) Tj ET
+BT /F1 9.5 Tf 58 416 Td (C\) Que aparezca una línea vacía antes) Tj ET
+BT /F1 9.5 Tf 58 403 Td (D\) Que Python ignore el print) Tj ET
+BT /F1 5 Tf 46 390 Td () Tj ET
+BT /F2 10.5 Tf 46 384 Td (5. ¿Cuál es un buen nombre de variable en Python?) Tj ET
+BT /F1 9.5 Tf 58 370 Td (A\) 2saldo) Tj ET
+BT /F1 9.5 Tf 58 357 Td (B\) saldo cuenta) Tj ET
+BT /F1 9.5 Tf 58 344 Td (C\) saldo_cuenta) Tj ET
+BT /F1 9.5 Tf 58 331 Td (D\) if) Tj ET
+BT /F1 5 Tf 46 318 Td () Tj ET
+BT /F2 10.5 Tf 46 312 Td (6. ¿Qué valor queda en saldo? saldo = 1000; saldo = saldo + 500) Tj ET
+BT /F1 9.5 Tf 58 298 Td (A\) 500) Tj ET
+BT /F1 9.5 Tf 58 285 Td (B\) 1000) Tj ET
+BT /F1 9.5 Tf 58 272 Td (C\) 1500) Tj ET
+BT /F1 9.5 Tf 58 259 Td (D\) saldo + 500) Tj ET
+BT /F1 5 Tf 46 246 Td () Tj ET
+BT /F2 10.5 Tf 46 240 Td (7. ¿Qué operador se usa para multiplicar en Python?) Tj ET
+BT /F1 9.5 Tf 58 226 Td (A\) x) Tj ET
+BT /F1 9.5 Tf 58 213 Td (B\) *) Tj ET
+BT /F1 9.5 Tf 58 200 Td (C\) ·) Tj ET
+BT /F1 9.5 Tf 58 187 Td (D\) **) Tj ET
+BT /F1 5 Tf 46 174 Td () Tj ET
+BT /F2 10.5 Tf 46 168 Td (8. ¿Qué resultado da 10 % 3?) Tj ET
+BT /F1 9.5 Tf 58 154 Td (A\) 1) Tj ET
+BT /F1 9.5 Tf 58 141 Td (B\) 3) Tj ET
+BT /F1 9.5 Tf 58 128 Td (C\) 3.33) Tj ET
+BT /F1 9.5 Tf 58 115 Td (D\) 10) Tj ET
+BT /F1 5 Tf 46 102 Td () Tj ET
+BT /F1 8 Tf 483 28 Td (Página 1 de 5) Tj ET
+
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 3004 >>
+stream
+BT /F2 8 Tf 46 814 Td (Banco Kahoot Python hasta if / else) Tj ET
+BT /F2 10.5 Tf 46 796 Td (9. ¿Qué hace Python con una línea que empieza con #?) Tj ET
+BT /F1 9.5 Tf 58 782 Td (A\) La ejecuta dos veces) Tj ET
+BT /F1 9.5 Tf 58 769 Td (B\) La usa como entrada) Tj ET
+BT /F1 9.5 Tf 58 756 Td (C\) La ignora como comentario) Tj ET
+BT /F1 9.5 Tf 58 743 Td (D\) La convierte en string) Tj ET
+BT /F1 5 Tf 46 730 Td () Tj ET
+BT /F2 10.5 Tf 46 724 Td (10. ¿Qué tipo de dato devuelve input\(\) antes de convertirlo?) Tj ET
+BT /F1 9.5 Tf 58 710 Td (A\) int) Tj ET
+BT /F1 9.5 Tf 58 697 Td (B\) float) Tj ET
+BT /F1 9.5 Tf 58 684 Td (C\) bool) Tj ET
+BT /F1 9.5 Tf 58 671 Td (D\) str) Tj ET
+BT /F1 5 Tf 46 658 Td () Tj ET
+BT /F2 10.5 Tf 46 652 Td (11. Si quieres calcular con una edad ingresada por teclado, ¿qué opción corresponde?) Tj ET
+BT /F1 9.5 Tf 58 638 Td (A\) edad = input\(\) + int) Tj ET
+BT /F1 9.5 Tf 58 625 Td (B\) edad = int\(input\(\)\)) Tj ET
+BT /F1 9.5 Tf 58 612 Td (C\) edad = print\(input\(\)\)) Tj ET
+BT /F1 9.5 Tf 58 599 Td (D\) edad = bool\(input\(\)\)) Tj ET
+BT /F1 5 Tf 46 586 Td () Tj ET
+BT /F2 10.5 Tf 46 580 Td (12. ¿Qué conversión conviene para guardar 12.5 horas jugadas?) Tj ET
+BT /F1 9.5 Tf 58 566 Td (A\) int\(\)) Tj ET
+BT /F1 9.5 Tf 58 553 Td (B\) float\(\)) Tj ET
+BT /F1 9.5 Tf 58 540 Td (C\) bool\(\)) Tj ET
+BT /F1 9.5 Tf 58 527 Td (D\) print\(\)) Tj ET
+BT /F1 5 Tf 46 514 Td () Tj ET
+BT /F2 10.5 Tf 46 508 Td (13. ¿Qué problema aparece al intentar hacer input\(\) + 10 sin convertir?) Tj ET
+BT /F1 9.5 Tf 58 494 Td (A\) Se suma correctamente) Tj ET
+BT /F1 9.5 Tf 58 481 Td (B\) Python interpreta 10 como texto automáticamente) Tj ET
+BT /F1 9.5 Tf 58 468 Td (C\) Puede producir TypeError) Tj ET
+BT /F1 9.5 Tf 58 455 Td (D\) Siempre devuelve True) Tj ET
+BT /F1 5 Tf 46 442 Td () Tj ET
+BT /F2 10.5 Tf 46 436 Td (14. ¿Cómo se escribe verdadero en Python?) Tj ET
+BT /F1 9.5 Tf 58 422 Td (A\) true) Tj ET
+BT /F1 9.5 Tf 58 409 Td (B\) TRUE) Tj ET
+BT /F1 9.5 Tf 58 396 Td (C\) True) Tj ET
+BT /F1 9.5 Tf 58 383 Td (D\) verdadero) Tj ET
+BT /F1 5 Tf 46 370 Td () Tj ET
+BT /F2 10.5 Tf 46 364 Td (15. ¿Qué operador compara si dos valores son iguales?) Tj ET
+BT /F1 9.5 Tf 58 350 Td (A\) =) Tj ET
+BT /F1 9.5 Tf 58 337 Td (B\) ==) Tj ET
+BT /F1 9.5 Tf 58 324 Td (C\) !=) Tj ET
+BT /F1 9.5 Tf 58 311 Td (D\) >=) Tj ET
+BT /F1 5 Tf 46 298 Td () Tj ET
+BT /F2 10.5 Tf 46 292 Td (16. ¿Qué resultado da 45000 >= 60000?) Tj ET
+BT /F1 9.5 Tf 58 278 Td (A\) True) Tj ET
+BT /F1 9.5 Tf 58 265 Td (B\) False) Tj ET
+BT /F1 9.5 Tf 58 252 Td (C\) 45000) Tj ET
+BT /F1 9.5 Tf 58 239 Td (D\) Error siempre) Tj ET
+BT /F1 5 Tf 46 226 Td () Tj ET
+BT /F2 10.5 Tf 46 220 Td (17. La regla dice: 'edad de 18 o más'. ¿Qué condición representa mejor la regla?) Tj ET
+BT /F1 9.5 Tf 58 206 Td (A\) edad > 18) Tj ET
+BT /F1 9.5 Tf 58 193 Td (B\) edad >= 18) Tj ET
+BT /F1 9.5 Tf 58 180 Td (C\) edad == 18) Tj ET
+BT /F1 9.5 Tf 58 167 Td (D\) edad < 18) Tj ET
+BT /F1 5 Tf 46 154 Td () Tj ET
+BT /F1 8 Tf 483 28 Td (Página 2 de 5) Tj ET
+
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 3041 >>
+stream
+BT /F2 8 Tf 46 814 Td (Banco Kahoot Python hasta if / else) Tj ET
+BT /F2 10.5 Tf 46 796 Td (18. ¿Qué resultado da bool\(0\)?) Tj ET
+BT /F1 9.5 Tf 58 782 Td (A\) True) Tj ET
+BT /F1 9.5 Tf 58 769 Td (B\) False) Tj ET
+BT /F1 9.5 Tf 58 756 Td (C\) 0) Tj ET
+BT /F1 9.5 Tf 58 743 Td (D\) None) Tj ET
+BT /F1 5 Tf 46 730 Td () Tj ET
+BT /F2 10.5 Tf 46 724 Td (19. ¿Qué resultado da bool\(-3\)?) Tj ET
+BT /F1 9.5 Tf 58 710 Td (A\) True) Tj ET
+BT /F1 9.5 Tf 58 697 Td (B\) False) Tj ET
+BT /F1 9.5 Tf 58 684 Td (C\) -3) Tj ET
+BT /F1 9.5 Tf 58 671 Td (D\) Error) Tj ET
+BT /F1 5 Tf 46 658 Td () Tj ET
+BT /F2 10.5 Tf 46 652 Td (20. ¿Cuándo devuelve True el operador and?) Tj ET
+BT /F1 9.5 Tf 58 638 Td (A\) Cuando al menos una condición es True) Tj ET
+BT /F1 9.5 Tf 58 625 Td (B\) Solo cuando ambas condiciones son True) Tj ET
+BT /F1 9.5 Tf 58 612 Td (C\) Solo cuando ambas condiciones son False) Tj ET
+BT /F1 9.5 Tf 58 599 Td (D\) Cuando se usa con números) Tj ET
+BT /F1 5 Tf 46 586 Td () Tj ET
+BT /F2 10.5 Tf 46 580 Td (21. ¿Qué resultado da True or False?) Tj ET
+BT /F1 9.5 Tf 58 566 Td (A\) True) Tj ET
+BT /F1 9.5 Tf 58 553 Td (B\) False) Tj ET
+BT /F1 9.5 Tf 58 540 Td (C\) Error) Tj ET
+BT /F1 9.5 Tf 58 527 Td (D\) None) Tj ET
+BT /F1 5 Tf 46 514 Td () Tj ET
+BT /F2 10.5 Tf 46 508 Td (22. ¿Qué resultado da not True?) Tj ET
+BT /F1 9.5 Tf 58 494 Td (A\) True) Tj ET
+BT /F1 9.5 Tf 58 481 Td (B\) False) Tj ET
+BT /F1 9.5 Tf 58 468 Td (C\) 0) Tj ET
+BT /F1 9.5 Tf 58 455 Td (D\) 1) Tj ET
+BT /F1 5 Tf 46 442 Td () Tj ET
+BT /F2 10.5 Tf 46 436 Td (23. Para publicar se necesita cuenta activa y no estar suspendido. ¿Cuál condición es) Tj ET
+BT /F2 10.5 Tf 46 422 Td (correcta?) Tj ET
+BT /F1 9.5 Tf 58 408 Td (A\) cuenta_activa or suspendido) Tj ET
+BT /F1 9.5 Tf 58 395 Td (B\) cuenta_activa and suspendido) Tj ET
+BT /F1 9.5 Tf 58 382 Td (C\) cuenta_activa and not suspendido) Tj ET
+BT /F1 9.5 Tf 58 369 Td (D\) not cuenta_activa and suspendido) Tj ET
+BT /F1 5 Tf 46 356 Td () Tj ET
+BT /F2 10.5 Tf 46 350 Td (24. Recibes notificación si estás en el servidor o si te mencionaron. ¿Qué operador) Tj ET
+BT /F2 10.5 Tf 46 336 Td (corresponde?) Tj ET
+BT /F1 9.5 Tf 58 322 Td (A\) and) Tj ET
+BT /F1 9.5 Tf 58 309 Td (B\) or) Tj ET
+BT /F1 9.5 Tf 58 296 Td (C\) not) Tj ET
+BT /F1 9.5 Tf 58 283 Td (D\) ==) Tj ET
+BT /F1 5 Tf 46 270 Td () Tj ET
+BT /F2 10.5 Tf 46 264 Td (25. La regla dice: 'descuento para compras de $15000 o más'. ¿Con qué valor hay que) Tj ET
+BT /F2 10.5 Tf 46 250 Td (probar el caso límite?) Tj ET
+BT /F1 9.5 Tf 58 236 Td (A\) 14999) Tj ET
+BT /F1 9.5 Tf 58 223 Td (B\) 15000) Tj ET
+BT /F1 9.5 Tf 58 210 Td (C\) 15001) Tj ET
+BT /F1 9.5 Tf 58 197 Td (D\) 0) Tj ET
+BT /F1 5 Tf 46 184 Td () Tj ET
+BT /F2 10.5 Tf 46 178 Td (26. Si una nota 4.0 aprueba, ¿qué condición es más precisa?) Tj ET
+BT /F1 9.5 Tf 58 164 Td (A\) nota > 4.0) Tj ET
+BT /F1 9.5 Tf 58 151 Td (B\) nota >= 4.0) Tj ET
+BT /F1 9.5 Tf 58 138 Td (C\) nota == 7.0) Tj ET
+BT /F1 9.5 Tf 58 125 Td (D\) nota < 4.0) Tj ET
+BT /F1 5 Tf 46 112 Td () Tj ET
+BT /F1 8 Tf 483 28 Td (Página 3 de 5) Tj ET
+
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 1560 >>
+stream
+BT /F2 8 Tf 46 814 Td (Banco Kahoot Python hasta if / else) Tj ET
+BT /F2 10.5 Tf 46 796 Td (27. ¿Qué hace un if en Python?) Tj ET
+BT /F1 9.5 Tf 58 782 Td (A\) Ejecuta un bloque solo si la condición es True) Tj ET
+BT /F1 9.5 Tf 58 769 Td (B\) Ejecuta siempre los dos bloques) Tj ET
+BT /F1 9.5 Tf 58 756 Td (C\) Convierte texto a número) Tj ET
+BT /F1 9.5 Tf 58 743 Td (D\) Repite el código muchas veces) Tj ET
+BT /F1 5 Tf 46 730 Td () Tj ET
+BT /F2 10.5 Tf 46 724 Td (28. ¿Cuándo se ejecuta el bloque else?) Tj ET
+BT /F1 9.5 Tf 58 710 Td (A\) Cuando la condición del if es True) Tj ET
+BT /F1 9.5 Tf 58 697 Td (B\) Cuando la condición del if es False) Tj ET
+BT /F1 9.5 Tf 58 684 Td (C\) Antes del if) Tj ET
+BT /F1 9.5 Tf 58 671 Td (D\) Solo si hay input\(\)) Tj ET
+BT /F1 5 Tf 46 658 Td () Tj ET
+BT /F2 10.5 Tf 46 652 Td (29. ¿Qué símbolo debe ir al final de una línea con if condicion?) Tj ET
+BT /F1 9.5 Tf 58 638 Td (A\) .) Tj ET
+BT /F1 9.5 Tf 58 625 Td (B\) ;) Tj ET
+BT /F1 9.5 Tf 58 612 Td (C\) :) Tj ET
+BT /F1 9.5 Tf 58 599 Td (D\) ,) Tj ET
+BT /F1 5 Tf 46 586 Td () Tj ET
+BT /F2 10.5 Tf 46 580 Td (30. ¿Por qué es importante indentar el bloque debajo de if o else?) Tj ET
+BT /F1 9.5 Tf 58 566 Td (A\) Porque Python usa la indentación como parte de la sintaxis) Tj ET
+BT /F1 9.5 Tf 58 553 Td (B\) Porque mejora solo el color del código) Tj ET
+BT /F1 9.5 Tf 58 540 Td (C\) Porque convierte los valores en booleanos) Tj ET
+BT /F1 9.5 Tf 58 527 Td (D\) Porque evita usar print\(\)) Tj ET
+BT /F1 5 Tf 46 514 Td () Tj ET
+BT /F1 8 Tf 483 28 Td (Página 4 de 5) Tj ET
+
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 1928 >>
+stream
+BT /F2 8 Tf 46 814 Td (Banco Kahoot Python hasta if / else) Tj ET
+BT /F2 16 Tf 46 796 Td (Pauta de respuestas) Tj ET
+BT /F1 10 Tf 46 772 Td (Usa esta tabla para configurar la alternativa correcta en Kahoot.) Tj ET
+BT /F1 10 Tf 46 756 Td (1. B\) print\(\)) Tj ET
+BT /F1 10 Tf 46 742 Td (2. B\) Hola curso) Tj ET
+BT /F1 10 Tf 46 728 Td (3. A\) Define el separador entre valores impresos) Tj ET
+BT /F1 10 Tf 46 714 Td (4. A\) Que el siguiente print continúe en la misma línea) Tj ET
+BT /F1 10 Tf 46 700 Td (5. C\) saldo_cuenta) Tj ET
+BT /F1 10 Tf 46 686 Td (6. C\) 1500) Tj ET
+BT /F1 10 Tf 46 672 Td (7. B\) *) Tj ET
+BT /F1 10 Tf 46 658 Td (8. A\) 1) Tj ET
+BT /F1 10 Tf 46 644 Td (9. C\) La ignora como comentario) Tj ET
+BT /F1 10 Tf 46 630 Td (10. D\) str) Tj ET
+BT /F1 10 Tf 46 616 Td (11. B\) edad = int\(input\(\)\)) Tj ET
+BT /F1 10 Tf 46 602 Td (12. B\) float\(\)) Tj ET
+BT /F1 10 Tf 46 588 Td (13. C\) Puede producir TypeError) Tj ET
+BT /F1 10 Tf 46 574 Td (14. C\) True) Tj ET
+BT /F1 10 Tf 46 560 Td (15. B\) ==) Tj ET
+BT /F1 10 Tf 46 546 Td (16. B\) False) Tj ET
+BT /F1 10 Tf 46 532 Td (17. B\) edad >= 18) Tj ET
+BT /F1 10 Tf 46 518 Td (18. B\) False) Tj ET
+BT /F1 10 Tf 46 504 Td (19. A\) True) Tj ET
+BT /F1 10 Tf 46 490 Td (20. B\) Solo cuando ambas condiciones son True) Tj ET
+BT /F1 10 Tf 46 476 Td (21. A\) True) Tj ET
+BT /F1 10 Tf 46 462 Td (22. B\) False) Tj ET
+BT /F1 10 Tf 46 448 Td (23. C\) cuenta_activa and not suspendido) Tj ET
+BT /F1 10 Tf 46 434 Td (24. B\) or) Tj ET
+BT /F1 10 Tf 46 420 Td (25. B\) 15000) Tj ET
+BT /F1 10 Tf 46 406 Td (26. B\) nota >= 4.0) Tj ET
+BT /F1 10 Tf 46 392 Td (27. A\) Ejecuta un bloque solo si la condición es True) Tj ET
+BT /F1 10 Tf 46 378 Td (28. B\) Cuando la condición del if es False) Tj ET
+BT /F1 10 Tf 46 364 Td (29. C\) :) Tj ET
+BT /F1 10 Tf 46 350 Td (30. A\) Porque Python usa la indentación como parte de la sintaxis) Tj ET
+BT /F1 8 Tf 483 28 Td (Página 5 de 5) Tj ET
+
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+xref
+0 15
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000148 00000 n 
+0000000245 00000 n 
+0000000347 00000 n 
+0000003490 00000 n 
+0000003626 00000 n 
+0000006682 00000 n 
+0000006818 00000 n 
+0000009911 00000 n 
+0000010048 00000 n 
+0000011661 00000 n 
+0000011799 00000 n 
+0000013780 00000 n 
+trailer
+<< /Size 15 /Root 1 0 R >>
+startxref
+13918
+%%EOF

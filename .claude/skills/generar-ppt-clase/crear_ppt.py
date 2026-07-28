@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
-crear_ppt.py — Generador del PPT de clase desde el spec enriquecido. (v5)
+crear_ppt.py — Generador del PPT de clase desde el spec enriquecido. (v6)
+
+Mejoras v6:
+- El PPT ahora termina en el slide de Cierre (Objetivo + Comprensión 1-5 +
+  Propósito), después de Errores típicos. Guiada, Independiente y Ticket
+  siguen fuera del PPT — esas secciones se trabajan desde el Colab.
 
 Mejoras v5:
-- El PPT ahora termina en "Errores comunes". Guiada, Independiente, Ticket
-  y Cierre se eliminaron del PPT — esas secciones se trabajan desde el Colab.
+- El PPT terminaba en "Errores comunes". Guiada, Independiente, Ticket
+  y Cierre se habían eliminado del PPT — esas secciones se trabajan desde el Colab.
 - Nueva capa de planificación (planificar_slides.py) que decide cuántos slides
   genera la ICN y con qué composición, usando presupuesto de densidad (filas).
 - Slides ICN "clásicos" (definición + código + idea clave) usan el nuevo
@@ -156,12 +161,12 @@ def parsear_spec(ruta_spec: Path) -> dict:
     spec = {
         "numero_clase": None, "tema": None, "contexto": {},
         "objetivo": None, "proposito": None,
-        "haz_ahora": None,
+        "haz_ahora": None, "haz_ahora_min": None,
         "icn": {"conceptos": [], "errores_tabla": [], "demos_apiladas": []},
         "guiada": {"situacion": None, "variables": None, "resultado": None},
         "independiente": [],
-        "ticket": {"tarea": None, "entrega": None},
         "cierre": [],
+        "cierre_estructurado": None,
     }
     m = re.search(r"^#\s+Clase\s+(\w+)\s*[—\-–]\s*(.+)$", contenido, re.MULTILINE)
     if m:
@@ -181,6 +186,8 @@ def parsear_spec(ruta_spec: Path) -> dict:
             l.lstrip("> ").rstrip() for l in prop.split("\n")
         ).strip()
     spec["haz_ahora"] = limpiar(extraer(contenido, "### 1. Haz Ahora", "### 2."))
+    m_dur_ha = re.search(r"###\s*1\.\s*Haz Ahora\s*\((\d+)", contenido)
+    spec["haz_ahora_min"] = int(m_dur_ha.group(1)) if m_dur_ha else None
     icn_raw = limpiar(extraer(contenido, "### 2. Introducción al Contenido Nuevo", "### 3."))
     if icn_raw:
         spec["icn"] = parsear_icn_enriquecido(icn_raw)
@@ -190,22 +197,38 @@ def parsear_spec(ruta_spec: Path) -> dict:
     i_raw = limpiar(extraer(contenido, "### 4. Práctica Independiente", "### 5."))
     if i_raw:
         spec["independiente"] = parsear_independiente(i_raw)
-    t_raw = limpiar(extraer(contenido, "### 5. Ticket de Salida", "### Cierre"))
-    if t_raw:
-        m_tarea = re.search(r"\*\*Tarea:\*\*\s*(.+?)(?=\*\*Entrega|\Z)", t_raw, re.DOTALL)
-        if m_tarea:
-            spec["ticket"]["tarea"] = m_tarea.group(1).strip().strip("*").strip()
-        m_ent = re.search(r"\*\*Entrega:\*\*\s*(.+)", t_raw)
-        if m_ent:
-            spec["ticket"]["entrega"] = m_ent.group(1).strip()
-    c_raw = limpiar(extraer(contenido, "### Cierre y metacognición", "## Decisiones"))
+    # El Ticket de Salida (MCQ) no aparece en el PPT — solo en el Solucionario.
+    c_raw = limpiar(extraer(contenido, "### Cierre", "## Decisiones"))
     if c_raw:
-        spec["cierre"] = [
-            re.sub(r"^\d+\.\s*", "", l.strip())
-            for l in c_raw.split("\n")
-            if re.match(r"^\d+\.", l.strip())
-        ]
+        if "**Objetivo de la clase" in c_raw:
+            spec["cierre_estructurado"] = parsear_cierre_estructurado(c_raw)
+        else:
+            spec["cierre"] = [
+                re.sub(r"^\d+\.\s*", "", l.strip())
+                for l in c_raw.split("\n")
+                if re.match(r"^\d+\.", l.strip())
+            ]
     return spec
+
+
+def parsear_cierre_estructurado(texto: str) -> dict:
+    """Parsea el cierre con objetivo + pregunta de comprensión + pregunta de propósito.
+    Usa (?=\\n\\*\\*|\\Z) para no cortar en bold (**texto**) dentro de una línea."""
+    cierre = {"objetivo": None, "pregunta_meta": None, "pregunta_actitud": None}
+
+    m_obj = re.search(r"\*\*Objetivo de la clase[^*]*\*\*\s*\n(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
+    if m_obj:
+        cierre["objetivo"] = m_obj.group(1).strip()
+
+    m_p1 = re.search(r"\*\*Pregunta 1[^*]*\*\*\s*\n(.+?)(?=\n\*\*Pregunta 2|\Z)", texto, re.DOTALL)
+    if m_p1:
+        cierre["pregunta_meta"] = m_p1.group(1).strip()
+
+    m_p2 = re.search(r"\*\*Pregunta 2[^*]*\*\*\s*\n(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
+    if m_p2:
+        cierre["pregunta_actitud"] = m_p2.group(1).strip()
+
+    return cierre
 
 
 def extraer(texto: str, ini: str, fin):
@@ -223,22 +246,58 @@ def limpiar(s):
     if not s:
         return None
     s = re.sub(r"\n\s*---\s*\n", "\n", s)
+    s = s.replace("\\$", "$")
     return s.strip()
+
+
+def _para_ppt(s: str) -> str:
+    """Strips markdown bold/italic for PowerPoint plain text display.
+    Applied only to display text, never to raw spec content that the parser needs.
+    """
+    if not s:
+        return s or ""
+    s = re.sub(r"\*\*(.+?)\*\*", r"\1", s)
+    s = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"\1", s)
+    return s
+
+
+def _parsear_tabla_html_comparacion(html: str) -> list:
+    """Convierte una tabla HTML simple (<table><tr><th|td>...) en filas de
+    celdas de texto plano. `<code>` se convierte a backticks para que
+    insertar_tabla_pptx lo renderice en Consolas verdoso; <pre>/<strong>/<em>
+    se aplanan a texto plano preservando saltos de línea (<pre> real)."""
+    filas = []
+    for fila_html in re.findall(r"<tr>(.*?)</tr>", html, re.DOTALL):
+        celdas = []
+        for celda_html in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", fila_html, re.DOTALL):
+            texto = celda_html
+            texto = re.sub(r"<code>(.*?)</code>", r"`\1`", texto, flags=re.DOTALL)
+            texto = re.sub(r"</?(?:strong|em)>", "", texto)
+            texto = re.sub(r"<br\s*/?>", "\n", texto)
+            texto = re.sub(r"</?pre>", "", texto)
+            texto = re.sub(r"<[^>]+>", "", texto)
+            celdas.append(texto.strip())
+        if celdas:
+            filas.append(celdas)
+    return filas
 
 
 def parsear_icn_enriquecido(texto: str) -> dict:
     icn = {"conceptos": [], "errores_tabla": [], "demos_apiladas": []}
     bloques = re.split(r"\*\*Concepto\s+(\d+)\s*:\s*([^*]+)\*\*", texto)
+    offsets_concepto = [m.start() for m in
+                        re.finditer(r"\*\*Concepto\s+(\d+)\s*:\s*([^*]+)\*\*", texto)]
     if len(bloques) > 1:
         for i in range(1, len(bloques), 3):
             if i + 2 >= len(bloques):
                 break
+            idx_offset = (i - 1) // 3
             num = bloques[i].strip()
             nombre = bloques[i + 1].strip()
             cuerpo = bloques[i + 2]
             concepto = {
                 "numero": num, "nombre": nombre,
-                "definicion": "", "ejemplo": "", "idea_clave": "",
+                "definicion": "", "ejemplo": "", "idea_clave": "", "output": "",
                 # Campos del v5 (Etapa 1): override y subsecciones opcionales
                 "tipo": None,            # "anatomia" | "analogia" | "antes_despues" | "frase_clave" | None
                 "expresion": "",        # para anatomia: la expresión grande
@@ -251,6 +310,8 @@ def parsear_icn_enriquecido(texto: str) -> dict:
                 "despues_codigo": "",
                 "takeaway": "",
                 "frase_clave_aparte": False,
+                "tabla_comparacion": None,
+                "_offset": offsets_concepto[idx_offset] if idx_offset < len(offsets_concepto) else 10**9,
             }
 
             # Tipo: explícito (línea suelta o como bullet)
@@ -263,10 +324,18 @@ def parsear_icn_enriquecido(texto: str) -> dict:
                           cuerpo, re.DOTALL)
             if m:
                 concepto["definicion"] = m.group(1).strip()
-            m = re.search(r"[-•]\s*\*?\*?Ejemplo\*?\*?\s*:?\s*\n?\s*```python\n(.*?)```",
-                          cuerpo, re.DOTALL)
-            if m:
-                concepto["ejemplo"] = m.group(1).rstrip()
+            # Captura código python + bloque de output (>> ...) si viene inmediatamente después
+            m_full = re.search(
+                r"[-•]\s*\*?\*?Ejemplo\*?\*?\s*:?\s*\n\s*```python\n(.*?)```\s*\n\s*```\n(.*?)```",
+                cuerpo, re.DOTALL)
+            if m_full:
+                concepto["ejemplo"] = m_full.group(1).rstrip()
+                concepto["output"] = m_full.group(2).rstrip()
+            else:
+                m = re.search(r"[-•]\s*\*?\*?Ejemplo\*?\*?\s*:?\s*\n?\s*```python\n(.*?)```",
+                              cuerpo, re.DOTALL)
+                if m:
+                    concepto["ejemplo"] = m.group(1).rstrip()
             m = re.search(r"[-•]\s*\*?\*?Idea clave\*?\*?\s*:\s*(.+?)(?=\n\s*[-•]|\n\s*\*\*|\Z)",
                           cuerpo, re.DOTALL)
             if m:
@@ -368,6 +437,38 @@ def parsear_icn_enriquecido(texto: str) -> dict:
             concepto["demos_inline"] = parsear_demos_apiladas(cuerpo)
 
             icn["conceptos"].append(concepto)
+
+    # Bloques "**Comparación: título**" — tabla HTML comparativa lado a lado
+    # (mismo nivel que Concepto/Demostración; se intercalan por orden de aparición).
+    for m in re.finditer(r"\*\*Comparaci[óo]n\s*:\s*([^*]+)\*\*", texto):
+        titulo = m.group(1).strip()
+        inicio_cuerpo = m.end()
+        m_siguiente = re.search(
+            r"\*\*(?:Concepto\s+\d+|Comparaci[óo]n|Demostraci[óo]n)\s*:",
+            texto[inicio_cuerpo:])
+        fin_cuerpo = inicio_cuerpo + m_siguiente.start() if m_siguiente else len(texto)
+        cuerpo = texto[inicio_cuerpo:fin_cuerpo]
+
+        icn["conceptos"].append({
+            "numero": "0", "nombre": titulo,
+            "definicion": "", "ejemplo": "", "idea_clave": "", "output": "",
+            "tipo": None, "expresion": "", "partes": [],
+            "analogia_subtitulo": "", "analogia_filas": [],
+            "antes_label": "Antes", "antes_codigo": "",
+            "despues_label": "Después", "despues_codigo": "",
+            "takeaway": "", "frase_clave_aparte": False,
+            "demos_inline": [],
+            "tabla_comparacion": _parsear_tabla_html_comparacion(cuerpo),
+            "_offset": m.start(),
+        })
+
+    # Reordenar por posición real de aparición en el spec y renumerar 1..N
+    # (Concepto y Comparación comparten numeración secuencial en el PPT).
+    if icn["conceptos"]:
+        icn["conceptos"].sort(key=lambda c: c.get("_offset", 0))
+        for idx, c in enumerate(icn["conceptos"], start=1):
+            c["numero"] = str(idx)
+            c.pop("_offset", None)
 
     if not icn["conceptos"]:
         m = re.search(r"\*\*Conceptos:\*\*\s*\n(.*?)(?=\*\*|\Z)", texto, re.DOTALL)
@@ -890,21 +991,24 @@ def insertar_tabla_pptx(slide, filas, left, top, width, height):
             texto_celda = fila[c_idx] if c_idx < len(fila) else ""
             tf = cell.text_frame
             tf.word_wrap = True
-            para = tf.paragraphs[0]
-            # Detectar si hay backticks (código inline)
-            partes = re.split(r"`([^`]+)`", texto_celda)
-            for k, parte in enumerate(partes):
-                if not parte:
-                    continue
-                run = para.add_run()
-                run.text = parte
-                run.font.size = Pt(14) if r_idx == 0 else Pt(13)
-                run.font.bold = r_idx == 0
-                if k % 2 == 1:  # estaba entre backticks
-                    run.font.name = "Consolas"
-                    run.font.color.rgb = COLOR_CODIGO
-                else:
-                    run.font.color.rgb = COLOR_TEXTO
+            # Una línea por párrafo (necesario para contenido con saltos de línea
+            # reales, ej. bloques <pre> aplanados desde una tabla HTML).
+            for l_idx, linea in enumerate(texto_celda.split("\n")):
+                para = tf.paragraphs[0] if l_idx == 0 else tf.add_paragraph()
+                # Detectar si hay backticks (código inline)
+                partes = re.split(r"`([^`]+)`", linea)
+                for k, parte in enumerate(partes):
+                    if not parte:
+                        continue
+                    run = para.add_run()
+                    run.text = parte
+                    run.font.size = Pt(14) if r_idx == 0 else Pt(13)
+                    run.font.bold = r_idx == 0
+                    if k % 2 == 1:  # estaba entre backticks
+                        run.font.name = "Consolas"
+                        run.font.color.rgb = COLOR_CODIGO
+                    else:
+                        run.font.color.rgb = COLOR_TEXTO
 
 
 def adaptar_layout_concepto(slide, concepto):
@@ -1238,6 +1342,84 @@ def construir_concepto_frase_clave(prs, num: str, concepto: dict,
 
 
 # =====================================================================
+# SLIDE ICN DOS COLUMNAS — formato preferido para conceptos clásicos
+# =====================================================================
+
+def construir_slide_icn_dos_columnas(prs, num: str, plan: "SlidePlan"):
+    """Slide ICN con dos columnas:
+    - Izquierda: conceptos resumidos como bullets (nombre + definición corta)
+    - Derecha: código del primer concepto con ejemplo (incluye output si existe)
+    No incluye 'idea clave' por defecto.
+    """
+    if not _HELPERS_OK:
+        for c in (plan.concepto or {}).get("conceptos_originales", []):
+            construir_concepto_clasico(prs, num, c)
+        return
+
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    _fondo_oscuro(slide)
+    _barra_superior(slide)
+
+    mapping = {"NUMERO_CLASE": num, "SECCION": "Contenido nuevo"}
+
+    # Título más arriba para ceder espacio al contenido
+    TITULO_Y = 0.62
+    TITULO_H = 0.52
+    _texto(slide, _MX, TITULO_Y, _W - 2 * _MX, TITULO_H,
+           plan.titulo, tamano=26, color="blanco", negrita=True)
+
+    Y_START  = TITULO_Y + TITULO_H + 0.08   # ≈ 1.22"
+    Y_END    = 7.22
+    H_AREA   = Y_END - Y_START
+    GAP_COLS = 0.22
+
+    COL_L_W  = 5.70    # columna izquierda (bullets)
+    COL_R_X  = _MX + COL_L_W + GAP_COLS
+    COL_R_W  = _W - COL_R_X - _MX
+
+    bullets = (plan.concepto or {}).get("bullets", [])
+    codigo  = (plan.concepto or {}).get("codigo", "")
+
+    # ── Columna izquierda: bullets ──
+    _rect(slide, _MX, Y_START, COL_L_W, H_AREA, _C["fondo_bloque"])
+    _rect(slide, _MX, Y_START, 0.08, H_AREA, _C["turquesa"])
+
+    lineas_b = []
+    for b in bullets:
+        lineas_b.append(f"📘 {b['numero']}. {b['nombre']}")
+        if b.get("definicion"):
+            defn = b["definicion"]
+            if not defn.endswith((".", "!", "?")):
+                defn += "."
+            lineas_b.append(f"    {defn}")
+        lineas_b.append("")     # separador visual entre conceptos
+    texto_bullets = "\n".join(lineas_b).strip()
+
+    n_lineas_b = texto_bullets.count("\n") + 1
+    tam_b = 20 if n_lineas_b <= 10 else (18 if n_lineas_b <= 14 else 16)
+
+    _texto(slide, _MX + 0.22, Y_START + 0.20,
+           COL_L_W - 0.32, H_AREA - 0.30,
+           "{{ICN_BULLETS}}", tamano=tam_b, color="blanco")
+    mapping["ICN_BULLETS"] = texto_bullets
+
+    # ── Columna derecha: terminal de código ──
+    if codigo:
+        _rect(slide, COL_R_X, Y_START, COL_R_W, H_AREA, _C["terminal_bg"])
+        _rect(slide, COL_R_X, Y_START, COL_R_W, 0.10, _C["turquesa"])
+
+        tam_cod = calcular_tamano_codigo(codigo, COL_R_W - 0.25,
+                                         tam_max=18, tam_min=13)
+        _texto(slide, COL_R_X + 0.18, Y_START + 0.20,
+               COL_R_W - 0.28, H_AREA - 0.30,
+               "{{ICN_COD}}", tamano=tam_cod,
+               color="codigo_color", fuente="Consolas")
+        mapping["ICN_COD"] = codigo
+
+    reemplazar_placeholders(slide, mapping)
+
+
+# =====================================================================
 # SLIDE ICN FLEXIBLE — composición dinámica de bloques
 # =====================================================================
 
@@ -1269,12 +1451,12 @@ def _renderizar_bloque(slide, bloque: "BloquePlan", y: float, h: float,
         label_txt = f"📘  {bloque.label or 'Definición'}"
         _texto(slide, _MX + 0.25, y + 0.10, _W - 2 * _MX - 0.4, LABEL_H,
                label_txt, tamano=_T["titulo_bloque"], color="turquesa", negrita=True)
-        # Tamaño de fuente adaptado a la longitud
-        tam_def = 20 if len(str(bloque.contenido)) > 150 else 22
+        contenido_display = _para_ppt(str(bloque.contenido))
+        tam_def = 20 if len(contenido_display) > 150 else 22
         _texto(slide, _MX + 0.25, y + LABEL_H + 0.05,
                _W - 2 * _MX - 0.4, h - LABEL_H - 0.15,
                "{{" + key + "_DEF}}", tamano=tam_def, color="blanco")
-        mapping[key + "_DEF"] = str(bloque.contenido)
+        mapping[key + "_DEF"] = contenido_display
 
     elif tipo == "codigo":
         LABEL_H = 0.38 if bloque.label else 0.0
@@ -1305,7 +1487,7 @@ def _renderizar_bloque(slide, bloque: "BloquePlan", y: float, h: float,
                _W - 2 * _MX - 0.4, h - LABEL_H - 0.10,
                "{{" + key + "_IK}}", tamano=_T["cuerpo_stock"], color="blanco",
                anchor_vertical=MSO_ANCHOR.MIDDLE)
-        mapping[key + "_IK"] = str(bloque.contenido)
+        mapping[key + "_IK"] = _para_ppt(str(bloque.contenido))
 
     elif tipo == "bullets":
         LABEL_H = 0.38 if bloque.label else 0.0
@@ -1386,12 +1568,13 @@ def construir_slide_icn_flexible(prs, num: str, plan: "SlidePlan"):
 # SLIDE HAZ AHORA FLEXIBLE
 # =====================================================================
 
-def construir_slide_haz_ahora_flex(prs, num: str, plan_ha: dict):
+def construir_slide_haz_ahora_flex(prs, num: str, plan_ha: dict, minutos: int = None):
     """Genera el slide de Haz Ahora con composición dinámica.
 
     Diseño tipo "situaciones" (caso más común):
     - Barra superior (NUMERO_CLASE + SECCION = "Haz Ahora")
-    - Título "⚡ Haz Ahora" en ámbar
+    - Título "⚡ Haz Ahora <<M:SS>>" en ámbar (el tag <<M:SS>> lo lee la
+      extensión de PowerPoint que inicia el timer en pantalla al proyectar)
     - Caja intro pequeña (la instrucción) con borde ámbar
     - Caja grande numerada con las situaciones
     - Nota de cierre al fondo en gris
@@ -1406,42 +1589,85 @@ def construir_slide_haz_ahora_flex(prs, num: str, plan_ha: dict):
     mapping = {"NUMERO_CLASE": num, "SECCION": "Haz Ahora"}
 
     # Título
+    titulo = "⚡ Haz Ahora"
+    if minutos:
+        titulo += f" <<{minutos}:00>>"
     _texto(slide, _MX, 0.62, _W - 2 * _MX, 0.52,
-           "⚡ Haz Ahora",
+           titulo,
            tamano=30, color="ambar", negrita=True)
 
     tipo = plan_ha.get("tipo", "libre")
-    intro = plan_ha.get("intro", "")
-    situaciones = plan_ha.get("situaciones", [])
-    cierre = plan_ha.get("cierre", "")
+    intro       = _para_ppt(plan_ha.get("intro", ""))
+    tabla       = plan_ha.get("tabla")          # list[list[str]] o None
+    instruccion = _para_ppt(plan_ha.get("instruccion", ""))
+    situaciones = [_para_ppt(s) for s in plan_ha.get("situaciones", [])]
+    cierre      = _para_ppt(plan_ha.get("cierre", ""))
 
     Y_START = 1.22
-    Y_END = 7.22
-    GAP = 0.12
+    Y_END   = 7.22
+    GAP     = 0.12
 
     y = Y_START
 
-    if tipo == "situaciones" and situaciones:
-        # Altura dinámica del intro según cuántas líneas ocupa el texto
+    if tipo == "situaciones_con_tabla" and tabla and situaciones:
+        # Layout: caja intro (ámbar) → tabla PPT → caja preguntas (turquesa)
+
+        # Caja intro
+        if intro:
+            n_lineas_intro = estimar_lineas(intro, 16, _W - 2 * _MX - 0.30)
+            INTRO_H = max(0.52, n_lineas_intro * 0.30 + 0.20)
+            _rect(slide, _MX, y, _W - 2 * _MX, INTRO_H, _C["fondo_bloque"])
+            _rect(slide, _MX, y, 0.08, INTRO_H, _C["ambar"])
+            _texto(slide, _MX + 0.22, y + 0.09,
+                   _W - 2 * _MX - 0.30, INTRO_H - 0.14,
+                   "{{HA_INTRO}}", tamano=16, color="blanco")
+            mapping["HA_INTRO"] = intro
+            y += INTRO_H + GAP
+
+        # Tabla PPT
+        n_rows = len(tabla)
+        TABLA_H = max(0.40 + n_rows * 0.46, 1.0)
+        TABLA_H = min(TABLA_H, 3.2)
+        insertar_tabla_pptx(slide, tabla,
+                            Inches(_MX), Inches(y),
+                            Inches(_W - 2 * _MX), Inches(TABLA_H))
+        y += TABLA_H + GAP
+
+        # Caja preguntas
+        h_sit = Y_END - y
+        n_sit = len(situaciones)
+        tam_sit = 20 if n_sit <= 5 else 18
+
+        _rect(slide, _MX, y, _W - 2 * _MX, h_sit, _C["fondo_bloque"])
+        _rect(slide, _MX, y, 0.08, h_sit, _C["turquesa"])
+
+        texto_preguntas = ""
+        if instruccion:
+            texto_preguntas = instruccion + "\n"
+        texto_preguntas += "\n".join(situaciones)
+
+        _texto(slide, _MX + 0.22, y + 0.15,
+               _W - 2 * _MX - 0.30, h_sit - 0.22,
+               "{{HA_SIT}}", tamano=tam_sit, color="blanco")
+        mapping["HA_SIT"] = texto_preguntas
+
+    elif tipo == "situaciones" and situaciones:
+        # Layout clásico: intro (ámbar) → preguntas (turquesa)
         n_lineas_intro = estimar_lineas(intro, 17, _W - 2 * _MX - 0.30)
         INTRO_H = max(0.70, n_lineas_intro * 0.32 + 0.28)
         CIERRE_H = 0.48
 
-        # Caja intro
         if intro:
             _rect(slide, _MX, y, _W - 2 * _MX, INTRO_H, _C["fondo_bloque"])
             _rect(slide, _MX, y, 0.08, INTRO_H, _C["ambar"])
             _texto(slide, _MX + 0.22, y + 0.09,
                    _W - 2 * _MX - 0.30, INTRO_H - 0.14,
-                   "{{HA_INTRO}}", tamano=17, color="gris_claro")
+                   "{{HA_INTRO}}", tamano=17, color="blanco")
             mapping["HA_INTRO"] = intro
             y += INTRO_H + GAP
 
-        # Espacio para cierre al fondo
         y_cierre_start = Y_END - CIERRE_H
         h_sit = (y_cierre_start - GAP) - y
-
-        # Caja situaciones numeradas
         n_sit = len(situaciones)
         tam_sit = 20 if n_sit <= 6 else 18
 
@@ -1453,15 +1679,14 @@ def construir_slide_haz_ahora_flex(prs, num: str, plan_ha: dict):
                "{{HA_SIT}}", tamano=tam_sit, color="blanco")
         mapping["HA_SIT"] = texto_sit
 
-        # Nota de cierre
         if cierre:
             _texto(slide, _MX, y_cierre_start,
                    _W - 2 * _MX, CIERRE_H,
-                   "{{HA_CIERRE}}", tamano=15, color="gris_secundario")
+                   "{{HA_CIERRE}}", tamano=15, color="blanco")
             mapping["HA_CIERRE"] = "→ " + cierre
 
     else:
-        # Layout libre: todo el contenido en una sola caja grande
+        # Layout libre
         h = Y_END - y
         _rect(slide, _MX, y, _W - 2 * _MX, h, _C["fondo_bloque"])
         _rect(slide, _MX, y, 0.08, h, _C["ambar"])
@@ -1487,7 +1712,7 @@ def generar_preview_haz_ahora(spec: dict, ruta_salida: Path):
 
     if spec["haz_ahora"] and _PLANIFICADOR_OK and _HELPERS_OK:
         plan_ha = planificar_haz_ahora(spec["haz_ahora"])
-        construir_slide_haz_ahora_flex(prs, num, plan_ha)
+        construir_slide_haz_ahora_flex(prs, num, plan_ha, spec.get("haz_ahora_min"))
 
     eliminar_slides(prs, list(range(TOTAL_SLIDES_MODELO)))
     ruta_salida.parent.mkdir(parents=True, exist_ok=True)
@@ -1512,7 +1737,10 @@ def _construir_icn(prs, num: str, spec: dict):
     for plan in planes:
         tipo = plan.tipo_slide
 
-        if tipo == "icn_flexible":
+        if tipo == "dos_columnas":
+            construir_slide_icn_dos_columnas(prs, num, plan)
+
+        elif tipo == "icn_flexible":
             if _HELPERS_OK:
                 construir_slide_icn_flexible(prs, num, plan)
             else:
@@ -1666,8 +1894,8 @@ def generar_ppt(spec: dict, ruta_salida: Path):
     reemplazar_placeholders(sl, {
         "NUMERO_CLASE": num,
         "TITULO_CLASE": tema,
-        "OBJETIVO": spec["objetivo"] or "",
-        "PROPOSITO": spec["proposito"] or "",
+        "OBJETIVO": _para_ppt(spec["objetivo"] or ""),
+        "PROPOSITO": _para_ppt(spec["proposito"] or ""),
         "REGLAS": generar_reglas(),
     })
 
@@ -1675,7 +1903,7 @@ def generar_ppt(spec: dict, ruta_salida: Path):
     if spec["haz_ahora"]:
         if _PLANIFICADOR_OK and _HELPERS_OK:
             plan_ha = planificar_haz_ahora(spec["haz_ahora"])
-            construir_slide_haz_ahora_flex(prs, num, plan_ha)
+            construir_slide_haz_ahora_flex(prs, num, plan_ha, spec.get("haz_ahora_min"))
         else:
             # Fallback: comportamiento v4 (clon de slide modelo)
             sl = duplicar_slide(prs, prs.slides[M_STOCK_TITULO])
@@ -1683,10 +1911,13 @@ def generar_ppt(spec: dict, ruta_salida: Path):
             tiene_codigo_ha = bool(ha["codigo"])
             shape_cod_ha = buscar_shape_por_key(sl, "CONTENIDO_CODIGO")
             shape_txt_ha = buscar_shape_por_key(sl, "CONTENIDO_TEXTO")
+            titulo_ha = "Haz Ahora"
+            if spec.get("haz_ahora_min"):
+                titulo_ha += f" <<{spec['haz_ahora_min']}:00>>"
             reemplazar_placeholders(sl, {
                 "NUMERO_CLASE": num,
                 "SECCION": "Haz Ahora",
-                "TITULO_SLIDE": "Haz Ahora",
+                "TITULO_SLIDE": titulo_ha,
                 "SUBTITULO_SLIDE": ha["intro"],
                 "CONTENIDO_TEXTO": ha["texto"],
                 "CONTENIDO_CODIGO": ha["codigo"] or "",
@@ -1719,7 +1950,18 @@ def generar_ppt(spec: dict, ruta_salida: Path):
                     mapping[k] = ""
         reemplazar_placeholders(sl, mapping)
 
-    # STOP: Guiada, Independiente, Ticket y Cierre se trabajan desde el Colab.
+    # STOP: Guiada, Independiente y Ticket se trabajan desde el Colab.
+    # El Cierre SÍ va en el PPT — es la última slide.
+
+    # === Cierre (última slide) ===
+    if spec.get("cierre_estructurado"):
+        c = spec["cierre_estructurado"]
+        sl = duplicar_slide(prs, prs.slides[M_CIERRE])
+        reemplazar_placeholders(sl, {
+            "CIERRE_OBJETIVO": _para_ppt(c.get("objetivo") or spec["objetivo"] or ""),
+            "CIERRE_PREGUNTA_COMPRENSION": _para_ppt(c.get("pregunta_meta") or ""),
+            "CIERRE_PREGUNTA_PROPOSITO": _para_ppt(c.get("pregunta_actitud") or ""),
+        })
 
     eliminar_slides(prs, list(range(TOTAL_SLIDES_MODELO)))
     ruta_salida.parent.mkdir(parents=True, exist_ok=True)
@@ -1771,7 +2013,8 @@ def generar_mensaje_hoy(spec: dict) -> str:
 
 
 def generar_reglas() -> str:
-    return ("📓 Todo comando nuevo va al cuaderno.\n"
+    return ("🦻 No ocupen audífonos.\n"
+            "📓 Todo comando nuevo va al cuaderno.\n"
             "🚫 NO hagan copiar-pegar de los comandos.\n"
             "✨ En toda evaluación podrán usar sus apuntes.")
 
@@ -1819,7 +2062,7 @@ def main():
         generar_preview_haz_ahora(spec, ruta_salida)
         print(f"[ok] Preview Haz Ahora guardado en: {ruta_salida}")
     else:
-        print("[ppt] Generando presentacion completa (hasta errores comunes)...")
+        print("[ppt] Generando presentacion completa (hasta Cierre)...")
         generar_ppt(spec, ruta_salida)
         print(f"[ok] PPT guardado en: {ruta_salida}")
 

@@ -7,6 +7,7 @@ El planificador usa el presupuesto de densidad (filas visuales) para decidir
 cuántos slides generar y qué composición usar.
 """
 
+import re
 from dataclasses import dataclass, field
 
 # =====================================================================
@@ -29,6 +30,30 @@ _COSTO = {
     "advertencia":    1.5,
     "separador":      0.5,
 }
+
+
+def _extraer_tabla_md(texto: str):
+    """Extrae la primera tabla markdown del texto.
+    Devuelve (texto_sin_tabla, filas) o (texto_original, None).
+    La fila separadora (---) se omite. La primera fila es el header.
+    """
+    if not texto or "|" not in texto:
+        return texto, None
+    patron = r"((?:[ \t]*\|.+\|\s*\n?)+)"
+    m = re.search(patron, texto)
+    if not m:
+        return texto, None
+    tabla_texto = m.group(1)
+    texto_limpio = (texto[:m.start()] + texto[m.end():]).strip()
+    filas = []
+    for linea in tabla_texto.strip().split("\n"):
+        linea_s = linea.strip()
+        if re.match(r"^\|[\s\-:|]+\|$", linea_s):
+            continue  # fila separadora
+        celdas = [c.strip() for c in linea_s.strip("|").split("|")]
+        if any(c for c in celdas):
+            filas.append(celdas)
+    return texto_limpio, filas if filas else None
 
 
 def _costo_definicion(texto: str) -> float:
@@ -81,23 +106,16 @@ def planificar_icn(conceptos: list, demos: list, num_clase: str) -> list:
     """Produce la lista de SlidePlan para toda la sección ICN.
 
     Estrategia:
-    - anatomia, analogia, antes_despues, frase_clave → slide propio con
-      constructor existente (ya funcionan bien).
-    - Concepto clásico (definición + código + idea clave opcional) → slide
-      ICN flexible con composición dinámica de bloques.
-    - Dos conceptos clásicos adyacentes con densidad combinada ≤ 14 → fusión
-      en un único slide.
-    - Demos → cada una mantiene su slide apilado al final.
+    1. Slide individual por cada concepto (icn_flexible para clásicos, slide propio para tipos especiales).
+    2. Demos siguen inmediatamente al concepto al que pertenecen.
+    3. Al final de todos los slides individuales: UN slide dos_columnas de resumen compacto
+       (solo si hay ≥2 conceptos clásicos).
     """
-    # Intercalar demos al final (v1: no inferimos posición relativa)
     items = _intercalar_demos(conceptos, demos)
-
     planes = []
-    i = 0
-    while i < len(items):
-        item = items[i]
+    clasicos_vistos = []   # para el resumen final dos_columnas
 
-        # — Demo —
+    for item in items:
         if item.get("_es_demo"):
             planes.append(SlidePlan(
                 tipo_slide="tabla_demos",
@@ -105,13 +123,11 @@ def planificar_icn(conceptos: list, demos: list, num_clase: str) -> list:
                 seccion="Contenido nuevo",
                 concepto=item,
             ))
-            i += 1
             continue
 
         concepto = item
         tipo = _tipo_layout(concepto)
 
-        # — Layouts especiales: slide propio, constructor existente —
         if tipo in ("anatomia", "analogia", "antes_despues", "frase_clave"):
             planes.append(SlidePlan(
                 tipo_slide=tipo,
@@ -119,66 +135,84 @@ def planificar_icn(conceptos: list, demos: list, num_clase: str) -> list:
                 seccion="Contenido nuevo",
                 concepto=concepto,
             ))
-            i += 1
             continue
 
-        # — Concepto clásico → slide flexible —
-        bloques_actual = _bloques_clasico(concepto)
-        densidad_actual = sum(b.filas for b in bloques_actual)
-
-        # Intentar fusionar con el siguiente si también es clásico y cabe
-        siguiente = items[i + 1] if i + 1 < len(items) else None
-        puede_fusionar = (
-            siguiente is not None
-            and not siguiente.get("_es_demo")
-            and _tipo_layout(siguiente) == "concepto"
-        )
-
-        if puede_fusionar:
-            bloques_sig = _bloques_clasico(siguiente)
-            densidad_combinada = (
-                densidad_actual
-                + _COSTO["separador"]
-                + sum(b.filas for b in bloques_sig)
-            )
-            if densidad_combinada <= PRESUPUESTO_OBJETIVO:
-                todos = (bloques_actual
-                         + [BloquePlan("separador", "", _COSTO["separador"])]
-                         + bloques_sig)
-                titulo_fusionado = (
-                    f"📘 {concepto['numero']}–{siguiente['numero']}. "
-                    f"{concepto['nombre']} y {siguiente['nombre']}"
-                )
-                planes.append(SlidePlan(
-                    tipo_slide="icn_flexible",
-                    titulo=titulo_fusionado,
-                    bloques=todos,
-                    densidad=densidad_combinada,
-                    concepto=concepto,
-                    justificacion=f"Fusionados: densidad {densidad_combinada:.1f} ≤ {PRESUPUESTO_OBJETIVO}",
-                ))
-                i += 2
-                continue
-
-        # Sin fusión
+        # Concepto clásico: slide individual
+        bloques = _bloques_clasico(concepto)
+        densidad = sum(b.filas for b in bloques)
         justificacion = ""
-        if densidad_actual > PRESUPUESTO_REFERENCIA:
+        if densidad > PRESUPUESTO_REFERENCIA:
             justificacion = (
-                f"⚠ Densidad {densidad_actual:.1f} > {PRESUPUESTO_REFERENCIA} "
-                f"(referencia) — contenido pedagógicamente necesario"
+                f"⚠ Densidad {densidad:.1f} > {PRESUPUESTO_REFERENCIA} "
+                f"— contenido pedagógicamente necesario"
             )
-
         planes.append(SlidePlan(
             tipo_slide="icn_flexible",
             titulo=f"📘 {concepto['numero']}. {concepto['nombre']}",
-            bloques=bloques_actual,
-            densidad=densidad_actual,
+            bloques=bloques,
+            densidad=densidad,
             concepto=concepto,
             justificacion=justificacion,
         ))
-        i += 1
+        clasicos_vistos.append(concepto)
+
+    # Slide resumen al final: dos_columnas con todos los conceptos clásicos
+    if len(clasicos_vistos) >= 2:
+        planes.append(_plan_dos_columnas(clasicos_vistos))
 
     return planes
+
+
+def _plan_dos_columnas(conceptos: list) -> SlidePlan:
+    """Un SlidePlan de tipo dos_columnas para N conceptos clásicos.
+
+    Izquierda: bullets (nombre + definición primera oración) de cada concepto.
+    Derecha: código + output del primer concepto que tenga ejemplo.
+    """
+    nums = [c.get("numero", "?") for c in conceptos]
+    if len(nums) == 1:
+        titulo = f"📘 {nums[0]}. {conceptos[0].get('nombre', '')}"
+    else:
+        titulo = f"📘 Conceptos {nums[0]}–{nums[-1]}"
+
+    # Código a mostrar: primer concepto con ejemplo (preferir el más representativo)
+    codigo = ""
+    output = ""
+    for c in conceptos:
+        if c.get("ejemplo"):
+            codigo = c["ejemplo"]
+            output = c.get("output", "")
+            break
+
+    codigo_display = codigo
+    if output:
+        codigo_display = codigo + "\n" + output
+
+    # Bullets: nombre + primera oración completa de la definición (sin truncar)
+    bullets = []
+    for c in conceptos:
+        nombre = c.get("nombre", "")
+        defn = c.get("definicion", "") or ""
+        primera = re.split(r"(?<=[.!?])\s+", defn)[0].strip() if defn else ""
+        bullets.append({
+            "numero": c.get("numero", ""),
+            "nombre": nombre,
+            "definicion": primera,
+        })
+
+    return SlidePlan(
+        tipo_slide="dos_columnas",
+        titulo=titulo,
+        seccion="Contenido nuevo",
+        bloques=[],
+        densidad=0.0,
+        concepto={
+            "bullets": bullets,
+            "codigo": codigo_display,
+            "conceptos_originales": conceptos,
+        },
+        justificacion="",
+    )
 
 
 # =====================================================================
@@ -211,14 +245,40 @@ def _bloques_clasico(concepto: dict) -> list:
     """Produce los BloquePlan para un concepto tipo clásico."""
     bloques = []
 
-    if concepto.get("definicion"):
-        filas = _costo_definicion(concepto["definicion"])
+    if concepto.get("tabla_comparacion"):
+        filas = concepto["tabla_comparacion"]
         bloques.append(BloquePlan(
-            tipo="definicion",
-            contenido=concepto["definicion"],
-            filas=filas,
-            label="Definición",
+            tipo="tabla",
+            contenido=filas,
+            filas=len(filas) * _COSTO["tabla_fila"],
+            label="",
         ))
+
+    if concepto.get("definicion"):
+        texto_def = concepto["definicion"]
+        texto_sin_tabla, filas_tabla = _extraer_tabla_md(texto_def)
+        if filas_tabla:
+            if texto_sin_tabla:
+                bloques.append(BloquePlan(
+                    tipo="definicion",
+                    contenido=texto_sin_tabla,
+                    filas=_costo_definicion(texto_sin_tabla),
+                    label="Definición",
+                ))
+            costo_tabla = len(filas_tabla) * _COSTO["tabla_fila"]
+            bloques.append(BloquePlan(
+                tipo="tabla",
+                contenido=filas_tabla,
+                filas=costo_tabla,
+                label="",
+            ))
+        else:
+            bloques.append(BloquePlan(
+                tipo="definicion",
+                contenido=texto_def,
+                filas=_costo_definicion(texto_def),
+                label="Definición",
+            ))
 
     if concepto.get("ejemplo"):
         filas = _costo_codigo(concepto["ejemplo"])
@@ -275,55 +335,80 @@ def _intercalar_demos(conceptos: list, demos: list) -> list:
 def planificar_haz_ahora(texto: str) -> dict:
     """Parsea el texto del Haz Ahora y devuelve un plan estructurado.
 
-    Identifica tres partes:
-    - intro: instrucción principal (todo lo que aparece antes de los ítems numerados)
-    - situaciones: lista de strings con los ítems numerados (ej. "1. El PIN...")
-    - cierre: texto de cierre (lo que aparece después de los ítems)
+    Identifica:
+    - intro: texto narrativo antes de la tabla/preguntas (sin metadata interna)
+    - tabla: filas de una tabla markdown (si existe), como lista de listas de celdas
+    - instruccion: línea tipo "Responde en tu cuaderno:" (si existe), separada del intro
+    - situaciones: ítems numerados ("1. ...", "2. ...")
+    - cierre: texto después de los ítems (generalmente vacío)
 
-    Retorna dict con:
-      tipo: "situaciones" | "libre"
-      intro: str
-      situaciones: list[str]
-      cierre: str
+    Tipos:
+      "situaciones_con_tabla": hay tabla + preguntas numeradas
+      "situaciones": solo preguntas numeradas
+      "libre": sin ítems numerados
     """
     import re
 
     if not texto:
-        return {"tipo": "libre", "intro": "", "situaciones": [], "cierre": ""}
+        return {"tipo": "libre", "intro": "", "tabla": None,
+                "instruccion": "", "situaciones": [], "cierre": ""}
+
+    # Eliminar metadata interna antes de parsear
+    texto = re.sub(r"\*\*Propósito:\*\*[^\n]*\n?", "", texto)
+    texto = re.sub(r"^\s*\(\s*\d+\s*min\s*\)\s*$", "", texto, flags=re.MULTILINE)
+    texto = re.sub(r"\*\*Actividad:\*\*\s*", "", texto)
+    texto = re.sub(r"\*\*Respuestas\s+(?:del\s+Haz\s+Ahora|esperadas):\*\*.*", "", texto, flags=re.DOTALL)
 
     lineas = texto.strip().split("\n")
-    intro_lineas = []
-    situaciones = []
+    intro_lineas = []   # todo lo que va antes de los ítems numerados (preserva vacías para tabla)
+    situaciones  = []
     cierre_lineas = []
     en_situaciones = False
 
     for linea in lineas:
         linea_stripped = linea.strip()
-        if not linea_stripped:
-            continue
         m = re.match(r"^(\d+)\.\s+(.+)$", linea_stripped)
         if m:
             en_situaciones = True
             situaciones.append(f"{m.group(1)}. {m.group(2)}")
         elif en_situaciones:
-            cierre_lineas.append(linea_stripped)
+            if linea_stripped:
+                cierre_lineas.append(linea_stripped)
         else:
-            intro_lineas.append(linea_stripped)
+            intro_lineas.append(linea)  # incluye líneas vacías (necesario para detectar tabla)
 
-    intro = " ".join(intro_lineas).strip()
+    # Unir con \n para que _extraer_tabla_md pueda encontrar la tabla
+    intro_raw = "\n".join(intro_lineas).strip()
+
+    # Extraer tabla markdown si existe
+    intro_sin_tabla, tabla_filas = _extraer_tabla_md(intro_raw)
+    intro_sin_tabla = intro_sin_tabla.strip()
+
+    # Extraer "instrucción" = línea que introduce las preguntas (ej: "Responde en tu cuaderno:")
+    instruccion = ""
+    lineas_intro = [ln.strip() for ln in intro_sin_tabla.split("\n") if ln.strip()]
+    if lineas_intro:
+        ultima = lineas_intro[-1]
+        if (ultima.endswith(":") or
+                re.match(r"responde|anota|escribe|contesta", ultima, re.IGNORECASE)):
+            instruccion = ultima
+            lineas_intro = lineas_intro[:-1]
+
+    intro = "\n".join(lineas_intro).strip()
     cierre = " ".join(cierre_lineas).strip()
-    tipo = "situaciones" if situaciones else "libre"
 
-    # TODO (caso futuro): algunos Haz Ahora pueden tener un bloque de código Python
-    # (ej. "ejecuta esto y observa qué devuelve") seguido de preguntas asociadas.
-    # En ese caso, "tipo" debería ser "codigo_preguntas" y el plan debería incluir
-    # una caja terminal + una caja de preguntas debajo, respetando el presupuesto
-    # de densidad. Por ahora se caen en "libre" (texto sin parsear), que funciona
-    # razonablemente bien aunque sin el estilo visual de terminal.
+    if tabla_filas and situaciones:
+        tipo = "situaciones_con_tabla"
+    elif situaciones:
+        tipo = "situaciones"
+    else:
+        tipo = "libre"
 
     return {
         "tipo": tipo,
         "intro": intro,
+        "tabla": tabla_filas,
+        "instruccion": instruccion,
         "situaciones": situaciones,
         "cierre": cierre,
     }

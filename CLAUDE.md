@@ -15,7 +15,7 @@ Cuando Diego inicie el diseño de una clase, sigue este flujo estrictamente. No 
 ```
 1. IDENTIFICAR clase Picuino y revisar el currículo
    ↓
-2. PROPONER objetivo + estructura de 5 pasos
+2. PROPONER objetivo + OAs MINEDUC + estructura de 5 pasos
    ↓  ESPERAR APROBACIÓN → guardar spec → pedir /compact
 3. GENERAR Colab de clase (.ipynb)
    ↓  ESPERAR APROBACIÓN → registrar en historial → pedir /compact
@@ -31,9 +31,13 @@ Cuando Diego inicie el diseño de una clase, sigue este flujo estrictamente. No 
 
 En cada etapa con aprobación, guarda el estado en la carpeta `clases/clase-NN-tema/` (ver sección "Organización de archivos").
 
-## Protocolo /compact entre fases
+## Protocolo de cierre de etapa (commit + push a GitHub + /compact)
 
-Después de cada gate de aprobación, Claude debe pedir a Diego que ejecute `/compact` antes de iniciar la siguiente fase. El estado de la clase vive en los archivos del proyecto (`Clase NN - Tema - Spec.md`, `Clase NN - Tema - Historial.md`), no en el contexto — por eso compactar es seguro y mantiene la sesión liviana.
+Después de cada gate de aprobación, Claude debe: guardar el estado, subir el contenido de la carpeta de la clase a GitHub, y recomendar `/compact` antes de iniciar la siguiente fase. El estado de la clase vive en los archivos del proyecto (`Clase NN - Tema - Spec.md`, `Clase NN - Tema - Historial.md`) y en GitHub, no en el contexto — por eso compactar es seguro y mantiene la sesión liviana.
+
+Diego siempre quiere compactar al cerrar una etapa — su respuesta es conocida de antemano, así que Claude no pregunta ni espera confirmación verbal: **afirma la recomendación directamente y sigue trabajando**. (Nota técnica: ni Claude ni un hook pueden ejecutar `/compact` por sí mismos — es un comando que solo Diego puede invocar — así que lo único que corresponde es señalarlo de forma clara y sin fricción, no bloquear el flujo esperando un "sí".)
+
+El repositorio `github.com/DiegoVP2001/clases-python` (rama `master`, ya configurado como `origin` de este proyecto) es el remoto donde se sube cada clase — esto es lo que le permite a Diego abrir los notebooks directo en Google Colab desde GitHub. Es **público**: Diego decidió mantenerlo así a sabiendas de que esto expone `Solucionario.ipynb` (con todas las respuestas) apenas se genera, antes de dictar la clase. No cuestiones esta decisión ni excluyas el Solucionario del push por tu cuenta.
 
 **Gates donde aplica (en orden):**
 1. Spec aprobada → antes del Colab de clase
@@ -42,18 +46,25 @@ Después de cada gate de aprobación, Claude debe pedir a Diego que ejecute `/co
 4. PPT aprobado → antes del Reel (si Diego decide hacerlo)
 
 **Protocolo exacto tras cada aprobación:**
-1. Escribe el archivo de estado correspondiente (`Clase NN - Tema - Spec.md` o `Clase NN - Tema - Historial.md`).
-2. Confirma a Diego qué se guardó y dónde.
-3. Di literalmente: *"¿Quieres ejecutar `/compact` antes de continuar? Recomiendo hacerlo para mantener el contexto limpio. Avísame cuando estés listo o si prefieres seguir directo."*
-4. Espera que Diego confirme. Cuando lo haga, activa la skill de la siguiente fase.
+1. Escribe/actualiza el archivo de estado correspondiente (`Clase NN - Tema - Spec.md`, `Clase NN - Tema - Historial.md`, o el artefacto propio del gate).
+2. Commitea y pushea **solo la carpeta de esa clase** a GitHub:
+   ```
+   git add "clases/clase-NN-tema-breve/"
+   git commit -m "Clase NN - Tema: <Spec|Colab de clase|Ejercicios|PPT|Reel> aprobado(a)"
+   git push
+   ```
+   Nunca uses `git add -A` ni `git add .` para este paso — acota siempre la ruta a la carpeta de la clase, para no arrastrar otros cambios pendientes del repo que no forman parte de este gate. Si el push falla (red, autenticación, conflicto), avisa a Diego explícitamente con el error — nunca reintentes con `--force` ni asumas que quedó subido.
+3. Confirma a Diego qué se guardó y qué se subió a GitHub. Si el gate generó o modificó un notebook (`.ipynb`), entrega también el link directo de Google Colab:
+   `https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-NN-tema-breve/<Nombre%20del%20archivo>.ipynb`
+   (reemplaza espacios por `%20`; tildes/ñ funcionan sin encodear en la mayoría de los navegadores, pero si el link falla, percent-encodéalos también).
+4. Di literalmente: *"Cierre de etapa: te recomiendo ejecutar `/compact` ahora antes de seguir, para mantener el contexto limpio. Cuando quieras, lo corres y seguimos."*
+5. Activa la skill de la siguiente fase sin esperar confirmación verbal — Diego ejecutará `/compact` cuando le acomode (antes, durante o después de la siguiente fase).
 
-Claude nunca salta al siguiente artefacto sin haber pedido el `/compact`. Si Diego omite ejecutarlo y dice "dale", continúa sin bloquearse — la regla es recordarlo, no bloquearlo.
-
-El texto del mensaje de `/compact` definido arriba es canónico — los SKILL.md individuales deben usarlo sin modificarlo, adaptando solo la referencia a la siguiente fase.
+El texto del mensaje de `/compact` definido arriba es canónico — los SKILL.md individuales deben usarlo sin modificarlo, adaptando solo la referencia a la siguiente fase. Los pasos 2 y 3 (commit+push+link de Colab) también son canónicos: cada SKILL.md debe reproducirlos igual, adaptando solo qué archivo(s) se commitean/enlazan en su gate.
 
 ## Activación de skills según etapa
 
-- **Etapa 1-2 (diseño)**: activa `disenar-clase`. Consulta `referencia-curriculo` para los conceptos Picuino, `referencia-bloom` para calibrar el nivel cognitivo del objetivo, `referencia-clase-que-sonamos` para la estructura pedagógica, `referencia-intereses-estudiantes` para contextualizar ejemplos, y `referencia-isla-de-maipo` cuando Diego pida contextos locales o de la comuna.
+- **Etapa 1-2 (diseño)**: activa `disenar-clase`. Consulta `referencia-curriculo` para los conceptos Picuino, `referencia-bloom` para calibrar el nivel cognitivo del objetivo, `referencia-clase-que-sonamos` para la estructura pedagógica, `referencia-intereses-estudiantes` para contextualizar ejemplos, `referencia-isla-de-maipo` cuando Diego pida contextos locales o de la comuna, y `referencia-estudiantes` cuando necesites nombres reales del curso para personajes o ejemplos. Lee `clases/OAs-referencia.md` (especialmente la "Guía rápida") para proponer los OAs MINEDUC que cubre la clase junto con el objetivo en el Paso 2.
 - **Etapa 3**: activa `generar-colab-clase`.
 - **Etapa 4**: activa `generar-colab-ejercicios`.
 - **Etapa 5**: activa `generar-ppt-clase`.
@@ -73,33 +84,25 @@ Este workflow es posterior y paralelo al diseño de clases. No forma parte del f
 
 ### Path por defecto — Jupyter/Colab
 
+**Cambio vigente desde 2026-07-28:** las ayudantías ya no viven en una carpeta `ayudantias/` aparte. Se integran a `clases/` con numeración real igual que cualquier clase, para que Diego las tenga ordenadas en la misma secuencia (ej. "Clase 21 - Ayudantía Ejercitación Ciclos"). Siguen siendo un workflow aparte del flujo maestro (se activan solo cuando Diego lo pide explícitamente), pero comparten carpeta y convención de nombrado con las clases normales.
+
 ```
-1. IDENTIFICAR clases foco ya existentes en `clases/`
+1. IDENTIFICAR clases foco ya existentes en `clases/` y consultar `Historial-Curricular.md` para fijar el próximo N° real disponible
    ↓
-2. REVISAR specs, notebooks y ejercicios de esas clases
+2. REVISAR specs, notebooks y ejercicios de esas clases foco
    ↓
-3. PROPONER ejercicios en chat (formato de enunciado aprobado)
+3. PROPONER en chat: objetivo + ejercicio guiado de recordatorio + serie de ejercicios (formato de enunciado aprobado)
    ↓  ESPERAR APROBACIÓN
-4. GUARDAR propuesta aprobada en `ayudantias/propuestas/<slug>.json`
+4. GUARDAR propuesta aprobada como JSON en `clases/clase-NN-ayudantia-tema/Clase NN - Ayudantía Tema - Ejercicios propuesta.json`
    ↓
 5. GENERAR dos notebooks con `generar-ayudantia-ejercicios`
    ↓
-6. REGISTRAR en `ayudantias/<slug>/historial.md`
+6. REGISTRAR en `Clase NN - Ayudantía Tema - Historial.md` y agregar la fila correspondiente en `Historial-Curricular.md`
    ↓
 7. DEJAR listos para que Diego suba a Colab y Classroom
 ```
 
-Artefactos de salida:
-
-```
-ayudantias/
-├── propuestas/
-│   └── <slug>.json                          # Fuente de verdad aprobada
-└── <slug>/
-    ├── <slug>-ejercicios.ipynb              # Para estudiantes → subir a Colab
-    ├── <slug>-solucionario.ipynb            # Para el profesor → subir a Classroom después
-    └── historial.md                         # Registro de iteraciones y feedback de Diego
-```
+**Artefactos de salida:** estructura completa documentada en "Organización de archivos" (más abajo) — no se repite aquí para evitar mantenerla en dos lugares. Sin PPT: las ayudantías nunca generan presentación.
 
 Activación de skills:
 
@@ -126,24 +129,7 @@ Solo se recorre cuando Diego pide explícitamente que los ejercicios vayan a Dod
 7. PUBLICAR (commit + push a `dodona-ejercicios-profesor/`) solo con autorización explícita de Diego
 ```
 
-Artefactos de salida:
-
-```
-dodona/
-├── propuestas/
-│   └── <slug>.json                            # Fuente de verdad aprobada
-└── <set_slug>/
-    └── <set_slug>-ejercicios.ipynb            # Notebook de respaldo, generado automáticamente
-
-dodona-ejercicios-profesor/                    # Repo externo (GitHub: DiegoVP2001/dodona-ejercicios-profesor)
-├── dirconfig.json
-└── <set_slug>/
-    └── <exercise_slug>/
-        ├── config.json
-        ├── description/
-        ├── evaluation/
-        └── solution/
-```
+**Artefactos de salida:** estructura completa de `dodona/` y `dodona-ejercicios-profesor/` documentada en "Organización de archivos" (más abajo) — no se repite aquí para evitar mantenerla en dos lugares.
 
 Activación de skills:
 
@@ -161,8 +147,8 @@ Activación de skills:
 
 ### Reglas (ambos paths)
 
-1. **No mezclar con el flujo de clases.** Las ayudantías y ejercicios autónomos se trabajan solo cuando Diego lo pida como tarea aparte.
-2. **No generar archivos sin propuesta aprobada.** Primero se propone en chat; luego se guarda el JSON (`ayudantias/propuestas/` o `dodona/propuestas/` según el path).
+1. **No mezclar con el flujo de clases.** Las ayudantías y ejercicios autónomos se trabajan solo cuando Diego lo pida como tarea aparte, aunque desde 2026-07-28 compartan carpeta y numeración con las clases (path Jupyter).
+2. **No generar archivos sin propuesta aprobada.** Primero se propone en chat; luego se guarda el JSON (`clases/clase-NN-ayudantia-tema/` para Jupyter, `dodona/propuestas/` para Dodona).
 3. **Fuente de verdad:** el JSON aprobado. Si hay que cambiar un ejercicio, edita el JSON y regenera con `--force`; no edites los artefactos generados a mano.
 4. **No copiar literalmente ejercicios de Colab.** Adaptar contenido y dificultad, cambiando contexto o datos.
 5. **Enunciados con formato aprobado:** narrativa de 3-4 líneas + tabla de inputs con "Respuestas posibles" + tabla de output. No mencionar operadores (`and`, `or`, `if`) ni nombres de variables en el enunciado. Ver skill `disenar-ayudantia-ejercicios` (Jupyter) o `disenar-dodona-ejercicios` (Dodona) para el formato exacto.
@@ -170,8 +156,9 @@ Activación de skills:
 7. **Ejercicios triviales (difficulty: trivial):** en el path Jupyter, el generador los omite de ambos notebooks. Úsalos solo si hay un ejercicio de introducción a la plataforma o herramienta.
 8. **Solucionario / soluciones oficiales:** en Jupyter, el solucionario incluye criterios de corrección auto-generados y todos los casos de prueba (visibles y ocultos), y Diego lo sube a Classroom. En Dodona, la solución oficial vive en `solution/solution.py` y debe ejecutarse contra los casos del JSON antes de publicar.
 9. **Tests en el JSON:** mantener los campos `tests` con casos `"hidden": true/false`. Son la fuente de verdad tanto para el solucionario Jupyter como para los tabs ocultos de TESTed en Dodona.
-10. **Registrar historial.** Cada set generado (Jupyter o Dodona) debe quedar registrado con fecha y descripción del cambio: `ayudantias/<slug>/historial.md` o, en Dodona, en el `Historial.md` de la clase foco si no existe uno propio del set.
+10. **Registrar historial.** Cada set generado debe quedar registrado con fecha y descripción del cambio: `Clase NN - Ayudantía Tema - Historial.md` (Jupyter) o, en Dodona, en el `Historial.md` de la clase foco si no existe uno propio del set.
 11. **Push a repositorios externos solo con autorización explícita.** Esto aplica en particular al path Dodona (`dodona-ejercicios-profesor/`); el path Jupyter no requiere push a ningún repositorio externo.
+12. **Estructura fija del contenido Jupyter (ambos notebooks).** El notebook de estudiante sigue siempre el orden: (1) objetivo breve de la ayudantía, (2) un ejercicio guiado de recordatorio — se resuelve en conjunto en clase, celda de código vacía, sin solución visible en el notebook de estudiante — y (3) la serie de ejercicios independientes. El Solucionario incluye la solución del ejercicio guiado además de la de toda la serie. Nunca se genera PPT para una ayudantía.
 
 ## Defaults del curso (3ro y 4to medio, Santiago)
 
@@ -182,7 +169,7 @@ A menos que Diego indique algo distinto para una clase específica, usa estos va
 | Curso | 3ro y 4to medio |
 | Duración de clase | 80 minutos |
 | Acceso a computador | Todos los estudiantes |
-| Modalidad de trabajo | Individual (salvo indicación contraria) |
+| Modalidad de trabajo | Parejas (salvo indicación contraria) |
 | Plataforma | Google Colab |
 | Entrega de evidencia | Google Classroom |
 | Idioma | Español de Chile |
@@ -209,9 +196,11 @@ Cada clase vive en su propia carpeta dentro de `clases/`. La estructura obligato
 clases/
 └── clase-NN-tema-breve/
     ├── Clase NN - Tema - Spec.md                  # Especificación aprobada (objetivo + estructura)
-    ├── Clase NN - Tema - Clase.ipynb              # Colab principal de la clase
-    ├── Clase NN - Tema - Ejercicios.ipynb         # Colab de ejercicios adicionales
+    ├── Clase NN - Tema - Clase.ipynb              # Colab principal de la clase, para estudiantes (sin ninguna solución, ni siquiera oculta)
+    ├── Clase NN - Tema - Solucionario.ipynb       # TODAS las soluciones (Ticket de Salida + Práctica Independiente + Ejercicios), solo para el profesor
+    ├── Clase NN - Tema - Ejercicios.ipynb         # Colab de ejercicios adicionales, para estudiantes (sin ninguna solución)
     ├── Clase NN - Tema - Presentación.pptx        # PPT de la clase
+    ├── Clase NN - Tema - Ticket de Salida.pptx    # PPT aparte con las preguntas de alternativas del TdS (mismo diseño, nunca se sube antes de dictar la clase)
     ├── Clase NN - Tema - Reel.mp4                 # Reel de contenido vertical 9:16 (opcional)
     ├── Clase NN - Tema - Historial.md             # Registro de iteraciones y feedback de Diego
     └── Clase NN - Tema - Ejercicios propuesta.md  # Fuente de verdad del Ejercicios.ipynb (interna)
@@ -221,21 +210,23 @@ Reglas de nombrado:
 - **Carpeta:** `clase-NN-tema-breve` en kebab-case (clase-03-variables, clase-09-if-else, clase-13-ciclo-for).
   `NN` puede incluir sufijo de letra (8a, 8b, 13, 22).
 - **Archivos:** prefijo `Clase NN - Tema - [Tipo].ext`
-  - `Tipo` es uno de: `Spec`, `Clase`, `Ejercicios`, `Presentación`, `Reel`, `Historial`, `Ejercicios propuesta`
+  - `Tipo` es uno de: `Spec`, `Clase`, `Solucionario`, `Ejercicios`, `Presentación`, `Ticket de Salida`, `Reel`, `Historial`, `Ejercicios propuesta`
   - `Tema` es el nombre legible del contenido (ej: `Operadores Lógicos`, `Condicionales if-else`)
   - Usa tildes y mayúsculas en el nombre: `Operadores Lógicos`, no `operadores-logicos`
+  - **`Solucionario.ipynb` se construye en dos etapas, sin ser un gate aparte.** `generar-colab-clase` lo crea junto con `Clase.ipynb` (Ticket de Salida + soluciones de Práctica Independiente). `generar-colab-ejercicios` lo **actualiza** (no lo recrea) agregando las soluciones de `Ejercicios.ipynb` cuando ese gate se aprueba. Diego lo sube a Classroom recién después de dictar la clase — nunca antes, para evitar filtraciones.
 
-Las ayudantías viven en `ayudantias/` dentro de este repo:
+Las ayudantías (path Jupyter, desde 2026-07-28) se integran a `clases/` con numeración real, igual que cualquier clase — ya no viven en una carpeta `ayudantias/` aparte. Cada ayudantía obtiene su N° real siguiendo a la clase foco más reciente (ver "Cómo se mantiene este archivo" en `Historial-Curricular.md`), y su carpeta usa el mismo patrón `clase-NN-tema-breve`, con `Tema` iniciando por "Ayudantía":
 
 ```
-ayudantias/
-├── propuestas/
-│   └── <slug>.json                           # Fuente de verdad aprobada
-└── <slug>/
-    ├── <slug>-ejercicios.ipynb               # Para estudiantes → subir a Colab
-    ├── <slug>-solucionario.ipynb             # Para el profesor → subir a Classroom
-    └── historial.md                          # Registro de iteraciones y feedback de Diego
+clases/
+└── clase-NN-ayudantia-tema-breve/
+    ├── Clase NN - Ayudantía Tema - Ejercicios propuesta.json  # Fuente de verdad aprobada (consumida por el script generador)
+    ├── Clase NN - Ayudantía Tema - Ejercicios.ipynb           # Para estudiantes → subir a Colab (objetivo + ejercicio guiado + serie, sin soluciones)
+    ├── Clase NN - Ayudantía Tema - Solucionario.ipynb         # Para el profesor → subir a Classroom (incluye solución del guiado y de toda la serie)
+    └── Clase NN - Ayudantía Tema - Historial.md               # Registro de iteraciones y feedback de Diego
 ```
+
+Sin `Presentación.pptx`: las ayudantías nunca generan PPT. La carpeta `ayudantias/` (histórica — contiene el set `ayudantia-if-else-booleanos` generado antes de este cambio) se conserva sin tocar como registro pasado, pero no recibe sets nuevos.
 
 Los ejercicios para Dodona (path alternativo, solo si Diego lo pide explícitamente) viven en `dodona/` dentro de este repo, más un repo externo:
 
@@ -274,19 +265,46 @@ Estas reglas aplican a TODAS las clases y no se negocian sin instrucción explí
 2. **Variables en español.** Nunca `x`, `y`, `var1`. Siempre nombres significativos (`puntos_jugador`, `minutos_estudio`).
 3. **Contextos variados.** No concentres todos los ejercicios de una clase en un solo tema (música, videojuegos, etc.). Mezcla.
 4. **Evita temas sensibles innecesarios.** No uses calorías, peso corporal, diagnósticos de salud salvo autorización explícita.
-5. **Soluciones ocultas al final, agrupadas.** Nunca pongas la solución inmediatamente después de un ejercicio. Agrúpalas al final del notebook en una sección "📋 Soluciones" con `<details>` individuales. Aplica a Colab de clase Y a Colab de ejercicios.
+5. **Ninguna solución vive en el notebook de estudiante, ni siquiera oculta con `<details>`.** Ni `Clase.ipynb` ni `Ejercicios.ipynb` contienen soluciones en ninguna forma — todas (Ticket de Salida, Práctica Independiente, Ejercicios) viven exclusivamente en `Solucionario.ipynb`, que Diego sube a Classroom recién después de dictar la clase. Esto evita que cualquier estudiante que abra el notebook del curso vea una respuesta antes de tiempo, y le permite a Diego usar el mismo archivo para revisar en vivo cuando trae a una pareja a explicar al frente.
 6. **Aprobación explícita solo en los gates formales del flujo.** Los gates son: objetivo/propósito → estructura de 5 pasos → Colab de clase → Colab de ejercicios → PPT → (oferta de Reel). Las correcciones técnicas intermedias (bugs, ajustes de texto, errores de indentación) se ejecutan sin preguntar.
 7. **Outputs con etiqueta descriptiva.** Los `print()` en ejercicios y soluciones siempre llevan texto explicativo: `print("¿Te alcanza?", saldo >= precio)` — nunca `print(saldo >= precio)` a secas.
-8. **Enunciados en lenguaje natural, sin revelar el operador.** Los enunciados de ejercicios y los pasos de la guiada describen QUÉ hacer sin mencionar operadores, nombres de variables ni comandos Python. Los ejemplos de input usan lenguaje natural ("si alguien ingresa $80.000"), nunca nombres de variables.
+8. **Enunciados en lenguaje natural, sin revelar el operador.** Los enunciados de ejercicios y los pasos de la guiada describen QUÉ hacer sin mencionar operadores, nombres de variables ni comandos Python. Los ejemplos de input usan lenguaje natural ("si alguien ingresa \$80.000"), nunca nombres de variables.
 9. **Haz Ahora: calentamiento o spoiler sutil, nunca adelanto explícito.** El Haz Ahora activa conocimiento previo útil para hoy Y/O hace un spoiler sutil de la clase en lenguaje natural, sin mostrar la sintaxis Python que se enseñará en el ICN.
-10. **El PPT termina en errores típicos.** La Práctica Guiada, Práctica Independiente, Ticket de Salida y Cierre solo se trabajan desde el Colab — nunca se incluyen en el PPT.
-11. **Las respuestas esperadas del Haz Ahora nunca van como pie de página ni nota al fondo.** En el PPT, la nota de cierre del slide Haz Ahora no revela las respuestas. En el Colab, las respuestas van exclusivamente en la sección "📋 Soluciones" con `<details>`.
+10. **El PPT termina en el slide de Cierre.** La Práctica Guiada, Práctica Independiente y Ticket de Salida solo se trabajan desde el Colab — nunca se incluyen en el PPT. El Cierre es la excepción: el PPT sí incluye, como última slide, el objetivo reimpreso + la pregunta de comprensión (escala 1-5) + la pregunta de propósito, ambas para responder a viva voz (nunca las respuestas).
+11. **Las respuestas esperadas del Haz Ahora nunca van como pie de página ni nota al fondo.** En el PPT, la nota de cierre del slide Haz Ahora no revela las respuestas. En el Colab de estudiante tampoco aparecen en ninguna forma; si Diego necesita registrarlas para sí mismo, van en `Solucionario.ipynb`.
 12. **El slide de Reglas del PPT incluye siempre "🦻 No ocupen audífonos"** como ítem fijo, independiente del tema de la clase.
-13. **En ejemplos de código, muestra el output de los `print()` con `>>`** en la línea siguiente. Ejemplo: `print("¿Te alcanza?", True)` seguido de `>> ¿Te alcanza? True`. Aplica tanto en celdas del Colab como en demos del spec que irán al PPT.
+13. **Convención de output de `print()`.** Ver `Convenciones-Formato-Output.md` — se usa `>>` en la línea siguiente para mostrar el resultado. Aplica tanto en celdas del Colab como en demos del spec que irán al PPT.
+14. **`print()` con comas, nunca con `+` y `str()`.** Para imprimir variables numéricas junto a texto usa comas: `print("Te quedan $", saldo, "en la tarjeta.")` — nunca `print("Te quedan $" + str(saldo) + " en la tarjeta.")`. Las comas evitan la conversión manual de tipo y son más legibles para estudiantes. (El `$` dentro de un string de código Python no necesita escape — la regla 21 de abajo aplica solo a texto markdown/prosa del spec.)
+15. **Formato canónico de ejercicios de Práctica Independiente.** Cada ejercicio sigue esta estructura fija en orden:
+    1. Narrativa (3-4 líneas de prosa, sin bullets) — contexto rico, fluye sin revelar operadores ni variables.
+    2. `**El programa debe:**` — bullets con términos clave en negrita. Describe qué hace el programa, no cómo.
+    3. Pistas colapsables con `<details><summary>💡 Pista N — subtítulo</summary>...</details>` — 1-2 según dificultad, solo donde aplica.
+    4. Tabla HTML side-by-side: encabezado `Ejemplo 1` / `Ejemplo 2` (sin descriptores), fila 📥 *El usuario escribe* con `<pre>` de inputs, fila 📤 *El programa imprime* con `<pre>` de outputs.
+    5. Celda de código vacía con solo `# Tu solución del Ejercicio N` — sin starter code.
+16. **Práctica Independiente: 1 ejercicio obligatorio + 1 ejercicio bonus, formato revisión rápida.** No preguntar la cantidad — es fija. El ejercicio 2 se presenta como bonus (décimas extra), a resolver solo si la pareja termina el obligatorio y quiere el desafío — así Diego revisa el obligatorio en vivo, trayendo a una pareja a explicarlo al curso. Narrativa más breve que el máximo permitido (2-3 líneas) y normalmente sin pistas `<details>` (solo si el ejercicio realmente lo amerita).
+17. **Ticket de Salida: 2-3 preguntas de alternativas (4 opciones, rotuladas 1 dedo/2 dedos/3 dedos/4 dedos — nunca A/B/C/D); las preguntas nunca van en el Colab de estudiante, solo un aviso de que se proyectan en la tele.** Se responden con los dedos, **nunca en voz alta**: Diego cuenta hasta 3 y todos muestran su respuesta al mismo tiempo (manos escondidas hasta el conteo), luego revela la correcta. Razón: responder a viva voz genera efecto arrastre — el primero en hablar ancla la respuesta del resto; el conteo con revelación simultánea obliga a cada estudiante a comprometerse con su propia respuesta antes de ver la de los demás. El Colab de clase (`Clase.ipynb`) incluye una sección `## 🎫 Ticket de Salida` justo antes del Cierre con solo ese aviso — nunca las preguntas ni alternativas. Las preguntas completas viven en `Clase NN - Tema - Solucionario.ipynb` (enunciado + 4 alternativas rotuladas por dedos + respuesta correcta + justificación breve), en su propia sección separada de las soluciones de Práctica Independiente y Ejercicios. Regla de cantidad (no preguntar, decidir según el spec): 2 preguntas si el ICN tiene 1-2 conceptos centrales relacionados; 3 preguntas si cubre 3+ conceptos, o si dos conceptos son claramente independientes y ambos ameritan verificación separada. **Las preguntas que se proyecten en la TV van en un PPT aparte de la Presentación principal** (`Clase NN - Tema - Ticket de Salida.pptx`), con el mismo diseño/plantilla que `Presentación.pptx` pero como archivo independiente — nunca como slides agregadas al PPT principal. Razón: `Presentación.pptx` se sube a Classroom/Colab antes de dictar la clase, así que cualquier pregunta que viva ahí queda expuesta a los estudiantes con anticipación. El PPT del Ticket de Salida solo se genera y proyecta el día de la clase, después de dictarla, y cada slide de pregunta debe recordar visualmente la mecánica (alternativas rotuladas 1-4 dedos + indicación de "manos escondidas hasta el conteo").
+18. **Trabajo en parejas: reviso uno, la pareja lo explica al frente.** Con la modalidad en parejas, Diego revisa uno de los ejercicios en vivo trayendo a la pareja a explicarlo al curso. Diseña Práctica Independiente y Ejercicios pensando en que el trabajo pueda mostrarse y explicarse por ambos integrantes, no solo entregarse.
+19. **Práctica Guiada: nunca celda "Mis respuestas" en el Colab.** Diego siempre escribe el código directamente en la celda de código (`# Tu programa`), nunca respuestas de texto aparte para la Guiada — a diferencia del Haz Ahora, el Cierre, y la celda "Mis respuestas — Parte A" de ejercicios Independiente con análisis de error, que sí las mantienen.
+20. **Práctica Guiada: pasos y resultado esperado en tabla de 2 columnas.** En el spec, usa `**Pasos guiados (tabla):**` con un bloque `- Paso N: ... / Resultado: \`\`\`...\`\`\`` por fila — no una lista numerada de pasos seguida de un bloque de resultado único al final. Agrupa en una misma fila los pasos que no producen output propio con el paso que sí lo hace, para que ninguna fila quede vacía. Si el resultado de una fila es una secuencia larga y repetitiva, acórtala con `...` para que la tabla no sea muy larga de mostrar. Formato exacto y ejemplo en `generar-colab-clase/SKILL.md`.
+21. **El signo peso (`$`) en texto markdown/prosa del spec siempre va escapado como `\$`.** Jupyter/Colab renderiza las celdas markdown con MathJax, así que un `$` sin escapar se interpreta como delimitador de fórmula matemática y descuadra el texto (sobre todo si hay un segundo `$` más adelante en la misma celda). Aplica a narrativas, enunciados, tablas HTML y cualquier prosa que mencione montos en pesos — ej: "cuesta \$5.000", nunca "cuesta $5.000". No aplica dentro de código Python (`print("Te quedan $", saldo)` no necesita escape, porque las celdas de código no se renderizan como markdown).
+
+## Workflow: evaluaciones individuales sumativas — generación
+
+Cuando Diego pida crear una evaluación individual sumativa (ver el plan de 3 evaluaciones del curso — Condicionales, Ciclos, Funciones+Strings+Listas), cada una vive en su propia carpeta `clases/clase-NN-evaluacion-tema/` y se genera con un script propio `generar_evaluacion.py` (mismo patrón script-based del resto del proyecto: fuente de verdad, nunca editar los `.ipynb` a mano — regenerar el script si hay que cambiar algo).
+
+**Tres notebooks, no dos:**
+
+1. **`Clase NN - Evaluación Tema - Evaluación.ipynb`** — para estudiantes, se rinde el día de la evaluación. Sin ninguna solución.
+2. **`Clase NN - Evaluación Tema - Solucionario.ipynb`** — solo para el profesor y para el agente corrector (skill `revisar-evaluacion`). Junto a cada solución incluye una **rúbrica flexible de 3 niveles** (✅ acepta sin descuento / ⚠️ descuenta 1-2 pts, detalle menor / ❌ descuenta la mayoría o todo el puntaje, error real), más un bloque de criterios de corrección al inicio dirigido explícitamente al agente que corrige ("Si estás revisando esta evaluación...").
+3. **`Clase NN - Evaluación Tema - Solucionario Estudiantes.ipynb`** — versión para publicar al curso. Misma narrativa y misma solución de referencia que el Solucionario del profesor (reutiliza la misma fuente de verdad en el script, nunca se duplica a mano), pero **sin ningún lenguaje de puntaje o descuento**: en vez de la rúbrica de 3 niveles, cada ítem/ejercicio lleva un bloque `🔎 **Qué se revisó:**` con 1-2 frases que describen el criterio de lógica evaluado (ej. "que la condición exigiera ambas variables a la vez", "que las 4 categorías quedaran bien delimitadas sin huecos"), sin mencionar puntos.
+
+**Regla de publicación (importante):** el Solucionario Estudiantes solo se genera cuando Diego lo pide explícitamente, y por defecto **no correspondería publicarlo/pushearlo hasta después de rendida la evaluación** — el repo es público, así que un push queda expuesto de inmediato y filtraría respuestas antes del examen. Si la fecha de la evaluación aún no ha pasado, confirma con Diego el momento exacto antes de pushear (no asumas que "generar" implica "publicar ya").
+
+**Implementación de referencia:** en el script, cada ítem/ejercicio trae un dict con `narrativa`, la solución, un dict `rubrica` (`acepta`/`parcial`/`full`, consumido solo por el builder del Solucionario del profesor) y un campo `criterio` de texto plano (consumido solo por el builder del Solucionario Estudiantes). Ver `clases/clase-19-evaluacion-condicionales/generar_evaluacion.py` como plantilla.
 
 ## Workflow: revisión de evaluaciones
 
-Cuando Diego quiera revisar entregas de estudiantes, activar la skill `revisar-evaluacion`. El flujo tiene 5 fases:
+Cuando Diego quiera revisar entregas de estudiantes, activar la skill `revisar-evaluacion`. Consulta `referencia-estudiantes` para obtener la nómina oficial al preparar submissions. El flujo tiene 5 fases:
 
 1. **Preparar submissions** — `preparar_submissions.py` inicializa `revision/puntajes.json`
 2. **Calibrar rúbrica** — leer el solucionario, acordar criterios con Diego, guardar en `criterios_calibracion.json`. **Nunca asumir criterios de evaluaciones anteriores.**

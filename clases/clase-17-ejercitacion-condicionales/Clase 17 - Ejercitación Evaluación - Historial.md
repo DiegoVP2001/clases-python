@@ -1,5 +1,15 @@
 # Historial — Clase 17 - Ejercitación Evaluación
 
+## 2026-07-28 — Revisión ligera de las 36 entregas + registro de décimas
+
+**Motivo:** Diego pidió cruzar las entregas reales (trabajadas en pareja, archivo `Clase 15 - Ejercitación Evaluación-20260728T152624Z-1-001.zip`, 36 notebooks) contra la nómina oficial de 32 estudiantes y dejar registradas las décimas correspondientes, para usarlas como bono al revisar la Clase 19. Pidió explícitamente que la revisión fuera **ligera** (avance considerable de principio a fin, aunque tenga errores — no exacta ni exhaustiva).
+
+**Desviación respecto a la pauta original de este documento:** la Sección 1 (creación 2026-07-13, arriba) exigía los **10/10 ítems en ✅** para otorgar la décima en bloque. Para esta revisión se relajó a **≥ 6/10 ítems correctos con código realmente ejecutado**, por el criterio "ligero" pedido — la pauta original de 10/10 sigue siendo la referencia formal del documento, pero no fue la que se aplicó en esta revisión puntual.
+
+**Método:** se extrajo de cada `.ipynb` el nombre declarado en el encabezado, el `displayName` real de la cuenta de Google que ejecutó cada celda (metadato `executionInfo.user.displayName`, más confiable que el campo de texto porque muchos lo dejaron en blanco), el conteo automático de "✅" en Sección 1, y el código/output de los 4 ejercicios de Sección 2. Varios archivos usaban apodos/cuentas de fantasía en vez del nombre real (`polar tv`, `alonso YT`, `Paulino González`, `julian ghost`, `Vicho 11`, `Héctor _`) — se identificaron con ayuda de Diego y quedaron documentados en `.claude/skills/referencia-estudiantes/alias-cuentas-conocidas.md` para no repetir la investigación en el futuro.
+
+**Resultado:** registro completo en `clases/clase-19-evaluacion-condicionales/revision/decimas_ejercitacion.md` (+ `.csv`), con las 32 filas de la nómina, el desglose por ítem/ejercicio y las notas de cada caso especial (cuentas compartidas, duplicados, atribuciones confirmadas por Diego). **No se aplicó todavía a ninguna nota** — queda como insumo pendiente para cuando se revise la Clase 19 con la skill `revisar-evaluacion`.
+
 ## 2026-07-13 — Creación
 
 **Motivo:** al preparar el temario de la Evaluación Individual de Condicionales (2026-07-21), se detectó que ninguna clase del curso (8a, 8b, 8c, 9/11, 13, 14, 17) practica leer código ya escrito — todos los ejercicios existentes son "escribe el programa completo desde una narrativa". El diagnóstico de medio semestre (`evaluacion_compu_solucionario.docx`, rendido 2026-07-13) sí evalúa 100% en formato de predicción de output / identificación de errores, lo que confirmó el hueco.

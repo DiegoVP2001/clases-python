@@ -1,13 +1,13 @@
 ---
 name: generar-colab-ejercicios
-description: Genera el Jupyter notebook de ejercicios adicionales (Clase NN - Tema - Ejercicios.ipynb) de una clase. Usa esta skill después de que el Colab principal (Clase NN - Tema - Clase.ipynb) esté aprobado. Sigue un flujo de dos fases: primero propone los ejercicios en chat para aprobación, luego genera el .ipynb final con soluciones ocultas en <details>. Los ejercicios usan solo conceptos vistos hasta la clase actual.
+description: Genera el Jupyter notebook de ejercicios adicionales (Clase NN - Tema - Ejercicios.ipynb) de una clase. Usa esta skill después de que el Colab principal (Clase NN - Tema - Clase.ipynb) esté aprobado. Sigue un flujo de dos fases: primero propone los ejercicios en chat para aprobación, luego genera el .ipynb final sin ninguna solución (ni siquiera oculta) y agrega las soluciones al Solucionario.ipynb existente. Los ejercicios usan solo conceptos vistos hasta la clase actual.
 ---
 
 # Skill: Generar Colab de ejercicios (Clase NN - Tema - Ejercicios.ipynb)
 
 ## Propósito
 
-Producir un notebook de ejercicios adicionales para que los estudiantes practiquen el contenido de la clase y de clases anteriores. Estos ejercicios complementan los del Colab principal: van pensados para estudiantes que terminan rápido, para tarea, o para refuerzo. Todos traen solución oculta con `<details>` para autoaprendizaje.
+Producir un notebook de ejercicios adicionales para que los estudiantes practiquen el contenido de la clase y de clases anteriores. Estos ejercicios complementan los del Colab principal: van pensados para estudiantes que terminan rápido, para tarea, o para refuerzo. Ninguno trae solución en el notebook de estudiante — todas van al `Solucionario.ipynb` de la clase.
 
 ## Cuándo usar esta skill
 
@@ -21,7 +21,8 @@ Actívate cuando Diego diga cosas como:
 **Requisitos previos:**
 1. Debe existir `clases/clase-NN-tema/Clase NN - Tema - Spec.md` aprobado.
 2. Debe existir `clases/clase-NN-tema/Clase NN - Tema - Clase.ipynb` aprobado (o al menos generado).
-3. Python con `nbformat` instalado.
+3. Debe existir `clases/clase-NN-tema/Clase NN - Tema - Solucionario.ipynb`, generado junto con `Clase.ipynb` — este script lo **actualiza**, agregando las soluciones de los ejercicios. Si no existe, el script avisa y no falla la generación de `Ejercicios.ipynb`, pero el paso queda incompleto hasta que exista.
+4. Python con `nbformat` instalado.
 
 Si falta alguno de los dos primeros, NO procedas: indícale a Diego qué falta y vuelve al paso correspondiente.
 
@@ -85,21 +86,34 @@ Resultado esperado: [una línea]
    jupyter nbconvert --to notebook --execute --output <mismo-archivo> "Clase NN - Tema - Ejercicios.ipynb"
    ```
 
-   Si alguna celda (enunciado, solución oculta en `<details>` ejecutada como prueba, etc.) lanza una excepción o produce un output distinto al documentado, corrige y repite — no presentes el notebook con errores sin detectar.
+   Si alguna celda lanza una excepción o produce un output distinto al documentado, corrige y repite — no presentes el notebook con errores sin detectar. Esto NO valida las soluciones (que ya no viven en `Ejercicios.ipynb`) — antes de aprobar la propuesta en Fase 1, verifica mentalmente que cada solución en `Clase NN - Tema - Ejercicios propuesta.md` corra sin errores (ver regla 5 de "Filosofía de los ejercicios").
 
-4. **Confirma a Diego** que el archivo se generó, se ejecutó sin errores, y dale las instrucciones para subirlo a Colab.
+4. **Confirma a Diego** que `Ejercicios.ipynb` se generó (sin soluciones) y que `Solucionario.ipynb` se actualizó con las soluciones de estos ejercicios.
 
 5. **Registra en `Clase NN - Tema - Historial.md`:**
 
    ```markdown
    ## [fecha] — Colab de ejercicios generado
    - Archivo: Clase NN - Tema - Ejercicios.ipynb
+   - Solucionario.ipynb actualizado con las soluciones de estos ejercicios
    - Total ejercicios: N (X de práctica base + Y desafíos opcionales)
    - Contextos usados: [lista]
    - [notas si hubo iteraciones relevantes]
    ```
 
-6. Después de registrar, di: *"Antes de continuar al PPT, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando Diego confirme, activa la skill `generar-ppt-clase`.
+6. Commitea y pushea **solo la carpeta de esta clase** a GitHub (ver "Protocolo de cierre de etapa" en el `CLAUDE.md` raíz) — incluye `Ejercicios.ipynb` y el `Solucionario.ipynb` actualizado:
+
+   ```
+   git add "clases/clase-NN-tema-breve/"
+   git commit -m "Clase NN - Tema: Ejercicios aprobado"
+   git push
+   ```
+
+   Si el push falla, avisa a Diego con el error explícito — no reintentes con `--force`.
+
+7. Confirma qué se subió a GitHub y entrega el link directo de Google Colab para `Ejercicios.ipynb` (reemplaza la subida manual):
+   `https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-NN-tema-breve/Clase%20NN%20-%20Tema%20-%20Ejercicios.ipynb`
+8. Después de confirmar, di: *"Antes de continuar al PPT, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando Diego confirme, activa la skill `generar-ppt-clase`.
 
 ## Modo rápido (sin propuesta intermedia)
 
@@ -116,10 +130,12 @@ El script produce:
 | Encabezado | "💪 Ejercicios — Clase NN: tema" |
 | Introducción | Texto orientador breve |
 | Índice | Lista de ejercicios con marca ⭐ para desafíos |
-| Ejercicio 1 | Enunciado + (pista opcional) + resultado esperado + celda de código + solución oculta |
+| Ejercicio 1 | Narrativa (3-4 líneas prosa) + bullets "El programa debe:" + pista(s) colapsable(s) + tabla input/output side-by-side + celda vacía |
 | Ejercicio 2 | ... |
 | ... | ... |
 | Cierre | Preguntas de metacognición sobre la práctica |
+
+Ninguna solución aparece en este notebook, ni siquiera oculta con `<details>` — solo las pistas (`💡`) son colapsables. Las soluciones se agregan a `Solucionario.ipynb` en una sección propia ("💪 Ejercicios adicionales — Soluciones").
 
 ## Iteración después de generar
 
@@ -132,14 +148,16 @@ El script produce:
 1. **Nunca uses conceptos no vistos.** Esta es la regla más fácil de violar y la más dañina pedagógicamente. Si dudas, simplifica el ejercicio.
 2. **Nunca generes el .ipynb sin propuesta aprobada** (salvo modo rápido explícito).
 3. **El archivo intermedio `Clase NN - Tema - Ejercicios propuesta.md` es la fuente de verdad.** Si hay discrepancia entre `.md` y `.ipynb`, regenera el `.ipynb`.
-4. **Soluciones al final, no inline.** Las soluciones van agrupadas en una sección "📋 Soluciones" al final del notebook, cada una en su propio `<details>`. Nunca poner la solución inmediatamente después del ejercicio.
-5. **Pistas sí van inline, pero solo cuando el ejercicio lo justifica.** No poner pistas en todos los ejercicios — solo donde la dificultad lo amerita. Una pista orienta sin revelar la respuesta.
+4. **Ninguna solución en `Ejercicios.ipynb`, ni siquiera oculta con `<details>`.** Todas las soluciones se agregan a `Solucionario.ipynb` (documento exclusivo del profesor), en su propia sección al final de ese archivo.
+5. **Pistas colapsables, solo donde el ejercicio lo justifica.** No poner pistas en todos los ejercicios. Cada pista va dentro de `<details><summary>💡 Pista N — subtítulo</summary>...</details>`. Una pista orienta sin revelar la respuesta. Pueden incluir un ejemplo de código "stock" (contexto neutro) para ilustrar un patrón.
 6. **No copies literalmente los ejercicios del spec.** El Colab de clase ya tiene la práctica independiente; el de ejercicios trae ejercicios DISTINTOS, aunque del mismo nivel.
 7. **Mezcla contextos.** Si los 3 ejercicios del spec eran de e-commerce, los ejercicios adicionales pueden incluir otros temas para variar (a menos que Diego pida mantener el tema).
 
 ## Principios de diseño del notebook (consistentes con generar-colab-clase)
 
-- **Ejemplos de input en lenguaje natural:** "si alguien ingresa un saldo de $80.000" — nunca `saldo_cuenta_rut = 80000`.
+- **Formato canónico de cada ejercicio:** narrativa (3-4 líneas prosa) → bullets `**El programa debe:**` → pistas `<details>` → tabla input/output side-by-side → celda vacía. Ver restricción 15 de `CLAUDE.md` para el HTML exacto.
+- **Tabla de ejemplos en HTML:** dos columnas (`Ejemplo 1` / `Ejemplo 2`), dos filas (`📥 El usuario escribe` / `📤 El programa imprime`) con `<pre>` dentro de `<td>`. Nunca descriptores en los encabezados ("Ejemplo 1 — condición falla").
+- **`print()` con comas, nunca `+` y `str()`:** `print("Te quedan $", saldo, "en la tarjeta.")` — nunca `print("Te quedan $" + str(saldo) + "...")`.
 - **Enunciados sin comandos ni operadores:** solo descripción de qué calcular, sin revelar el cómo.
 - **Outputs con etiqueta descriptiva:** `print("¿Puede ver en HD?", velocidad >= 5)` — nunca `print(velocidad >= 5)` a secas.
 - **Lenguaje "tú":** dirigirse al estudiante en segunda persona — nunca "el estudiante" o "el alumno".

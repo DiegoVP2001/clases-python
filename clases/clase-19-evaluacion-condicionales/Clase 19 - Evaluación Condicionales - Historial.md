@@ -1,5 +1,13 @@
 # Historial — Clase 19 - Evaluación Condicionales
 
+## 2026-07-28 — Registro de décimas de la Ejercitación (Clase 17) como insumo de bono
+
+**Motivo:** antes de revisar esta evaluación, Diego pidió cruzar las 36 entregas de la Ejercitación de Clase 17 (trabajadas en pareja) contra la nómina oficial y dejar registradas las décimas que corresponden a cada estudiante, para sumarlas como bono al calcular las notas de esta evaluación.
+
+**Artefacto generado:** `revision/decimas_ejercitacion.md` (+ `.csv`) — 32 filas (nómina completa), con Sección 1 / Ej.1-4 desglosados y el total (máx. +6 c/u). El detalle completo del método, el criterio "ligero" usado y las decisiones de identidad (cuentas con apodo, casos de pareja) quedó documentado en `Clase 17 - Ejercitación Evaluación - Historial.md` (entrada 2026-07-28), para no duplicarlo aquí.
+
+**Estado:** el registro está listo pero **no se ha aplicado todavía** a ninguna nota de esta evaluación — queda pendiente para cuando se active la skill `revisar-evaluacion` sobre las entregas de Clase 19.
+
 ## 2026-07-27 — Auditoría pre-examen: fecha desincronizada + ambigüedad coma/punto decimal
 
 **Motivo:** Diego pidió auditar `Evaluación.ipynb` en busca de enunciados poco claros, sin sentido o que evaluaran contenido no visto. Se detectaron dos problemas (ninguno de contenido curricular — la cobertura contra el Temario de Clase 17.5 y los Bloques 1-7 se verificó completa y correcta).

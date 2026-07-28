@@ -2,27 +2,19 @@
 """
 generar_ayudantia.py — Genera dos notebooks Jupyter desde una propuesta JSON.
 
-Salida:
-  ayudantias/<slug>/<slug>-ejercicios.ipynb    — para estudiantes (subir a Colab)
-  ayudantias/<slug>/<slug>-solucionario.ipynb  — para el profesor (subir a Classroom después)
+Salida (dentro de clases/, con numeración real — vigente desde 2026-07-28):
+  clases/clase-<class_number>-ayudantia-<slug>/Clase <class_number> - Ayudantia <class_topic> - Ejercicios.ipynb
+  clases/clase-<class_number>-ayudantia-<slug>/Clase <class_number> - Ayudantia <class_topic> - Solucionario.ipynb
 
 Uso:
-  python generar_ayudantia.py ayudantias/propuestas/<slug>.json [--force]
+  python generar_ayudantia.py "clases/clase-NN-ayudantia-tema/Clase NN - Ayudantia Tema - Ejercicios propuesta.json" [--force]
 """
 
 import argparse
 import json
-import os
-import shutil
-import stat
 import uuid
 from datetime import date
 from pathlib import Path
-
-
-def _force_remove(func, path, _exc):
-    os.chmod(path, stat.S_IWRITE)
-    func(path)
 
 
 # ── Helpers de celda ──────────────────────────────────────────────────────────
@@ -91,12 +83,26 @@ def build_student_notebook(proposal: dict) -> dict:
         ),
     ]
 
+    if proposal.get("objetivo"):
+        cells.append(md_cell(f"---\n\n## 🎯 Objetivo\n\n{proposal['objetivo']}"))
+
+    guided = proposal.get("guided_exercise")
+    if guided:
+        topic = proposal.get("class_topic", "lo visto")
+        cells.append(md_cell(
+            f"---\n\n## 🔁 Ejercicio guiado — recordemos {topic}\n\n"
+            f"{guided['statement_md']}"
+        ))
+        cells.append(code_cell("# Trabajemos este ejercicio en conjunto\n"))
+
+    cells.append(md_cell("---\n\n## 🎯 Serie de ejercicios"))
+
     ex_num = 1
     for ex in proposal["exercises"]:
         if ex.get("difficulty") == "trivial":
             continue
         cells.append(md_cell(
-            f"---\n\n## 🎯 Ejercicio {ex_num} — {ex['title']}\n\n{ex['statement_md']}"
+            f"---\n\n### Ejercicio {ex_num} — {ex['title']}\n\n{ex['statement_md']}"
         ))
         cells.append(code_cell("# Tu código aquí\n"))
         ex_num += 1
@@ -166,6 +172,13 @@ def build_solucionario(proposal: dict) -> dict:
         ),
     ]
 
+    guided = proposal.get("guided_exercise")
+    if guided:
+        cells.append(md_cell(
+            f"---\n\n## 🔁 Ejercicio guiado — {guided['title']}\n\n{guided['statement_md']}"
+        ))
+        cells.append(code_cell(f"# ✅ Solución esperada\n{guided.get('solution_py', '')}"))
+
     ex_num = 1
     for ex in proposal["exercises"]:
         if ex.get("difficulty") == "trivial":
@@ -187,23 +200,28 @@ def build_solucionario(proposal: dict) -> dict:
 def main():
     ap = argparse.ArgumentParser(description="Genera notebooks de ayudantía (estudiantes + solucionario).")
     ap.add_argument("proposal", type=Path, help="Ruta al JSON de propuesta")
-    ap.add_argument("--root", type=Path, default=Path("ayudantias"), help="Carpeta raíz de salida")
+    ap.add_argument("--root", type=Path, default=Path("clases"), help="Carpeta raíz de salida")
     ap.add_argument("--force", action="store_true", help="Sobreescribir si ya existe")
     args = ap.parse_args()
 
     proposal = json.loads(args.proposal.read_text(encoding="utf-8"))
     slug = proposal["set_slug"]
-    out_dir = args.root / slug
+    class_number = str(proposal["class_number"])
+    class_topic = proposal["class_topic"]
 
-    if out_dir.exists() and not args.force:
-        print(f"Ya existe {out_dir}. Usa --force para sobreescribir.")
+    folder_name = f"clase-{class_number}-ayudantia-{slug}"
+    file_prefix = f"Clase {class_number} - Ayudantía {class_topic}"
+    out_dir = args.root / folder_name
+
+    student_path = out_dir / f"{file_prefix} - Ejercicios.ipynb"
+    sol_path = out_dir / f"{file_prefix} - Solucionario.ipynb"
+
+    # La carpeta puede existir de antemano (ej. con un Prompt.md de planificación);
+    # solo bloqueamos si los notebooks ya fueron generados antes.
+    if (student_path.exists() or sol_path.exists()) and not args.force:
+        print(f"Ya existen notebooks en {out_dir}. Usa --force para sobreescribir.")
         return
-    if out_dir.exists():
-        shutil.rmtree(out_dir, onerror=_force_remove)
-    out_dir.mkdir(parents=True)
-
-    student_path = out_dir / f"{slug}-ejercicios.ipynb"
-    sol_path = out_dir / f"{slug}-solucionario.ipynb"
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     student_path.write_text(
         json.dumps(build_student_notebook(proposal), ensure_ascii=False, indent=2),

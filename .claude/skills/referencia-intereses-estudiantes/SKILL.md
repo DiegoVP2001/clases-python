@@ -11,7 +11,9 @@ Esta skill ayuda a un agente IA a diseñar materiales de programación más pert
 
 Debe utilizarse para transformar contenidos de programación —especialmente en Python y Google Colab— en experiencias conectadas con gustos reales del curso, tales como videojuegos, música, deportes, redes sociales, tecnología, IA, salud, finanzas, estudio y automatización.
 
-El objetivo no es “decorar” ejercicios con temas juveniles, sino usar esos intereses como contexto auténtico para formular problemas, variables, condiciones, funciones, listas, ciclos, entradas/salidas, simulaciones y proyectos.
+El objetivo no es "decorar" ejercicios con temas juveniles, sino usar esos intereses como contexto auténtico para formular problemas, variables, condiciones, funciones, listas, ciclos, entradas/salidas, simulaciones y proyectos.
+
+El detalle exhaustivo de cada interés (qué aparece declarado, usos recomendados y bancos de ejemplos de ejercicios, además de ejemplos de código modelo) vive en `references/perfil-intereses.md`. Las plantillas completas de actividad de Google Colab por temática viven en `references/actividades-colab.md`. Este SKILL.md actúa como resumen navegable — el "Resumen rápido de intereses" y el "Banco de transformaciones rápidas" cubren la mayoría de los casos; abre las referencias cuando necesites más variedad de ejemplos para un interés específico o un template de actividad completo.
 
 ---
 
@@ -65,11 +67,11 @@ Los intereses estudiantiles deben mejorar la comprensión del contenido, no apar
 
 Incorrecto:
 
-> “Calcula una suma sobre videojuegos” sin relación con el contenido.
+> "Calcula una suma sobre videojuegos" sin relación con el contenido.
 
 Correcto:
 
-> “Crea un sistema simple de puntaje para un videojuego, donde cada victoria suma monedas y cada derrota resta vidas.”
+> "Crea un sistema simple de puntaje para un videojuego, donde cada victoria suma monedas y cada derrota resta vidas."
 
 ### 3.2. Ejemplos simples, pero con sentido
 
@@ -126,519 +128,83 @@ Usar lenguaje cercano, pero no infantilizado.
 
 Preferir:
 
-> “Tu programa debe pedir el nombre de una canción y guardarla en una playlist.”
+> "Tu programa debe pedir el nombre de una canción y guardarla en una playlist."
 
 Evitar:
 
-> “Realiza una implementación algorítmica de una estructura de almacenamiento secuencial musical.”
+> "Realiza una implementación algorítmica de una estructura de almacenamiento secuencial musical."
 
 ---
 
-## 4. Perfil de intereses del curso
+## 4. Resumen rápido de intereses
 
-### 4.1. Intereses de prioridad muy alta
+Usa este resumen para contextualizar sin abrir la referencia completa. Está organizado por prioridad — si el usuario no indica contexto, prioriza de arriba hacia abajo. Cada bloque trae 1-2 ejemplos de ejercicio listos para adaptar.
 
-Estos temas deben aparecer con mayor frecuencia en ejemplos, prácticas y proyectos.
+### Prioridad muy alta
 
-#### Videojuegos 🎮
+**Videojuegos 🎮** — PC, PlayStation, Steam, Brawl Stars, Clash Royale, FC Mobile, indies.
+Útil para: rankings, puntajes, vidas, niveles, monedas, inventario, partidas.
+Ejemplo: *"Guarda los puntajes de tres jugadores y muestra cuál fue el mejor evaluado."*
 
-Aparecen intereses como:
+**Música 🎧** — Spotify, Apple Music, playlists, artistas, géneros.
+Útil para: recomendadores, listas de artistas, filtros por género, conteo de reproducciones.
+Ejemplo: *"Crea una playlist con listas de Python y recomienda una canción según el ánimo del usuario."*
 
-- jugar en PC;
-- PlayStation;
-- Steam;
-- Brawl Stars;
-- Clash Royale;
-- FC Mobile;
-- juegos indie.
+**Redes sociales 📱** — TikTok, Instagram, WhatsApp, YouTube, Discord.
+Útil para: contador de likes, simulador de publicaciones, mensajes automáticos, comparación de vistas.
+Ejemplo: *"Suma los likes de varias publicaciones y muestra si la cuenta se volvió viral."*
 
-Usos recomendados en Python:
+**Tecnología, robots e IA 🤖** — robots, asistentes personales, automatización, IA.
+Útil para: bots simples, asistentes con condicionales, reglas tipo "si pasa X, hacer Y", sensores simulados.
+Ejemplo: *"Simula un robot doméstico que decide si limpia, avisa o se detiene según su batería."*
 
-- rankings;
-- puntajes;
-- vidas;
-- niveles;
-- monedas;
-- decisiones;
-- mejoras de personaje;
-- inventario;
-- simuladores de partidas;
-- torneos simples;
-- registro de partidas.
+### Prioridad alta
 
-Ejemplos de ejercicios:
+**Deportes 🏀⚽🏐** — básquetbol, fútbol, vóley, BMX, gimnasio, entrenamiento.
+Útil para: registro de entrenamientos, cálculo de rendimiento, metas semanales, comparación de marcas.
+Ejemplo: *"Pide los minutos de ejercicio de hoy y entrega una recomendación general."*
 
-- Crear una variable `vidas` y restar una vida cuando el jugador pierde.
-- Guardar puntajes de tres jugadores y mostrar el mayor.
-- Crear un ranking de juegos favoritos.
-- Simular una tienda donde el jugador compra mejoras con monedas.
-- Usar condicionales para decidir si un jugador pasa de nivel.
+**Salud y bienestar 🏃** — actividad física, hábitos saludables, estado físico.
+Útil para: seguimiento de actividad, metas de movimiento, clasificación de intensidad. **Cuidado:** evitar diagnósticos médicos, lenguaje normativo sobre cuerpos o foco en calorías.
+Ejemplo: *"Clasifica la intensidad de una sesión de entrenamiento como baja, media o alta."*
 
-#### Música 🎧
+**Robots e IA aplicada** — hardware, mBot, sensores, automatización.
+Ejemplo: *"Si el sensor detecta un obstáculo, el robot se detiene; si la batería es baja, recomienda cargar."*
 
-Aparecen intereses como:
+### Prioridad media
 
-- Spotify;
-- Apple Music;
-- escuchar música;
-- playlists;
-- artistas;
-- géneros musicales.
+**Dinero y finanzas 💸** — ahorro, gastos, presupuesto. **Cuidado:** usar solo datos ficticios, sin recomendaciones de inversión real.
+Ejemplo: *"Suma los gastos de la semana y avisa si se superó el presupuesto."*
 
-Usos recomendados en Python:
+**Estudio y organización 📚** — agendas, recordatorios, planificación de estudio.
+Ejemplo: *"Organiza materias y tiempos de estudio para una semana y muestra un resumen."*
 
-- recomendadores de canciones;
-- listas de artistas;
-- filtros por género;
-- playlists según estado de ánimo;
-- conteo de reproducciones;
-- ranking de canciones favoritas.
+**Clima 🌦️** — alertas y recomendaciones según condiciones.
+Ejemplo: *"Si hay lluvia, recomienda llevar paraguas; si hace calor, recomienda llevar agua."*
 
-Ejemplos de ejercicios:
+**Archivos y limpieza digital 🗂️** — clasificar archivos, detectar archivos grandes.
+Ejemplo: *"Clasifica una lista de archivos según su tipo: imagen, video o documento."*
 
-- Crear una playlist con listas de Python.
-- Recomendar una canción según el ánimo del usuario.
-- Contar cuántas canciones hay en una lista.
-- Filtrar canciones por género.
-- Mostrar el artista más escuchado.
-
-#### Redes sociales 📱
-
-Aparecen intereses como:
-
-- TikTok;
-- Instagram;
-- WhatsApp;
-- YouTube;
-- Discord.
-
-Usos recomendados en Python:
-
-- estadísticas de uso;
-- contador de likes;
-- simulador de publicaciones;
-- mensajes automáticos;
-- análisis de seguidores;
-- comparación de vistas.
-
-Ejemplos de ejercicios:
-
-- Calcular el total de likes entre varias publicaciones.
-- Simular una publicación y mostrar si se volvió viral.
-- Comparar vistas de videos.
-- Crear mensajes automáticos para un bot de Discord.
-- Contar minutos diarios en redes sociales.
-
-#### Tecnología, robots e IA 🤖
-
-Aparecen intereses como:
-
-- robots;
-- asistentes personales;
-- automatización;
-- inteligencia artificial.
-
-Usos recomendados en Python:
-
-- bots simples;
-- asistentes con condicionales;
-- automatización tipo “si pasa X, hacer Y”;
-- simuladores de robots;
-- reglas de decisión;
-- respuestas automáticas.
-
-Ejemplos de ejercicios:
-
-- Crear un asistente que responda según la necesidad del usuario.
-- Simular un robot doméstico que decide si limpia, avisa o se detiene.
-- Crear una IA ficticia que recomienda una acción.
-- Automatizar una luz según una condición.
-- Simular sensores con variables.
-
----
-
-### 4.2. Intereses de prioridad alta
-
-Estos temas deben usarse con frecuencia, especialmente en prácticas independientes y proyectos aplicados.
-
-#### Deportes 🏀⚽🏐
-
-Aparecen intereses como:
-
-- básquetbol;
-- fútbol;
-- vóley;
-- BMX;
-- gimnasio;
-- entrenamiento.
-
-Usos recomendados en Python:
-
-- registro de entrenamientos;
-- cálculo de rendimiento;
-- metas semanales;
-- estadísticas deportivas;
-- comparación de marcas;
-- asistencia de entrenamiento.
-
-Ejemplos de ejercicios:
-
-- Pedir minutos de ejercicio y entregar una recomendación.
-- Calcular promedio de goles, puntos o repeticiones.
-- Registrar entrenamientos de una semana.
-- Determinar si se cumplió una meta.
-- Comparar rendimiento entre días.
-
-#### Salud y bienestar 🏃
-
-Aparecen intereses como:
-
-- IMC;
-- estado físico;
-- actividad de trote;
-- hábitos saludables.
-
-Usos recomendados en Python:
-
-- calculadoras simples de salud;
-- seguimiento de actividad física;
-- recomendaciones generales según actividad;
-- registro de hábitos;
-- metas de movimiento.
-
-Cuidado pedagógico:
-
-- Evitar emitir diagnósticos médicos.
-- Evitar lenguaje normativo sobre cuerpos.
-- Priorizar bienestar, hábitos y movimiento.
-- No centrar actividades en calorías si no es necesario.
-- Presentar resultados como información orientativa, no como evaluación de salud personal.
-
-Ejemplos de ejercicios:
-
-- Registrar minutos de actividad física.
-- Recomendar descanso o hidratación según tiempo de ejercicio.
-- Calcular si se cumplió una meta semanal de movimiento.
-- Simular una app de bienestar.
-- Clasificar intensidad de actividad: baja, media o alta.
-
-#### Robots e IA aplicada
-
-Este interés puede conectarse con hardware, mBot, sensores o automatización, aunque el ejercicio sea solo simulado.
-
-Ejemplos:
-
-- Si el sensor detecta un obstáculo, el robot se detiene.
-- Si la temperatura es alta, el asistente recomienda hidratarse.
-- Si el usuario aplaude, se prende una luz simulada.
-- Si el robot detecta basura, activa modo limpieza.
-
----
-
-### 4.3. Intereses de prioridad media
-
-Estos temas pueden utilizarse como variación, desafío o proyecto específico.
-
-#### Dinero y finanzas 💸
-
-Aparecen intereses como:
-
-- ahorro;
-- inversión;
-- trading;
-- gestión de gastos.
-
-Usos recomendados en Python:
-
-- presupuesto mensual;
-- simulador de ahorro;
-- control de gastos;
-- alertas si se supera un presupuesto;
-- cálculo de metas.
-
-Cuidado pedagógico:
-
-- No entregar recomendaciones reales de inversión.
-- No simular promesas de ganancia.
-- Enmarcar como educación financiera básica.
-- Usar datos ficticios.
-
-Ejemplos de ejercicios:
-
-- Sumar gastos semanales.
-- Avisar si se supera un presupuesto.
-- Calcular cuánto falta para una meta de ahorro.
-- Clasificar gastos en categorías.
-- Simular ahorro mensual con datos inventados.
-
-#### Estudio y organización 📚
-
-Uso recomendado:
-
-- agendas;
-- recordatorios;
-- organización de materias;
-- planificación de estudio;
-- temporizadores simples.
-
-Ejemplos:
-
-- Crear una app de estudio que recomiende cuánto tiempo dedicar a una materia.
-- Ordenar tareas según prioridad.
-- Mostrar recordatorios.
-- Calcular tiempo total de estudio semanal.
-
-#### Clima 🌦️
-
-Uso recomendado:
-
-- alertas;
-- recomendaciones;
-- condicionales;
-- simulaciones.
-
-Ejemplos:
-
-- Si hay lluvia, recomendar llevar paraguas.
-- Si hace frío, recomendar abrigo.
-- Si hace calor, recomendar agua.
-
-#### Archivos y limpieza digital 🗂️
-
-Uso recomendado:
-
-- clasificar archivos;
-- detectar archivos grandes;
-- simular limpieza de memoria;
-- organizar extensiones.
-
-Ejemplos:
-
-- Clasificar archivos según tipo: imagen, video, documento.
-- Marcar archivos grandes para revisar.
-- Simular eliminación de archivos basura.
+> Para más variedad de ejemplos, banco extendido de ejercicios por interés y ejemplos de código modelo, abre `references/perfil-intereses.md`.
 
 ---
 
 ## 5. Temáticas recomendadas para Google Colab
 
-Al diseñar Colabs, priorizar actividades con una narrativa clara, breve y ejecutable.
-
-### 5.1. Playlist inteligente
-
-**Contenido Python sugerido:**
-
-- variables;
-- listas;
-- condicionales;
-- `input()`;
-- `print()`.
-
-**Ejemplo de consigna:**
-
-> Crea un programa que pregunte el estado de ánimo del usuario y recomiende una canción o playlist.
-
-**Extensión posible:**
-
-- agregar géneros;
-- agregar artistas;
-- contar canciones;
-- permitir que el usuario agregue una canción.
-
----
-
-### 5.2. Ranking de videojuegos
-
-**Contenido Python sugerido:**
-
-- variables;
-- listas;
-- comparación;
-- condicionales;
-- actualización de puntajes.
-
-**Ejemplo de consigna:**
-
-> Guarda tres videojuegos favoritos con sus puntajes y muestra cuál fue el mejor evaluado.
-
-**Extensión posible:**
-
-- agregar ranking;
-- sumar puntos extra;
-- simular partidas;
-- actualizar monedas o vidas.
-
----
-
-### 5.3. Asistente de entrenamiento
-
-**Contenido Python sugerido:**
-
-- `input()`;
-- operaciones matemáticas;
-- condicionales;
-- mensajes personalizados.
-
-**Ejemplo de consigna:**
-
-> Pide los minutos de ejercicio realizados hoy y entrega una recomendación general de entrenamiento.
-
-**Extensión posible:**
-
-- calcular meta semanal;
-- comparar días;
-- clasificar intensidad;
-- generar mensaje motivador.
-
----
-
-### 5.4. Gestor de gastos
-
-**Contenido Python sugerido:**
-
-- variables;
-- suma;
-- condicionales;
-- comparación con presupuesto;
-- acumuladores.
-
-**Ejemplo de consigna:**
-
-> Suma los gastos de la semana y avisa si se superó el presupuesto.
-
-**Extensión posible:**
-
-- separar gastos por categoría;
-- calcular ahorro restante;
-- simular una meta de compra;
-- mostrar alerta.
-
----
-
-### 5.5. App de estudio
-
-**Contenido Python sugerido:**
-
-- listas;
-- diccionarios simples, si corresponde;
-- condicionales;
-- organización de datos.
-
-**Ejemplo de consigna:**
-
-> Organiza materias, tiempos de estudio y recordatorios para una semana.
-
-**Extensión posible:**
-
-- priorizar asignaturas;
-- recomendar tiempo según dificultad;
-- generar resumen de estudio.
-
----
-
-### 5.6. Asistente personal con IA simulada
-
-**Contenido Python sugerido:**
-
-- condicionales;
-- funciones;
-- respuestas automáticas;
-- entrada de texto.
-
-**Ejemplo de consigna:**
-
-> Según la necesidad escrita por el usuario, entrega una respuesta automática como si fuera un asistente personal.
-
-**Extensión posible:**
-
-- crear categorías de respuestas;
-- agregar frases personalizadas;
-- simular conversación.
-
----
-
-### 5.7. Alerta de clima
-
-**Contenido Python sugerido:**
-
-- variables;
-- condicionales;
-- operadores lógicos;
-- mensajes de salida.
-
-**Ejemplo de consigna:**
-
-> Si la temperatura es baja, alta o hay lluvia, entrega una recomendación.
-
-**Extensión posible:**
-
-- agregar viento;
-- agregar probabilidad de lluvia;
-- generar outfit recomendado.
-
----
-
-### 5.8. Robot doméstico simulado
-
-**Contenido Python sugerido:**
-
-- condicionales;
-- funciones;
-- variables de estado;
-- reglas de prioridad.
-
-**Ejemplo de consigna:**
-
-> Usa condiciones para decidir si el robot limpia, cocina, avisa o se detiene.
-
-**Extensión posible:**
-
-- agregar sensores simulados;
-- agregar batería;
-- definir prioridades;
-- conectar con lógica de mBot.
-
----
-
-### 5.9. Limpieza de archivos basura
-
-**Contenido Python sugerido:**
-
-- listas;
-- condicionales;
-- clasificación;
-- conteo;
-- filtros.
-
-**Ejemplo de consigna:**
-
-> Clasifica archivos según tamaño o tipo y marca cuáles podrían revisarse para liberar espacio.
-
-**Extensión posible:**
-
-- contar archivos por extensión;
-- calcular memoria total;
-- identificar archivos duplicados simulados.
-
----
-
-### 5.10. Automatización con sonidos
-
-**Contenido Python sugerido:**
-
-- condicionales;
-- variables booleanas;
-- simulación de sensores.
-
-**Ejemplo de consigna:**
-
-> Simula que un aplauso prende una luz usando condiciones.
-
-**Extensión posible:**
-
-- agregar doble aplauso;
-- apagar luz;
-- conectar con domótica básica.
+Al diseñar un Colab completo, prioriza actividades con narrativa clara, breve y ejecutable. Hay 10 templates de actividad completos (contenido Python sugerido + ejemplo de consigna + extensión posible) en `references/actividades-colab.md`:
+
+1. Playlist inteligente — listas, condicionales, recomendación según ánimo.
+2. Ranking de videojuegos — comparación, actualización de puntajes.
+3. Asistente de entrenamiento — `input()`, condicionales, mensajes personalizados.
+4. Gestor de gastos — sumas, acumuladores, comparación con presupuesto.
+5. App de estudio — listas, organización de datos, prioridades.
+6. Asistente personal con IA simulada — condicionales, funciones, respuestas automáticas.
+7. Alerta de clima — condicionales, operadores lógicos.
+8. Robot doméstico simulado — condicionales, funciones, variables de estado.
+9. Limpieza de archivos basura — listas, clasificación, conteo, filtros.
+10. Automatización con sonidos — condicionales, variables booleanas, sensores simulados.
+
+Abre la referencia cuando necesites el template completo de cualquiera de estas actividades para construir el Colab.
 
 ---
 
@@ -652,11 +218,11 @@ Usar intereses para activar conversación o predicción.
 
 Ejemplos:
 
-- “¿Qué hace que un video de TikTok se vuelva viral?”
-- “¿Cómo decide Spotify qué canción recomendar?”
-- “¿Qué variables tendría un personaje de videojuego?”
-- “¿Qué datos necesita una app para recomendarte una rutina?”
-- “¿Qué condiciones debería revisar un robot antes de moverse?”
+- "¿Qué hace que un video de TikTok se vuelva viral?"
+- "¿Cómo decide Spotify qué canción recomendar?"
+- "¿Qué variables tendría un personaje de videojuego?"
+- "¿Qué datos necesita una app para recomendarte una rutina?"
+- "¿Qué condiciones debería revisar un robot antes de moverse?"
 
 ### 6.2. Introducción al contenido nuevo
 
@@ -921,7 +487,7 @@ Demostrar [habilidad] mediante [producto o tarea].
 
 Evitar frases como:
 
-> “Este ejercicio trata de videojuegos”  
+> "Este ejercicio trata de videojuegos"  
 > pero luego solo sumar `a + b` sin relación con mecánicas reales de juego.
 
 ### 12.2. No infantilizar
@@ -930,11 +496,11 @@ Los estudiantes pueden tener intereses juveniles, pero el lenguaje debe ser resp
 
 Evitar:
 
-> “Vamos a hacer jueguitos súper fáciles.”
+> "Vamos a hacer jueguitos súper fáciles."
 
 Preferir:
 
-> “Vamos a modelar una mecánica simple de puntaje usando variables.”
+> "Vamos a modelar una mecánica simple de puntaje usando variables."
 
 ### 12.3. No sobrecomplejizar
 
@@ -1017,70 +583,7 @@ Para proyectos finales, priorizar:
 
 ---
 
-## 14. Ejemplos modelo
-
-### Ejemplo 1: actualización de variables con videojuegos
-
-```python
-# Sistema simple de monedas en un videojuego
-
-monedas = 100
-print("Monedas iniciales:", monedas)
-
-# El jugador gana una partida
-monedas = monedas + 50
-print("Después de ganar una partida:", monedas)
-
-# El jugador compra una mejora
-monedas = monedas - 30
-print("Después de comprar una mejora:", monedas)
-```
-
-### Ejemplo 2: playlist con listas
-
-```python
-# Playlist simple
-
-playlist = ["Canción 1", "Canción 2", "Canción 3"]
-
-print("Tu playlist de hoy:")
-print(playlist)
-```
-
-### Ejemplo 3: asistente de entrenamiento
-
-```python
-# Asistente simple de entrenamiento
-
-minutos = int(input("¿Cuántos minutos entrenaste hoy? "))
-
-if minutos >= 45:
-    print("Buen trabajo. Hoy cumpliste una sesión larga.")
-elif minutos >= 20:
-    print("Buen avance. Fue una sesión media.")
-else:
-    print("Hoy fue una sesión breve. Puedes retomarlo mañana.")
-```
-
-### Ejemplo 4: simulador de robot
-
-```python
-# Robot doméstico simulado
-
-bateria = 25
-obstaculo = True
-
-if bateria < 20:
-    print("Robot detenido: necesita cargar batería.")
-elif obstaculo == True:
-    print("Robot detenido: hay un obstáculo.")
-else:
-    print("Robot en movimiento: puede limpiar.")
-```
-
----
-
-## 15. Verificación interna antes de responder
+## 14. Verificación interna antes de responder
 
 Antes de entregar el producto final, el agente debe revisar:
 
@@ -1097,7 +600,7 @@ Antes de entregar el producto final, el agente debe revisar:
 
 ---
 
-## 16. Regla final de uso
+## 15. Regla final de uso
 
 Si el usuario pide diseñar una clase o Colab de programación y no entrega contexto, el agente debe asumir por defecto que conviene usar una combinación de:
 

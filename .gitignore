@@ -10,3 +10,11 @@ __pycache__/
 *.gslides
 *.gdoc
 *.gsheet
+
+# Archivos de bloqueo temporal de Microsoft Office (docx/pptx/xlsx abiertos)
+~$*
+
+# Entregas crudas de estudiantes (privacidad — no se suben al repo público;
+# además la carpeta descomprimida excede el límite de ruta de Windows)
+clases/clase-17-ejercitacion-condicionales/Clase 15 - Ejercitación Evaluación-20260728T152624Z-1-001/
+clases/clase-17-ejercitacion-condicionales/Clase 15 - Ejercitación Evaluación-20260728T152624Z-1-001.zip

@@ -23,6 +23,8 @@ Esta skill permite que un agente IA use la **Taxonomía de Bloom** como marco de
 
 La skill está diseñada para ser usada como **referencia transversal** por otros agentes o skills de planificación de clases, evaluación, retroalimentación, diseño de rúbricas y construcción de materiales pedagógicos.
 
+El detalle exhaustivo de cada nivel (definiciones, listas de verbos, formatos de tarea, criterios y errores) vive en `references/niveles-cognitivos.md`. Este SKILL.md actúa como resumen navegable — usa la "Vista general" y el "Bloom rápido" primero, y solo abre la referencia exhaustiva si necesitas el detalle completo de un nivel específico.
+
 ---
 
 ## Cuándo usar esta skill
@@ -49,6 +51,23 @@ No es necesario consultarla cuando:
 - La tarea es de iteración cosmética sobre un artefacto ya diseñado (ajustes de redacción, formato, typos) y no toca el verbo del objetivo, la actividad ni la evaluación.
 - Diego ya calibró el nivel cognitivo del objetivo en una sesión anterior y no cambió el alcance — basta con mantener la consistencia ya establecida.
 - La tarea pertenece a un workflow paralelo (generación de notebooks/PPT, ayudantías, revisión de evaluaciones) que no implica diseñar ni ajustar un objetivo de aprendizaje.
+
+---
+
+## Cómo profundizar en un nivel específico
+
+Usa esta tabla para decidir si necesitas abrir `references/niveles-cognitivos.md`. Cada fila ahí incluye definición operativa, lista completa de verbos, formatos de tarea, criterios de calidad y errores frecuentes.
+
+| Necesitas… | Sección de `references/niveles-cognitivos.md` |
+|---|---|
+| Verbos o formatos de tareas de recuerdo/identificación | § Nivel 1: Conocimiento |
+| Verbos o formatos para explicar, resumir, interpretar | § Nivel 2: Comprensión |
+| Verbos o formatos para calcular, ejecutar, resolver con procedimiento | § Nivel 3: Aplicación |
+| Verbos o formatos para comparar, clasificar, distinguir relaciones | § Nivel 4: Análisis |
+| Verbos o formatos para diseñar, construir, proponer algo nuevo | § Nivel 5: Síntesis |
+| Verbos o formatos para juzgar, valorar, seleccionar con criterios | § Nivel 6: Evaluación |
+
+Para tareas de rediseño de preguntas o auditoría completa de una evaluación, usa las plantillas de `references/plantillas.md`.
 
 ---
 
@@ -132,9 +151,7 @@ Si se espera que el estudiante analice, diseñe, sintetice o evalúe, la planifi
 
 ---
 
-## Niveles de la Taxonomía de Bloom
-
-### Vista general
+## Niveles de la Taxonomía de Bloom — Vista general
 
 | Nivel | Acción cognitiva central | Evidencia observable | Riesgo frecuente |
 |---|---|---|---|
@@ -144,383 +161,6 @@ Si se espera que el estudiante analice, diseñe, sintetice o evalúe, la planifi
 | 4. Análisis | Descomponer, comparar y establecer relaciones | El estudiante diferencia, clasifica, compara, contrasta, examina o identifica relaciones | Llamar “análisis” a una simple lista |
 | 5. Síntesis | Integrar partes para construir algo nuevo | El estudiante diseña, organiza, formula, propone, construye o combina elementos | Pedir creación sin restricciones ni criterios |
 | 6. Evaluación | Emitir juicios fundamentados según criterios | El estudiante juzga, valora, selecciona, justifica, revisa o recomienda con evidencia | Pedir opiniones sin criterios explícitos |
-
----
-
-## Nivel 1: Conocimiento
-
-### Definición operativa
-
-Corresponde a la capacidad de **recordar hechos, términos, métodos, procesos, fórmulas, estructuras o marcos de referencia** sin transformarlos ni elaborarlos en profundidad.
-
-El estudiante demuestra este nivel cuando puede recuperar información en su forma original o reconocerla entre alternativas.
-
-### Verbos asociados
-
-Usa o reconoce verbos como:
-
-- apuntar;
-- definir;
-- describir;
-- encontrar;
-- enlistar;
-- identificar;
-- marcar;
-- memorizar;
-- nombrar;
-- numerar;
-- reconocer;
-- recordar;
-- registrar;
-- relatar;
-- repetir;
-- subrayar.
-
-### Formatos de tarea adecuados
-
-- “Define el concepto de…”
-- “Identifica las partes de…”
-- “Nombra tres características de…”
-- “Reconoce cuál alternativa corresponde a…”
-- “Completa la tabla con los términos correctos.”
-
-### Criterios de calidad
-
-Una tarea de conocimiento es correcta si:
-
-- solicita información claramente enseñada o disponible;
-- permite verificar si el estudiante recuerda o reconoce el dato;
-- no exige interpretación profunda, transferencia ni juicio de valor;
-- es breve, precisa y verificable.
-
-### Errores que el agente debe evitar
-
-- Declarar que el estudiante “comprende” solo porque repite una definición.
-- Usar tareas de conocimiento como única evidencia de logro en objetivos de análisis, síntesis o evaluación.
-- Plantear preguntas memorísticas cuando el propósito declarado exige transferencia.
-
----
-
-## Nivel 2: Comprensión
-
-### Definición operativa
-
-Corresponde a la capacidad de **entender el significado de información, ideas, procesos o conceptos**, y expresarlos con palabras propias, ejemplos, resúmenes, traducciones o interpretaciones.
-
-El estudiante no solo recuerda: también muestra que entiende la relación básica entre las ideas.
-
-### Verbos asociados
-
-Usa o reconoce verbos como:
-
-- completar;
-- descubrir;
-- ejemplificar;
-- esquematizar;
-- explicar;
-- expresar;
-- identificar;
-- informar;
-- interpretar;
-- listar;
-- localizar;
-- narrar;
-- nombrar;
-- organizar;
-- predecir;
-- preparar;
-- reafirmar;
-- reconocer;
-- relacionar;
-- resumir;
-- revisar;
-- secuenciar;
-- traducir;
-- transcribir;
-- ubicar.
-
-### Formatos de tarea adecuados
-
-- “Explica con tus palabras…”
-- “Resume la idea principal de…”
-- “Interpreta el significado de…”
-- “Da un ejemplo cotidiano de…”
-- “Ordena los pasos de…”
-- “Relaciona cada concepto con su descripción.”
-
-### Criterios de calidad
-
-Una tarea de comprensión es correcta si:
-
-- exige reformular o explicar, no solo copiar;
-- permite observar si el estudiante entiende el significado;
-- puede incluir ejemplos, analogías, resúmenes o representaciones;
-- no requiere necesariamente resolver un problema nuevo.
-
-### Errores que el agente debe evitar
-
-- Usar “comprender” como verbo de objetivo sin evidencia observable.
-- Aceptar respuestas textuales copiadas como evidencia suficiente de comprensión.
-- Diseñar una pregunta de comprensión que en realidad solo pide memoria literal.
-
----
-
-## Nivel 3: Aplicación
-
-### Definición operativa
-
-Corresponde a la capacidad de **usar conocimientos, reglas, métodos, fórmulas, procedimientos o principios en situaciones concretas**.
-
-El estudiante demuestra aplicación cuando puede ejecutar un procedimiento aprendido o transferirlo a un caso particular.
-
-### Verbos asociados
-
-Usa o reconoce verbos como:
-
-- actualizar;
-- aplicar;
-- calcular;
-- cambiar;
-- completar;
-- construir;
-- demostrar;
-- dibujar;
-- ejecutar;
-- emplear;
-- esbozar;
-- examinar;
-- experimentar;
-- ilustrar;
-- interpretar;
-- operar;
-- planear;
-- practicar;
-- programar;
-- trazar;
-- usar;
-- utilizar.
-
-### Formatos de tarea adecuados
-
-- “Resuelve el problema usando…”
-- “Aplica el procedimiento para…”
-- “Calcula…”
-- “Usa la fórmula en el siguiente caso…”
-- “Ejecuta el algoritmo con estos datos…”
-- “Demuestra cómo se utiliza…”
-
-### Criterios de calidad
-
-Una tarea de aplicación es correcta si:
-
-- presenta una situación concreta;
-- exige usar un conocimiento o procedimiento;
-- tiene condiciones claras;
-- permite observar si el estudiante selecciona y ejecuta correctamente el procedimiento;
-- puede incluir transferencia moderada, pero no necesariamente análisis profundo.
-
-### Errores que el agente debe evitar
-
-- Convertir la aplicación en copia mecánica de un ejemplo idéntico.
-- Omitir el contexto o los datos necesarios para aplicar el procedimiento.
-- Pedir resolución sin haber modelado antes el procedimiento esperado.
-
----
-
-## Nivel 4: Análisis
-
-### Definición operativa
-
-Corresponde a la capacidad de **descomponer un problema, texto, fenómeno, objeto o situación en partes**, identificando relaciones, patrones, jerarquías, causas, supuestos, diferencias o tensiones entre sus componentes.
-
-El análisis permite comprender cómo se organiza una situación y por qué sus partes se relacionan de cierta manera.
-
-### Verbos asociados
-
-Usa o reconoce verbos como:
-
-- analizar;
-- clasificar;
-- categorizar;
-- comparar;
-- contrastar;
-- criticar;
-- cuestionar;
-- debatir;
-- diagramar;
-- diferenciar;
-- discriminar;
-- discutir;
-- distinguir;
-- examinar;
-- experimentar;
-- explicar;
-- identificar;
-- inspeccionar;
-- investigar;
-- organizar;
-- probar;
-- relatar;
-- resolver.
-
-### Formatos de tarea adecuados
-
-- “Compara dos soluciones y explica sus diferencias relevantes.”
-- “Clasifica las respuestas según criterios dados.”
-- “Identifica causas y consecuencias de…”
-- “Distingue hechos, opiniones y supuestos.”
-- “Analiza qué partes del problema están conectadas entre sí.”
-- “Examina qué evidencia respalda cada conclusión.”
-
-### Criterios de calidad
-
-Una tarea de análisis es correcta si:
-
-- exige separar partes o dimensiones;
-- requiere establecer relaciones explícitas;
-- usa criterios de comparación o clasificación;
-- pide justificar con evidencia;
-- no se limita a enumerar información.
-
-### Errores que el agente debe evitar
-
-- Llamar “análisis” a una tarea que solo pide identificar o listar.
-- Pedir análisis sin entregar criterios, fuentes, datos o material a analizar.
-- Exigir conclusiones sin pedir relaciones entre evidencia y argumento.
-
----
-
-## Nivel 5: Síntesis
-
-### Definición operativa
-
-Corresponde a la capacidad de **integrar partes, ideas, datos, evidencias o procedimientos para construir un producto, propuesta, modelo, plan, estructura o solución nueva**.
-
-La síntesis implica reorganizar elementos para formar un todo que antes no estaba dado de manera explícita.
-
-### Verbos asociados
-
-Usa o reconoce verbos como:
-
-- arreglar;
-- catalogar;
-- coleccionar;
-- combinar;
-- componer;
-- construir;
-- concluir;
-- crear;
-- decidir;
-- diferenciar;
-- dirigir;
-- diseñar;
-- elegir;
-- ensamblar;
-- establecer;
-- formular;
-- influenciar;
-- justificar;
-- moderar;
-- organizar;
-- planear;
-- preparar;
-- priorizar;
-- proponer;
-- recomendar;
-- reunir;
-- validar.
-
-### Formatos de tarea adecuados
-
-- “Diseña una propuesta que integre…”
-- “Construye un modelo para explicar…”
-- “Formula una hipótesis a partir de…”
-- “Organiza la información en una estructura nueva.”
-- “Propón una solución considerando estas restricciones…”
-- “Combina las evidencias para elaborar una conclusión.”
-
-### Criterios de calidad
-
-Una tarea de síntesis es correcta si:
-
-- exige integrar múltiples elementos;
-- produce algo nuevo o reorganizado;
-- incluye restricciones, propósito y criterios de éxito;
-- requiere decisiones justificadas;
-- no se reduce a completar una plantilla de manera mecánica.
-
-### Errores que el agente debe evitar
-
-- Pedir “crear” sin criterios de calidad.
-- Confundir síntesis con decoración o producción superficial.
-- Exigir una propuesta sin datos, restricciones ni usuario objetivo.
-- Diseñar actividades creativas sin conexión con el objetivo de aprendizaje.
-
----
-
-## Nivel 6: Evaluación
-
-### Definición operativa
-
-Corresponde a la capacidad de **formular juicios fundamentados sobre el valor, calidad, pertinencia, efectividad o coherencia de ideas, soluciones, métodos, productos o argumentos**, usando criterios internos o externos.
-
-Puede incluir juicios cuantitativos o cualitativos, siempre que estén fundamentados en evidencia y criterios claros.
-
-### Verbos asociados
-
-Usa o reconoce verbos como:
-
-- apreciar;
-- arreglar;
-- calificar;
-- combinar;
-- componer;
-- construir;
-- crear;
-- diseñar;
-- elaborar;
-- escoger;
-- escribir;
-- estimar;
-- evaluar;
-- inventar;
-- juzgar;
-- medir;
-- planear;
-- planificar;
-- producir;
-- reconstruir;
-- resolver;
-- revisar;
-- seleccionar;
-- valorar;
-- valuar.
-
-### Formatos de tarea adecuados
-
-- “Evalúa cuál solución es más pertinente según los criterios dados.”
-- “Justifica qué alternativa elegirías usando evidencia.”
-- “Valora la calidad de una propuesta según una rúbrica.”
-- “Selecciona la mejor opción y explica por qué.”
-- “Revisa el trabajo de un par usando criterios de logro.”
-- “Emite un juicio sobre la efectividad de…”
-
-### Criterios de calidad
-
-Una tarea de evaluación es correcta si:
-
-- exige emitir un juicio;
-- entrega o solicita criterios claros;
-- requiere fundamentar con evidencia;
-- permite comparar alternativas, estándares o niveles de logro;
-- no se limita a expresar una preferencia personal.
-
-### Errores que el agente debe evitar
-
-- Pedir “opinión” y clasificarla como evaluación.
-- Omitir criterios de juicio.
-- Aceptar respuestas sin evidencia.
-- Evaluar algo que no fue analizado o comprendido previamente.
 
 ---
 
@@ -644,7 +284,7 @@ Cuando el usuario pida aplicar Bloom a una planificación, evaluación o activid
 
 ---
 
-## Formato breve de referencia para otros agentes
+## Bloom rápido (resumen para otras skills)
 
 Cuando otra skill necesite solo una referencia rápida, usa este resumen:
 
@@ -761,71 +401,6 @@ Criterio de logro: distingue correctamente dato, interpretación y oportunidad d
 
 ---
 
-## Plantilla para rediseñar una pregunta según Bloom
-
-```markdown
-## Pregunta original
-
-[Texto de la pregunta]
-
-## Diagnóstico
-
-- Nivel declarado: [si existe]
-- Nivel real: [nivel]
-- Evidencia solicitada: [qué debe producir el estudiante]
-- Problema detectado: [si hay desalineación]
-
-## Rediseño por niveles
-
-| Nivel Bloom | Pregunta rediseñada |
-|---|---|
-| Conocimiento | [versión] |
-| Comprensión | [versión] |
-| Aplicación | [versión] |
-| Análisis | [versión] |
-| Síntesis | [versión] |
-| Evaluación | [versión] |
-
-## Recomendación
-
-[Indicar qué versión conviene usar según el objetivo pedagógico]
-```
-
----
-
-## Plantilla para revisar una evaluación completa
-
-```markdown
-## Mapa cognitivo de la evaluación
-
-| Ítem | Habilidad evaluada | Nivel Bloom | Evidencia exigida | Observación técnica |
-|---:|---|---|---|---|
-| 1 | [habilidad] | [nivel] | [evidencia] | [comentario] |
-
-## Distribución de niveles
-
-| Nivel Bloom | Cantidad de ítems | Porcentaje aproximado |
-|---|---:|---:|
-| Conocimiento | [n] | [%] |
-| Comprensión | [n] | [%] |
-| Aplicación | [n] | [%] |
-| Análisis | [n] | [%] |
-| Síntesis | [n] | [%] |
-| Evaluación | [n] | [%] |
-
-## Diagnóstico
-
-[Conclusión sobre balance, rigor, progresión y alineación]
-
-## Ajustes sugeridos
-
-- [Ajuste 1]
-- [Ajuste 2]
-- [Ajuste 3]
-```
-
----
-
 ## Nota sobre versiones de Bloom
 
 Esta skill usa la secuencia clásica presentada en el documento base:
@@ -835,4 +410,3 @@ Conocimiento → Comprensión → Aplicación → Análisis → Síntesis → Ev
 ```
 
 Algunos marcos actuales usan una versión revisada donde “crear” aparece como nivel superior. Si el usuario solicita explícitamente la versión revisada, el agente puede adaptar la nomenclatura, pero debe explicitar el cambio para evitar mezclar ambos sistemas sin aclaración.
-

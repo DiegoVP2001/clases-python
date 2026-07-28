@@ -1,0 +1,4 @@
+interface:
+  display_name: "Validar Dodona"
+  short_description: "Valida estructura y archivos de ejercicios Dodona."
+  default_prompt: "Valida estos ejercicios Dodona."

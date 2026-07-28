@@ -43,6 +43,11 @@ C = {
     "codigo_color": RGBColor(0x4A, 0xDF, 0xCB),
     "tabla_header": RGBColor(0x0F, 0x16, 0x2A),
     "tabla_fila": RGBColor(0x1F, 0x29, 0x44),
+    # Slide de Cierre: columna Comprensión (azul) / columna Propósito (verde)
+    "azul": RGBColor(0x38, 0xBD, 0xF8),
+    "azul_fondo": RGBColor(0x0F, 0x2A, 0x43),
+    "verde": RGBColor(0x4A, 0xDE, 0x80),
+    "verde_fondo": RGBColor(0x10, 0x2A, 0x1C),
 }
 
 T = {
@@ -879,28 +884,60 @@ def construir_slide_frase_clave(prs):
 
 
 def construir_slide_cierre(prs):
+    """Última slide del PPT: objetivo reimpreso + dos preguntas de cierre a viva voz.
+
+    Layout (ver clases/propuesta_ultima_diapo.png): título "Cierre" con barra
+    ámbar, caja Objetivo de ancho completo, y dos columnas — Comprensión 1 a 5
+    (azul) y Propósito (verde). Solo se muestran las preguntas — las respuestas
+    se dan de forma oral en clase, nunca se imprimen en el slide.
+
+    Placeholders:
+      {{CIERRE_OBJETIVO}}
+      {{CIERRE_PREGUNTA_COMPRENSION}}
+      {{CIERRE_PREGUNTA_PROPOSITO}}
+    """
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     aplicar_fondo_oscuro(slide)
-    agregar_barra_superior(slide)
-    agregar_titulo_slide(slide, texto_placeholder=f"{E['cierre']}  Antes de irte, piensa…")
 
-    agregar_texto(slide, MARGEN_X, 1.70, ANCHO_SLIDE - 2 * MARGEN_X, 0.50,
-                  "Tres preguntas para llevarte de esta clase:",
-                  tamano=T["subtitulo_stock"], color="blanco")
+    # Título + barra ámbar
+    agregar_texto(slide, MARGEN_X, 0.45, ANCHO_SLIDE - 2 * MARGEN_X, 0.70,
+                  "Cierre", tamano=36, color="blanco", negrita=True)
+    agregar_rectangulo(slide, MARGEN_X, 1.15, 1.3, 0.06, C["ambar"])
 
-    y_actual = 2.40
-    for i in range(1, 4):
-        agregar_rectangulo(slide, MARGEN_X, y_actual,
-                           ANCHO_SLIDE - 2 * MARGEN_X, 1.30, C["fondo_bloque"])
-        agregar_rectangulo(slide, MARGEN_X, y_actual, 0.08, 1.30, C["turquesa"])
-        agregar_texto(slide, MARGEN_X + 0.25, y_actual + 0.12,
-                      0.6, 0.6, f"{i}.", tamano=T["cuerpo_stock"],
-                      color="turquesa", negrita=True)
-        agregar_texto(slide, MARGEN_X + 0.85, y_actual + 0.15,
-                      ANCHO_SLIDE - 2 * MARGEN_X - 1.0, 1.00,
-                      "{{PREGUNTA_" + str(i) + "}}",
-                      tamano=T["cuerpo_stock"], color="blanco", auto_size=True)
-        y_actual += 1.45
+    # Caja Objetivo (ancho completo)
+    OBJ_Y = 1.45
+    OBJ_H = 1.55
+    agregar_rectangulo(slide, MARGEN_X, OBJ_Y, ANCHO_SLIDE - 2 * MARGEN_X, OBJ_H,
+                       C["tabla_header"])
+    agregar_texto(slide, MARGEN_X + 0.25, OBJ_Y + 0.15, 1.6, 0.4,
+                  "Objetivo", tamano=16, color="ambar", negrita=True)
+    agregar_texto(slide, MARGEN_X + 1.95, OBJ_Y + 0.15,
+                  ANCHO_SLIDE - 2 * MARGEN_X - 2.2, OBJ_H - 0.30,
+                  "{{CIERRE_OBJETIVO}}", tamano=17, color="blanco",
+                  auto_size=True)
+
+    # Dos columnas: Comprensión (azul) / Propósito (verde)
+    COL_Y = OBJ_Y + OBJ_H + 0.30
+    COL_H = ALTO_SLIDE - COL_Y - 0.45
+    COL_W = (ANCHO_SLIDE - 2 * MARGEN_X - 0.35) / 2
+    COL_A_X = MARGEN_X
+    COL_B_X = MARGEN_X + COL_W + 0.35
+
+    agregar_rectangulo(slide, COL_A_X, COL_Y, COL_W, COL_H, C["azul_fondo"])
+    agregar_texto(slide, COL_A_X + 0.3, COL_Y + 0.25, COL_W - 0.6, 0.45,
+                  "Comprensión 1 a 5", tamano=19, color="azul", negrita=True,
+                  alineacion=PP_ALIGN.CENTER)
+    agregar_texto(slide, COL_A_X + 0.35, COL_Y + 0.85, COL_W - 0.7, COL_H - 1.10,
+                  "{{CIERRE_PREGUNTA_COMPRENSION}}", tamano=17, color="blanco",
+                  alineacion=PP_ALIGN.CENTER, auto_size=True)
+
+    agregar_rectangulo(slide, COL_B_X, COL_Y, COL_W, COL_H, C["verde_fondo"])
+    agregar_texto(slide, COL_B_X + 0.3, COL_Y + 0.25, COL_W - 0.6, 0.45,
+                  "Propósito", tamano=19, color="verde", negrita=True,
+                  alineacion=PP_ALIGN.CENTER)
+    agregar_texto(slide, COL_B_X + 0.35, COL_Y + 0.85, COL_W - 0.7, COL_H - 1.10,
+                  "{{CIERRE_PREGUNTA_PROPOSITO}}", tamano=17, color="blanco",
+                  alineacion=PP_ALIGN.CENTER, auto_size=True)
 
 
 # =====================================================================

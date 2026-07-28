@@ -173,8 +173,8 @@ def construir_notebook(datos: dict) -> nbformat.NotebookNode:
     nb.cells.append(new_markdown_cell(generar_cierre(datos)))
     nb.cells.append(new_markdown_cell("---\n\n"))
 
-    # --- SOLUCIONES AL FINAL ---
-    nb.cells.append(new_markdown_cell(generar_seccion_soluciones(datos)))
+    # NOTA: el notebook de estudiante NO lleva soluciones, ni siquiera ocultas
+    # con <details>. Todas van a Solucionario.ipynb — ver actualizar_solucionario().
 
     return nb
 
@@ -200,8 +200,8 @@ def generar_indice(datos: dict) -> str:
         marca = " ⭐" if ej["es_desafio"] else ""
         bloque += f"- **Ejercicio {ej['numero']}** — {titulo_limpio}{marca}\n"
     bloque += "\n⭐ = Desafío opcional para quienes quieran ir más allá.\n\n"
-    bloque += "**Recomendación:** intenta cada ejercicio por tu cuenta antes de mirar la solución. "
-    bloque += "Si te atascas más de 10 minutos, revisa la pista (si la tiene) y solo después la solución.\n"
+    bloque += "**Recomendación:** intenta cada ejercicio por tu cuenta. "
+    bloque += "Si te atascas más de 10 minutos, revisa la pista (si la tiene) o pregunta al profe.\n"
     return bloque
 
 
@@ -228,16 +228,6 @@ def generar_enunciado(ejercicio: dict) -> str:
     return bloque
 
 
-def generar_solucion(ejercicio: dict) -> str:
-    bloque = "<details>\n<summary>🔓 Ver solución (solo después de intentarlo)</summary>\n\n"
-    if ejercicio["solucion"]:
-        bloque += "```python\n" + ejercicio["solucion"] + "\n```\n"
-    else:
-        bloque += "_Solución no disponible. Consulta al profe._\n"
-    bloque += "\n</details>"
-    return bloque
-
-
 def generar_cierre(datos: dict) -> str:
     num_total = len(datos["ejercicios"])
     num_desafios = sum(1 for ej in datos["ejercicios"] if ej["es_desafio"])
@@ -261,19 +251,48 @@ def generar_cierre(datos: dict) -> str:
     return bloque
 
 
-def generar_seccion_soluciones(datos: dict) -> str:
-    bloque = "## 📋 Soluciones\n\n"
-    bloque += "> Intenta resolver cada ejercicio antes de mirar aquí.\n\n"
+def generar_seccion_solucionario(datos: dict) -> str:
+    """Sección de soluciones de Ejercicios.ipynb para agregar al Solucionario.
+    Sin <details> — el Solucionario es documento privado del profesor."""
+    bloque = "## 💪 Ejercicios adicionales — Soluciones\n\n"
     for ej in datos["ejercicios"]:
         titulo_limpio = ej["titulo"].replace("⭐", "").strip()
-        bloque += "<details>\n"
-        bloque += f"<summary>🔓 Ejercicio {ej['numero']} — {titulo_limpio}</summary>\n\n"
+        bloque += f"### Ejercicio {ej['numero']} — {titulo_limpio}\n\n"
         if ej["solucion"]:
             bloque += f"```python\n{ej['solucion']}\n```\n\n"
         else:
-            bloque += "_Solución no disponible. Consulta al profe._\n\n"
-        bloque += "</details>\n\n"
+            bloque += "_Solución no disponible — completar antes de subir el Solucionario._\n\n"
     return bloque.rstrip()
+
+
+def actualizar_solucionario(datos: dict, ruta_ejercicios: Path) -> Path | None:
+    """Agrega la sección de soluciones de Ejercicios.ipynb al Solucionario.ipynb
+    ya existente (generado por generar-colab-clase junto con Clase.ipynb).
+
+    Nunca crea un segundo archivo de solucionario — actualiza el único que existe
+    por clase. Si no lo encuentra, avisa y no falla la generación de Ejercicios.ipynb.
+    """
+    nombre_solucionario = ruta_ejercicios.name.replace(" - Ejercicios.ipynb", " - Solucionario.ipynb")
+    if nombre_solucionario == ruta_ejercicios.name:
+        print("⚠️  No se pudo derivar el nombre del Solucionario — "
+              "el archivo de salida debe seguir el patrón 'Clase NN - Tema - Ejercicios.ipynb'.")
+        return None
+
+    ruta_solucionario = ruta_ejercicios.parent / nombre_solucionario
+    if not ruta_solucionario.exists():
+        print(f"⚠️  No existe {ruta_solucionario.name} — genera primero el Colab de clase "
+              "(generar-colab-clase) para crear el Solucionario, luego vuelve a correr este script.")
+        return None
+
+    nb_sol = nbformat.read(ruta_solucionario, as_version=4)
+    # Si ya existía una sección de Ejercicios (regeneración tras iteración), la
+    # reemplaza en vez de duplicarla.
+    marca = "## 💪 Ejercicios adicionales — Soluciones"
+    nb_sol.cells = [c for c in nb_sol.cells if not c.get("source", "").startswith(marca)]
+    nb_sol.cells.append(new_markdown_cell(generar_seccion_solucionario(datos)))
+    with ruta_solucionario.open("w", encoding="utf-8") as f:
+        nbformat.write(nb_sol, f)
+    return ruta_solucionario
 
 
 # =====================================================================
@@ -314,6 +333,12 @@ def main():
 
     print(f"💾 Notebook guardado en: {ruta_salida}")
     print(f"📤 Súbelo a Colab desde https://colab.research.google.com (Archivo → Subir cuaderno)")
+
+    print(f"🛠️  Agregando soluciones al Solucionario...")
+    ruta_solucionario = actualizar_solucionario(datos, ruta_salida)
+    if ruta_solucionario:
+        print(f"💾 Solucionario actualizado: {ruta_solucionario}")
+        print("🔒 Solo para el profesor — se sube a Classroom recién después de dictar la clase.")
 
 
 if __name__ == "__main__":

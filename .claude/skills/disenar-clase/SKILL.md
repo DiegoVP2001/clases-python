@@ -76,6 +76,13 @@ Evita verbos no observables: "comprender", "saber", "conocer", "entender".
 
 El **propósito** debe estar escrito para estudiantes y responder "¿para qué sirve esto?", proyectándose **más allá del aula y de la programación misma**. No basta con conectar el contenido con otros programas o ejercicios — el propósito debe mostrar cómo lo aprendido se aplica a decisiones, sistemas o situaciones de la vida real fuera del liceo (apps de banco, semáforos, música, deportes, trabajo, etc.). Diego aprobó explícitamente esta orientación: el propósito es agencia y proyección, no solo utilidad técnica.
 
+**Regla crítica — actitud y propósito deben estar conectados:** La actitud del objetivo (ej: `con perseverancia`, `con orden`, `con criterio`) no es decorativa. El propósito **debe nombrarla explícitamente al inicio**, explicar qué significa en lenguaje cotidiano para un estudiante de 3ro y 4to medio, y cerrar mostrando cómo la clase de hoy la ejercita concretamente. Estructura canónica del propósito — **exactamente 3 frases, sin enumeraciones ni ejemplos entre guiones intercalados** (mantenerlo breve y fluido, no una lista de casos):
+1. Frase que define la actitud en términos cotidianos ("El orden es la capacidad de...")
+2. Frase que la proyecta más allá del liceo, **en plural** — el curso se piensa como colectivo, nunca "te sirve" sino "nos sirve" ("Esa habilidad nos sirve en cualquier proceso real que...")
+3. Frase que conecta con la clase de hoy ("Hoy la vamos a ejercitar con `for` y `range()`, donde...")
+
+Ejemplo del formato vigente (3 frases, plural, sin listas intercaladas): "El orden es la capacidad de escribir y organizar el código de manera clara, estructurada y fácil de seguir. Esa habilidad nos sirve en cualquier proceso real que se repita muchas veces, donde la claridad evita errores costosos. Hoy la vamos a ejercitar con `for` y `range()`, construyendo bucles ordenados para generar secuencias numéricas." Specs anteriores a esta fecha (ej. `clase-13-if-anidadas`) usan el formato antiguo en singular — no son la referencia vigente.
+
 Presenta objetivo + propósito y espera aprobación o ajuste antes de avanzar.
 
 ### Paso 4 — Proponer estructura de 5 pasos
@@ -94,7 +101,12 @@ Tiene dos funciones (pueden coexistir):
 1. **Calentar** conocimiento previo que será útil en la clase de hoy.
 2. **Spoiler sutil**: plantear el problema de la clase en lenguaje cotidiano sin revelar la sintaxis Python — los estudiantes no se dan cuenta de que ya están "haciendo" lo que aprenderán.
 
+**Patrón por defecto — alineado con la Guiada (validado en Clase 14):** cuando el foco de la clase es clasificar/decidir entre casos (rangos, categorías, condiciones), el Haz Ahora debe reutilizar **el mismo escenario, tabla o dato** que después aparece en la Práctica Guiada — no uno análogo, el mismo. Los estudiantes resuelven a mano en el Haz Ahora exactamente lo que en la Guiada van a automatizar con código: así el momento "aha" ocurre al notar que ya sabían la lógica, solo faltaba escribirla. Preguntas simples y directas (2-5), resolubles sin ambigüedad y respondibles en un par de palabras en markdown en el cuaderno — no preguntas abiertas de opinión.
+Si la clase no tiene ese tipo de foco (ej. bucles, funciones, listas), usa otra variante: predicción de output de código ya visto, detectar un error típico de la clase anterior, o un dilema entre dos formas de resolver algo — mantén siempre la conexión con lo que se hará en la Guiada, aunque no sea la tabla idéntica.
+
 Regla crítica: **NO revelar explícitamente** el contenido nuevo de hoy. No mostrar operadores, funciones ni sintaxis que se introducirán en el ICN. La actividad puede ser desconectada (papel) o tener una celda de código si es pertinente (para activar algo ya visto).
+
+Duración: usa un número exacto de minutos, no un rango (ej. `(6 min)`, no `(5-8 min)`) — `generar-ppt-clase` lo lee para armar el timer en pantalla del slide (`⚡ Haz Ahora <<6:00>>`). Este timer es exclusivo del Haz Ahora; la Guiada no lleva timer en el PPT porque no se trabaja desde ahí.
 
 Propósito: [qué conocimiento previo activa Y/O qué intuición construye para hoy]
 Actividad: [descripción breve — papel, predicción, código previo, etc.]
@@ -112,20 +124,19 @@ Errores típicos a anticipar: [2-3 errores predecibles para tabla]
 Construcción paso a paso CON el curso. No entregar código resuelto al inicio.
 Los pasos se redactan en **lenguaje natural de alto nivel**: describen QUÉ hacer sin revelar el nombre exacto de la variable ni el operador/comando a usar — eso lo aporta la clase. Ejemplo correcto: "Crea una variable que registre el saldo del usuario". Ejemplo incorrecto: "Crea `saldo = int(input(...))`".
 Situación: [contexto narrativo]
-Resultado esperado: [output expresivo con etiquetas descriptivas, no solo True/False]
+Pasos y resultado: cada paso (o grupo de pasos que va junto) se presenta con su propio resultado esperado parcial, no solo un output final — se renderiza como tabla de 2 columnas (qué debe hacer el programa | resultado esperado). Agrupa pasos que no producen output propio con el paso que sí lo hace.
 
-### 4. Práctica Independiente (25-30 min)
-Trabajo individual, alineado con la guiada pero NO copia literal.
-Los enunciados NO incluyen nombres de variables, operadores ni comandos — solo descripción en lenguaje natural de qué calcular. Los ejemplos de input/output usan lenguaje natural ("si alguien ingresa un saldo de $80.000..."), nunca nombres de variables. Los outputs esperados tienen etiquetas descriptivas.
-Cantidad de ejercicios: [típicamente 2-3]
-Contextos: [variados, no concentrados en uno solo]
+### 4. Práctica Independiente (15-18 min)
+Trabajo individual, alineado con la guiada pero NO copia literal. Formato "revisión rápida": ejercicios breves y directos, no problemas extensos multi-parte.
+Los enunciados NO incluyen nombres de variables, operadores ni comandos — solo descripción en lenguaje natural de qué calcular. Los ejemplos de input/output usan lenguaje natural ("si alguien ingresa un saldo de \$80.000..."), nunca nombres de variables. Los outputs esperados tienen etiquetas descriptivas. Recuerda escapar el signo peso como `\$` — ver CLAUDE.md restricción 21.
+Cantidad de ejercicios: **1 obligatorio + 1 bonus/décimas extra (fijo — no preguntar)**
+Contextos: [variados entre los 2 ejercicios]
 Criterio de logro: [qué evidencia el aprendizaje]
 
-### 5. Ticket de Salida (8-10 min)
-Evidencia individual del foco específico de la clase.
-Tipo: [comprensión / escritura / análisis]
-Pregunta o tarea: [descripción]
-Cómo se entrega: [+ Text en Colab, captura, código, etc.]
+### 5. Ticket de Salida (5-8 min)
+2-3 preguntas de alternativas (4 opciones, rotuladas 1 dedo/2 dedos/3 dedos/4 dedos) sobre lo más importante de la clase. Se responden mostrando los dedos todos al mismo tiempo (conteo + revelación simultánea, ver CLAUDE.md regla 17) — las preguntas y alternativas NO se incluyen en el Colab de clase (solo un aviso de que se proyectan en la tele), van completas solo en el Solucionario.
+Cantidad de preguntas: [2 si el ICN tiene 1-2 conceptos centrales relacionados; 3 si cubre 3+ conceptos o si dos conceptos son claramente independientes — no preguntar, decidir con este criterio]
+Preguntas: [enunciado + 4 alternativas (1-4 dedos) + cuál es correcta + justificación breve, para cada una]
 
 ### Cierre (5 min)
 **Objetivo de la clase:** [copiar el objetivo aprobado]
@@ -167,8 +178,8 @@ Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/Clase 
 
 ## Estructura de la clase
 
-### 1. Haz Ahora (5-8 min)
-[Descripción detallada]
+### 1. Haz Ahora (N min)
+[Descripción detallada. N es un número exacto de minutos (ej. `(6 min)`), no un rango — `generar-ppt-clase` lo usa para el timer del slide.]
 
 ### 2. Introducción al Contenido Nuevo (15-20 min)
 
@@ -223,30 +234,56 @@ Ejemplos:
 
 ### 3. Práctica Guiada (20-25 min)
 **Situación:** [contexto narrativo]
+
+[Opcional — solo si la situación incluye una tabla de correspondencia (ej: rango de monto → actividad, temperatura → nivel): escríbela como tabla HTML con `<th>` y `<td>` en lugar de un bloque de código de texto plano. El generador la pasa tal cual al notebook y se renderiza limpiamente en Colab. No uses esto para situaciones narrativas sin tabla.]
+
 **Variables:**
 ```python
 [variables iniciales]
 ```
-**Pasos guiados:**
-1. ...
-2. ...
-3. ...
-**Resultado esperado:**
-```
-[output esperado]
-```
+**Pasos guiados (tabla):**
 
-### 4. Práctica Independiente (25-30 min)
-**Ejercicio 1 — [contexto]**
-[Enunciado]
+- Paso 1: [texto del paso, en lenguaje natural, sin revelar variable/operador]
+  Resultado:
+  ```
+  [output esperado de este paso, o una nota tipo "(todavía no hay output — es solo la variable inicial)" si el paso no produce output propio]
+  ```
+
+- Paso 2: [texto del paso]
+  Resultado:
+  ```
+  [output esperado]
+  ```
+
+[Agrega tantas filas como pasos agrupados necesites — típicamente 3 a 5. Agrupa en una misma fila los pasos que no producen output propio con el paso que sí lo hace (ej: "construye el bucle" + "dentro del bucle, muestra en pantalla"), para que ninguna fila quede con un resultado vacío. Si el resultado de una fila es una secuencia larga y repetitiva, acórtala con `...` para que la tabla no quede demasiado larga de mostrar. Los backticks dentro de `paso` o `resultado` se convierten automáticamente a código con estilo — no hace falta escribir `<code>` a mano.]
+
+### 4. Práctica Independiente (15-18 min)
+**Ejercicio 1 — [contexto] (obligatorio)**
+[Enunciado breve, formato revisión rápida]
 Resultado esperado: ...
 
-**Ejercicio 2 — [contexto distinto]**
-[Enunciado]
+**Ejercicio 2 — [contexto distinto] (Bonus — décimas extra, solo si terminaron el Ejercicio 1)**
+[Enunciado breve, formato revisión rápida]
 Resultado esperado: ...
 
-### 5. Ticket de Salida (8-10 min)
-[Enunciado completo del ticket]
+### 5. Ticket de Salida (5-8 min)
+**Pregunta 1:** [enunciado]
+- 1 dedo: [alternativa]
+- 2 dedos: [alternativa]
+- 3 dedos: [alternativa]
+- 4 dedos: [alternativa]
+**Respuesta correcta:** [1/2/3/4 dedos]
+**Justificación:** [explicación breve, para que Diego la use al revelar la respuesta en vivo]
+
+**Pregunta 2:** [enunciado]
+- 1 dedo: [alternativa]
+- 2 dedos: [alternativa]
+- 3 dedos: [alternativa]
+- 4 dedos: [alternativa]
+**Respuesta correcta:** [1/2/3/4 dedos]
+**Justificación:** [explicación breve]
+
+[Agregar **Pregunta 3** solo si el ICN de esta clase cubre 3+ conceptos, o si dos conceptos son claramente independientes y ambos ameritan verificación separada — ver criterio en CLAUDE.md.]
 
 ### Cierre (5 min)
 **Objetivo de la clase:** [copiar el objetivo aprobado]
@@ -272,10 +309,20 @@ Crea también la carpeta y un `Clase NN - Tema - Historial.md` inicial:
 ```
 
 **Actualiza también `clases/Historial-Curricular.md`:**
-1. Agrega una fila nueva a la tabla "Clases dictadas (orden real)" con: N° real, tema, carpeta, clase Picuino de referencia, estado y fecha.
-2. Recalcula "Próxima clase disponible" (N° real + 1), dejando el tema como "sin definir todavía" salvo que Diego ya haya adelantado cuál sigue.
+1. En la tabla "Clases dictadas y plan curricular completo": si la clase ya existe como fila con estado "Planificada", cambia su estado a "Spec aprobada" y agrega la fecha. Si no existía como fila, agrégala con todos los campos.
+2. Recalcula "Próxima clase disponible" apuntando a la siguiente fila "Planificada" de la tabla.
 
-Confirma a Diego que la spec y el historial curricular quedaron guardados, y dónde. Luego di: *"Antes de continuar al Colab de clase, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando confirme, activa la skill `generar-colab-clase`.
+Commitea y pushea **solo la carpeta de esta clase** a GitHub (ver "Protocolo de cierre de etapa" en el `CLAUDE.md` raíz):
+
+```
+git add "clases/clase-NN-tema-breve/"
+git commit -m "Clase NN - Tema: Spec aprobada"
+git push
+```
+
+Si el push falla, avisa a Diego con el error explícito — no reintentes con `--force`.
+
+Confirma a Diego que la spec y el historial curricular quedaron guardados y subidos a GitHub. Luego di: *"Antes de continuar al Colab de clase, ejecuta `/compact` para limpiar el contexto. Avísame cuando estés listo."* Cuando confirme, activa la skill `generar-colab-clase`.
 
 ## Consultas a skills de referencia
 

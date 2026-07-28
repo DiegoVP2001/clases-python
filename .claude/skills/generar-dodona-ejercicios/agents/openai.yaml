@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generar Dodona"
+  short_description: "Genera carpetas Dodona con TESTed desde propuestas aprobadas."
+  default_prompt: "Genera los ejercicios Dodona aprobados."

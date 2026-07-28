@@ -1,13 +1,13 @@
 ---
 name: referencia-clase-que-sonamos
-description: Diseña planificaciones pedagógicas según el modelo “La Clase que Soñamos” de Enseña Chile, usando planificación a la inversa, protagonismo estudiantil, propósito, demostración de aprendizaje y gestión emocional.
+description: Diseña planificaciones pedagógicas según el modelo "La Clase que Soñamos" de Enseña Chile, usando planificación a la inversa, protagonismo estudiantil, propósito, demostración de aprendizaje y gestión emocional.
 ---
 
 # Skill: Diseño instruccional — La Clase que Soñamos
 
 ## 1. Propósito de la skill
 
-Actúa como un motor de diseño instruccional para generar, revisar o mejorar planificaciones de clase basadas en el modelo **“La Clase que Soñamos”** y en la lógica de **Enseñanza como Liderazgo Colectivo** de Enseña Chile.
+Actúa como un motor de diseño instruccional para generar, revisar o mejorar planificaciones de clase basadas en el modelo **"La Clase que Soñamos"** y en la lógica de **Enseñanza como Liderazgo Colectivo** de Enseña Chile.
 
 La planificación debe concebirse como un ecosistema pedagógico diseñado **retrospectivamente**, es decir, desde la evidencia final de aprendizaje hacia las actividades iniciales. Toda clase debe:
 
@@ -17,7 +17,9 @@ La planificación debe concebirse como un ecosistema pedagógico diseñado **ret
 - levantar **evidencia demostrable de aprendizaje**;
 - usar contextos, ejemplos y problemas conectados con la identidad, intereses, necesidades y realidad sociocultural del curso.
 
-La clase no debe limitarse a “pasar contenido”. Debe diseñar una experiencia donde los estudiantes comprendan **para qué aprenden**, practiquen activamente, demuestren lo aprendido y reflexionen sobre su proceso.
+La clase no debe limitarse a "pasar contenido". Debe diseñar una experiencia donde los estudiantes comprendan **para qué aprenden**, practiquen activamente, demuestren lo aprendido y reflexionen sobre su proceso.
+
+El detalle operativo de cada uno de los 5 pasos de la clase (propósito pedagógico, diseño operativo, formato sugerido y errores a evitar) vive en `references/estructura-5-pasos.md`. Las plantillas de salida extensas (planificación completa y revisión de clase existente) viven en `references/plantillas-salida.md`. Este SKILL.md actúa como resumen navegable de los principios, la lógica de diseño y los criterios de calidad — abre las referencias solo cuando necesites el detalle operativo de un paso o el formato de salida completo.
 
 ---
 
@@ -30,14 +32,14 @@ Usa esta skill cuando el usuario pida:
 - transformar una idea de clase en una secuencia pedagógica;
 - construir una clase con estructura de Enseña Chile;
 - planificar usando **Haz Ahora, ICN, Práctica Guiada, Práctica Independiente, Ticket de Salida y Cierre**;
-- revisar si una clase está alineada con “La Clase que Soñamos”;
+- revisar si una clase está alineada con "La Clase que Soñamos";
 - crear materiales instruccionales para estudiantes, guías, tickets, actividades o secuencias;
 - convertir un contenido curricular en una experiencia de aprendizaje con propósito, protagonismo, demostración y emoción;
 - ajustar una planificación para que sea más contextualizada, activa, inclusiva y evaluable.
 
 También debe usarse cuando el usuario mencione explícitamente alguno de estos marcos o conceptos:
 
-- “La Clase que Soñamos”;
+- "La Clase que Soñamos";
 - Enseña Chile;
 - Enseñanza como Liderazgo Colectivo;
 - planificación a la inversa;
@@ -116,9 +118,9 @@ Hoy aprenderemos esto porque nos permite...
 
 Evita propósitos genéricos como:
 
-- “porque entra en la prueba”;
-- “porque es parte del currículum”;
-- “porque es importante saberlo”.
+- "porque entra en la prueba";
+- "porque es parte del currículum";
+- "porque es importante saberlo".
 
 Estos pueden mencionarse como contexto, pero no deben ser el sentido principal de la clase.
 
@@ -199,10 +201,10 @@ Cada clase debe incluir al menos un **chequeo emocional** o una pregunta de cier
 
 Ejemplos:
 
-- “¿Con qué emoción te vas de esta clase?”
-- “¿Qué parte te generó más seguridad?”
-- “¿Qué parte te desafió más?”
-- “¿Qué error te ayudó a entender mejor?”
+- "¿Con qué emoción te vas de esta clase?"
+- "¿Qué parte te generó más seguridad?"
+- "¿Qué parte te desafió más?"
+- "¿Qué error te ayudó a entender mejor?"
 
 ---
 
@@ -285,374 +287,19 @@ Si una actividad no prepara para el Ticket de Salida, debe eliminarse, ajustarse
 
 ---
 
-## 7. Estructura esperada de clase
+## 7. Cómo profundizar en un paso específico de la clase
 
-La planificación debe organizarse en la siguiente estructura pedagógica.
+La planificación se organiza en 5 pasos (más el diseño inverso previo). Usa esta tabla para decidir si necesitas abrir `references/estructura-5-pasos.md` — ahí cada paso tiene su propósito pedagógico, diseño operativo, formato sugerido para redactarlo y errores frecuentes.
 
-> Nota: aunque el Ticket de Salida aparece hacia el final en la ejecución, debe diseñarse primero.
-
----
-
-### 7.1 Diseño inverso previo
-
-Antes de la secuencia de clase, presenta:
-
-```markdown
-## Diseño inverso de la clase
-
-**Objetivo de clase:**  
-...
-
-**Propósito para estudiantes:**  
-...
-
-**Ticket de Salida:**  
-...
-
-**Criterios de éxito del Ticket de Salida:**  
-1. ...
-2. ...
-3. ...
-
-**Respuesta ejemplar esperada:**  
-...
-
-**Habilidades necesarias para resolver el Ticket:**  
-- ...
-- ...
-- ...
-```
-
----
-
-### 7.2 Paso 1: Inicio y Haz Ahora
-
-#### Propósito pedagógico
-
-Capturar la atención inmediata, activar conocimientos previos y establecer el propósito transversal de la clase conectándolo con la vida y el contexto de los estudiantes.
-
-#### Diseño operativo
-
-El Haz Ahora debe:
-
-- ser breve;
-- ser resoluble al entrar al aula;
-- activar ideas previas;
-- conectar con una situación concreta;
-- poder realizarse sin una explicación larga del docente;
-- permitir levantar información inicial del curso;
-- preparar cognitivamente para el objetivo.
-
-Puede usar:
-
-- meme;
-- noticia local;
-- imagen;
-- dilema;
-- encuesta rápida;
-- problema cotidiano;
-- mini caso;
-- pregunta provocadora;
-- error común;
-- comparación entre dos opciones;
-- ejemplo cercano a la cultura del grupo.
-
-Debe incluir:
-
-- consigna para estudiantes;
-- 1 o 2 preguntas simples;
-- respuesta o ideas esperadas;
-- transición hacia el objetivo y propósito.
-
-#### Formato sugerido
-
-```markdown
-### 1. Inicio y Haz Ahora
-
-**Tiempo estimado:** ... minutos
-
-**Consigna para estudiantes:**  
-...
-
-**Preguntas del Haz Ahora:**  
-1. ...
-2. ...
-
-**Respuesta o ideas esperadas:**  
-...
-
-**Conexión con el objetivo:**  
-...
-
-**Propósito en lenguaje estudiante:**  
-...
-```
-
-#### Errores a evitar
-
-- iniciar con exposición larga;
-- partir copiando el objetivo sin sentido;
-- usar una actividad entretenida pero desconectada del aprendizaje;
-- hacer preguntas demasiado amplias o vagas;
-- usar contextos genéricos que no resuenan con el curso.
-
----
-
-### 7.3 Paso 2: Introducción al Contenido Nuevo (ICN)
-
-#### Propósito pedagógico
-
-Entregar los fundamentos, conceptos o herramientas necesarias para que los estudiantes puedan iniciar la práctica.
-
-La ICN debe ser concisa, clara y multimodal.
-
-#### Diseño operativo
-
-La ICN debe:
-
-- limitarse a un máximo de **3 conceptos clave**;
-- priorizar lo imprescindible para resolver el Ticket de Salida;
-- usar explicaciones breves;
-- incluir ejemplos visuales, analógicos o digitales;
-- representar la información de más de una forma cuando corresponda;
-- evitar sobrecarga cognitiva;
-- conectar cada concepto con la práctica posterior.
-
-#### Formato sugerido
-
-```markdown
-### 2. Introducción al Contenido Nuevo (ICN)
-
-**Tiempo estimado:** ... minutos
-
-**Concepto clave 1:** ...  
-Explicación breve: ...  
-Ejemplo o apoyo visual: ...
-
-**Concepto clave 2:** ...  
-Explicación breve: ...  
-Ejemplo o apoyo visual: ...
-
-**Concepto clave 3:** ...  
-Explicación breve: ...  
-Ejemplo o apoyo visual: ...
-
-**Chequeo rápido de comprensión:**  
-...
-```
-
-#### Errores a evitar
-
-- incluir más de 3 conceptos centrales;
-- transformar la ICN en una clase magistral;
-- explicar procedimientos sin mostrar ejemplos;
-- usar lenguaje excesivamente técnico sin mediación;
-- enseñar contenidos que no serán usados en la práctica o Ticket de Salida.
-
----
-
-### 7.4 Paso 3: Práctica Guiada (PG)
-
-#### Propósito pedagógico
-
-Proveer andamiaje y modelar el paso a paso de cómo pensar y ejecutar la tarea que luego se exigirá en la Práctica Independiente y en el Ticket de Salida.
-
-La Práctica Guiada debe mostrar no solo qué hacer, sino **cómo pensar**.
-
-#### Diseño operativo
-
-La PG debe:
-
-- tener instrucciones claras en máximo **5 pasos**;
-- usar un ejemplo contextualizado;
-- aplicar técnica de **modelar el pensamiento** o *Think Aloud*;
-- verbalizar decisiones, dudas, criterios y estrategias;
-- incluir participación activa del curso;
-- seguir un ciclo de **Practicar → Revisar → Practicar**;
-- preparar directamente para el Ticket de Salida.
-
-#### Formato sugerido
-
-```markdown
-### 3. Práctica Guiada
-
-**Tiempo estimado:** ... minutos
-
-**Desafío guiado:**  
-...
-
-**Pasos del modelo docente:**  
-1. ...
-2. ...
-3. ...
-4. ...
-5. ...
-
-**Modelamiento del pensamiento docente:**  
-- “Primero observo... porque...”
-- “Decido... porque el criterio dice...”
-- “Si me equivoco en..., puedo corregirlo revisando...”
-
-**Participación del curso:**  
-...
-
-**Respuesta esperada o solución guiada:**  
-...
-
-**Cómo prepara para el Ticket de Salida:**  
-...
-```
-
-#### Errores a evitar
-
-- modelar solo la mecánica sin explicar el razonamiento;
-- resolver todo sin participación del estudiante;
-- usar ejemplos abstractos o desconectados;
-- hacer una práctica guiada que no se parece al Ticket de Salida;
-- saltarse los criterios de éxito.
-
----
-
-### 7.5 Paso 4: Práctica Independiente (PI)
-
-#### Propósito pedagógico
-
-Consolidar el protagonismo estudiantil mediante un desafío cognitivo autónomo.
-
-Es el momento en que los estudiantes aplican lo modelado, prueban estrategias, cometen errores, corrigen y se preparan para el Ticket de Salida.
-
-#### Diseño operativo
-
-La PI debe:
-
-- concentrar una parte importante del tiempo de clase;
-- tener instrucciones observables y secuenciadas;
-- incluir límites de tiempo explícitos;
-- proponer una tarea con rigor cognitivo;
-- conectarse con un contexto pertinente;
-- permitir trabajo individual o colaborativo con roles claros;
-- entregar criterios de éxito visibles;
-- permitir que el docente monitoree evidencia durante la ejecución.
-
-#### Formato sugerido
-
-```markdown
-### 4. Práctica Independiente
-
-**Tiempo estimado:** ... minutos
-
-**Consigna para estudiantes:**  
-...
-
-**Producto esperado:**  
-...
-
-**Instrucciones:**  
-1. ...
-2. ...
-3. ...
-
-**Criterios de éxito:**  
-- ...
-- ...
-- ...
-
-**Modalidad de trabajo:**  
-Individual / parejas / grupos con roles.
-
-**Rol del docente durante la práctica:**  
-- Monitorear...
-- Hacer preguntas...
-- Retroalimentar...
-- Registrar evidencias...
-
-**Errores esperables y apoyos:**  
-| Error esperable | Pregunta o apoyo docente |
+| Estás diseñando o revisando… | Sección de `references/estructura-5-pasos.md` |
 |---|---|
-| ... | ... |
-```
+| Activación, conexión con el contexto, pregunta de entrada | § Paso 1: Inicio y Haz Ahora |
+| Conceptos clave, explicación breve, chequeo de comprensión | § Paso 2: Introducción al Contenido Nuevo (ICN) |
+| Modelamiento, Think Aloud, ejemplo paso a paso | § Paso 3: Práctica Guiada (PG) |
+| Desafío autónomo, criterios de éxito, errores esperables | § Paso 4: Práctica Independiente (PI) |
+| Ticket de Salida, cierre, metacognición, chequeo emocional | § Paso 5: Ticket de Salida, Cierre y Metacognición |
 
-#### Errores a evitar
-
-- interrumpir constantemente al grupo completo;
-- convertir la práctica independiente en otra explicación docente;
-- entregar tareas de bajo rigor;
-- no definir producto observable;
-- no dar tiempo suficiente;
-- no anticipar errores comunes;
-- no conectar la actividad con el Ticket de Salida.
-
----
-
-### 7.6 Paso 5: Ticket de Salida, Cierre y Metacognición
-
-#### Propósito pedagógico
-
-Verificar el logro del objetivo, hacer consciente el proceso de aprendizaje y consolidar el vínculo entre aprendizaje, estrategia y emoción.
-
-Este paso debe incluir:
-
-1. ejecución autónoma del Ticket de Salida;
-2. revisión breve con criterios de éxito;
-3. metacognición;
-4. chequeo emocional;
-5. decisión docente para la próxima clase.
-
-#### Diseño operativo
-
-El cierre no debe ser solo un resumen del profesor. Debe permitir que el estudiante reconozca:
-
-- qué aprendió;
-- cómo lo aprendió;
-- qué estrategia utilizó;
-- qué error le ayudó;
-- qué fue fácil o difícil;
-- dónde podría usar esto nuevamente;
-- con qué emoción termina la clase.
-
-#### Formato sugerido
-
-```markdown
-### 5. Ticket de Salida, Cierre y Metacognición
-
-**Tiempo estimado:** ... minutos
-
-**Ticket de Salida para estudiantes:**  
-...
-
-**Criterios de éxito:**  
-1. ...
-2. ...
-3. ...
-
-**Respuesta ejemplar esperada:**  
-...
-
-**Autoevaluación rápida:**  
-Marca tu nivel:
-- Lo logré.
-- Estoy cerca.
-- Necesito apoyo.
-
-**Pregunta metacognitiva:**  
-...
-
-**Chequeo emocional:**  
-...
-
-**Uso docente de la evidencia:**  
-Si la mayoría logra..., la próxima clase...
-Si aparecen errores en..., la próxima clase...
-```
-
-#### Errores a evitar
-
-- cerrar solo con un resumen docente;
-- no aplicar el Ticket de Salida;
-- usar un Ticket que no evalúa el objetivo;
-- no incluir respuesta ejemplar;
-- omitir la reflexión del estudiante;
-- no usar la evidencia para decidir próximos pasos.
+Para entregar el documento final completo (planificación nueva o revisión de una existente), usa las plantillas de `references/plantillas-salida.md`.
 
 ---
 
@@ -747,231 +394,7 @@ Verifica:
 
 ---
 
-## 9. Formato de salida esperado
-
-Cuando diseñes una planificación completa, usa este formato.
-
-```markdown
-# Planificación de clase — [Asignatura / Unidad]
-
-## Datos generales
-
-| Elemento | Detalle |
-|---|---|
-| Curso | ... |
-| Duración | ... |
-| Asignatura | ... |
-| Unidad o tema | ... |
-| Objetivo de aprendizaje / habilidad | ... |
-| Recursos | ... |
-| Perfil o contexto del curso | ... |
-
-## Supuestos usados
-
-- ...
-
-## Diseño inverso de la clase
-
-**Objetivo de clase:**  
-...
-
-**Propósito para estudiantes:**  
-...
-
-**Ticket de Salida:**  
-...
-
-**Criterios de éxito del Ticket de Salida:**  
-1. ...
-2. ...
-3. ...
-
-**Respuesta ejemplar esperada:**  
-...
-
-**Habilidades necesarias para resolver el Ticket:**  
-- ...
-- ...
-- ...
-
----
-
-## Secuencia de clase
-
-### 1. Inicio y Haz Ahora
-
-**Tiempo:** ... minutos  
-**Propósito pedagógico:** ...  
-**Consigna para estudiantes:** ...  
-**Preguntas:**  
-1. ...
-2. ...
-
-**Respuesta o ideas esperadas:** ...  
-**Transición hacia el objetivo:** ...
-
----
-
-### 2. Introducción al Contenido Nuevo (ICN)
-
-**Tiempo:** ... minutos  
-**Conceptos clave:**  
-1. ...
-2. ...
-3. ...
-
-**Explicación docente breve:** ...  
-**Apoyo visual / analógico / digital:** ...  
-**Chequeo rápido de comprensión:** ...
-
----
-
-### 3. Práctica Guiada
-
-**Tiempo:** ... minutos  
-**Desafío guiado:** ...  
-**Pasos modelados:**  
-1. ...
-2. ...
-3. ...
-4. ...
-5. ...
-
-**Modelamiento del pensamiento docente:** ...  
-**Participación del curso:** ...  
-**Respuesta esperada:** ...  
-**Conexión con el Ticket de Salida:** ...
-
----
-
-### 4. Práctica Independiente
-
-**Tiempo:** ... minutos  
-**Consigna para estudiantes:** ...  
-**Producto esperado:** ...  
-**Modalidad:** ...  
-**Instrucciones:**  
-1. ...
-2. ...
-3. ...
-
-**Criterios de éxito visibles:**  
-- ...
-- ...
-- ...
-
-**Errores esperables y apoyos docentes:**  
-
-| Error esperable | Pregunta o apoyo docente |
-|---|---|
-| ... | ... |
-
----
-
-### 5. Ticket de Salida, Cierre y Metacognición
-
-**Tiempo:** ... minutos  
-
-**Ticket de Salida:**  
-...
-
-**Criterios de éxito:**  
-1. ...
-2. ...
-3. ...
-
-**Respuesta ejemplar:**  
-...
-
-**Autoevaluación:**  
-- Lo logré.
-- Estoy cerca.
-- Necesito apoyo.
-
-**Pregunta metacognitiva:**  
-...
-
-**Chequeo emocional:**  
-...
-
-**Uso docente de la evidencia:**  
-...
-
----
-
-## Verificación de calidad
-
-| Criterio | Cumple | Observación |
-|---|---:|---|
-| Objetivo y Ticket de Salida están alineados | Sí/No | ... |
-| La clase fue diseñada a la inversa | Sí/No | ... |
-| PG y PI preparan para el Ticket | Sí/No | ... |
-| Más del 50% del tiempo es práctica estudiantil | Sí/No | ... |
-| Hay propósito claro para estudiantes | Sí/No | ... |
-| Hay contextualización sociocultural | Sí/No | ... |
-| Hay respuesta ejemplar del Ticket | Sí/No | ... |
-| Hay metacognición y chequeo emocional | Sí/No | ... |
-| Hay criterios de éxito claros | Sí/No | ... |
-| Se evita sobrecarga cognitiva | Sí/No | ... |
-
-## Próximos pasos sugeridos
-
-- ...
-```
-
----
-
-## 10. Formato de salida para revisión de una clase existente
-
-Si el usuario entrega una clase ya diseñada y pide revisión, usa este formato.
-
-```markdown
-# Revisión de planificación — La Clase que Soñamos
-
-## Diagnóstico ejecutivo
-
-...
-
-## Fortalezas
-
-1. ...
-2. ...
-3. ...
-
-## Riesgos pedagógicos detectados
-
-| Riesgo | Por qué afecta la clase | Ajuste recomendado |
-|---|---|---|
-| ... | ... | ... |
-
-## Revisión por dimensión
-
-| Dimensión | Evaluación | Evidencia | Mejora sugerida |
-|---|---|---|---|
-| Propósito | ... | ... | ... |
-| Protagonistas | ... | ... | ... |
-| Demuestran | ... | ... | ... |
-| Emociones | ... | ... | ... |
-
-## Revisión de alineación a la inversa
-
-**Objetivo:** ...  
-**Ticket de Salida:** ...  
-**Nivel de alineación:** Alto / Medio / Bajo  
-**Ajuste necesario:** ...
-
-## Versión mejorada de la clase
-
-[Entregar planificación corregida o ajustes puntuales, según lo solicitado.]
-
-## Verificación final
-
-- ...
-```
-
----
-
-## 11. Estilo lingüístico y tono
+## 9. Estilo lingüístico y tono
 
 Todos los materiales dirigidos a estudiantes deben usar un tono:
 
@@ -985,25 +408,25 @@ Todos los materiales dirigidos a estudiantes deben usar un tono:
 
 Prefiere formulaciones como:
 
-- “Observemos juntos...”
-- “Probemos una estrategia...”
-- “El error nos da información para mejorar...”
-- “Te invito a justificar tu decisión...”
-- “Compara tu respuesta con los criterios...”
+- "Observemos juntos..."
+- "Probemos una estrategia..."
+- "El error nos da información para mejorar..."
+- "Te invito a justificar tu decisión..."
+- "Compara tu respuesta con los criterios..."
 
 Evita formulaciones como:
 
-- “Esto es fácil, no deberían equivocarse.”
-- “El que no termina, pierde.”
-- “Copien rápido.”
-- “Solo memoricen esto.”
-- “Si no saben esto, están mal.”
+- "Esto es fácil, no deberían equivocarse."
+- "El que no termina, pierde."
+- "Copien rápido."
+- "Solo memoricen esto."
+- "Si no saben esto, están mal."
 
 ---
 
-## 12. Restricciones y errores que el agente debe evitar
+## 10. Restricciones y errores que el agente debe evitar
 
-### 12.1 Errores de diseño instruccional
+### 10.1 Errores de diseño instruccional
 
 No debes:
 
@@ -1023,7 +446,7 @@ No debes:
 - usar ejemplos genéricos si hay contexto disponible;
 - plantear tareas desconectadas de la realidad del curso.
 
-### 12.2 Errores de tono
+### 10.2 Errores de tono
 
 No debes:
 
@@ -1035,7 +458,7 @@ No debes:
 - escribir instrucciones con exceso de jerga técnica;
 - usar un tono excesivamente frío en materiales para estudiantes.
 
-### 12.3 Errores de evaluación
+### 10.3 Errores de evaluación
 
 No debes:
 
@@ -1045,7 +468,7 @@ No debes:
 - no declarar qué evidencia observará el docente;
 - no indicar cómo se usará la evidencia para la próxima clase.
 
-### 12.4 Errores de contextualización
+### 10.4 Errores de contextualización
 
 No debes:
 
@@ -1057,7 +480,7 @@ No debes:
 
 ---
 
-## 13. Reglas de calidad para tiempos
+## 11. Reglas de calidad para tiempos
 
 Cuando el usuario entregue duración, distribuye el tiempo con criterio realista.
 
@@ -1080,7 +503,7 @@ La distribución puede ajustarse según contenido, nivel, curso y propósito, pe
 
 ---
 
-## 14. Reglas de respuesta ante solicitudes ambiguas
+## 12. Reglas de respuesta ante solicitudes ambiguas
 
 Si la solicitud es ambigua:
 
@@ -1103,7 +526,7 @@ Si quieres que avance con supuestos, puedo asumir una clase de 80 minutos para 2
 
 ---
 
-## 15. Verificación interna obligatoria antes de responder
+## 13. Verificación interna obligatoria antes de responder
 
 Antes de entregar cualquier planificación, revisa internamente:
 
@@ -1127,7 +550,7 @@ Si una respuesta no cumple estos criterios, debes corregirla antes de entregarla
 
 ---
 
-## 16. Prioridad pedagógica final
+## 14. Prioridad pedagógica final
 
 Cuando debas decidir entre una clase más extensa y una clase más efectiva, prioriza:
 
