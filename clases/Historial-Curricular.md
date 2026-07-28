@@ -25,7 +25,7 @@
 | **16** | **for + range()** | `clase-16-for-range` | N°13, N°14 — Sentencia for + range() | Spec aprobada (Colab+PPT+Reel ya generados; falta Ejercicios.ipynb) — programada para dictarse | **2026-08-04** | OA1, OA3 |
 | **18** | **Reforzamiento — repaso Clase 17 + nueva guía rápida** | `clase-18-reforzamiento-condicionales` | N/A — clase de consolidación (repaso previo a la evaluación) | ✅ Completa | **2026-07-20** | OA1, OA3 \| OAd |
 | **19** | **🎯 Evaluación individual — Condicionales** (if/else, if anidadas, elif) | `clase-19-evaluacion-condicionales` | N/A — evaluación sumativa individual | Spec + Evaluación + Solucionario generados — se rinde hoy | **2026-07-28** | OA1, OA3 \| OAd |
-| **20** | **continue, break, for anidado** | `clase-20-for-avanzado` | N°15, N°16, N°17 — Sentencia continue + break + for anidadas | Planificada | **2026-08-06** | OA1, OA3 |
+| **20** | **For anidado** | `clase-20-for-avanzado` | N°17 — Sentencias for anidadas | Spec aprobada | **2026-08-06** | OA1, OA3 |
 | **21** | **Ayudantía — Ejercitación Ciclos** (for+range, continue/break/for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Planificada (sin propuesta aún) | **2026-08-10** | OA1, OA3 |
 | **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Planificada | sep 2026 | OA1, OA3 |
 | **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | sep 2026 | OA1, OA3 |
@@ -53,7 +53,7 @@
 | Jueves | 2026-07-30 | Sin clases |
 | Lunes | 2026-08-03 | Revisión de la prueba N°19 — parte 1: errores más frecuentes; parte 2: guía dirigida a esos errores. Sin spec ni N° real aún |
 | Martes | 2026-08-04 | N° 16 — for + range() |
-| Jueves | 2026-08-06 | N° 20 — continue, break, for anidado (contenido nuevo — sin spec aún) |
+| Jueves | 2026-08-06 | N° 20 — For anidado (contenido nuevo — spec aprobada 2026-07-28) |
 | Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza el `Ejercicios.ipynb` propio de Clase 16, que no se generará) |
 
 > Nota de orden: N° 17 se dicta antes que N° 16 en el calendario real (la ejercitación de condicionales estaba lista y hacía falta consolidar antes de introducir loops), aunque el spec de C16 se aprobó primero. La numeración N° real no se altera — identifica el artefacto, no necesariamente el orden estricto de dictado.
@@ -63,6 +63,8 @@
 > **Actualización de calendario 2026-07-28:** el calendario planificado el 2026-07-13 (N°16 y N°18 el lunes 20/07, N°19 el martes 21/07) se corrió una semana completa. N°17 y N°18 sí se dictaron según lo previsto (todos los contenidos hasta N°18 ya están revisados), pero N°19 se rindió recién hoy 2026-07-28 y N°16 pasó al martes 2026-08-04. El lunes 2026-08-03, entremedio, se usa para revisar la prueba N°19 (aún sin spec ni N° real formal — se asignará cuando `disenar-clase` guarde su spec aprobada). El jueves 2026-08-06 retoma la progresión Picuino con N°20: se eligió contenido nuevo y no práctica porque los lunes quedaron como el día reservado para ejercitación de lo visto en las clases recientes.
 
 > Ritmo semanal acordado el 2026-07-28: **lunes = ejercitación/práctica de lo visto en las clases recientes; jueves = contenido nuevo.** Aplica desde la semana del 2026-08-03 en adelante, salvo indicación contraria de Diego.
+
+> **Pendiente anotado 2026-07-28 — continue y break sin clase asignada:** al diseñar la Clase N°20, Diego decidió enfocarla 100% en for anidado (Picuino N°17), dejando continue y break (Picuino N°15-16) fuera de su alcance. Falta agendar una clase futura para continue+break — sin fecha ni N° real todavía, explícitamente no urgente (no se renumera nada por esto). Esto deja además una inconsistencia menor a resolver más adelante: la Ayudantía N°21 (2026-08-10) dice hoy "for+range, continue/break, for anidado" como clases foco, pero continue/break aún no se habrán enseñado en esa fecha — revisar el alcance de esa ayudantía cuando se agende la clase pendiente de continue+break.
 
 > **Renumeración 2026-07-28 (ayudantías pasan a numerarse como clases):** de ahora en adelante las ayudantías se integran a `clases/` con numeración real — ya no viven en `ayudantias/`. Se insertó **N°21 — Ayudantía Ejercitación Ciclos** (dúos, 2026-08-10, clases foco 16 y 20), corriendo +1 todo lo que venía después: while (N°22), Evaluación de Ciclos (N°22.5), funciones (N°23), strings (N°24–25), listas (N°26–27), integración (N°28), Evaluación Funciones+Strings+Listas (N°28.5), proyectos (N°29–34). Ver también "Organización de archivos" del `CLAUDE.md` del proyecto para la nueva convención de carpeta/nombrado de ayudantías.
 
