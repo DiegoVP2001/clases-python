@@ -30,6 +30,9 @@ Propósito: activar la intuición de "repetir un patrón, y dentro de cada repet
 
 Actividad: Una sala de cine tiene 4 filas de butacas, y cada fila tiene 5 asientos. En una celda markdown, respondiendo en un par de palabras, se les pide que describan cómo numerarían todos los asientos de la sala, butaca por butaca, sin saltarse ninguno — describiendo el "para cada fila... y dentro de cada fila...".
 
+**Respuestas esperadas:**
+1. Para cada fila (de la 1 a la 4), recorrer todos sus asientos (del 1 al 5) y numerarlos uno por uno, completando la fila entera antes de pasar a la siguiente.
+
 ### 2. Introducción al Contenido Nuevo (18 min)
 
 Contexto de ejemplos: sala de cine (butacas en filas y columnas) — mismo contexto del Haz Ahora, para que el "aha" sea inmediato.
@@ -121,14 +124,48 @@ bloques_por_dia = 3
   Día 4 - Bloque 1  Día 4 - Bloque 2  Día 4 - Bloque 3
   ```
 
+- Solución:
+  ```python
+  dias_con_talleres = 4
+  bloques_por_dia = 3
+
+  for dia in range(1, dias_con_talleres + 1):
+      for bloque in range(1, bloques_por_dia + 1):
+          print("Día", dia, "- Bloque", bloque, end="  ")
+      print()
+  ```
+
 ### 4. Práctica Independiente (16 min)
 **Ejercicio 1 — Torneo de tenis de mesa (obligatorio)**
 Un campeonato de tenis de mesa entre cursos tiene 5 rondas, y en cada ronda se juegan tantos partidos como el número de la ronda (ronda 1 tiene 1 partido, ronda 2 tiene 2 partidos, y así). El programa debe mostrar cada partido de cada ronda, identificando el número de ronda y el número de partido dentro de esa ronda.
 Resultado esperado: una tabla creciente, donde la ronda 1 muestra 1 línea, la ronda 2 muestra 2 líneas, hasta la ronda 5 con 5 líneas.
 
+- Solución:
+  ```python
+  cantidad_rondas = 5
+
+  for ronda in range(1, cantidad_rondas + 1):
+      for partido in range(1, ronda + 1):
+          print("Ronda", ronda, "- Partido", partido)
+  ```
+
 **Ejercicio 2 — Diseño de un tablero de ajedrez (Bonus — décimas extra)**
 Un tablero de ajedrez tiene 8 filas y 8 columnas, alternando casillas claras y oscuras. El programa debe recorrer todas las casillas del tablero, fila por fila, mostrando en pantalla si cada casilla es clara u oscura según su posición.
 Resultado esperado: 8 líneas, cada una mostrando el patrón alternado de 8 casillas de esa fila.
+
+- Solución:
+  ```python
+  filas_tablero = 8
+  columnas_tablero = 8
+
+  for fila in range(1, filas_tablero + 1):
+      for columna in range(1, columnas_tablero + 1):
+          if (fila + columna) % 2 == 0:
+              print("Clara", end=" ")
+          else:
+              print("Oscura", end=" ")
+      print()
+  ```
 
 ### 5. Ticket de Salida (6 min)
 **Pregunta 1:** ¿Qué pasa con el ciclo interno cada vez que el ciclo externo avanza una vuelta?
