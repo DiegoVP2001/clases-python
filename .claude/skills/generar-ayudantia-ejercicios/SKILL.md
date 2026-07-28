@@ -28,7 +28,7 @@ python .claude/skills/generar-ayudantia-ejercicios/scripts/generar_ayudantia.py 
   [--force]
 ```
 
-El script deriva el nombre de la carpeta y de los archivos de salida a partir de los campos `class_number` y `class_topic` del JSON (ver schema abajo) — no hace falta pasarlos por separado.
+El script deriva el nombre de la carpeta a partir de `class_number` + `set_slug`, y el prefijo de los archivos a partir de `class_number` + `class_topic` (ver schema abajo) — no hace falta pasarlos por separado. Usa el mismo `set_slug` que ya haya quedado en la carpeta pre-creada (ej. `ciclos` en `clase-21-ayudantia-ciclos`), no un slug distinto derivado del tema.
 
 ## Salida
 
@@ -96,7 +96,7 @@ Los campos requeridos por el generador:
 }
 ```
 
-`class_number` y `class_topic` determinan la carpeta (`clase-{class_number}-ayudantia-<slug-del-tema>`) y el prefijo de los archivos (`Clase {class_number} - Ayudantía {class_topic} - ...`). Los ejercicios de la serie con `difficulty: trivial` se omiten de ambos notebooks; el ejercicio guiado nunca se omite.
+`class_number` + `set_slug` determinan la carpeta (`clase-{class_number}-ayudantia-{set_slug}`); `class_number` + `class_topic` determinan el prefijo de los archivos (`Clase {class_number} - Ayudantía {class_topic} - ...`). Los ejercicios de la serie con `difficulty: trivial` se omiten de ambos notebooks; el ejercicio guiado nunca se omite.
 
 ## Después de generar
 
