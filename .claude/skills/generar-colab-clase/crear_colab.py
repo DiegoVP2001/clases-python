@@ -444,15 +444,17 @@ def parsear_cierre_estructurado(texto: str) -> dict:
     Usa (?=\\n\\*\\*|\\Z) para no cortar en bold (**texto**) dentro de una línea."""
     cierre = {"objetivo": None, "pregunta_meta": None, "pregunta_actitud": None}
 
-    m_obj = re.search(r"\*\*Objetivo de la clase[^*]*\*\*\s*\n(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
+    # \s* (no \s*\n) para aceptar tanto "**Header**\ntexto" como "**Header:** texto" inline —
+    # este segundo formato es el que usa el template vigente de disenar-clase (Paso 5).
+    m_obj = re.search(r"\*\*Objetivo de la clase[^*]*\*\*\s*(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
     if m_obj:
         cierre["objetivo"] = m_obj.group(1).strip()
 
-    m_p1 = re.search(r"\*\*Pregunta 1[^*]*\*\*\s*\n(.+?)(?=\n\*\*Pregunta 2|\Z)", texto, re.DOTALL)
+    m_p1 = re.search(r"\*\*Pregunta 1[^*]*\*\*\s*(.+?)(?=\n\*\*Pregunta 2|\Z)", texto, re.DOTALL)
     if m_p1:
         cierre["pregunta_meta"] = m_p1.group(1).strip()
 
-    m_p2 = re.search(r"\*\*Pregunta 2[^*]*\*\*\s*\n(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
+    m_p2 = re.search(r"\*\*Pregunta 2[^*]*\*\*\s*(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
     if m_p2:
         cierre["pregunta_actitud"] = m_p2.group(1).strip()
 
