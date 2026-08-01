@@ -18,3 +18,11 @@ __pycache__/
 # además la carpeta descomprimida excede el límite de ruta de Windows)
 clases/clase-17-ejercitacion-condicionales/Clase 15 - Ejercitación Evaluación-20260728T152624Z-1-001/
 clases/clase-17-ejercitacion-condicionales/Clase 15 - Ejercitación Evaluación-20260728T152624Z-1-001.zip
+
+# Carpetas de revisión de evaluaciones (privacidad — el repo es público).
+# Contienen código, puntajes y notas de estudiantes reales: notebooks de entrega,
+# codigo_extraido_*.json, puntajes_*.json, los Colabs de devolución y las décimas.
+# Regla del CLAUDE.md: nada de revision/ se sube sin autorización explícita de Diego.
+clases/**/revision/
+clases/**/Evaluación2-Estudiantes/
+clases/**/Evaluación 2 - Estudiantes.zip
