@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tres formas de combinar condiciones</title>
+<style>
+  :root{
+    --bg:#11101c;
+    --card:#1b1a2e;
+    --ink:#f4f2ff;
+    --dim:#a29ec4;
+    --py-blue:#4b8bbe;
+    --py-yellow:#ffd43b;
+    --water:#3fa9f5;
+    --open:#7ee787;
+    --shut:#ff6b6b;
+    --edge:#39355c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Consolas","DejaVu Sans Mono",monospace;
+    line-height:1.5;
+    padding:28px 18px 60px;
+    background-image:
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:16px 16px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* ---------- header ---------- */
+  header{
+    display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+    border:4px solid var(--edge);
+    background:var(--card);
+    padding:20px 22px;
+    box-shadow:8px 8px 0 rgba(0,0,0,.45);
+    margin-bottom:34px;
+  }
+  header canvas{flex:none}
+  .titles{flex:1 1 320px}
+  h1{
+    font-size:clamp(20px,3.4vw,34px);
+    letter-spacing:1px;
+    text-transform:uppercase;
+    text-shadow:3px 3px 0 #000;
+  }
+  h1 em{color:var(--py-yellow);font-style:normal}
+  .sub{color:var(--dim);font-size:clamp(13px,1.7vw,16px);margin-top:8px}
+
+  /* ---------- cards ---------- */
+  .card{
+    border:4px solid var(--edge);
+    background:var(--card);
+    box-shadow:8px 8px 0 rgba(0,0,0,.45);
+    margin-bottom:30px;
+  }
+  .card-top{
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding:14px 20px;
+    border-bottom:4px solid var(--edge);
+    background:#232144;
+  }
+  .num{
+    background:var(--py-yellow);color:#11101c;
+    font-weight:bold;padding:2px 10px;font-size:18px;
+  }
+  .card-top h2{font-size:clamp(16px,2.2vw,22px);text-transform:uppercase;letter-spacing:1px}
+  .form{color:var(--py-blue);font-size:clamp(13px,1.8vw,17px);margin-left:auto}
+  .body{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:820px){.body{grid-template-columns:1fr}}
+
+  canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+  canvas.river{
+    display:block;margin:0 auto;
+    border:3px solid var(--edge);background:#0c0b16;
+  }
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--dim)}
+  .legend b{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px}
+  .idea{font-size:clamp(14px,1.9vw,17px);margin-bottom:14px}
+  .idea strong{color:var(--py-yellow)}
+  pre{
+    background:#0c0b16;border:3px solid var(--edge);
+    padding:14px;overflow-x:auto;font-size:clamp(12px,1.6vw,15px);
+    line-height:1.65;
+  }
+  .kw{color:#ff7edb}.str{color:#7ee787}.fn{color:var(--py-blue)}.num-t{color:var(--py-yellow)}.cm{color:#6f6a92}
+  .warn{
+    margin-top:14px;border-left:6px solid var(--shut);
+    background:rgba(255,107,107,.09);
+    padding:10px 14px;font-size:clamp(12px,1.6vw,15px);
+  }
+  .warn b{color:var(--shut)}
+
+  /* ---------- side-by-side contrast ---------- */
+  .contrast{
+    grid-column:1 / -1;
+    border-top:4px solid var(--edge);
+    margin-top:6px;padding-top:20px;
+  }
+  .contrast h4{
+    font-size:clamp(14px,1.9vw,18px);text-transform:uppercase;
+    letter-spacing:1px;margin-bottom:16px;
+  }
+  .contrast h4 em{color:var(--py-yellow);font-style:normal}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media (max-width:820px){.duo{grid-template-columns:1fr}}
+  .pane .tag{
+    display:inline-block;margin-bottom:10px;padding:4px 10px;
+    font-size:clamp(12px,1.6vw,15px);border:3px solid var(--edge);
+  }
+  .pane .tag.ok{color:var(--open)}
+  .pane .tag.bad{color:var(--shut)}
+  .pane p{margin-top:10px;font-size:clamp(12px,1.6vw,15px);color:var(--dim)}
+  .pane p b{color:var(--ink)}
+
+  /* ---------- footer ---------- */
+  .closing{
+    border:4px solid var(--py-yellow);
+    background:var(--card);
+    box-shadow:8px 8px 0 rgba(0,0,0,.45);
+    padding:22px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+  }
+  .closing canvas{flex:none}
+  .closing .q{flex:1 1 300px}
+  .closing h3{font-size:clamp(16px,2.3vw,22px);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .opt{border:3px solid var(--edge);padding:6px 12px;font-size:14px}
+  .opt span{color:var(--py-blue)}
+  .tip{color:var(--dim);font-size:clamp(13px,1.7vw,16px)}
+  .tip strong{color:var(--py-yellow)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <canvas id="mascota-grande"></canvas>
+    <div class="titles">
+      <h1>¿Independientes, excluyentes o <em>dependientes?</em></h1>
+      <p class="sub">Tres formas de combinar condiciones — y cómo se ve cada una si fueran ríos.</p>
+    </div>
+  </header>
+
+  <!-- 1 -->
+  <section class="card">
+    <div class="card-top">
+      <span class="num">1</span>
+      <h2>Independientes</h2>
+      <span class="form">varios <code>if</code> seguidos</span>
+    </div>
+    <div class="body">
+      <div>
+        <canvas class="river" id="rio1"></canvas>
+        <div class="legend">
+          <span><b style="background:var(--open)"></b>compuerta abierta</span>
+          <span><b style="background:var(--shut)"></b>compuerta cerrada</span>
+          <span><b style="background:#4a4560"></b>cauce seco</span>
+        </div>
+      </div>
+      <div>
+        <p class="idea">Tres ríos <strong>separados</strong>, cada uno con su compuerta. Python revisa cada <code>if</code> por su cuenta: pueden abrirse varios a la vez, uno solo, o ninguno.</p>
+<pre><span class="kw">if</span> hay_mensaje_nuevo == <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="str">"Tienes un mensaje sin leer."</span>)
+
+<span class="kw">if</span> bateria_baja == <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="str">"Queda poca batería."</span>)
+
+<span class="kw">if</span> hay_wifi_disponible == <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="str">"Hay wifi disponible."</span>)</pre>
+        <div class="warn">Se usa cuando las preguntas <b>no tienen nada que ver</b> entre sí. Que haya wifi no cambia si te queda batería.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="card">
+    <div class="card-top">
+      <span class="num">2</span>
+      <h2>Excluyentes</h2>
+      <span class="form"><code>if / elif / else</code></span>
+    </div>
+    <div class="body">
+      <div>
+        <canvas class="river" id="rio2"></canvas>
+        <div class="legend">
+          <span><b style="background:var(--water)"></b>por aquí pasó el agua</span>
+          <span><b style="background:#4a4560"></b>quedó seco</span>
+        </div>
+      </div>
+      <div>
+        <p class="idea">Un <strong>solo río</strong> con desvíos en cadena. El primer desvío que se abre se lleva <strong>toda</strong> el agua, y los de más abajo quedan secos: ni siquiera se revisan.</p>
+<pre><span class="kw">if</span> racha_dias_estudio &gt;= <span class="num-t">14</span>:
+    <span class="fn">print</span>(<span class="str">"Racha de élite"</span>)
+<span class="kw">elif</span> racha_dias_estudio &gt;= <span class="num-t">7</span>:
+    <span class="fn">print</span>(<span class="str">"Buena constancia"</span>)
+<span class="kw">elif</span> racha_dias_estudio &gt;= <span class="num-t">3</span>:
+    <span class="fn">print</span>(<span class="str">"Vas tomando ritmo"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Recién empezando"</span>)</pre>
+        <div class="warn">El <b>orden decide</b>. Si el desvío más ancho va primero, se lleva el agua de todos los demás y esas ramas nunca se alcanzan.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="card">
+    <div class="card-top">
+      <span class="num">3</span>
+      <h2>Una depende de la otra</h2>
+      <span class="form"><code>if</code> anidado</span>
+    </div>
+    <div class="body">
+      <div>
+        <canvas class="river" id="rio3"></canvas>
+        <div class="legend">
+          <span><b style="background:var(--open)"></b>1ª compuerta: ¿tiene pase?</span>
+          <span><b style="background:var(--shut)"></b>2ª compuerta: ¿le alcanza?</span>
+        </div>
+      </div>
+      <div>
+        <p class="idea">Un solo río con las compuertas <strong>una detrás de la otra</strong>. A la segunda solo le llega agua si la primera la dejó pasar: la segunda pregunta solo tiene sentido dentro de la primera.</p>
+<pre><span class="kw">if</span> tiene_pase_escolar == <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="str">"Puedes subir con tu pase."</span>)
+<span class="kw">else</span>:
+    <span class="kw">if</span> saldo_tarjeta &gt;= <span class="num-t">800</span>:
+        <span class="fn">print</span>(<span class="str">"Puedes pagar el pasaje."</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"No te alcanza para el pasaje."</span>)</pre>
+        <div class="warn">Si las escribes como dos <code>if</code> sueltos, el saldo <b>se pregunta siempre</b> — incluso a quien ya subió con su pase.</div>
+      </div>
+
+      <div class="contrast">
+        <h4>Mira la diferencia con alguien que <em>sí</em> tiene pase escolar</h4>
+        <div class="duo">
+          <div class="pane">
+            <span class="tag ok">✅ Anidado — como corresponde</span>
+            <canvas class="river" id="rio3ok"></canvas>
+            <div class="legend">
+              <span><b style="background:var(--open)"></b>1° desvío: ¿tiene pase?</span>
+              <span><b style="background:#57527a"></b>2° desvío: ¿le alcanza? — sin agua</span>
+            </div>
+            <p>Se va por su desvío apenas muestra el pase. El cauce que lleva a la pregunta del saldo <b>queda seco</b>: esa pregunta nunca se hace.</p>
+          </div>
+          <div class="pane">
+            <span class="tag bad">❌ Dos <code>if</code> sueltos</span>
+            <canvas class="river" id="rio3bad"></canvas>
+            <div class="legend">
+              <span><b style="background:var(--water)"></b>río de arriba: ¿tiene pase?</span>
+              <span><b style="background:var(--water)"></b>río de abajo: ¿le alcanza? — con agua igual</span>
+            </div>
+            <p>El saldo corre por <b>su propio río</b>, así que se pregunta igual. Al mismo pasajero que ya subió con su pase le preguntamos si le alcanza.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <canvas id="mascota-chica"></canvas>
+    <div class="q">
+      <h3>Antes de escribir, pregúntate:</h3>
+      <div class="opts">
+        <span class="opt">¿Independientes? <span>varios if</span></span>
+        <span class="opt">¿Excluyentes? <span>elif</span></span>
+        <span class="opt">¿Una depende de la otra? <span>anidado</span></span>
+      </div>
+      <p class="tip">Y cuando ya esté escrito, <strong>prueba el valor del borde</strong>: 14, 7, 3, 800. Ahí es donde los programas se rompen sin avisar.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------------------------------------------------------------
+   Tiny pixel-art renderer: every scene is a list of strings, one
+   character per pixel, painted onto a canvas at integer scale.
+   --------------------------------------------------------------- */
+/* One canvas pixel per logical pixel. The canvas is then blown up by an
+   INTEGER factor via CSS, which is what keeps pixel art crisp -- a
+   fractional factor (e.g. 368px painted into a 505px box) smears every
+   edge and, when it shrinks, drops whole rows of pixels. */
+const COLORS = {
+  '.': null,          // transparent
+  'T': '#2e2a4d',     // river bank
+  't': '#3b366310',   // (unused placeholder)
+  '=': '#4a4560',     // dry channel
+  '!': '#7ee787',     // open gate
+  '#': '#ff6b6b',     // closed gate
+  'x': '#57527a',     // gate that never got water
+  'b': '#4b8bbe',     // python blue
+  'y': '#ffd43b',     // python yellow
+  'w': '#ffffff',
+  'r': '#ff5b5b',
+  'k': '#11101c'
+};
+
+/* Water scrolls along its own channel: '~' runs left -> right, '|' runs
+   top -> bottom, so a fork reads as the current actually turning down.
+   Subtracting the frame is what moves the pattern WITH the flow; three
+   tones make the crest visible enough to see the direction on the TV. */
+const WAVE = ['#8fd3ff', '#3fa9f5', '#2b7fd4', '#2b7fd4', '#3fa9f5', '#5cbaf7'];
+
+function mod(n, m){ return ((n % m) + m) % m; }
+
+function waterColor(ch, x, y, frame){
+  const along = (ch === '|') ? y : x;
+  return WAVE[mod(along - frame, WAVE.length)];
+}
+
+function paint(canvas, rows, frame){
+  const cols = Math.max(...rows.map(r => r.length));
+  canvas.width  = cols;
+  canvas.height = rows.length;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, cols, rows.length);
+  rows.forEach((row, y) => {
+    for (let x = 0; x < row.length; x++){
+      const ch = row[x];
+      const color = (ch === '~' || ch === '|') ? waterColor(ch, x, y, frame) : COLORS[ch];
+      if (!color) continue;
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  });
+}
+
+/* Lock the displayed size to an integer multiple of the logical grid. */
+function fitInteger(canvas, maxZoom){
+  const avail = canvas.parentElement.clientWidth;
+  const zoom  = Math.max(1, Math.min(maxZoom || 99, Math.floor(avail / canvas.width)));
+  canvas.style.width  = (canvas.width  * zoom) + 'px';
+  canvas.style.height = (canvas.height * zoom) + 'px';
+}
+
+/* ---------------------------------------------------------------
+   Scene builders. Working on a mutable grid of characters keeps the
+   layouts readable instead of hand-typing 44-character strings.
+   --------------------------------------------------------------- */
+const W = 46;
+
+function grid(h, w = W, fill = '.'){
+  return Array.from({length: h}, () => Array(w).fill(fill));
+}
+function hLine(g, y, x0, x1, ch){
+  for (let x = x0; x <= x1; x++) g[y][x] = ch;
+}
+function vLine(g, x, y0, y1, ch){
+  for (let y = y0; y <= y1; y++) g[y][x] = ch;
+}
+function bank(g, y){ hLine(g, y, 0, g[y].length - 1, 'T'); }
+function toRows(g){ return g.map(r => r.join('')); }
+
+/* Scene 1 — three parallel rivers, each with its own gate.
+   Two gates open (water keeps flowing), one shut (channel dries up). */
+function scene1(){
+  const g = grid(12);
+  const gateX = 22;
+  const channels = [[1,2,'!'], [5,6,'#'], [9,10,'!']];
+  bank(g, 0); bank(g, 3); bank(g, 4); bank(g, 7); bank(g, 8); bank(g, 11);
+  channels.forEach(([yA, yB, gate]) => {
+    [yA, yB].forEach(y => {
+      hLine(g, y, 0, gateX - 1, '~');
+      hLine(g, y, gateX + 2, W - 1, gate === '!' ? '~' : '=');
+    });
+    vLine(g, gateX,     yA, yB, gate);   // gates are 2px wide so they stay
+    vLine(g, gateX + 1, yA, yB, gate);   // legible once projected on the TV
+  });
+  return toRows(g);
+}
+
+/* Scene 2 — one river, three chained diversions. The first open gate
+   takes ALL the water; everything past it stays dry. */
+function scene2(){
+  const g = grid(14);
+  const xs = [9, 22, 35];
+  const gates = ['#', '!', 'x'];      // shut -> open (takes the water) -> never reached
+  const takenAt = 1;                  // index of the diversion that wins
+
+  bank(g, 0); bank(g, 3);
+  // main channel: wet until the winning diversion, dry after it
+  [1, 2].forEach(y => {
+    hLine(g, y, 0, xs[takenAt], '~');
+    hLine(g, y, xs[takenAt] + 1, W - 1, '=');
+  });
+  // gates sit on the bank row, right below the main channel
+  xs.forEach((x, i) => { g[3][x] = gates[i]; g[3][x+1] = gates[i]; });
+  // vertical drops + pools
+  xs.forEach((x, i) => {
+    const wet = (i === takenAt);
+    vLine(g, x,   4, 10, wet ? '|' : '=');   // '|' so the current runs downward
+    vLine(g, x+1, 4, 10, wet ? '|' : '=');
+    hLine(g, 11, x - 3, x + 4, wet ? '~' : '=');
+    hLine(g, 12, x - 3, x + 4, wet ? '~' : '=');
+    hLine(g, 13, x - 4, x + 5, 'T');
+  });
+  return toRows(g);
+}
+
+/* Scene 3 — one river, gates in series. The second gate only ever sees
+   water because the first one let it through. */
+function scene3(){
+  const g = grid(10);
+  const gateA = 14, gateB = 30;
+  bank(g, 0); bank(g, 1); bank(g, 8); bank(g, 9);
+  [2,3,4,5,6,7].forEach(y => {
+    hLine(g, y, 0, gateA - 1, '~');
+    hLine(g, y, gateA + 2, gateB - 1, '~');   // passed gate A
+    hLine(g, y, gateB + 2, W - 1, '=');       // gate B is shut: dry from here on
+  });
+  [gateA, gateA + 1].forEach(x => vLine(g, x, 2, 7, '!'));
+  [gateB, gateB + 1].forEach(x => vLine(g, x, 2, 7, '#'));
+  return toRows(g);
+}
+
+/* Contrast pair, both showing the SAME passenger: one who does have a
+   pass. Nested (left) sends the water out at the first gate and leaves
+   the saldo channel dry; two loose ifs (right) give the saldo its own
+   river, so the question gets asked anyway. */
+const WC = 30;   // narrower grid: these two sit side by side
+
+function scene3Ok(){
+  const g = grid(13, WC);
+  const xs = [8, 20];
+  const gates = ['!', 'x'];
+  const takenAt = 0;
+  bank(g, 0); bank(g, 3);
+  [1, 2].forEach(y => {
+    hLine(g, y, 0, xs[takenAt] + 1, '~');
+    hLine(g, y, xs[takenAt] + 2, WC - 1, '=');
+  });
+  xs.forEach((x, i) => { g[3][x] = gates[i]; g[3][x+1] = gates[i]; });
+  xs.forEach((x, i) => {
+    const wet = (i === takenAt);
+    vLine(g, x,   4, 9, wet ? '|' : '=');
+    vLine(g, x+1, 4, 9, wet ? '|' : '=');
+    hLine(g, 10, x - 3, x + 4, wet ? '~' : '=');
+    hLine(g, 11, x - 3, x + 4, wet ? '~' : '=');
+    hLine(g, 12, x - 4, x + 5, 'T');
+  });
+  return toRows(g);
+}
+
+function scene3Bad(){
+  const g = grid(13, WC);
+  const gateX = 14;
+  [0, 4, 5, 6, 7, 11, 12].forEach(y => bank(g, y));
+  [[1, 3], [8, 10]].forEach(([yTop, yBottom]) => {
+    for (let y = yTop; y <= yBottom; y++){
+      hLine(g, y, 0, gateX - 1, '~');
+      hLine(g, y, gateX + 2, WC - 1, '~');   // both rivers keep flowing
+    }
+    vLine(g, gateX,     yTop, yBottom, '!');
+    vLine(g, gateX + 1, yTop, yBottom, '!');
+  });
+  return toRows(g);
+}
+
+/* ---------------------------------------------------------------
+   The mascot: a pixel snake in Python's own blue and yellow.
+   --------------------------------------------------------------- */
+/* Only the blue snake is drawn by hand; the yellow one is the same shape
+   rotated 180 degrees, which is exactly how the real logo is built and
+   keeps the two halves from drifting out of symmetry. */
+const SNAKE_BLUE = [
+  '...bbbbbbb......',
+  '..bbbbbbbbb.....',
+  '..bbwbbbbbb.....',
+  '..bbbbbbbbb.....',
+  '..bbb....bb.....',
+  '.bbbbbbbbbbb....',
+  '.bbbbbbbbbbbb...',
+  '.bbbb...........',
+  '.bbbb...........',
+  '..bbb...........',
+  '................',
+  '................',
+  '................',
+  '................',
+  '................',
+  '................'
+];
+
+const SNAKE = (() => {
+  const N = 16;
+  const g = Array.from({length: N}, () => Array(N).fill('.'));
+  SNAKE_BLUE.forEach((row, y) => {
+    for (let x = 0; x < N; x++){
+      const ch = row[x];
+      if (ch === '.') continue;
+      g[y][x] = ch;                                       // blue half
+      const yellow = (ch === 'b') ? 'y' : ch;             // keep the eye white
+      g[N - 1 - y][N - 1 - x] = yellow;                   // rotated half
+    }
+  });
+  return g.map(r => r.join(''));
+})();
+
+/* ---------------------------------------------------------------
+   Animate. 8 fps keeps the retro feel and costs almost nothing.
+   --------------------------------------------------------------- */
+const scenes = [
+  [document.getElementById('rio1'),    scene1()],
+  [document.getElementById('rio2'),    scene2()],
+  [document.getElementById('rio3'),    scene3()],
+  [document.getElementById('rio3ok'),  scene3Ok()],
+  [document.getElementById('rio3bad'), scene3Bad()]
+];
+
+const mascotaGrande = document.getElementById('mascota-grande');
+const mascotaChica  = document.getElementById('mascota-chica');
+paint(mascotaGrande, SNAKE, 0);
+paint(mascotaChica,  SNAKE, 0);
+
+function layout(){
+  fitInteger(mascotaGrande, 8);
+  fitInteger(mascotaChica, 5);
+  scenes.forEach(([canvas]) => fitInteger(canvas));
+}
+
+let frame = 0;
+function tick(){
+  scenes.forEach(([canvas, rows]) => paint(canvas, rows, frame));
+  frame = (frame + 1) % 600;
+}
+
+/* Order matters: paint first so every canvas carries its real grid size,
+   then lock the display size. Doing it the other way round measures the
+   browser's default 300x150 canvas and lands on a fractional zoom. */
+tick();
+layout();
+window.addEventListener('resize', layout);
+setInterval(tick, 125);
+</script>
+</body>
+</html>
