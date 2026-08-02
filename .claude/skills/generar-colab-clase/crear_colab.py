@@ -53,6 +53,9 @@ def parsear_spec(ruta_spec: Path) -> dict:
         "icn": {"conceptos": [], "ejemplos": [], "errores": []},
         "guiada": {"situacion": None, "variables": None, "pasos": [], "resultado": None},
         "independiente": [],
+        "independiente_intro": None,
+        "independiente_config": None,
+        "independiente_rutas": [],
         "ticket_mcq": [],
         "cierre": [],
         "cierre_estructurado": None,
@@ -60,8 +63,10 @@ def parsear_spec(ruta_spec: Path) -> dict:
         "decisiones": None,
     }
 
-    # Encabezado: "# Clase 07 — La función input()" o "# Clase 8a — ..."
-    match_titulo = re.search(r"^#\s+Clase\s+(\w+)\s*[—\-–]\s*(.+)$", contenido, re.MULTILINE)
+    # Encabezado: "# Clase 07 — La función input()", "# Clase 8a — ..." o "# Clase 19.5 — ..."
+    # ([\w.]+) acepta también la numeración decimal de las clases intercaladas (19.5, 22.5),
+    # que con (\w+) quedaba sin parsear y dejaba el notebook sin número ni tema.
+    match_titulo = re.search(r"^#\s+Clase\s+([\w.]+)\s*[—\-–]\s*(.+)$", contenido, re.MULTILINE)
     if match_titulo:
         raw = match_titulo.group(1)
         spec["numero_clase"] = int(raw) if raw.isdigit() else raw
@@ -119,15 +124,28 @@ def parsear_spec(ruta_spec: Path) -> dict:
     if icn_raw:
         spec["icn"] = parsear_icn(icn_raw)
 
-    # Práctica Guiada
+    # Práctica Guiada (strip marcador de tiempo como "(22 min)" — el formato nuevo de
+    # narrativa libre, a diferencia del antiguo con "**Situación:**", no lo saltaba solo)
     guiada_raw = extraer_seccion(contenido, "### 3. Práctica Guiada", "### 4.", limpiar=True)
     if guiada_raw:
+        guiada_raw = re.sub(r"^\s*\(\d+\s*min\)\s*", "", guiada_raw).strip()
         spec["guiada"] = parsear_guiada(guiada_raw)
 
-    # Práctica Independiente
+    # Práctica Independiente (strip marcador de tiempo como "(20 min)": antes se perdía
+    # junto con la intro, que el parser descartaba; ahora la intro sí se conserva)
     indep_raw = extraer_seccion(contenido, "### 4. Práctica Independiente", "### 5.", limpiar=True)
     if indep_raw:
-        spec["independiente"] = parsear_independiente(indep_raw)
+        indep_raw = re.sub(r"^\s*\(\d+\s*min\)\s*", "", indep_raw).strip()
+        match_config = re.search(
+            r"\*\*Celda de configuración:\*\*\s*\n\s*```python\n(.*?)```", indep_raw, re.DOTALL
+        )
+        if match_config:
+            spec["independiente_config"] = textwrap.dedent(match_config.group(1)).strip()
+            indep_raw = (indep_raw[:match_config.start()] + indep_raw[match_config.end():]).strip()
+        intro, rutas, ejercicios = parsear_independiente_estructura(indep_raw)
+        spec["independiente_intro"] = intro
+        spec["independiente_rutas"] = rutas
+        spec["independiente"] = ejercicios
 
     # Ticket (MCQ — 2-3 preguntas de 4 alternativas, solo van al Solucionario)
     ticket_raw = extraer_seccion(contenido, "### 5. Ticket de Salida", "### Cierre", limpiar=True)
@@ -206,7 +224,10 @@ def parsear_icn(texto: str) -> dict:
                     # Convert ">> output" lines to "# >> output" so they are valid Python comments
                     concepto["ejemplo"] = re.sub(r"^>>", "# >>", raw_ej, flags=re.MULTILINE)
 
-                m_ik = re.search(r"- Idea clave:\s*(.+?)(?=\*\*|\Z)", content, re.DOTALL)
+                # (?=\n\*\*|\Z) y no (?=\*\*|\Z): con este último, una idea clave que
+                # usa negrita inline se cortaba en la primera palabra en negrita
+                # (mismo bug que ya estaba corregido en el cierre estructurado).
+                m_ik = re.search(r"- Idea clave:\s*(.+?)(?=\n\*\*|\Z)", content, re.DOTALL)
                 if m_ik:
                     concepto["idea_clave"] = m_ik.group(1).strip()
 
@@ -275,7 +296,8 @@ def parsear_guiada(texto: str) -> dict:
     """Parsea la sección de Práctica Guiada."""
     guiada = {
         "situacion": None, "variables": None, "pasos": [], "pasos_tabla": [],
-        "resultado": None, "solucion": None, "codigo_error": None,
+        "el_programa_debe": [], "pistas": [], "resultado": None,
+        "resultado_tabla": None, "solucion": None, "codigo_error": None,
     }
 
     match_situacion = re.search(r"\*\*Situación:\*\*\s*(.+?)(?=\*\*|\Z)", texto, re.DOTALL)
@@ -290,9 +312,38 @@ def parsear_guiada(texto: str) -> dict:
     if match_codigo_error:
         guiada["codigo_error"] = textwrap.dedent(match_codigo_error.group(1)).strip()
 
-    if re.search(r"\*\*Pasos guiados \(tabla\):\*\*", texto):
-        # Formato tabla (default actual): cada paso trae su propio resultado esperado,
-        # se renderiza como tabla de 2 columnas en vez de lista + bloque de resultado separado.
+    if re.search(r"\*\*El programa debe:\*\*", texto):
+        # Formato canónico actual (mismo formato que Independiente y que la Evaluación):
+        # narrativa libre (sin etiqueta "Situación") + bullets "El programa debe" +
+        # pistas <details> opcionales + resultado único. Reemplaza a la tabla de pasos
+        # como default — ver CLAUDE.md regla 20 y disenar-clase/SKILL.md Paso 4.
+        if not guiada["situacion"]:
+            idx = texto.find("**El programa debe:**")
+            guiada["situacion"] = texto[:idx].strip()
+
+        pistas_encontradas = re.findall(r"<details>.*?</details>", texto, re.DOTALL)
+        guiada["pistas"] = [p.strip() for p in pistas_encontradas]
+        texto_sin_pistas = re.sub(r"\n*<details>.*?</details>\n*", "\n", texto, flags=re.DOTALL)
+
+        match_debe = re.search(
+            r"\*\*El programa debe:\*\*\s*\n(.*?)(?=\n\s*\*{0,2}Resultado esperado:|\Z)",
+            texto_sin_pistas, re.DOTALL
+        )
+        if match_debe:
+            guiada["el_programa_debe"] = [
+                re.sub(r"^-\s*", "", l.strip())
+                for l in match_debe.group(1).split("\n")
+                if l.strip().startswith("-")
+            ]
+        match_resultado = re.search(
+            r"\*{0,2}Resultado esperado:\*{0,2}\s*\n```\n(.*?)```", texto_sin_pistas, re.DOTALL
+        )
+        if match_resultado:
+            guiada["resultado"] = match_resultado.group(1).rstrip()
+        guiada["resultado_tabla"] = extraer_resultado_tabla(texto_sin_pistas)
+    elif re.search(r"\*\*Pasos guiados \(tabla\):\*\*", texto):
+        # Formato tabla (retrocompatible, anterior a Clase 20): cada paso trae su propio
+        # resultado esperado, se renderiza como tabla de 2 columnas.
         for m in re.finditer(
             r"-\s*Paso\s+\d+:\s*(.+?)\n\s*Resultado:\s*\n\s*```\n(.*?)```", texto, re.DOTALL
         ):
@@ -322,6 +373,53 @@ def parsear_guiada(texto: str) -> dict:
     return guiada
 
 
+def extraer_resultado_tabla(texto: str) -> str | None:
+    """Extrae el resultado esperado cuando viene como tabla HTML side-by-side
+    (📥 lo que ingresa el usuario / 📤 lo que imprime el programa, en dos
+    columnas Ejemplo 1 y Ejemplo 2), que es la variante para ejercicios con
+    `input()` de valor variable — ver CLAUDE.md regla 15. La otra variante
+    (bloque ``` con salida determinista) la sigue tomando `resultado`.
+    """
+    match = re.search(
+        r"\*{0,2}Resultado esperado:\*{0,2}\s*\n\s*(<table>.*?</table>)", texto, re.DOTALL
+    )
+    if match:
+        return match.group(1).strip()
+    return None
+
+
+def parsear_independiente_estructura(texto: str) -> tuple:
+    """Separa la Práctica Independiente en (intro, rutas, ejercicios).
+
+    Cuando la clase es de trabajo diferenciado, el spec agrupa los ejercicios
+    bajo encabezados `#### Ruta X — descripción` y cada ruta tiene su propia
+    numeración (Ejercicio 1 y 2 en ambas). Si no hay rutas, `rutas` queda vacío
+    y `ejercicios` trae la lista plana de siempre.
+    """
+    patron_ruta = r"(?m)^####\s+(Ruta\s+[^\n]+)$"
+    if not re.search(patron_ruta, texto):
+        ejercicios = parsear_independiente(texto)
+        primer_ejercicio = re.search(r"\*\*Ejercicio\s+\d+\s*[—\-–]", texto)
+        intro = texto[:primer_ejercicio.start()].strip() if primer_ejercicio else texto.strip()
+        return intro, [], ejercicios
+
+    partes = re.split(patron_ruta, texto)
+    intro = partes[0].strip()
+    rutas = []
+    ejercicios_planos = []
+    for i in range(1, len(partes), 2):
+        titulo = partes[i].strip()
+        cuerpo = partes[i + 1] if i + 1 < len(partes) else ""
+        primer_ejercicio = re.search(r"\*\*Ejercicio\s+\d+\s*[—\-–]", cuerpo)
+        cabecera = cuerpo[:primer_ejercicio.start()].strip() if primer_ejercicio else cuerpo.strip()
+        ejercicios = parsear_independiente(cuerpo)
+        for ejercicio in ejercicios:
+            ejercicio["ruta"] = titulo
+        rutas.append({"titulo": titulo, "intro": cabecera, "ejercicios": ejercicios})
+        ejercicios_planos.extend(ejercicios)
+    return intro, rutas, ejercicios_planos
+
+
 def parsear_independiente(texto: str) -> list:
     """Parsea los ejercicios de Práctica Independiente. Soporta Parte A/B."""
     ejercicios = []
@@ -334,10 +432,13 @@ def parsear_independiente(texto: str) -> list:
         contenido = bloques[i + 2].strip()
 
         ejercicio = {
-            "numero": num, "titulo": titulo,
+            "numero": num, "titulo": titulo, "ruta": None,
             "contexto": None, "enunciado": None,
             "parte_a": None, "parte_b": None,
-            "resultado": None, "codigo_error": None,
+            "el_programa_debe": [], "etiqueta_debe": "El programa debe:", "pistas": [],
+            "resultado": None, "resultado_tabla": None, "codigo_error": None,
+            "celda_respuesta": None, "plantilla": None, "solucion_referencia": None,
+            "celda_verificacion": None,
             "solucion": None, "solucion_a": None, "solucion_b": None,
         }
 
@@ -362,6 +463,47 @@ def parsear_independiente(texto: str) -> list:
             ejercicio["codigo_error"] = textwrap.dedent(match_codigo_error.group(1)).strip()
             contenido = (contenido[:match_codigo_error.start()] + contenido[match_codigo_error.end():]).strip()
 
+        # Celda de verificación: la llamada al autochequeo que el estudiante ejecuta
+        # después de resolver, para saber solo/a si le quedó bien. Sale como celda de
+        # código propia, después de la celda donde responde.
+        match_verificacion = re.search(
+            r"\*\*Celda de verificación:\*\*\s*\n\s*```python\n(.*?)```", contenido, re.DOTALL
+        )
+        if match_verificacion:
+            ejercicio["celda_verificacion"] = textwrap.dedent(match_verificacion.group(1)).strip()
+            contenido = (contenido[:match_verificacion.start()] + contenido[match_verificacion.end():]).strip()
+
+        # Solución de referencia: para ejercicios cuyo producto no es código y que
+        # por lo tanto no tienen "- Solución:" en python (ej. una batería de casos
+        # de prueba). Va al Solucionario tal cual, en markdown. Termina en la
+        # siguiente línea que empiece con "**".
+        match_referencia = re.search(
+            r"\*\*Solución de referencia:\*\*\s*\n+(.*?)(?=\n\*\*|\Z)", contenido, re.DOTALL
+        )
+        if match_referencia:
+            ejercicio["solucion_referencia"] = match_referencia.group(1).strip()
+            contenido = (contenido[:match_referencia.start()] + contenido[match_referencia.end():]).strip()
+
+        # Celda de respuesta: "código" (default), "markdown", o "markdown + código".
+        # Un ejercicio que no pide escribir un programa (ej. diseñar una batería de
+        # casos de prueba) necesita una celda markdown, no una celda de código vacía.
+        match_celda = re.search(r"\*\*Celda de respuesta:\*\*\s*(.+)", contenido)
+        if match_celda:
+            ejercicio["celda_respuesta"] = match_celda.group(1).strip().lower()
+            contenido = (contenido[:match_celda.start()] + contenido[match_celda.end():]).strip()
+
+        # Plantilla de respuesta: markdown que el estudiante completa en su propia
+        # celda editable (ej. la tabla de decisión que se llena antes de programar,
+        # o la batería de casos de prueba). Va SIEMPRE al final del bloque del
+        # ejercicio en el spec — se captura hasta el fin, así admite varias tablas.
+        # En markdown y no HTML, porque es para escribir encima.
+        match_plantilla = re.search(
+            r"\*\*Plantilla de respuesta:\*\*\s*\n+(.*)", contenido, re.DOTALL
+        )
+        if match_plantilla:
+            ejercicio["plantilla"] = match_plantilla.group(1).strip()
+            contenido = contenido[:match_plantilla.start()].strip()
+
         # Extraer Parte B antes que A para no truncar contenido
         match_parte_b = re.search(r"\*\*Parte B[^*]*\*\*\s*\n(.*?)(?=\*\*Parte|\Z)", contenido, re.DOTALL)
         if match_parte_b:
@@ -373,14 +515,42 @@ def parsear_independiente(texto: str) -> list:
             ejercicio["parte_a"] = match_parte_a.group(1).strip()
             contenido = (contenido[:match_parte_a.start()] + contenido[match_parte_a.end():]).strip()
 
+        # Pistas <details>...</details> (ej. hint del operador módulo) — se extraen
+        # completas y se renderizan aparte, en el orden en que aparecen en el spec.
+        pistas_encontradas = re.findall(r"<details>.*?</details>", contenido, re.DOTALL)
+        ejercicio["pistas"] = [p.strip() for p in pistas_encontradas]
+        if pistas_encontradas:
+            contenido = re.sub(r"\n*<details>.*?</details>\n*", "\n", contenido, flags=re.DOTALL).strip()
+
+        # Formato canónico actual (igual al de la Evaluación): narrativa + bullets
+        # "El programa debe" + resultado único. Ver CLAUDE.md regla 15/16.
+        # "El trabajo debe" es alias de "El programa debe", para ejercicios cuyo
+        # producto no es un programa (ej. una batería de casos de prueba).
+        match_debe = re.search(
+            r"\*\*El (programa|trabajo) debe:\*\*\s*\n(.*?)(?=\n\s*\*{0,2}Resultado esperado:|\Z)",
+            contenido, re.DOTALL
+        )
+        if match_debe:
+            ejercicio["etiqueta_debe"] = f"El {match_debe.group(1)} debe:"
+            ejercicio["el_programa_debe"] = [
+                re.sub(r"^-\s*", "", l.strip())
+                for l in match_debe.group(2).split("\n")
+                if l.strip().startswith("-")
+            ]
+            resto = contenido[match_debe.end():]
+            contenido = contenido[:match_debe.start()].strip()
+
         ejercicio["contexto"] = contenido.strip()
         ejercicio["enunciado"] = contenido.strip()
 
-        match_resultado = re.search(r"Resultado esperado:\s*\n```\n(.*?)```", contenido, re.DOTALL)
+        texto_resultado = resto if match_debe else contenido
+        match_resultado = re.search(r"\*{0,2}Resultado esperado:\*{0,2}\s*\n```\n(.*?)```", texto_resultado, re.DOTALL)
         if match_resultado:
             ejercicio["resultado"] = match_resultado.group(1).rstrip()
-            ejercicio["enunciado"] = contenido[:match_resultado.start()].strip()
-            ejercicio["contexto"] = ejercicio["enunciado"]
+            if not match_debe:
+                ejercicio["enunciado"] = contenido[:match_resultado.start()].strip()
+                ejercicio["contexto"] = ejercicio["enunciado"]
+        ejercicio["resultado_tabla"] = extraer_resultado_tabla(texto_resultado)
 
         ejercicios.append(ejercicio)
 
@@ -417,6 +587,14 @@ def parsear_ticket_mcq(texto: str) -> list:
         numero = bloques[i].strip()
         cuerpo = bloques[i + 1]
 
+        # Código opcional aludiendo a la pregunta (como foco o como referencia) —
+        # default vigente desde Clase 20: cada pregunta trae un bloque breve.
+        codigo = None
+        match_codigo = re.match(r"\s*```python\n(.*?)```\s*", cuerpo, re.DOTALL)
+        if match_codigo:
+            codigo = textwrap.dedent(match_codigo.group(1)).rstrip()
+            cuerpo = cuerpo[match_codigo.end():]
+
         match_enunciado = re.search(r"^(.*?)(?=\n\s*-\s*[A-D]\s*:)", cuerpo, re.DOTALL)
         enunciado = match_enunciado.group(1).strip() if match_enunciado else cuerpo.strip()
 
@@ -431,7 +609,7 @@ def parsear_ticket_mcq(texto: str) -> list:
         justificacion = match_justif.group(1).strip() if match_justif else ""
 
         preguntas.append({
-            "numero": numero, "enunciado": enunciado,
+            "numero": numero, "codigo": codigo, "enunciado": enunciado,
             "alternativas": alternativas, "correcta": correcta,
             "justificacion": justificacion,
         })
@@ -467,6 +645,16 @@ def backticks_a_code(texto: str) -> str:
     no reprocesa markdown inline dentro de HTML crudo, así que los backticks quedarían
     literales en vez de renderizarse con estilo de código."""
     return re.sub(r"`([^`]+)`", r"<code>\1</code>", texto)
+
+
+def formatear_pista(pista: str) -> str:
+    """Las pistas son bloques <details> crudos, así que el markdown inline de
+    adentro tampoco se reprocesa: los backticks salían literales. Se convierten
+    a <code>, salvo que la pista traiga un bloque ```…``` (ahí los backticks son
+    del propio cerco y convertirlos lo rompería)."""
+    if "```" in pista:
+        return pista
+    return backticks_a_code(pista)
 
 
 MIME_POR_EXTENSION = {
@@ -514,11 +702,16 @@ def construir_notebook(spec: dict, carpeta_spec: Path) -> nbformat.NotebookNode:
     nb.cells.append(new_markdown_cell(generar_objetivo_proposito(spec)))
 
     # --- 1. HAZ AHORA ---
-    nb.cells.append(new_markdown_cell(generar_seccion_haz_ahora(spec)))
-    num_items = len(re.findall(r"^\d+\.", spec["haz_ahora"] or "", re.MULTILINE))
-    num_items = max(num_items, 3)
-    respuestas = "**Mis respuestas:**\n\n" + "\n".join(f"{i}. " for i in range(1, num_items + 1))
-    nb.cells.append(new_markdown_cell(respuestas))
+    nb.cells.extend(generar_celdas_haz_ahora(spec))
+    # La celda única de respuestas al final solo aplica cuando el spec NO intercala
+    # sus propios espacios con [[respuesta]]; si los intercala, sobraría.
+    if MARCADOR_RESPUESTA not in (spec["haz_ahora"] or ""):
+        # Conteo dinámico real de preguntas — sin piso artificial (antes forzaba mín. 3,
+        # lo que generaba blancos de más si el Haz Ahora tenía menos preguntas reales).
+        num_items = len(re.findall(r"^\d+\.", spec["haz_ahora"] or "", re.MULTILINE))
+        num_items = num_items if num_items > 0 else 1
+        respuestas = "**Mis respuestas:**\n\n" + "\n".join(f"{i}. " for i in range(1, num_items + 1))
+        nb.cells.append(new_markdown_cell(respuestas))
 
     # --- 2. INTRODUCCIÓN AL CONTENIDO NUEVO ---
     nb.cells.append(new_markdown_cell(generar_seccion_icn_intro(spec)))
@@ -556,23 +749,21 @@ def construir_notebook(spec: dict, carpeta_spec: Path) -> nbformat.NotebookNode:
 
     # --- 4. PRÁCTICA INDEPENDIENTE ---
     nb.cells.append(new_markdown_cell(generar_seccion_independiente_intro(spec)))
-    for ejercicio in spec["independiente"]:
-        nb.cells.append(new_markdown_cell(generar_ejercicio_independiente(ejercicio)))
-        if ejercicio.get("parte_a") and ejercicio.get("parte_b"):
-            if ejercicio.get("codigo_error"):
-                nb.cells.append(new_code_cell("# Código a analizar — ejecuta y observa el resultado\n" + ejercicio["codigo_error"]))
-            nb.cells.append(new_markdown_cell("#### Parte A — Análisis\n\n" + ejercicio["parte_a"]))
-            nb.cells.append(new_markdown_cell(
-                "📝 **Mis respuestas — Parte A** *(haz doble click para editar)*\n\n"
-                "1. \n\n2. \n\n3. "
-            ))
-            nb.cells.append(new_code_cell("# Tu código — Parte A\n"))
-            nb.cells.append(new_markdown_cell("#### Parte B — Escritura desde cero\n\n" + ejercicio["parte_b"]))
-            nb.cells.append(new_code_cell("# Tu código — Parte B\n"))
-        else:
-            if ejercicio.get("codigo_error"):
-                nb.cells.append(new_code_cell("# Código a analizar — ejecuta y observa el resultado\n" + ejercicio["codigo_error"]))
-            nb.cells.append(new_code_cell(f"# Tu solución del Ejercicio {ejercicio['numero']}\n"))
+    if spec.get("independiente_config"):
+        nb.cells.append(new_code_cell(spec["independiente_config"]))
+    if spec.get("independiente_rutas"):
+        # Trabajo diferenciado: cada ruta es su propio bloque, con su numeración
+        # de ejercicios. El estudiante trabaja solo la ruta que le corresponde.
+        for ruta in spec["independiente_rutas"]:
+            cabecera = f"### 🧭 {ruta['titulo']}\n\n"
+            if ruta.get("intro"):
+                cabecera += ruta["intro"] + "\n"
+            nb.cells.append(new_markdown_cell(cabecera))
+            for ejercicio in ruta["ejercicios"]:
+                nb.cells.extend(generar_celdas_ejercicio(ejercicio))
+    else:
+        for ejercicio in spec["independiente"]:
+            nb.cells.extend(generar_celdas_ejercicio(ejercicio))
 
     # --- TICKET DE SALIDA (placeholder) ---
     # Las preguntas y alternativas NUNCA van en este notebook — viven solo en
@@ -631,14 +822,58 @@ def generar_objetivo_proposito(spec: dict) -> str:
     return bloque
 
 
-def generar_seccion_haz_ahora(spec: dict) -> str:
-    bloque = "---\n\n## 1️⃣ Haz Ahora\n\n"
-    if spec["haz_ahora"]:
-        # Strip internal design notes (Propósito, Objetivo) — not student-facing
-        contenido = re.sub(r"\*\*Propósito:\*\*[^\n]*\n?", "", spec["haz_ahora"])
-        contenido = re.sub(r"\*\*Objetivo:\*\*[^\n]*\n?", "", contenido).strip()
-        bloque += contenido
-    return bloque
+def limpiar_notas_internas(texto: str) -> str:
+    """Quita las notas de diseño y de conducción del spec — son para Diego, no
+    para estudiantes, y nunca deben llegar al notebook de clase.
+
+    Acepta las etiquetas con o sin negrita y con o sin blockquote (`> `): el spec
+    puede escribirlas de cualquier forma (bug detectado en Clase 20 con
+    `Propósito:` sin negrita, y en Clase 19.5 con `> Nota de conducción:`).
+    "Actividad:" solo pierde la etiqueta — el texto que sigue sí es para estudiantes.
+    """
+    for etiqueta in ("Propósito", "Objetivo", "Nota de conducción"):
+        texto = re.sub(rf"(?m)^\s*>?\s*\*{{0,2}}{etiqueta}:\*{{0,2}}[^\n]*\n?", "", texto)
+    texto = re.sub(r"(?m)^\s*\*{0,2}Actividad:\*{0,2}\s*", "", texto)
+    return texto.strip()
+
+
+MARCADOR_RESPUESTA = "[[respuesta]]"
+CELDA_RESPUESTA_HAZ_AHORA = "📝 **Tu respuesta** *(haz doble click para editar)*\n\n"
+
+
+def generar_celdas_haz_ahora(spec: dict) -> list:
+    """Devuelve las celdas del Haz Ahora, en el orden del spec.
+
+    Si el spec trae bloques ```python dentro del Haz Ahora, cada uno se entrega
+    como celda **ejecutable** y el texto intermedio queda en celdas markdown
+    (default desde Clase 19.5: en una clase de revisión los estudiantes corren
+    el programa con el error en vez de predecir la salida en el aire). Si no hay
+    bloques de código, sale una sola celda markdown como siempre.
+
+    Una línea con `[[respuesta]]` inserta ahí una celda markdown editable. Sirve
+    para dejar el espacio de respuesta pegado a cada pregunta —en vez de una sola
+    celda con todos los slots al final—, que es lo que corresponde cuando cada
+    pregunta va justo debajo del programa que la motiva.
+    """
+    contenido = limpiar_notas_internas(spec["haz_ahora"] or "")
+    encabezado = "---\n\n## 1️⃣ Haz Ahora\n\n"
+    celdas = []
+    partes = re.split(r"```python\n(.*?)```", contenido, flags=re.DOTALL)
+    for i, parte in enumerate(partes):
+        if i % 2 == 1:
+            celdas.append(new_code_cell(textwrap.dedent(parte).rstrip()))
+            continue
+        trozos = re.split(r"(?m)^[ \t]*\[\[respuesta\]\][ \t]*$", parte)
+        for j, trozo in enumerate(trozos):
+            texto = trozo.strip()
+            if encabezado:
+                texto = encabezado + texto
+                encabezado = ""
+            if texto:
+                celdas.append(new_markdown_cell(texto.rstrip()))
+            if j < len(trozos) - 1:
+                celdas.append(new_markdown_cell(CELDA_RESPUESTA_HAZ_AHORA))
+    return celdas
 
 
 def generar_seccion_icn_intro(spec: dict) -> str:
@@ -694,6 +929,26 @@ def generar_demo_codigo(demo: dict) -> str:
 
 def generar_seccion_guiada_intro(spec: dict) -> str:
     bloque = "---\n\n## 3️⃣ Práctica Guiada\n\n"
+    g = spec["guiada"]
+
+    if g.get("el_programa_debe"):
+        # Formato canónico actual (igual al de Independiente y al de la Evaluación):
+        # narrativa libre + bullets "El programa debe" + pistas opcionales + resultado.
+        # Reemplaza la tabla de pasos de 2 columnas como default — CLAUDE.md regla 20.
+        if g.get("situacion"):
+            bloque += f"{limpiar_notas_internas(g['situacion'])}\n\n"
+        bloque += "**El programa debe:**\n\n"
+        for item in g["el_programa_debe"]:
+            bloque += f"- {backticks_a_code(item)}\n"
+        bloque += "\n"
+        for pista in g.get("pistas", []):
+            bloque += formatear_pista(pista) + "\n\n"
+        if g.get("resultado_tabla"):
+            bloque += backticks_a_code(g["resultado_tabla"]) + "\n"
+        elif g.get("resultado"):
+            bloque += f"📤 <em>El programa imprime:</em>\n\n<pre>\n{g['resultado']}\n</pre>\n"
+        return bloque
+
     if spec["guiada"]["situacion"]:
         bloque += f"**Situación:** {spec['guiada']['situacion']}\n\n"
 
@@ -723,12 +978,33 @@ def generar_seccion_guiada_intro(spec: dict) -> str:
 
 
 def generar_seccion_independiente_intro(spec: dict) -> str:
-    return "---\n\n## 4️⃣ Práctica Independiente\n\nResuelve los siguientes ejercicios en pareja. Si se traban, pregunten al profe."
+    bloque = "---\n\n## 4️⃣ Práctica Independiente\n\n"
+    intro = limpiar_notas_internas(spec.get("independiente_intro") or "")
+    if intro:
+        return bloque + intro
+    return bloque + "Resuelve los siguientes ejercicios en pareja. Si se traban, pregunten al profe."
 
 
 def generar_ejercicio_independiente(ejercicio: dict) -> str:
-    bloque = f"### Ejercicio {ejercicio['numero']} — {ejercicio['titulo']}\n\n"
+    bloque = f"### 🎯 Ejercicio {ejercicio['numero']} — {ejercicio['titulo']}\n\n"
     contexto = ejercicio.get("contexto") or ejercicio.get("enunciado") or ""
+
+    if ejercicio.get("el_programa_debe"):
+        # Formato canónico actual (igual al de la Evaluación): narrativa + bullets
+        # "El programa debe" + pistas <details> opcionales + resultado con el mismo
+        # estilo visual (ícono + <em> + <pre>) que usa Clase 19 - Evaluación.
+        bloque += contexto + "\n\n"
+        bloque += f"**{ejercicio.get('etiqueta_debe', 'El programa debe:')}**\n\n"
+        for item in ejercicio["el_programa_debe"]:
+            bloque += f"- {backticks_a_code(item)}\n"
+        bloque += "\n"
+        for pista in ejercicio.get("pistas", []):
+            bloque += formatear_pista(pista) + "\n\n"
+        if ejercicio.get("resultado_tabla"):
+            bloque += backticks_a_code(ejercicio["resultado_tabla"]) + "\n"
+        elif ejercicio.get("resultado"):
+            bloque += f"📤 <em>El programa imprime:</em>\n\n<pre>\n{ejercicio['resultado']}\n</pre>\n"
+        return bloque
 
     if "Ejemplo:" in contexto:
         idx = contexto.find("Ejemplo:")
@@ -752,6 +1028,58 @@ def generar_ejercicio_independiente(ejercicio: dict) -> str:
         bloque += "```\n"
 
     return bloque
+
+
+def generar_celdas_ejercicio(ejercicio: dict) -> list:
+    """Celdas de un ejercicio de Práctica Independiente: enunciado + la(s) celda(s)
+    donde el estudiante responde (código por defecto; markdown cuando el producto
+    del ejercicio no es un programa)."""
+    celdas = [new_markdown_cell(generar_ejercicio_independiente(ejercicio))]
+
+    if ejercicio.get("codigo_error"):
+        celdas.append(new_code_cell(
+            "# Código a analizar — ejecuta y observa el resultado\n" + ejercicio["codigo_error"]
+        ))
+
+    if ejercicio.get("parte_a") and ejercicio.get("parte_b"):
+        celdas.append(new_markdown_cell("#### Parte A — Análisis\n\n" + ejercicio["parte_a"]))
+        celdas.append(new_markdown_cell(
+            "📝 **Mis respuestas — Parte A** *(haz doble click para editar)*\n\n"
+            "1. \n\n2. \n\n3. "
+        ))
+        celdas.append(new_code_cell("# Tu código — Parte A\n"))
+        celdas.append(new_markdown_cell("#### Parte B — Escritura desde cero\n\n" + ejercicio["parte_b"]))
+        celdas.append(new_code_cell("# Tu código — Parte B\n"))
+        return celdas
+
+    # Con rutas diferenciadas ambas numeran sus ejercicios desde 1, así que la
+    # etiqueta de la celda lleva también la ruta para que no se confundan.
+    etiqueta = f"Ejercicio {ejercicio['numero']}"
+    match_ruta = re.match(r"Ruta\s+(\S+)", ejercicio.get("ruta") or "")
+    if match_ruta:
+        etiqueta = f"Ruta {match_ruta.group(1)} — Ejercicio {ejercicio['numero']}"
+
+    modo = ejercicio.get("celda_respuesta") or "código"
+    quiere_markdown = "markdown" in modo
+    quiere_codigo = "cod" in modo.replace("ó", "o") or not quiere_markdown
+
+    # La celda de verificación va antes o después de la respuesta según para qué
+    # sirve: si el ejercicio se responde escribiendo código, verifica ese código y
+    # va después; si se responde en markdown, es la herramienta con la que el
+    # estudiante explora antes de escribir su conclusión, así que va antes.
+    verificacion = ejercicio.get("celda_verificacion")
+    if verificacion and not quiere_codigo:
+        celdas.append(new_code_cell(verificacion))
+    if quiere_markdown:
+        respuesta = f"📝 **Tu respuesta — {etiqueta}** *(haz doble click para editar)*\n\n"
+        respuesta += ejercicio.get("plantilla") or ""
+        celdas.append(new_markdown_cell(respuesta.rstrip()))
+    if quiere_codigo:
+        celdas.append(new_code_cell(f"# Tu solución — {etiqueta}\n"))
+        if verificacion:
+            celdas.append(new_code_cell(verificacion))
+
+    return celdas
 
 
 def derivar_tema_breve_form(nombre_carpeta: str) -> str:
@@ -826,7 +1154,8 @@ def hay_soluciones_de_clase(spec: dict) -> bool:
     if spec["guiada"].get("solucion"):
         return True
     for ejercicio in spec["independiente"]:
-        if ejercicio.get("solucion") or ejercicio.get("solucion_a") or ejercicio.get("solucion_b"):
+        if (ejercicio.get("solucion") or ejercicio.get("solucion_a")
+                or ejercicio.get("solucion_b") or ejercicio.get("solucion_referencia")):
             return True
     return False
 
@@ -849,11 +1178,19 @@ def generar_secciones_solucionario_clase(spec: dict) -> str:
     ejercicios_con_solucion = [
         e for e in spec["independiente"]
         if e.get("solucion") or e.get("solucion_a") or e.get("solucion_b")
+        or e.get("solucion_referencia")
     ]
     if ejercicios_con_solucion:
         bloque += "## 4️⃣ Práctica Independiente — Soluciones\n\n"
         for ejercicio in ejercicios_con_solucion:
-            bloque += f"### Ejercicio {ejercicio['numero']} — {ejercicio['titulo']}\n\n"
+            # Con rutas diferenciadas ambas numeran desde 1, así que el título
+            # del solucionario lleva la ruta delante para no confundirlas.
+            prefijo = ""
+            if ejercicio.get("ruta"):
+                prefijo = re.split(r"[—\-–]", ejercicio["ruta"])[0].strip() + " · "
+            bloque += f"### {prefijo}Ejercicio {ejercicio['numero']} — {ejercicio['titulo']}\n\n"
+            if ejercicio.get("solucion_referencia"):
+                bloque += ejercicio["solucion_referencia"] + "\n\n"
             if ejercicio.get("solucion_a"):
                 bloque += f"**Parte A:**\n\n```python\n{ejercicio['solucion_a']}\n```\n\n"
             if ejercicio.get("solucion_b"):
@@ -903,7 +1240,10 @@ def construir_solucionario(spec: dict) -> nbformat.NotebookNode:
     if spec.get("ticket_mcq"):
         nb.cells.append(new_markdown_cell("## 🎫 Ticket de Salida"))
         for pregunta in spec["ticket_mcq"]:
-            bloque = f"### Pregunta {pregunta['numero']}\n\n{pregunta['enunciado']}\n\n"
+            bloque = f"### Pregunta {pregunta['numero']}\n\n"
+            if pregunta.get("codigo"):
+                bloque += f"```python\n{pregunta['codigo']}\n```\n\n"
+            bloque += f"{pregunta['enunciado']}\n\n"
             for letra in ["A", "B", "C", "D"]:
                 texto_alt = pregunta["alternativas"].get(letra, "")
                 if not texto_alt:
@@ -939,7 +1279,7 @@ def main():
 
     print(f"✅ Spec parseado: Clase {spec['numero_clase']} — {spec['tema']}")
     print(f"   - {len(spec['icn']['conceptos'])} conceptos en ICN")
-    print(f"   - {len(spec['guiada']['pasos']) or len(spec['guiada']['pasos_tabla'])} pasos en guiada")
+    print(f"   - {len(spec['guiada']['pasos']) or len(spec['guiada']['pasos_tabla']) or len(spec['guiada']['el_programa_debe'])} pasos/bullets en guiada")
     print(f"   - {len(spec['independiente'])} ejercicios independientes")
 
     print(f"🛠️  Construyendo notebook...")

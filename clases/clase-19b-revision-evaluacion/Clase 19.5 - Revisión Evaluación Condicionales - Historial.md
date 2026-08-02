@@ -1,6 +1,6 @@
 # Clase 19.5 — Revisión Evaluación Condicionales — Historial
 
-**Estado:** Spec aprobada (2026-08-01). Existen el material de proyección y la spec; faltan los artefactos (Colab de clase + Solucionario, PPT, PPT del Ticket de Salida).
+**Estado:** Colab de clase **aprobado** (2026-08-02). Existen el material de proyección, la spec, el Colab de clase, el Solucionario y el JSON del Ticket de Salida; faltan el PPT y el PPT aparte del Ticket de Salida, que quedan para una sesión aparte.
 
 **Fecha prevista:** lunes 3 de agosto de 2026 · 80 minutos.
 **Numeración:** N° 19.5, decimal, para no renumerar el resto del plan (mismo patrón que 22.5 y 28.5). Va entre la evaluación del 28-07 y For anidado del 06-08.
@@ -84,9 +84,76 @@ Se mantuvo sin cambios desde la v1: la Práctica Independiente diferenciada en p
 
 Carpeta y nombrado: se conservan `clase-19b-revision-evaluacion` para la carpeta y el prefijo `Clase 19.5 - ...` para los archivos, tal como ya existían.
 
+## 2026-08-02 — Colab de clase generado
+
+Archivos: `Clase 19.5 - ... - Clase.ipynb` (39 celdas), `... - Solucionario.ipynb` y `... - Ticket de Salida Respuestas.json` (B / C / D). Generados con `generar-colab-clase`. El notebook se ejecutó completo con `nbconvert`: 0 errores, y los 7 outputs calzan uno a uno con lo documentado en el spec.
+
+**Correcciones técnicas aplicadas al spec** (sin cambiar el diseño aprobado, solo lo necesario para que el generador produzca lo que el spec ya describía):
+- Los cuatro ejemplos del ICN venían sin definir sus variables (`bateria_baja`, `racha_dias_estudio`, `tiene_pase_escolar`) — reventaban con `NameError` y obligaban a ejecutar en orden estricto. Ahora cada celda es autocontenida y trae su salida con `>>`. El ejemplo del Concepto 3 usa **los mismos datos del Programa 3 del Haz Ahora** (`"si"` / 200) a propósito: ahí imprimía dos líneas contradictorias, acá imprime una sola.
+- Las tres tablas de resultado esperado (Guiada, Ruta B Ej 1 y Ej 2) pasaron de tabla markdown a `<table>` HTML, que es el formato canónico y el único que el parser reconoce.
+- Las tablas de decisión de la Ruta B pasaron del enunciado a `**Plantilla de respuesta:**`, así el estudiante las completa en su propia celda editable en vez de escribir sobre el enunciado.
+
+**Cambio de contenido que sí conviene revisar:** los rótulos de las rutas eran `Ruta A — para quienes ya resolvieron la Sección 2 completa` y `Ruta B — para quienes dejaron esos ejercicios sin terminar`. En el spec eso está bien, pero el notebook lo abre el curso entero, así que en el material visible quedaron neutros y descriptivos del trabajo: **"Ruta A — Diseñar los casos que rompen programas"** y **"Ruta B — Escribir los programas"**. Quién va en cada ruta lo dice Diego en la sala; el criterio de rendimiento quedó registrado en el spec como nota de conducción. La intro de la sección también se reescribió en voz de estudiante ("hoy trabajan en parejas cruzadas…") en vez de la voz de planificación original.
+
+**Agregado al Solucionario:** batería de referencia de la Ruta A (4 casos de la micro + 5 del ahorro, con el error que caza cada uno). Sin eso Diego no tenía contra qué comparar lo que entregue ese tramo. La Ruta A Ejercicio 2 no lleva referencia porque depende del programa que le toque probar.
+
+**Cambios al generador `crear_colab.py`** — todos generales, aplican a clases futuras:
+- Acepta numeración decimal en el título (`Clase 19.5`); antes quedaba sin número ni tema.
+- Haz Ahora con celdas de código ejecutables cuando el spec trae bloques ` ```python `.
+- Práctica Independiente diferenciada por rutas (`#### Ruta X — …`), con numeración propia por ruta.
+- Directivas nuevas por ejercicio: `**El trabajo debe:**` (alias), `**Celda de respuesta:**`, `**Plantilla de respuesta:**`, `**Solución de referencia:**`.
+- Resultado esperado en tabla HTML side-by-side (la variante con `input()` variable, que estaba documentada pero sin implementar).
+- Filtro de `Nota de conducción:` junto a `Propósito:` / `Objetivo:`.
+- Dos bugs corregidos: la "Idea clave" se cortaba en la primera palabra en negrita, y los backticks dentro de las pistas `<details>` salían literales en vez de renderizarse como código.
+- Script nuevo `limpiar_outputs_haz_ahora.py`: la ejecución de verificación deja los outputs dentro del `.ipynb`, y en el Haz Ahora eso elimina justo el acto de ejecutar que se está pidiendo. Las celdas del ICN sí conservan su salida.
+
+## 2026-08-02 — Haz Ahora reestructurado (feedback de Diego)
+
+El Haz Ahora tenía los tres programas seguidos y las cuatro preguntas juntas al final. Diego pidió dos cambios, ambos aplicados:
+
+1. **Cada programa lleva ahora su propio enunciado**, con título de escenario (`Programa 1 — La app de hábitos de estudio`) y una línea `*Lo que debía hacer:*` que describe el comportamiento correcto. Razón textual de Diego: *"dudo que se acuerden ni yo lo recuerdo"*. Sin eso la pregunta "¿qué debería imprimir?" no es contestable — solo se ve el output, no la brecha.
+2. **La pregunta y su espacio de respuesta van pegados a cada programa**, no todas al final. La secuencia quedó: enunciado → celda de código → pregunta → celda markdown editable, tres veces, más la pregunta 4 ("¿cuál se parece a un error tuyo?") bajo un bloque **Para cerrar**.
+
+Para esto se agregó al generador el marcador `[[respuesta]]`: una línea con solo eso inserta una celda markdown editable en ese punto, y desactiva la celda única de "Mis respuestas" del final. Es general, sirve para cualquier clase futura cuyo Haz Ahora alterne bloque de código y pregunta.
+
+El notebook quedó en 45 celdas (antes 39). Re-ejecutado con `nbconvert`: 0 errores, y los outputs del Haz Ahora limpiados de nuevo.
+
+## 2026-08-02 — Ticket con contextos nuevos + Práctica Independiente rediseñada
+
+**Ticket de Salida.** Diego aprobó los tres ejercicios pero pidió cambiarles el contexto para que no repitieran la clase ni la prueba. Misma trampa y mismo código en cada uno, situación nueva: P1 pasó del torneo al **espacio libre del celular para instalar un juego** (correcta C); P2, del saldo bip al **precio de la entrada a un partido** (correcta A); P3, de batería/wifi a **dos avisos de un videojuego: vida baja y amigo conectado** (correcta D). Las tres letras siguen siendo distintas. Se dejó anotada la razón en el spec: el Ticket mide transferencia a una situación nueva, no memoria del ejercicio.
+
+**Práctica Independiente — descartada la versión de rutas cruzadas.** Diego la declaró inviable. El problema de fondo no era diferenciar, sino la **dependencia entre las dos rutas**: quien diseñaba casos no podía empezar a probar hasta que su pareja tuviera un programa funcionando, y esa pareja era justamente el tramo que había dejado esos ejercicios en blanco. Sumado a eso, armar las parejas cruzadas antes de la clase y sostener dos bloques paralelos en un mismo notebook.
+
+Se le propusieron tres alternativas, todas sin rutas ni dependencias. **Eligió la opción A**, con dos pedidos propios:
+1. Que el programa del Ejercicio 1 tuviera **dos o más funcionalidades declaradas**, para que la búsqueda del error fuera más difícil.
+2. Que hubiera un **verificador ejecutable** para que se autorrevisen entre ejercicio y ejercicio.
+
+**Cómo quedó:**
+- **Ejercicio 1 — Las dos versiones del taller de robótica.** Se les dan dos programas completos que hacen dos cosas a la vez (decidir el ingreso + avisar cupos disponibles). Con casi cualquier dato imprimen lo mismo; solo difieren cuando la persona **está inscrita**, porque la Versión 2 le hace igual la pregunta de la autorización. El trabajo es encontrar un dato que las separe, anotarlo, y justificar cuál está bien. Contexto nuevo, no reusa la micro.
+- **Ejercicio 2 — La alcancía en dólares.** Retoma el ítem 2.3 de la prueba (65% de logro) y le suma un aviso independiente del nivel: el recordatorio de repartir lo ahorrado si la alcancía fue compartida. Así el mismo programa mezcla **excluyentes** (las 4 franjas) e **independientes** (el aviso), que son dos de las tres formas del ICN.
+- **Autochequeo.** Celda `#@title` al inicio de la sección con dos funciones. `comparar_versiones(...)` corre internamente ambas versiones del taller y dice si se comportaron igual o distinto — convierte "encuentra el caso que rompe esto" en algo verificable. `verificar_bordes(con_10=, con_30=, con_60=)` recibe lo que el programa del estudiante imprimió en los tres bordes y lo compara, normalizando tildes y puntuación para no dar falsos negativos. Ambas probadas antes de integrarlas.
+
+Ya no hay tramos, ni rutas, ni rótulos: los mismos dos ejercicios para todo el curso. La diferenciación ocurre sola, porque encontrar el dato que separa las dos versiones tiene techo alto y la celda de código del Ejercicio 2 parte vacía para todos.
+
+**Cambios adicionales al generador:** directivas `**Celda de configuración:**` (celda de código al inicio de la Independiente) y `**Celda de verificación:**` (por ejercicio, ubicada antes o después de la respuesta según si el ejercicio se responde en código o en markdown). Además se generalizó la limpieza de outputs: ahora la regla es **conservar outputs solo en el ICN** y limpiarlos en todas las demás secciones — antes solo limpiaba el Haz Ahora, y las celdas de verificación habrían quedado con su salida ya impresa.
+
+Notebook final: 40 celdas, ejecutado sin errores, verificador funcionando.
+
+**Ajustes posteriores del Ejercicio 1 (mismo día).** Diego pidió que las dos versiones se vieran **lado a lado** y que la respuesta no fuera una tabla sino texto libre. Las dos versiones pasaron a una tabla HTML de dos columnas y una fila, con el código en `<pre>` (pierde el coloreado de sintaxis, que es el costo de ponerlas lado a lado — las cercas ```` ```python ```` no se pueden poner en columnas). Para que las columnas quepan sin desbordarse, los cinco mensajes se acortaron; el `<` de `cupos_disponibles < 5` va escapado como `&lt;` porque dentro de HTML crudo se interpretaría como apertura de etiqueta. La celda de respuesta quedó como una sola línea de consigna y espacio libre para escribir.
+
+**Chequeo de sincronía.** El código de las dos versiones existe duplicado: el que se muestra en la tabla y el que el verificador corre por dentro. Si se desincronizan, el ejercicio miente. Se comparan programáticamente después de generar (extrayendo el `<pre>` del enunciado y el cuerpo de `_version_1`/`_version_2` del verificador) y quedaron idénticas línea a línea.
+
+## 2026-08-02 — Colab de clase aprobado
+
+- Archivos: `Clase 19.5 - ... - Clase.ipynb` (40 celdas), `... - Solucionario.ipynb`, `... - Ticket de Salida Respuestas.json`.
+- Generados con `generar-colab-clase`; ejecutados con `nbconvert` sin errores.
+
+**Decisión que se lleva a la skill:** el autochequeo (celda de configuración + celdas de verificación) queda como capacidad **opcional** de `generar-colab-clase`, y **se le pregunta explícitamente a Diego antes de incluirlo** en cualquier clase futura. No es parte del formato por defecto: cambia cómo se trabaja la Práctica Independiente en aula y cuesta tiempo de clase, así que la decisión es suya. Es una excepción deliberada a la restricción 6 del `CLAUDE.md` (aprobación solo en gates formales), documentada en el `SKILL.md`.
+
 ---
 
 ## Pendientes
 
 - **Gate abierto que bloquea la clase:** Diego debe revisar los 22 Colabs de devolución de la Evaluación 2 antes de poder entregarlos el lunes. Mientras eso no ocurra, `puntajes_evaluacion2.json` sigue con todos los puntajes en `null`. Ver el plan de revisión en la carpeta de la Clase 19.
-- Generar el Colab de clase + Solucionario (`generar-colab-clase`), el PPT y el PPT aparte del Ticket de Salida.
+- Revisar el Colab de clase generado y, con eso aprobado, generar el PPT (`generar-ppt-clase`) y el PPT aparte del Ticket de Salida.
+- Sin decisiones abiertas de diseño: las rutas diferenciadas se descartaron y con ellas la duda de sus rótulos.

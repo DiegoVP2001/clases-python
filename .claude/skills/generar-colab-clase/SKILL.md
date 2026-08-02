@@ -28,7 +28,8 @@ Antes de ejecutar el script, valida:
 2. **El spec está aprobado.** El estado en el archivo debe decir "Spec aprobada".
 3. **Python y nbformat disponibles.** Verifica con `python --version` y `python -c "import nbformat"`. Si falla nbformat, ejecuta `pip install nbformat` (en Windows con Python del sistema, normalmente funciona sin más; en sistemas con `pip` restringido puede necesitarse `pip install --user nbformat`).
 4. **No existe ya un `Clase NN - Tema - Clase.ipynb` con cambios manuales.** Si existe, pregunta a Diego si quiere sobrescribir.
-5. **Los conceptos del spec corresponden a la clase Picuino indicada.** Consulta `referencia-curriculo` para confirmar que no se adelantan contenidos fuera de la progresión 1 a N (ver restricción permanente "No adelantes contenidos no vistos" en `CLAUDE.md`). Si detectas un desajuste, avisa a Diego antes de generar.
+5. **Si la clase podría usar autochequeo, pregúntaselo a Diego antes de escribirlo.** Ver "Autochequeo" más abajo — es opcional y su inclusión la decide él, no Claude.
+6. **Los conceptos del spec corresponden a la clase Picuino indicada.** Consulta `referencia-curriculo` para confirmar que no se adelantan contenidos fuera de la progresión 1 a N (ver restricción permanente "No adelantes contenidos no vistos" en `CLAUDE.md`). Si detectas un desajuste, avisa a Diego antes de generar.
 
 ## Cómo se ejecuta
 
@@ -61,7 +62,7 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
 | n | Markdown | Tabla de errores típicos |
 | n+1 | Markdown | Sección "3️⃣ Práctica Guiada" con situación y pasos (SIN celda "Mis respuestas" — ver regla abajo) |
 | n+2 | Code | Espacio en blanco para construir el código |
-| n+3 | Markdown | Sección "4️⃣ Práctica Independiente" (1 ejercicio obligatorio + 1 bonus) |
+| n+3 | Markdown | Sección "4️⃣ Práctica Independiente" (2 ejercicios obligatorios — default desde Clase 20) |
 | ... | MD+Code alternados | Cada ejercicio con su enunciado y celda vacía |
 | n+k | Markdown | Sección "🎫 Ticket de Salida" — anuncio de que se proyecta en la tele + link al Form + nombre breve a escribir en "Tema de la clase de hoy", sin preguntas (ver regla abajo) |
 | último | Markdown | Cierre y preguntas de reflexión |
@@ -79,6 +80,14 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
    jupyter nbconvert --to notebook --execute --output <mismo-archivo> "Clase NN - Tema - Clase.ipynb"
    ```
    Si una celda lanza una excepción (`NameError`, `SyntaxError`, etc.) o el output no calza con el `>>` documentado en el spec, corrige el notebook y vuelve a ejecutar — no se lo muestres a Diego con errores sin detectar. Esto atrapa bugs de variables mal escritas o lógica incorrecta antes de que lleguen al aula. Si `nbconvert`/`nbclient` no está disponible, instala con `pip install nbconvert` o avisa a Diego.
+
+   **Cada celda de ejemplo del ICN debe ser autocontenida:** define sus propias variables, sin depender de que se haya ejecutado una celda anterior. Un ejemplo que arranca directo con `if bateria_baja == True:` revienta con `NameError` y además obliga al estudiante a ejecutar en orden estricto. Si el spec trae un ejemplo así, agrégale las asignaciones al inicio (es una corrección técnica: se hace en el spec y se regenera, sin preguntar).
+
+   **Después de ejecutar, limpia los outputs que no correspondan:**
+   ```bash
+   python -X utf8 ".claude/skills/generar-colab-clase/limpiar_outputs_haz_ahora.py" "clases/clase-NN-tema/Clase NN - Tema - Clase.ipynb"
+   ```
+   La ejecución de verificación deja los outputs guardados dentro del `.ipynb`. **Solo el ICN debe conservarlos** (el estudiante lee el ejemplo junto a su resultado, sin depender de haber ejecutado en orden); el script limpia todas las demás secciones. Un Haz Ahora cuyo trabajo es *ejecutar y observar* pierde el sentido si el resultado ya viene impreso, y una celda de verificación que trae su salida invita a leerla en vez de correrla.
 2. Confirma a Diego que el archivo se creó, se ejecutó sin errores, y dónde está. Confirma también que `Clase NN - Tema - Solucionario.ipynb` se generó (o actualizó) junto con él, y recuérdale que ese archivo es exclusivamente para él — el Ticket de Salida se proyecta en clase, y el resto (Haz Ahora, Guiada, Independiente) recién se sube a Classroom después de dictar la clase, nunca antes.
 3. **Recomienda subirlo a Google Colab** para revisarlo en el entorno real antes de aprobar:
    - Abrir https://colab.research.google.com
@@ -131,26 +140,55 @@ Verificar que el spec cumpla estos principios antes de generar. Si no los cumple
 **Encabezado y metadatos**
 - Curso por defecto: `"3ro y 4to medio"` (no solo "4to medio").
 
+**Haz Ahora — celdas de código ejecutables (desde Clase 19.5)**
+Si la sección `### 1. Haz Ahora` del spec trae bloques ` ```python `, cada uno sale como **celda de código ejecutable** y el texto intermedio queda en celdas markdown, en el orden del spec (`generar_celdas_haz_ahora()` en `crear_colab.py`). Es el formato indicado cuando el Haz Ahora consiste en correr programas con un error y observar qué imprimen — en vez de pedir "predice sin ejecutar", que es justo lo que no corresponde en un Colab. Si el spec no trae bloques de código, sale una sola celda markdown como siempre. Recuerda limpiarles el output después de la ejecución de verificación (ver "Después de generar").
+
+**Cada programa lleva su propio enunciado.** Si el Haz Ahora muestra código de una prueba o actividad anterior, no basta con rotularlo `**Programa N**`: nadie —tampoco Diego— se acuerda de qué tenía que hacer ese programa. Va un título con el escenario (`**Programa 1 — La app de hábitos de estudio**`) y debajo una línea `*Lo que debía hacer:* …` describiendo el comportamiento correcto en lenguaje natural. Sin eso, la pregunta "¿qué debería imprimir?" no se puede contestar.
+
+**Espacios de respuesta intercalados: `[[respuesta]]`.** Una línea con solo `[[respuesta]]` inserta ahí una celda markdown editable (`📝 **Tu respuesta**`). Úsala para dejar el espacio pegado a cada pregunta, justo debajo del bloque de código que la motiva — es lo que corresponde cuando el Haz Ahora alterna programa → pregunta → programa → pregunta. Si el spec usa este marcador, el generador **no** agrega la celda única de "Mis respuestas" al final; si no lo usa, el comportamiento es el de siempre (una celda con un slot numerado por pregunta).
+
 **Haz Ahora**
-- Incluir celda markdown de respuestas con slots numerados según los ítems del Haz Ahora (conteo dinámico — no hardcodear 6).
+- Incluir celda markdown de respuestas con slots numerados según los ítems del Haz Ahora (conteo dinámico real — nunca forzar un piso artificial. Bug detectado y corregido en Clase 20: el código forzaba mínimo 3 blancos aunque el spec tuviera menos preguntas; ahora `num_items` usa el conteo real, con fallback de 1 solo si no detecta ninguna).
 - Las respuestas esperadas del Haz Ahora van SOLO en `Solucionario.ipynb` — nunca en el cuerpo del notebook de estudiante ni como nota o pie de página al final de la sección Haz Ahora.
 - En el spec, marcar las respuestas con `**Respuestas esperadas:** ...` al final de la sección — el parser las extrae automáticamente.
 - NO revelar operadores, funciones ni sintaxis de hoy — ni en los enunciados ni en columnas de tabla.
-- **NO incluir la línea `**Propósito:**` del Haz Ahora en el notebook.** Es una nota interna de diseño del spec (para Diego al planificar), no contenido para estudiantes. El generador la filtra automáticamente — el spec puede mantenerla sin problema.
+- **NO incluir las etiquetas `Propósito:` ni `Actividad:` del Haz Ahora en el notebook.** Son notas internas de diseño del spec, no contenido para estudiantes. `disenar-clase` ya no debe escribirlas en el spec final (ver su propio SKILL.md) — pero el generador igual las filtra como red de seguridad, acepte o no negrita (`generar_seccion_haz_ahora()` en `crear_colab.py`; bug corregido en Clase 20: el filtro original solo reconocía `**Propósito:**` con negrita exacta, y un spec que la escribió sin negrita se filtró al notebook de estudiante).
 
 **Propósito**
 - El propósito de la sección `## Propósito` del spec **SÍ se incluye** en el notebook, como `## 💡 Propósito` en blockquote `>`, inmediatamente después del objetivo. Es contenido para estudiantes.
-- Lo que **NO se incluye** es la línea `**Propósito:**` dentro de la sección Haz Ahora del spec — esa es una nota interna de diseño para Diego y el generador la filtra automáticamente.
+- Lo que **NO se incluye** es la etiqueta `Propósito:` (con o sin negrita) dentro de la sección Haz Ahora del spec — ver punto anterior.
 
-**Práctica Guiada — pasos y resultado en tabla de 2 columnas (default)**
-Los pasos guiados y su resultado esperado se escriben en el spec como `**Pasos guiados (tabla):**`, con un bloque por paso que trae su propio resultado — no como lista numerada + un bloque de resultado único al final. El generador arma automáticamente una tabla HTML de 2 columnas (`Qué debe hacer tu programa` | `Resultado esperado`). Formato canónico en el spec:
+**Práctica Guiada — mismo formato canónico que Independiente (default desde Clase 20)**
+La Guiada comparte escenario con el Haz Ahora (ver arriba) y se escribe como un solo ejercicio guiado: narrativa libre (sin necesidad de etiqueta `**Situación:**`) + `**El programa debe:**` en bullets + pista(s) `<details>` opcionales + `**Resultado esperado:**`. El parser detecta este formato buscando `**El programa debe:**` en la sección; si lo encuentra, toma todo el texto libre anterior como narrativa (con o sin la etiqueta `**Situación:**` — ambas funcionan). Formato canónico en el spec:
 ```markdown
+[Narrativa — retoma el escenario del Haz Ahora, con una pregunta distinta ya "bajada a código"]
+
+**El programa debe:**
+- [requisito 1, en lenguaje natural de alto nivel]
+- [requisito 2]
+
+**Resultado esperado:**
+```
+[output esperado — un solo bloque si no hay input() con valores variables; acórtalo con `...` si es largo y repetitivo]
+```
+
+- Solución:
+  ```python
+  [código de referencia]
+  ```
+```
+Los backticks dentro de los bullets de "El programa debe" se convierten automáticamente a `<code>` — no hace falta escribir `<code>` a mano en el spec.
+
+**Formato antiguo (retrocompatible, solo para regenerar clases anteriores a Clase 20):** `**Situación:**` + `**Pasos guiados (tabla):**`, con un bloque por paso que trae su propio resultado — el generador arma una tabla HTML de 2 columnas (`Qué debe hacer tu programa` | `Resultado esperado`):
+```markdown
+**Situación:** [contexto narrativo]
+
 **Pasos guiados (tabla):**
 
 - Paso 1: [texto del paso, en lenguaje natural, sin revelar variable/operador]
   Resultado:
   ```
-  [output esperado, o una nota tipo "(todavía no hay output — es solo la variable inicial)" si el paso no produce output propio]
+  [output esperado de este paso, o una nota tipo "(todavía no hay output — es solo la variable inicial)" si el paso no produce output propio]
   ```
 
 - Paso 2: [texto del paso]
@@ -159,11 +197,7 @@ Los pasos guiados y su resultado esperado se escriben en el spec como `**Pasos g
   [output esperado]
   ```
 ```
-Agrupa en una misma fila los pasos que van juntos (ej: "construye el bucle" + "dentro del bucle, suma y muestra") cuando separarlos dejaría una fila sin resultado propio que mostrar — no hace falta que el número de filas de la tabla coincida 1:1 con cada micro-paso de la situación. El resultado de cada fila puede acortarse con `...` si es una secuencia larga y repetitiva (ver "Errores típicos" más abajo no aplica aquí — es solo para mantener la tabla legible).
-
-Si el `paso` o el `resultado` de una fila incluyen código entre backticks (`` `range()` ``), el generador los convierte automáticamente a `<code>` — Jupyter/Colab NO reprocesa markdown inline dentro de un bloque `<table>` crudo, así que los backticks sin convertir quedarían literales en vez de renderizarse con estilo de código. No hace falta escribir `<code>` a mano en el spec, basta con backticks como en cualquier otra sección.
-
-Formato antiguo (retrocompatible, solo para regenerar clases anteriores a este cambio): `**Pasos guiados:**` con lista numerada + `**Resultado esperado:**` con un bloque de código único al final. El parser detecta cuál formato usa el spec automáticamente.
+Agrupa en una misma fila los pasos que van juntos (ej: "construye el bucle" + "dentro del bucle, suma y muestra") cuando separarlos dejaría una fila sin resultado propio que mostrar. El resultado de cada fila puede acortarse con `...` si es una secuencia larga y repetitiva. Existe también un formato aún más antiguo (`**Pasos guiados:**` con lista numerada + `**Resultado esperado:**` único al final). El parser detecta automáticamente cuál de los tres formatos usa el spec — no hace falta indicarlo.
 
 **Práctica Guiada — tabla de rangos o clasificación**
 Cuando la situación de la guiada incluye una tabla de correspondencia (ej: rango de monto → actividad recomendada, temperatura → categoría, etc.), esa tabla se escribe en el spec y aparece en el notebook como **tabla HTML** con encabezados `<th>`, NO como bloque de código de texto plano con `────` o `→`. Formato canónico:
@@ -179,8 +213,8 @@ Cuando la situación de la guiada incluye una tabla de correspondencia (ej: rang
 ```
 Esto garantiza que se renderice correctamente en Colab y tenga el mismo nivel visual que las tablas de los ejercicios independientes.
 
-**Ticket de Salida — preguntas solo en el Solucionario, placeholder en Clase.ipynb**
-Las preguntas y alternativas del Ticket de Salida nunca se renderizan en `Clase.ipynb`. El parser las extrae (`**Pregunta N:**` + alternativas `- A:`..`- D:` + `**Respuesta correcta:**` + `**Justificación:**`) desde la sección `### 5. Ticket de Salida` del spec y las escribe únicamente en `Clase NN - Tema - Solucionario.ipynb`. Las alternativas se rotulan A/B/C/D (convención vigente desde 2026-07-28 — antes se rotulaban por cantidad de dedos, mecanismo obsoleto desde que el TdS migró a Google Form); se responden vía el Google Form de registro (no en voz alta, ni antes de terminar la última pregunta) — ver CLAUDE.md regla 17. En `Clase.ipynb`, si el spec tiene `ticket_mcq`, se agrega automáticamente una sección `## 🎫 Ticket de Salida` justo antes del Cierre con el aviso de que se proyecta en la tele, el link al Google Form de registro y el nombre breve a escribir en "Tema de la clase de hoy" — no requiere nada en el spec, el generador la arma sola (ver `derivar_tema_breve_form()` y `generar_seccion_ticket_placeholder()` en `crear_colab.py`). Ver sección "Solucionario (todas las soluciones)" más abajo.
+**Ticket de Salida — 3 preguntas fijas, con código, solo en el Solucionario**
+Las preguntas y alternativas del Ticket de Salida nunca se renderizan en `Clase.ipynb`. El parser las extrae (`**Pregunta N:**` + bloque `` ```python...``` `` opcional + alternativas `- A:`..`- D:` + `**Respuesta correcta:**` + `**Justificación:**`) desde la sección `### 5. Ticket de Salida` del spec y las escribe únicamente en `Clase NN - Tema - Solucionario.ipynb`. **Cantidad fija: 3 preguntas siempre** (default desde Clase 20 — antes dependía de la cantidad de conceptos del ICN). Cada pregunta trae opcionalmente un bloque de código breve (justo después de `**Pregunta N:**`, antes del enunciado) — el parser lo detecta automáticamente vía `parsear_ticket_mcq()` en `crear_colab.py` y lo antepone al enunciado en el Solucionario; si la pregunta no trae código, se omite ese bloque sin problema (retrocompatible con specs anteriores). **Reparte la respuesta correcta en una letra distinta por pregunta** — nunca las 3 en la misma alternativa. Las alternativas se rotulan A/B/C/D (convención vigente desde 2026-07-28 — antes se rotulaban por cantidad de dedos, mecanismo obsoleto desde que el TdS migró a Google Form); se responden vía el Google Form de registro (no en voz alta, ni antes de terminar la última pregunta) — ver CLAUDE.md regla 17. En `Clase.ipynb`, si el spec tiene `ticket_mcq`, se agrega automáticamente una sección `## 🎫 Ticket de Salida` justo antes del Cierre con el aviso de que se proyecta en la tele, el link al Google Form de registro y el nombre breve a escribir en "Tema de la clase de hoy" — no requiere nada en el spec, el generador la arma sola (ver `derivar_tema_breve_form()` y `generar_seccion_ticket_placeholder()` en `crear_colab.py`). Ver sección "Solucionario (todas las soluciones)" más abajo.
 
 **JSON de respuestas del Ticket de Salida (`Clase NN - Tema - Ticket de Salida Respuestas.json`)**
 Si el spec tiene `ticket_mcq`, el generador también escribe un JSON aparte junto al Solucionario, vía `construir_ticket_respuestas()` en `crear_colab.py`. Es intencionalmente liviano — solo las respuestas correctas, sin enunciado ni justificación — para que el agente que cruce las respuestas del Google Form (ver [[tds-trazabilidad-sheet]] en memoria) lo lea rápido sin abrir el Solucionario ni el `.py`. Formato fijo:
@@ -216,37 +250,68 @@ El campo `**Respuestas esperadas:**` en el spec captura todo el texto hasta el f
   >> ¿Te alcanza? False
   ```
 
-**Formato canónico de ejercicios (Práctica Independiente)**
+**Formato canónico de ejercicios (Práctica Independiente y Práctica Guiada — mismo formato, default desde Clase 20)**
 
-1 ejercicio obligatorio + 1 ejercicio bonus (fijo, no preguntar), formato "revisión rápida": narrativa breve (2-3 líneas) y normalmente sin pistas `<details>` — solo si el ejercicio realmente lo amerita. El Ejercicio 2 se marca explícitamente como bonus/décimas extra, a resolver solo si la pareja terminó el obligatorio. Cada ejercicio sigue esta estructura fija en orden:
+**2 ejercicios obligatorios** (fijo, no preguntar — reemplaza el esquema anterior "1 obligatorio + 1 bonus/décimas extra"). Ambos con la misma exigencia de narrativa, ninguno se marca como bonus. La Guiada usa este mismo formato como un ejercicio único guiado (ver más arriba). Cada ejercicio sigue esta estructura fija en orden, implementada en `parsear_independiente()` / `generar_ejercicio_independiente()` (y su equivalente `parsear_guiada()` / `generar_seccion_guiada_intro()` para la Guiada) en `crear_colab.py`:
 
-1. **Narrativa** — 3-4 líneas de prosa, sin bullets. Contexto rico, fluye sin revelar operadores ni nombres de variables.
-2. **`**El programa debe:**`** — bullets con términos clave en **negrita**. Describe qué hace el programa, no cómo.
-3. **Pistas colapsables** — 1-2 según dificultad, solo donde el ejercicio lo justifica. Formato:
+1. **Narrativa** — 3-4 líneas de prosa, sin bullets. Contexto rico, fluye sin revelar operadores ni nombres de variables. Es todo el texto libre antes de `**El programa debe:**` — no necesita ninguna etiqueta.
+2. **`**El programa debe:**`** — bullets con términos clave en **negrita**. Describe qué hace el programa, no cómo. El parser corta este bloque en la primera línea que empieza con `-` hasta encontrar `Resultado esperado:` (con o sin negrita) o el final de la sección.
+3. **Pistas colapsables** — 1-2 según dificultad, solo donde el ejercicio lo justifica (ej: recordar un operador que no es el foco de la clase). El parser las extrae completas vía regex (`<details>.*?</details>`) desde cualquier punto del bloque y las renderiza justo después de los bullets, antes del resultado — no importa en qué línea exacta del spec estén escritas. Formato:
    ```html
    <details>
    <summary>💡 Pista N — subtítulo</summary>
    texto orientador + bloque de código si aplica
    </details>
    ```
-4. **Tabla HTML side-by-side** — dos columnas, dos filas de datos:
-   ```html
-   <table>
-   <tr><th></th><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
-   <tr>
-   <td>📥 <em>El usuario escribe</em></td>
-   <td><pre>valores de input...</pre></td>
-   <td><pre>valores de input...</pre></td>
-   </tr>
-   <tr>
-   <td>📤 <em>El programa imprime</em></td>
-   <td><pre>output del programa...</pre></td>
-   <td><pre>output del programa...</pre></td>
-   </tr>
-   </table>
-   ```
-   Encabezados siempre `Ejemplo 1` y `Ejemplo 2` — sin descriptores adicionales.
-5. **Celda de código vacía** — solo `# Tu solución del Ejercicio N`. Sin starter code.
+4. **Resultado esperado** — el generador SIEMPRE lo renderiza con el mismo lenguaje visual que las evaluaciones (ícono + `<em>` + `<pre>`), nunca como bloque de código markdown plano ni como etiqueta `**Resultado esperado:**` a secas — aunque en el spec se escriba como bloque simple (`**Resultado esperado:**` seguido de un bloque ` ``` `), es el generador (`generar_ejercicio_independiente()` / `generar_seccion_guiada_intro()`) el que lo transforma al renderizar. Dos variantes según si el ejercicio usa `input()` con valores que varían:
+   - **Sin input() (caso típico de `for`/`for` anidado — valores fijos, salida determinista):** `📤 <em>El programa imprime:</em>` seguido de `<pre>...</pre>` con el output esperado. Acórtalo con `...` si es una secuencia larga y repetitiva (ver Clase 20 como referencia).
+   - **Con input() de valor variable:** tabla HTML side-by-side — dos columnas, dos filas de datos:
+     ```html
+     <table>
+     <tr><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
+     <tr>
+     <td>📥 <em>El usuario ingresa</em><pre>valores de input...</pre></td>
+     <td>📥 <em>El usuario ingresa</em><pre>valores de input...</pre></td>
+     </tr>
+     <tr>
+     <td>📤 <em>El programa imprime</em><pre>output del programa...</pre></td>
+     <td>📤 <em>El programa imprime</em><pre>output del programa...</pre></td>
+     </tr>
+     </table>
+     ```
+     Encabezados siempre `Ejemplo 1` y `Ejemplo 2` — sin descriptores adicionales. Cada celda combina ícono + `<em>` + `<pre>` (igual al formato usado en las evaluaciones, ej. `Clase 19 - Evaluación Condicionales - Evaluación.ipynb`). **Implementado desde Clase 19.5** (`extraer_resultado_tabla()` en `crear_colab.py`): en el spec se escribe `**Resultado esperado:**` seguido del `<table>` HTML crudo — el generador se queda con la tabla y descarta la etiqueta, para que quede igual que en las evaluaciones. Los saltos de línea dentro de un `<pre>` van como saltos reales, no como `<br>`. Si el spec usa una tabla markdown (`| … |`) en vez del `<table>`, el parser no la reconoce y el resultado esperado **se pierde en silencio** — usa siempre HTML.
+5. **Celda de código vacía** — solo `# Tu solución del Ejercicio N` (Independiente) o `# Tu programa` (Guiada). Sin starter code.
+
+**Práctica Independiente diferenciada por rutas (desde Clase 19.5)**
+Cuando la clase reparte trabajo distinto según el tramo, el spec agrupa los ejercicios bajo encabezados `#### Ruta X — descripción`, cada ruta con su propia numeración desde 1 (`parsear_independiente_estructura()`). El generador emite un bloque `### 🧭 Ruta X — …` por ruta con su párrafo introductorio, y etiqueta las celdas de respuesta como `Ruta A — Ejercicio 1` para que no se confundan entre rutas; en el Solucionario los títulos quedan como `Ruta A · Ejercicio 1 — …`. Si no hay encabezados `#### Ruta`, el comportamiento es el de siempre (lista plana).
+
+**Rótulos de ruta: neutros, nunca por rendimiento.** El notebook lo abre el curso entero, así que los títulos de ruta describen **el trabajo** ("Diseñar los casos que rompen programas" / "Escribir los programas"), nunca a quién le toca ("para quienes dejaron los ejercicios sin terminar"). Quién va en qué ruta lo dice Diego en la sala; en el spec eso se registra como `Nota de conducción:`.
+
+**Directivas por ejercicio** (todas opcionales, útiles sobre todo en clases diferenciadas):
+- `**El trabajo debe:**` — alias de `**El programa debe:**` para ejercicios cuyo producto no es un programa (ej. una batería de casos de prueba). Se renderiza con la misma etiqueta que trae el spec.
+- `**Celda de respuesta:**` — `código` (default), `markdown`, o `markdown + código`. Define qué celda(s) recibe el estudiante para responder. Un ejercicio que se entrega como tabla necesita `markdown`; uno que exige decidir la estructura antes de programar, `markdown + código`.
+- `**Plantilla de respuesta:**` — markdown (típicamente una tabla con filas en blanco) que se copia dentro de la celda editable del estudiante. Es la forma canónica de dar andamiaje sin romper la regla de "celda de código siempre vacía": la tabla de decisión va en la celda de respuesta, no como starter code. **Va siempre al final del bloque del ejercicio**, antes de `- Solución:` — se captura hasta el fin del bloque, así admite varias tablas seguidas.
+- `**Solución de referencia:**` — respuesta modelo en markdown para ejercicios que no tienen `- Solución:` en python. Va solo al Solucionario. Termina en la siguiente línea que empiece con `**`, así que colócala antes de `**Celda de respuesta:**`.
+
+- `**Celda de verificación:**` + bloque ` ```python ` — la llamada al autochequeo que el estudiante ejecuta para saber solo/a si le quedó bien. Sale como celda de código propia. Su posición depende de para qué sirve, y el generador lo resuelve solo: si el ejercicio se responde **escribiendo código**, la verificación revisa ese código y va **después**; si se responde en **markdown**, es la herramienta con la que explora antes de escribir su conclusión y va **antes**.
+
+Orden obligatorio dentro del bloque de un ejercicio: narrativa → `**El programa/trabajo debe:**` → `<details>` → `**Resultado esperado:**` → `**Celda de verificación:**` → `**Solución de referencia:**` → `**Celda de respuesta:**` → `**Plantilla de respuesta:**` → `- Solución:`. El parser trunca el bloque en `- Solución:`, así que cualquier cosa escrita después se pierde.
+
+**Autochequeo: `**Celda de configuración:**` (desde Clase 19.5)**
+
+> ⚠️ **Pregúntale siempre a Diego antes de incluirlo.** El autochequeo NO es parte del formato por defecto de una clase: es una capacidad opcional que se agrega solo cuando él lo pide. Antes de escribir cualquier celda de configuración o de verificación en un spec, pregúntale explícitamente si quiere incluir el verificador en esta clase, y espera su respuesta. Esta es una excepción deliberada a la regla general de "aprobación solo en los gates formales" (`CLAUDE.md` restricción 6): agregar el verificador cambia cómo se trabaja la Práctica Independiente en aula y cuesta tiempo de clase, así que la decisión es suya, no una elección de diseño que Claude pueda tomar por su cuenta.
+>
+> Cuándo tiene sentido ofrecerlo: cuando la Práctica Independiente exige comprobar algo concreto (valores del borde, comparar dos programas, casos límite) y Diego no alcanza a pasar por cada puesto. Cuándo no: ejercicios de escritura libre donde no hay un resultado único contra el cual chequear.
+
+En la intro de `### 4. Práctica Independiente`, un bloque `**Celda de configuración:**` + ` ```python ` se emite como celda de código justo después del texto introductorio de la sección. Es donde viven las funciones `verificar_*` / `comparar_*` que después llaman las celdas de verificación de cada ejercicio. Convención heredada de la Clase 17: primera línea `#@title 🔧 … (no la edites)`, que en Colab colapsa la celda a solo el título — importante, porque adentro suele estar la lógica correcta.
+
+Sirve para que los estudiantes se autorrevisen sin esperar a que el profe pase por el puesto. Dos formas que ya están probadas:
+- **Comparador**: recibe unos datos, corre internamente dos versiones de un programa y dice si se comportaron igual o distinto. Convierte "encuentra el caso que rompe este programa" en algo verificable sin que el estudiante tenga nada que escribir todavía.
+- **Chequeo de bordes**: recibe lo que el programa del estudiante imprimió para ciertos valores y lo compara. Normaliza el texto (minúsculas, sin tildes) y matchea por subcadena, así un `Nivel: ¡Excelente semana!` calza con `Excelente semana` — sin eso, cualquier diferencia de puntuación da un falso ❌.
+
+Como todavía no se enseñan funciones, el estudiante solo **llama** a estas funciones con datos; nunca las escribe ni las lee.
+
+**Formato antiguo (retrocompatible, solo para regenerar clases anteriores a Clase 20):** narrativa + `Ejemplo:` inline + bloque de código de output, sin bullets "El programa debe" ni pistas. El generador detecta automáticamente cuál formato usa cada ejercicio (`el_programa_debe` presente o no) y no hace falta indicarlo.
 
 **Solucionario (todas las soluciones)**
 `Clase NN - Tema - Solucionario.ipynb` se genera automáticamente junto con `Clase.ipynb` (mismo comando, mismo gate de aprobación) siempre que haya algún contenido de solución en el spec. Contiene, en este orden: respuestas del Haz Ahora, solución de la Práctica Guiada, soluciones de Práctica Independiente, y las preguntas MCQ del Ticket de Salida (enunciado + 4 alternativas rotuladas A/B/C/D + la correcta marcada con ✅ + justificación). Es exclusivamente para el profesor: el Ticket se proyecta y responde a viva voz en clase; el resto Diego lo sube a Classroom recién **después** de dictar la clase. `generar-colab-ejercicios` actualiza este mismo archivo más adelante, agregando las soluciones de `Ejercicios.ipynb` — nunca crea un segundo solucionario.
@@ -270,6 +335,9 @@ El campo `**Respuestas esperadas:**` en el spec captura todo el texto hasta el f
 **Workflow**
 - Solo preguntar a Diego en gates formales de aprobación (objetivo, estructura, Colab de clase, Colab de ejercicios, PPT).
 - Correcciones técnicas intermedias: ejecutar sin preguntar.
+
+**Notas internas del spec que nunca llegan al notebook**
+`limpiar_notas_internas()` borra las líneas que empiezan con `Propósito:`, `Objetivo:` o `Nota de conducción:` — con o sin negrita, con o sin blockquote (`> `). `Actividad:` solo pierde la etiqueta. Se aplica al Haz Ahora, a la narrativa de la Guiada y a la intro de la Práctica Independiente. Usa `Nota de conducción:` en el spec para cualquier cosa dirigida a Diego que viva dentro de una sección que sí se renderiza (timers del PPT, a quién le toca qué ruta, qué conviene hacer notar al cerrar).
 
 ## Limitaciones conocidas
 

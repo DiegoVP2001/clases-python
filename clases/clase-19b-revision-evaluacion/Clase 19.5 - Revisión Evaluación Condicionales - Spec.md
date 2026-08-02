@@ -8,7 +8,7 @@
 
 - **Curso:** 3ro y 4to medio
 - **Duración:** 80 min
-- **Modalidad:** parejas cruzadas (un estudiante de cada tramo de rendimiento por pareja)
+- **Modalidad:** parejas
 - **Plataforma:** Google Colab
 - **Entrega:** Google Classroom
 - **Fecha prevista:** lunes 3 de agosto de 2026
@@ -29,8 +29,8 @@ La rigurosidad es revisar justo el caso donde algo puede fallar, en vez de confi
 `OA1, OA3 | OAd`
 
 - **OA1** — el eje de la clase es análisis de soluciones alternativas: tres formas posibles para el mismo par de preguntas, y decidir cuál corresponde.
-- **OA3** — ambos tramos escriben o depuran programas completos con condicionales.
-- **OAd** — el tramo alto justifica por qué un caso límite rompe un programa; el otro tramo, por qué una rama va anidada y no suelta.
+- **OA3** — escriben un programa completo con condicionales y lo comprueban en los valores del borde.
+- **OAd** — justifican por escrito cuál de dos versiones de un mismo programa está bien y por qué, y qué dato lo demuestra.
 
 ---
 
@@ -46,9 +46,11 @@ Los cuadernos se abren y se miran ~2 minutos en silencio. **No se revisa ítem p
 
 > Nota de conducción: el timer del PPT cubre solo este tramo de trabajo autónomo (`⚡ Haz Ahora <<7:00>>`). La revisión en conjunto de las respuestas toma ~5 min adicionales y la conduce Diego sin reloj.
 
-Tres programas de la prueba que estuvieron mal resueltos, tal como quedaron. Están en celdas ejecutables: se corren, no se adivinan.
+Tres programas de la prueba que estuvieron mal resueltos, tal como quedaron. Están en celdas ejecutables: se corren, no se adivinan. Debajo de cada uno está la pregunta y el espacio para responderla.
 
-**Programa 1**
+**Programa 1 — La app de hábitos de estudio**
+
+*Lo que debía hacer:* clasificar tu racha de días seguidos estudiando en una de cuatro categorías. Con 14 días o más es *Racha de élite*; con 7 o más, *Buena constancia*; con 3 o más, *Racha en marcha*; y con menos que eso, *Recién empezando*.
 
 ```python
 racha_dias_estudio = 12
@@ -65,7 +67,13 @@ else:
 print("Categoría de tu racha:", mensaje_racha)
 ```
 
-**Programa 2**
+1. Ejecuta el Programa 1. ¿Qué imprime? ¿Y qué debería imprimir con una racha de 12 días?
+
+[[respuesta]]
+
+**Programa 2 — El torneo de equipos**
+
+*Lo que debía hacer:* decir si un equipo clasifica a semifinales. Clasifica cuando su puntaje **alcanza** el mínimo exigido, que en este torneo es de 18 puntos.
 
 ```python
 puntaje_equipo = 18
@@ -79,7 +87,13 @@ else:
 print("Resultado del torneo:", mensaje_torneo)
 ```
 
-**Programa 3**
+2. Ejecuta el Programa 2. Después cambia el puntaje a 19 y ejecútalo otra vez. ¿En cuál de los dos casos el resultado quedó equivocado?
+
+[[respuesta]]
+
+**Programa 3 — La micro a Talagante**
+
+*Lo que debía hacer:* decidir cómo sube una persona al micro que va de Isla de Maipo a Talagante. Si tiene pase escolar vigente, sube gratis y no hay nada más que revisar. Si no lo tiene, se mira si el saldo de su tarjeta bip alcanza los \$800 que cuesta el pasaje.
 
 ```python
 tiene_pase_escolar = "si"
@@ -94,10 +108,15 @@ else:
     print("No le alcanza el saldo para el pasaje.")
 ```
 
-1. Ejecuta el Programa 1. ¿Qué imprime? ¿Y qué debería imprimir con una racha de 12 días?
-2. Ejecuta el Programa 2. Después cambia el puntaje a 19 y ejecútalo otra vez. ¿En cuál de los dos casos el resultado quedó equivocado?
 3. Ejecuta el Programa 3. ¿Cuántas líneas imprime? ¿Pueden ser verdaderas las dos al mismo tiempo?
-4. De los tres programas, ¿cuál se parece a un error que cometiste tú en la prueba?
+
+[[respuesta]]
+
+**Para cerrar**
+
+4. De los tres programas, ¿cuál se parece a un error que cometiste tú en la prueba? Míralo en tu Colab de devolución.
+
+[[respuesta]]
 
 **Respuestas esperadas:**
 1. Imprime `"Racha en marcha: no la cortes."`. Debería imprimir `"Buena constancia."`, porque 12 días ya pasó los 7.
@@ -112,21 +131,28 @@ Se proyecta el material ya terminado `Clase 19.5 - Revisión Evaluación Condici
 Frase de entrada al pasar del Haz Ahora al HTML: *"dos de estos tres los reconocen de la prueba. El tercero no lo hemos visto nunca — y es el que explica por qué el tercer programa se comportó así."*
 
 **Concepto 1: Independientes — varios `if` seguidos**
-- Definición: cuando dos preguntas no tienen nada que ver entre sí, cada una va en su propio `if`. Python revisa todos, uno por uno, sin que el resultado de uno afecte al siguiente.
+- Definición: Cuando dos preguntas no tienen nada que ver entre sí, cada una va en su propio `if`. Python revisa todos, uno por uno, sin que el resultado de uno afecte al siguiente.
 - Ejemplo:
   ```python
+  bateria_baja = True
+  hay_wifi_disponible = True
+
   if bateria_baja == True:
       print("Queda poca batería.")
+  >> Queda poca batería.
 
   if hay_wifi_disponible == True:
       print("Hay wifi disponible.")
+  >> Hay wifi disponible.
   ```
-- Idea clave: cada `if` se revisa por su cuenta. Pueden cumplirse los dos, uno solo o ninguno.
+- Idea clave: Cada `if` se revisa por su cuenta. Pueden cumplirse los dos, uno solo o ninguno.
 
 **Concepto 2: Excluyentes — `if / elif / else`, y el orden decide**
-- Definición: cuando las preguntas son distintas versiones de lo mismo y solo una puede ser la respuesta, van encadenadas con `elif`. El primer `elif` que se cumple se lleva todo y los de más abajo ni siquiera se revisan.
+- Definición: Cuando las preguntas son distintas versiones de lo mismo y solo una puede ser la respuesta, van encadenadas con `elif`. El primer `elif` que se cumple se lleva todo y los de más abajo ni siquiera se revisan.
 - Ejemplo:
   ```python
+  racha_dias_estudio = 12
+
   if racha_dias_estudio >= 14:
       print("Categoría de tu racha:", "Racha de élite")
   elif racha_dias_estudio >= 7:
@@ -135,13 +161,17 @@ Frase de entrada al pasar del Haz Ahora al HTML: *"dos de estos tres los reconoc
       print("Categoría de tu racha:", "Racha en marcha")
   else:
       print("Categoría de tu racha:", "Recién empezando")
+  >> Categoría de tu racha: Buena constancia
   ```
-- Idea clave: la condición más exigente va primero. Si la más amplia va arriba, se lleva el agua de todas las de abajo y esas ramas nunca se alcanzan.
+- Idea clave: La condición más exigente va primero. Si la más amplia va arriba, se lleva el agua de todas las de abajo y esas ramas nunca se alcanzan.
 
 **Concepto 3: Una depende de la otra — `if` anidado**
-- Definición: cuando la segunda pregunta solo tiene sentido si la primera resultó de cierta manera, la segunda va escrita **dentro** de la primera.
+- Definición: Cuando la segunda pregunta solo tiene sentido si la primera resultó de cierta manera, la segunda va escrita **dentro** de la primera.
 - Ejemplo:
   ```python
+  tiene_pase_escolar = "si"
+  saldo_tarjeta_bip = 200
+
   if tiene_pase_escolar == "si":
       print("Sube gratis con su pase escolar.")
   else:
@@ -149,11 +179,12 @@ Frase de entrada al pasar del Haz Ahora al HTML: *"dos de estos tres los reconoc
           print("Paga el pasaje con la tarjeta bip.")
       else:
           print("No le alcanza el saldo para el pasaje.")
+  >> Sube gratis con su pase escolar.
   ```
-- Idea clave: si escribes las dos preguntas sueltas, la segunda se hace siempre — incluso a quien ya subió con su pase. Es exactamente el Programa 3 del Haz Ahora.
+- Idea clave: Son los **mismos datos** del Programa 3 del Haz Ahora, y ahora imprime una sola línea. Si escribes las dos preguntas sueltas, la segunda se hace siempre — incluso a quien ya subió con su pase.
 
 **Concepto 4: Probar el valor del borde**
-- Definición: el borde es el valor exacto donde una condición cambia de resultado. Un programa puede funcionar con todos los ejemplos que le probaste y fallar solo ahí.
+- Definición: El borde es el valor exacto donde una condición cambia de resultado. Un programa puede funcionar con todos los ejemplos que le probaste y fallar solo ahí.
 - Ejemplo:
   ```python
   puntaje_equipo = 18
@@ -163,8 +194,9 @@ Frase de entrada al pasar del Haz Ahora al HTML: *"dos de estos tres los reconoc
       print("Resultado del torneo:", "El equipo clasifica a semifinales.")
   else:
       print("Resultado del torneo:", "El equipo queda eliminado.")
+  >> Resultado del torneo: El equipo clasifica a semifinales.
   ```
-- Idea clave: cuando termines de escribir, prueba el valor exacto del borde. En estos programas son 14, 7, 3, 18 y 800.
+- Idea clave: Cuando termines de escribir, prueba el valor exacto del borde. En estos programas son 14, 7, 3, 18 y 800.
 
 **Errores típicos:**
 
@@ -191,10 +223,25 @@ Si la escribes junto a las otras dos preguntas del principio, el programa se la 
 
 **Resultado esperado:**
 
-| Ejemplo 1 | Ejemplo 2 |
-|---|---|
-| 📥 *El usuario ingresa* <pre>12<br>si</pre> | 📥 *El usuario ingresa* <pre>0<br>no<br>4</pre> |
-| 📤 *El programa imprime* <pre>Categoría de tu racha: Buena constancia</pre> | 📤 *El programa imprime* <pre>Categoría de tu racha: Recién empezando<br>Aviso: todavía no registras estudio de hoy.<br>Todavía puedes retomar la racha anterior.</pre> |
+<table>
+<tr>
+  <th>Ejemplo 1</th>
+  <th>Ejemplo 2</th>
+</tr>
+<tr>
+  <td>📥 <em>El usuario ingresa</em><pre>12
+si</pre></td>
+  <td>📥 <em>El usuario ingresa</em><pre>0
+no
+4</pre></td>
+</tr>
+<tr>
+  <td>📤 <em>El programa imprime</em><pre>Categoría de tu racha: Buena constancia</pre></td>
+  <td>📤 <em>El programa imprime</em><pre>Categoría de tu racha: Recién empezando
+Aviso: todavía no registras estudio de hoy.
+Todavía puedes retomar la racha anterior.</pre></td>
+</tr>
+</table>
 
 - Solución:
   ```python
@@ -225,127 +272,221 @@ Nota de conducción: el Ejemplo 1 usa **racha = 12**, el mismo valor del Program
 
 ### 4. Práctica Independiente (20 min)
 
-**Trabajo diferenciado en parejas cruzadas** — un estudiante de cada tramo por pareja. Ambas rutas trabajan sobre las **mismas dos especificaciones** (los ítems 2.2 y 2.3 de la Evaluación 2), desde lados opuestos: una las escribe, la otra las rompe.
+Trabajo en parejas, **los mismos dos ejercicios para todo el curso**. Antes de empezar, ejecuta la celda de configuración de abajo: deja listos los verificadores con los que van a revisar su propio trabajo, sin tener que esperar a que el profe pase por el puesto.
 
-Distribución del tiempo: **12 min de trabajo propio + 8 min de cruce.**
+**Celda de configuración:**
 
-El emparejamiento es simétrico y hay que decirlo así al curso: quien diseña casos necesita un programa que probar, y quien repara necesita saber si su arreglo aguanta. **La Ruta A no hace de ayudantía de la Ruta B.**
+```python
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
 
----
+import unicodedata
 
-#### Ruta A — para quienes ya resolvieron la Sección 2 completa
 
-**Ejercicio 1 — La batería que rompe programas (obligatorio)**
+def _normalizar(texto):
+    texto = str(texto).strip().lower()
+    texto = unicodedata.normalize("NFKD", texto)
+    return "".join(letra for letra in texto if not unicodedata.combining(letra))
 
-Un programa que pasa todos los ejemplos que le probaste no es un programa correcto: es un programa que todavía no encuentras cómo romper. Tu trabajo hoy no es escribir programas, es escribir los casos que los hacen caer. Vas a preparar la batería de pruebas para las dos especificaciones de abajo, y en unos minutos se la vas a aplicar al programa de tu pareja.
 
-**Especificación 1 — Micro a Talagante:** el sistema revisa primero si la persona tiene pase escolar vigente; si no lo tiene, revisa si el saldo de su tarjeta bip alcanza los \$800 del pasaje. Tres caminos posibles: sube gratis con su pase / paga el pasaje con la bip / no le alcanza el saldo.
+def _version_1(esta_inscrito, trae_autorizacion, cupos_disponibles):
+    salida = []
+    if esta_inscrito == "si":
+        salida.append("Puedes entrar al taller.")
+    else:
+        if trae_autorizacion == "si":
+            salida.append("Entras con autorización firmada.")
+        else:
+            salida.append("No puedes entrar: falta autorización.")
 
-**Especificación 2 — Ahorro semanal en dólares:** clasifica el monto ahorrado en la semana (puede tener decimales) en cuatro niveles: menos de 10 → *Recién empezando*; de 10 a menos de 30 → *En camino*; de 30 a menos de 60 → *Buen ahorro*; 60 o más → *¡Excelente semana!*
+    if cupos_disponibles < 5:
+        salida.append("Quedan pocos cupos disponibles.")
+    else:
+        salida.append("Todavía quedan cupos de sobra.")
+    return salida
+
+
+def _version_2(esta_inscrito, trae_autorizacion, cupos_disponibles):
+    salida = []
+    if esta_inscrito == "si":
+        salida.append("Puedes entrar al taller.")
+
+    if trae_autorizacion == "si":
+        salida.append("Entras con autorización firmada.")
+    else:
+        salida.append("No puedes entrar: falta autorización.")
+
+    if cupos_disponibles < 5:
+        salida.append("Quedan pocos cupos disponibles.")
+    else:
+        salida.append("Todavía quedan cupos de sobra.")
+    return salida
+
+
+def comparar_versiones(esta_inscrito, trae_autorizacion, cupos_disponibles):
+    salida_1 = _version_1(esta_inscrito, trae_autorizacion, cupos_disponibles)
+    salida_2 = _version_2(esta_inscrito, trae_autorizacion, cupos_disponibles)
+    print("Datos probados -> inscrito:", esta_inscrito,
+          "| autorización:", trae_autorizacion,
+          "| cupos:", cupos_disponibles)
+    print()
+    print("--- Versión 1 ---")
+    for linea in salida_1:
+        print(linea)
+    print()
+    print("--- Versión 2 ---")
+    for linea in salida_2:
+        print(linea)
+    print()
+    if salida_1 == salida_2:
+        print("🔎 Las dos versiones imprimieron exactamente lo mismo. Prueba con otros datos.")
+    else:
+        print("🎯 Encontraste un caso donde las dos versiones NO se comportan igual.")
+        print("   Anótalo y explica cuál de las dos está bien y por qué.")
+
+
+_NIVEL_ESPERADO = {10: "En camino", 30: "Buen ahorro", 60: "Excelente semana"}
+
+
+def verificar_bordes(con_10="", con_30="", con_60=""):
+    entregado = {10: con_10, 30: con_30, 60: con_60}
+    correctas = 0
+    for monto in (10, 30, 60):
+        respuesta = _normalizar(entregado[monto])
+        if respuesta == "":
+            print("⬜ Con", monto, "dólares todavía no escribiste qué mostró tu programa.")
+        elif _normalizar(_NIVEL_ESPERADO[monto]) in respuesta:
+            print("✅ Con", monto, "dólares tu programa clasifica bien.")
+            correctas += 1
+        else:
+            print("❌ Con", monto, "dólares tu programa no clasifica como corresponde.")
+            print("   Revisa el orden de tus condiciones y qué pasa justo en ese valor.")
+    print()
+    if correctas == 3:
+        print("🎉 Los tres bordes quedaron correctos: tu cadena está bien ordenada.")
+    else:
+        print("Te faltan", 3 - correctas, "borde(s). El borde es justo donde una cadena mal ordenada se rompe.")
+```
+
+**Ejercicio 1 — Las dos versiones del taller de robótica (obligatorio)**
+
+El taller de robótica del liceo tiene un sistema en la entrada que hace dos cosas a la vez: decide si la persona puede pasar y, además, avisa cómo va la disponibilidad de cupos para la próxima sesión. Dos compañeros lo programaron por separado y los dos juran que el suyo funciona. Con casi todos los datos que han probado imprimen exactamente lo mismo — pero uno de los dos está mal.
+
+Así debía funcionar: si la persona **está inscrita** en el taller, pasa directo. Si **no está inscrita**, recién ahí se revisa si trae la **autorización firmada**. Aparte de eso, y sin importar quién sea la persona, el sistema avisa si quedan **menos de 5 cupos** para la próxima sesión.
+
+<table>
+<tr>
+  <th>Versión 1</th>
+  <th>Versión 2</th>
+</tr>
+<tr>
+<td><pre>if esta_inscrito == "si":
+    print("Puedes entrar al taller.")
+else:
+    if trae_autorizacion == "si":
+        print("Entras con autorización firmada.")
+    else:
+        print("No puedes entrar: falta autorización.")
+
+if cupos_disponibles &lt; 5:
+    print("Quedan pocos cupos disponibles.")
+else:
+    print("Todavía quedan cupos de sobra.")</pre></td>
+<td><pre>if esta_inscrito == "si":
+    print("Puedes entrar al taller.")
+
+if trae_autorizacion == "si":
+    print("Entras con autorización firmada.")
+else:
+    print("No puedes entrar: falta autorización.")
+
+if cupos_disponibles &lt; 5:
+    print("Quedan pocos cupos disponibles.")
+else:
+    print("Todavía quedan cupos de sobra.")</pre></td>
+</tr>
+</table>
 
 **El trabajo debe:**
-- Entregar **al menos 3 casos por especificación**, cada uno con qué se ingresa, qué debería imprimir, y qué error estaría cazando.
-- Incluir el **valor exacto del borde** de cada frontera: los \$800 de la micro, y el 10, el 30 y el 60 del ahorro.
-- Incluir **al menos un caso donde un programa correcto y uno con las preguntas sueltas den resultados distintos** — el que distingue el anidado de dos `if` sueltos.
-
-Formato de entrega, una tabla por especificación:
-
-| Qué se ingresa | Qué debería imprimir | Qué error estaría cazando |
-|---|---|---|
-| | | |
-
-**Ejercicio 2 — Probar el programa de tu pareja (obligatorio)**
-
-Cuando tu pareja termine, pásale la batería completa y córranla juntos, caso por caso.
-
-**El trabajo debe:**
-- Anotar **cuál caso cayó** y qué imprimió en vez de lo esperado.
-- Después de que tu pareja arregle el programa, **volver a correr la batería entera** — no solo el caso que falló. Un arreglo puede romper un caso que antes pasaba.
-- Cerrar con una frase: ¿el programa aguanta ahora la batería completa, sí o no?
-
----
-
-#### Ruta B — para quienes dejaron esos ejercicios sin terminar
-
-Los dos ejercicios que quedaron en blanco, otra vez — pero esta vez decidiendo la estructura **antes** de escribir código. Completa primero la tabla de decisión y recién después abre la celda de código.
-
-**Ejercicio 1 — Micro a Talagante (obligatorio)**
-
-Para subir al micro que va desde Isla de Maipo hasta Talagante, el sistema revisa primero si la persona tiene pase escolar vigente. Si no lo tiene, recién ahí revisa si el saldo de su tarjeta bip alcanza para pagar el pasaje, que cuesta \$800. Según esos datos, el programa muestra cómo puede subir la persona.
-
-**Antes de programar, completa esta tabla:**
-
-| ¿Qué se pregunta? | ¿Depende de otra pregunta? | ¿Qué imprime? |
-|---|---|---|
-| ¿Tiene pase escolar vigente? | No — es la primera | `"Sube gratis con su pase escolar."` |
-| ¿El saldo alcanza los \$800? | *(completar)* | *(completar)* |
-| ¿Y si el saldo no alcanza? | *(completar)* | *(completar)* |
-
-**El programa debe:**
-- Pedir si la persona **tiene pase escolar vigente** (responde exactamente `"si"` o `"no"`).
-- Si **no** tiene pase, pedir además el **saldo de la tarjeta bip**, un número entero en pesos.
-- Verificar **primero** el pase escolar; solo si no lo tiene, verificar si el saldo **alcanza** los \$800.
-- Mostrar el mensaje que corresponda a cada uno de los tres caminos.
+- Encontrar **un dato con el que las dos versiones NO impriman lo mismo**. Para probar, cambia los tres valores de la celda de abajo y ejecútala las veces que necesites.
+- Seguir probando hasta que el verificador diga que encontraste el caso. Ojo: hay **varios** datos que sirven, no uno solo.
+- Escribir tus conclusiones en la celda de respuesta: con qué dato dejaron de comportarse igual, qué imprimió cada versión, y **cuál de las dos está bien y por qué**. Con tus palabras, no hace falta que sea largo.
 
 <details>
-<summary>💡 Pista — cuándo se pide el saldo</summary>
-Si el saldo se pide al principio junto con el pase, el programa se lo pregunta también a quien va a subir gratis. Fíjate en tu tabla: la fila del saldo dice que depende de la primera pregunta, así que el `input()` del saldo va escrito dentro de esa rama.
+<summary>💡 Pista — por dónde empezar a probar</summary>
+Fíjate en el enunciado: la pregunta de la autorización solo tiene sentido para cierto tipo de persona. Prueba primero con alguien a quien esa pregunta <em>no</em> debería hacérsele, y mira si las dos versiones se la hacen igual.
 </details>
 
-**Resultado esperado:**
+**Celda de verificación:**
 
-| Ejemplo 1 | Ejemplo 2 |
-|---|---|
-| 📥 *El usuario ingresa* <pre>si</pre> | 📥 *El usuario ingresa* <pre>no<br>500</pre> |
-| 📤 *El programa imprime* <pre>Sube gratis con su pase escolar.</pre> | 📤 *El programa imprime* <pre>No le alcanza el saldo para el pasaje.</pre> |
+```python
+# Cambia estos tres datos y ejecuta la celda las veces que necesites
+comparar_versiones(esta_inscrito="no", trae_autorizacion="si", cupos_disponibles=8)
+```
 
-- Solución:
-  ```python
-  tiene_pase_escolar = input("¿Tiene pase escolar vigente? (si/no): ")
+**Solución de referencia:**
 
-  if tiene_pase_escolar == "si":
-      print("Sube gratis con su pase escolar.")
-  else:
-      saldo_tarjeta_bip = int(input("Ingresa el saldo de la tarjeta bip: "))
-      if saldo_tarjeta_bip >= 800:
-          print("Paga el pasaje con la tarjeta bip.")
-      else:
-          print("No le alcanza el saldo para el pasaje.")
-  ```
+Las dos versiones se comportan igual siempre que `esta_inscrito` sea `"no"`. **Difieren en cualquier caso donde la persona esté inscrita**, porque la Versión 2 le hace igual la pregunta de la autorización. Los dos casos que sirven:
 
-**Ejercicio 2 — Ahorro semanal en dólares (obligatorio)**
-
-Una alcancía digital lleva el registro de cuánto ahorras en dólares cada semana — varias personas en Chile prefieren ahorrar en esta moneda para protegerse de la fluctuación del peso. Dado el monto ahorrado, el programa muestra el nivel que corresponde: menos de 10 dólares es *Recién empezando*; de 10 a menos de 30 es *En camino*; de 30 a menos de 60 es *Buen ahorro*; y de 60 en adelante es *¡Excelente semana!*
-
-**Antes de programar, completa esta tabla.** El orden de las filas es el orden en que tu programa va a hacer las preguntas, así que decídelo ahora:
-
-| Orden | Condición (en palabras) | Qué imprime |
+| Dato | Versión 1 | Versión 2 |
 |---|---|---|
-| 1° | *(completar)* | *(completar)* |
-| 2° | *(completar)* | *(completar)* |
-| 3° | *(completar)* | *(completar)* |
-| 4° — el caso que sobra | *(completar)* | *(completar)* |
+| inscrito `"si"`, autorización `"no"` | `Puedes entrar al taller.` + el aviso de cupos | agrega `No puedes entrar: falta autorización.` — **se contradice consigo misma** |
+| inscrito `"si"`, autorización `"si"` | `Puedes entrar al taller.` + el aviso de cupos | agrega `Entras con autorización firmada.` — redundante, dos permisos para una misma persona |
+
+La correcta es la **Versión 1**: la pregunta de la autorización solo corresponde hacérsela a quien no está inscrito, así que va escrita **dentro** del `else` de la primera. El aviso de cupos, en cambio, sí es independiente y por eso va suelto en las dos versiones — lo que confirma que el problema no es tener varios `if` seguidos, sino tenerlos cuando las preguntas dependen una de otra. Si un estudiante solo prueba con gente no inscrita, nunca ve la diferencia: ese es el punto de la clase.
+
+**Celda de respuesta:** markdown
+
+**Plantilla de respuesta:**
+
+*Con qué dato las dos versiones dejaron de comportarse igual, qué imprimió cada una, y cuál de las dos está bien y por qué:*
+
+**Ejercicio 2 — La alcancía en dólares (obligatorio)**
+
+Una alcancía digital lleva el registro de cuánto ahorras en dólares cada semana — varias personas en Chile prefieren ahorrar en esta moneda para protegerse de la fluctuación del peso. Además del nivel que alcanzaste, la app tiene que avisarte si esta semana compartiste la alcancía con alguien, para que no se te olvide repartir lo juntado. Ese aviso no tiene nada que ver con cuánto ahorraste: aparece igual, te haya ido bien o mal.
 
 **El programa debe:**
 - Pedir el **monto ahorrado esta semana en dólares**, que puede tener decimales.
-- Clasificar el monto en los **cuatro niveles**, mostrando uno solo.
-- Respetar el orden que escribiste en la tabla, de modo que las cuatro franjas queden bien delimitadas: sin huecos y sin que un monto caiga en dos niveles.
+- Pedir si esta semana **compartiste la alcancía** con alguien (se responde exactamente `"si"` o `"no"`).
+- Mostrar **un solo** nivel según el monto: menos de 10 es *Recién empezando*; de 10 a menos de 30 es *En camino*; de 30 a menos de 60 es *Buen ahorro*; de 60 en adelante es *¡Excelente semana!*
+- Mostrar **aparte** el recordatorio de repartir lo ahorrado cuando la alcancía fue compartida, **sin que dependa** del nivel que salió.
+- Antes de darlo por listo, ejecutarlo con **10, 30 y 60 exactos** y comprobar los tres con la celda de verificación.
 
 <details>
-<summary>💡 Pista — probar el borde</summary>
-Cuando termines, prueba tu programa con 10, con 30 y con 60 exactos. Esos tres valores son los que separan un nivel del siguiente, y son justo donde una cadena mal ordenada se rompe sin avisar.
+<summary>💡 Pista — el orden de la cadena</summary>
+Las cuatro franjas se revisan en cadena, así que el orden decide todo. Escribe primero la condición más exigente y baja desde ahí; si partes por la más amplia, esa se lleva todos los casos y las de abajo nunca se alcanzan.
 </details>
 
 **Resultado esperado:**
 
-| Ejemplo 1 | Ejemplo 2 |
-|---|---|
-| 📥 *El usuario ingresa* <pre>15</pre> | 📥 *El usuario ingresa* <pre>62.5</pre> |
-| 📤 *El programa imprime* <pre>Nivel: En camino.</pre> | 📤 *El programa imprime* <pre>Nivel: ¡Excelente semana!</pre> |
+<table>
+<tr>
+  <th>Ejemplo 1</th>
+  <th>Ejemplo 2</th>
+</tr>
+<tr>
+  <td>📥 <em>El usuario ingresa</em><pre>15
+no</pre></td>
+  <td>📥 <em>El usuario ingresa</em><pre>60
+si</pre></td>
+</tr>
+<tr>
+  <td>📤 <em>El programa imprime</em><pre>Nivel: En camino.</pre></td>
+  <td>📤 <em>El programa imprime</em><pre>Nivel: ¡Excelente semana!
+Recuerda repartir lo ahorrado con quien compartiste la alcancía.</pre></td>
+</tr>
+</table>
+
+**Celda de verificación:**
+
+```python
+# Ejecuta tu programa con 10, con 30 y con 60, y escribe aquí el nivel que mostró cada vez
+verificar_bordes(con_10="", con_30="", con_60="")
+```
 
 - Solución:
   ```python
   monto_ahorrado_semana = float(input("Ingresa cuántos dólares ahorraste esta semana: "))
+  alcancia_compartida = input("¿Compartiste la alcancía esta semana? (si/no): ")
 
   if monto_ahorrado_semana < 10:
       print("Nivel: Recién empezando.")
@@ -355,67 +496,72 @@ Cuando termines, prueba tu programa con 10, con 30 y con 60 exactos. Esos tres v
       print("Nivel: Buen ahorro.")
   else:
       print("Nivel: ¡Excelente semana!")
+
+  if alcancia_compartida == "si":
+      print("Recuerda repartir lo ahorrado con quien compartiste la alcancía.")
   ```
 
-**Criterio de logro:** Ruta A entrega una batería que efectivamente hace caer un programa mal estructurado, incluyendo los valores exactos del borde. Ruta B entrega dos programas que producen la salida correcta en los tres caminos de la micro y en las cuatro franjas del ahorro, incluidos los bordes.
+**Criterio de logro:** en el Ejercicio 1, identificar un dato que separe a las dos versiones y justificar que la correcta es la Versión 1, porque la pregunta de la autorización solo corresponde hacérsela a quien no está inscrito. En el Ejercicio 2, un programa que entrega el nivel correcto en las cuatro franjas —incluidos los bordes 10, 30 y 60— y que muestra el recordatorio de forma independiente del nivel.
 
 ### 5. Ticket de Salida (6 min)
 
+> Los tres contextos son deliberadamente **distintos** a los de la clase y a los de la Evaluación 2 (racha de estudio, torneo, micro a Talagante, ahorro en dólares, batería/wifi): el Ticket mide si el concepto se transfiere a una situación nueva, no si recuerdan el ejercicio.
+
 **Pregunta 1:**
 ```python
-puntaje_equipo = int(input("Puntaje del equipo: "))
+espacio_libre_mb = int(input("¿Cuántos MB libres te quedan? "))
 
-if puntaje_equipo >= 18:
-    mensaje_torneo = "El equipo clasifica a semifinales."
+if espacio_libre_mb >= 1200:
+    mensaje_instalacion = "El juego se puede instalar."
 else:
-    mensaje_torneo = "El equipo queda eliminado."
+    mensaje_instalacion = "Necesitas liberar espacio primero."
 
-print("Resultado del torneo:", "El equipo clasifica a semifinales.")  # <- esta línea
+print("Estado:", "El juego se puede instalar.")  # <- esta línea
 ```
-Si alguien ingresa un puntaje de 5, ¿qué imprime este programa?
-- A: `Resultado del torneo: El equipo queda eliminado.`
-- B: `Resultado del torneo: El equipo clasifica a semifinales.`
-- C: No imprime nada, porque la condición no se cumple.
-- D: Da error, porque `mensaje_torneo` nunca se usa.
+Si alguien ingresa 300, ¿qué imprime este programa?
+- A: `Estado: Necesitas liberar espacio primero.`
+- B: No imprime nada, porque la condición no se cumple.
+- C: `Estado: El juego se puede instalar.`
+- D: Da error, porque `mensaje_instalacion` nunca se usa.
 
-**Respuesta correcta:** B
-**Justificación:** el `if` calcula bien el mensaje y lo guarda en `mensaje_torneo`, pero el `print()` no usa esa variable: imprime un texto fijo escrito a mano. El programa dice siempre lo mismo, sin importar el puntaje que se ingrese.
+**Respuesta correcta:** C
+**Justificación:** el `if` calcula bien el mensaje y lo guarda en `mensaje_instalacion`, pero el `print()` no usa esa variable: imprime un texto fijo escrito a mano. El programa dice siempre lo mismo, sin importar cuánto espacio se ingrese.
 
 **Pregunta 2:**
 ```python
-saldo_tarjeta_bip = input("Ingresa el saldo de la tarjeta bip: ")
+precio_entrada = input("¿Cuánto cuesta la entrada al partido? ")
 
-if saldo_tarjeta_bip >= 800:
-    print("Paga el pasaje con la tarjeta bip.")
+if precio_entrada <= 12000:
+    print("Te alcanza para ir al partido.")
 else:
-    print("No le alcanza el saldo para el pasaje.")
+    print("Esta vez te quedas fuera.")
 ```
-Si alguien ingresa 1500, ¿qué pasa?
-- A: Imprime `Paga el pasaje con la tarjeta bip.`
-- B: Imprime `No le alcanza el saldo para el pasaje.`
-- C: El programa se detiene con un error, porque está comparando texto con un número.
+Si alguien ingresa 8000, ¿qué pasa?
+- A: El programa se detiene con un error, porque está comparando texto con un número.
+- B: Imprime `Te alcanza para ir al partido.`
+- C: Imprime `Esta vez te quedas fuera.`
 - D: Imprime las dos líneas.
 
-**Respuesta correcta:** C
-**Justificación:** `input()` siempre entrega texto, aunque escribas números. Sin `int()`, Python no puede comparar el texto `"1500"` con el número `800` y el programa se cae. La forma correcta es `int(input(...))`.
+**Respuesta correcta:** A
+**Justificación:** `input()` siempre entrega texto, aunque escribas números. Sin `int()`, Python no puede comparar el texto `"8000"` con el número `12000` y el programa se cae. La forma correcta es `int(input(...))`.
 
 **Pregunta 3:**
 ```python
-# La app avisa dos cosas del estado de tu teléfono:
-if bateria_baja == True:
-    print("Queda poca batería.")
+# El juego muestra dos avisos mientras juegas:
+if vida_baja == True:
+    print("¡Cuidado! Te queda poca vida.")
 
-if hay_wifi_disponible == True:
-    print("Hay wifi disponible.")
+if amigo_conectado == True:
+    print("Un amigo tuyo acaba de conectarse.")
 ```
-¿Por qué estas dos preguntas van con dos `if` separados y no encadenadas con `elif`?
+¿Por qué estos dos avisos van con dos `if` separados y no encadenados con `elif`?
 - A: Porque `elif` solo funciona con números, no con `True` y `False`.
 - B: Porque `elif` siempre necesita un `else` al final y aquí no hace falta.
 - C: Porque el orden de los avisos cambiaría si se usara `elif`.
 - D: Porque son independientes: pueden ser verdaderas las dos a la vez, y con `elif` el segundo aviso nunca aparecería junto al primero.
 
 **Respuesta correcta:** D
-**Justificación:** que quede poca batería no cambia si hay wifi. Son preguntas sin relación, así que cada una necesita su propio `if`. Encadenadas con `elif`, apenas se cumpliera la primera, la segunda ni siquiera se revisaría.
+**Justificación:** que te quede poca vida no cambia si un amigo se conecta. Son preguntas sin relación, así que cada una necesita su propio `if`. Encadenadas con `elif`, apenas se cumpliera la primera, la segunda ni siquiera se revisaría.
 
 ### Cierre (5 min)
 
@@ -450,9 +596,13 @@ La tarjeta 1 es la única sin error asociado **porque nunca se enseñó** — ve
 
 **El ICN puede durar solo 15 min** porque el Haz Ahora hace trabajo real: llegan al HTML con tres preguntas ya vividas en su propia pantalla, así que las tarjetas 2, 3 y el cierre del borde consolidan en vez de introducir.
 
-**Andamiaje de la Ruta B: tabla de decisión, no starter code.** Se evaluaron las dos opciones. Se descartó el esqueleto con condiciones en blanco porque les regala la estructura, que es exactamente lo que fallaron: no vieron que la segunda pregunta iba dentro de la primera. La tabla de decisión los obliga a comprometerse con la estructura antes de escribir, y respeta la regla del proyecto de celda de código siempre vacía.
+**Se descartó la diferenciación por rutas cruzadas.** La primera versión repartía trabajo distinto según el tramo de rendimiento, con parejas cruzadas: un lado escribía los programas y el otro diseñaba los casos que los rompían. Se descartó por inviable en aula, y la razón de fondo no fue la diferenciación sino **la dependencia**: quien diseñaba casos no podía empezar a probar hasta que su pareja tuviera un programa funcionando — y esa pareja era justo el tramo que había dejado esos ejercicios en blanco. A eso se sumaba armar las parejas antes de la clase y sostener dos bloques paralelos en un mismo notebook.
 
-**La Ruta A no hace de ayudantía.** Al tramo alto la Sección 2 no le dejó nada que reforzar (97-100%), así que una clase de repaso general los desperdiciaría. Su trabajo propio —diseñar los casos límite— es genuinamente más difícil que reescribir los programas, y el cruce es simétrico: quien diseña casos necesita un programa que probar, y quien repara necesita saber si su arreglo aguanta.
+**La diferenciación ahora ocurre sola, sin repartir a nadie.** Los mismos dos ejercicios para todo el curso. El Ejercicio 1 tiene techo alto sin costarle tiempo muerto a nadie: el código está dado, así que cualquiera puede empezar de inmediato, pero encontrar el dato que separa a las dos versiones es difícil de verdad — y hay varios datos que sirven, no uno solo. El Ejercicio 2 parte con la celda de código vacía para todos.
+
+**El verificador reemplaza a la pareja.** Lo que en la versión descartada aportaba el compañero —un programa real que probar, y alguien que confirmara si el arreglo aguantaba— ahora lo entrega una celda de configuración con dos funciones. `comparar_versiones()` corre internamente ambas versiones del taller y dice si se comportaron igual o distinto; `verificar_bordes()` recibe lo que el programa del estudiante imprimió en 10, 30 y 60 y lo compara. Se autorrevisan sin esperar a que el profe pase por el puesto, y sin depender del ritmo de nadie más.
+
+**Los contextos del Ticket son nuevos a propósito.** Espacio del celular, entrada a un partido y avisos de un videojuego — ninguno aparece en la clase ni en la Evaluación 2. El Ticket mide si el concepto se transfiere a una situación que no vieron, no si recuerdan el ejercicio con el que se enseñó. La Práctica Independiente hace lo contrario y también a propósito: el Ejercicio 2 retoma el ítem 2.3 de la prueba, porque ahí sí lo que se busca es cerrar una brecha concreta.
 
 **Cierre formativo, no recuperativa.** La nota está cerrada. Se dice al abrir para que la clase no se vuelva negociación de puntos.
 
