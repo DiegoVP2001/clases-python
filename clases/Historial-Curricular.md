@@ -25,6 +25,7 @@
 | **16** | **for + range()** | `clase-16-for-range` | N°13, N°14 — Sentencia for + range() | Spec aprobada (Colab+PPT+Reel ya generados; falta Ejercicios.ipynb) — programada para dictarse | **2026-08-04** | OA1, OA3 |
 | **18** | **Reforzamiento — repaso Clase 17 + nueva guía rápida** | `clase-18-reforzamiento-condicionales` | N/A — clase de consolidación (repaso previo a la evaluación) | ✅ Completa | **2026-07-20** | OA1, OA3 \| OAd |
 | **19** | **🎯 Evaluación individual — Condicionales** (if/else, if anidadas, elif) | `clase-19-evaluacion-condicionales` | N/A — evaluación sumativa individual | Spec + Evaluación + Solucionario generados — se rinde hoy | **2026-07-28** | OA1, OA3 \| OAd |
+| **19.5** | **Revisión Evaluación Condicionales** (independientes / excluyentes / dependientes + probar el valor del borde) | `clase-19b-revision-evaluacion` | N/A — cierre formativo (retoma N°11 y N°12, e introduce el contraste con `if` independientes) | Spec aprobada | **2026-08-03** | OA1, OA3 \| OAd |
 | **20** | **For anidado** | `clase-20-for-avanzado` | N°17 — Sentencias for anidadas | Spec aprobada | **2026-08-06** | OA1, OA3 |
 | **21** | **Ayudantía — Ejercitación Ciclos** (for+range, continue/break/for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Planificada (sin propuesta aún) | **2026-08-10** | OA1, OA3 |
 | **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Planificada | sep 2026 | OA1, OA3 |
@@ -51,7 +52,7 @@
 |---|---|---|
 | Martes (hoy) | 2026-07-28 | N° 19 — 🎯 Evaluación individual — Condicionales |
 | Jueves | 2026-07-30 | Sin clases |
-| Lunes | 2026-08-03 | Revisión de la prueba N°19 — parte 1: errores más frecuentes; parte 2: guía dirigida a esos errores. Sin spec ni N° real aún |
+| Lunes | 2026-08-03 | **N° 19.5 — Revisión Evaluación Condicionales** (spec aprobada 2026-08-01). El Haz Ahora es la revisión de los errores comunes con ítems reales de la prueba; el ICN los cierra con el HTML "Tres Formas"; la Práctica Independiente va diferenciada en parejas cruzadas |
 | Martes | 2026-08-04 | N° 16 — for + range() |
 | Jueves | 2026-08-06 | N° 20 — For anidado (contenido nuevo — spec aprobada 2026-07-28) |
 | Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza el `Ejercicios.ipynb` propio de Clase 16, que no se generará) |

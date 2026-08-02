@@ -1,6 +1,6 @@
 # Clase 19.5 — Revisión Evaluación Condicionales — Historial
 
-**Estado:** en diseño. Solo existe el material de proyección; **la spec todavía no se escribe** (queda para una sesión aparte, por decisión de Diego).
+**Estado:** Spec aprobada (2026-08-01). Existen el material de proyección y la spec; faltan los artefactos (Colab de clase + Solucionario, PPT, PPT del Ticket de Salida).
 
 **Fecha prevista:** lunes 3 de agosto de 2026 · 80 minutos.
 **Numeración:** N° 19.5, decimal, para no renumerar el resto del plan (mismo patrón que 22.5 y 28.5). Va entre la evaluación del 28-07 y For anidado del 06-08.
@@ -66,10 +66,27 @@ Los errores menores del punto 5 **no entran al ICN** — van a las 3 preguntas d
 
 Verificado en navegador: los 7 canvas con escalado entero, sin desborde horizontal, y la lógica de cada escena comprobada leyendo los píxeles pintados.
 
+## 2026-08-01 — Spec aprobada
+
+Objetivo: distinguir si dos condiciones son independientes, excluyentes o dependientes, escribir la forma de `if` que corresponde y comprobarla en el valor del borde, **con rigurosidad**. OAs: `OA1, OA3 | OAd`.
+
+Actitud elegida entre cuatro candidatas (Criterio, Rigurosidad, Método, Autocrítica). Diego eligió **Rigurosidad**, que ancla la clase en la herramienta transversal —probar el valor del borde— y no solo en el eje de decisión.
+
+**Cambio de arquitectura pedido por Diego durante el diseño (v1 → v2).** La primera versión abría con un escenario inventado (una corrida familiar por la ribera del Maipo) que compartía narrativa con la Práctica Guiada, según el patrón por defecto. Diego pidió que **la revisión de la prueba se "comiera" el Haz Ahora**, partiendo con ejemplos de los errores comunes y usándolos como rampa de entrada al HTML. Se descartó la corrida por completo: la clase entera se construye ahora sobre ítems reales de la Evaluación 2.
+
+Esto destrabó un hallazgo que ordenó el resto: **el ítem 1B.5 (el error transversal, 48% de logro) es la racha de días de estudio con umbrales 14 / 7 / 3 — exactamente el escenario y los números que ya estaban dibujados en la tarjeta 2 del HTML.** El mapa fragmento → tarjeta quedó registrado en la spec.
+
+**Segundo ajuste pedido por Diego (v2 → v3).** El Haz Ahora pasó de ser una secuencia proyectada y conducida por Diego a una **actividad trabajada por los estudiantes**: los tres fragmentos van como celdas ejecutables en el Colab, con cuatro preguntas escritas que responden en parejas antes de revisar en conjunto. Esto resolvió de paso el timer del PPT (`<<7:00>>` sobre el tramo autónomo) y evitó pedir "predecir sin ejecutar" en Colab. El presupuesto se reajustó a 4 / 7+5 / 15 / 18 / 20 / 6 / 5 = 80 min; el ICN pudo bajar a 15 porque el Haz Ahora ahora hace trabajo real.
+
+**Andamiaje de la Ruta B — decidido por Diego: opción A (tabla de decisión).** Se le presentaron las dos opciones lado a lado: (A) andamiaje en el enunciado, con una tabla de decisión que completan antes de programar y celda de código vacía; (B) starter code con los `if` puestos y las condiciones en blanco. Eligió A, que además respeta la regla 15 del `CLAUDE.md` (celda de código siempre vacía, sin código de partida). Razón pedagógica: B les regala la estructura, que es exactamente lo que fallaron.
+
+Se mantuvo sin cambios desde la v1: la Práctica Independiente diferenciada en parejas cruzadas (Ruta A diseña la batería de casos límite y la corre contra el programa de su pareja; Ruta B reescribe los ítems 2.2 y 2.3), las 3 preguntas del Ticket de Salida (hardcodear el resultado, `input()` sin convertir, y `elif` vs. `if` sueltos) y el Cierre.
+
+Carpeta y nombrado: se conservan `clase-19b-revision-evaluacion` para la carpeta y el prefijo `Clase 19.5 - ...` para los archivos, tal como ya existían.
+
 ---
 
 ## Pendientes
 
-- **Escribir la spec** con `disenar-clase` (objetivo + OAs + los 5 pasos). No se hizo en esta sesión por decisión de Diego.
 - **Gate abierto que bloquea la clase:** Diego debe revisar los 22 Colabs de devolución de la Evaluación 2 antes de poder entregarlos el lunes. Mientras eso no ocurra, `puntajes_evaluacion2.json` sigue con todos los puntajes en `null`. Ver el plan de revisión en la carpeta de la Clase 19.
-- Registrar la fila de esta clase en `Historial-Curricular.md` — corresponde hacerlo al guardar la spec aprobada, no antes.
+- Generar el Colab de clase + Solucionario (`generar-colab-clase`), el PPT y el PPT aparte del Ticket de Salida.
