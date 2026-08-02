@@ -150,10 +150,53 @@ Notebook final: 40 celdas, ejecutado sin errores, verificador funcionando.
 
 **Decisión que se lleva a la skill:** el autochequeo (celda de configuración + celdas de verificación) queda como capacidad **opcional** de `generar-colab-clase`, y **se le pregunta explícitamente a Diego antes de incluirlo** en cualquier clase futura. No es parte del formato por defecto: cambia cómo se trabaja la Práctica Independiente en aula y cuesta tiempo de clase, así que la decisión es suya. Es una excepción deliberada a la restricción 6 del `CLAUDE.md` (aprobación solo en gates formales), documentada en el `SKILL.md`.
 
+## 2026-08-02 — PPT de la clase generado
+
+- Archivo: `Clase 19.5 - ... - Presentación.pptx` (10 slides, termina en el Cierre).
+- Generado con `generar-ppt-clase`.
+
+**Versión proyectada del Haz Ahora.** El Haz Ahora del Colab son tres programas completos en celdas ejecutables: volcarlo tal cual en una slide daba un resultado ilegible (código, marcadores `[[respuesta]]` y las cuatro preguntas apelmazados en una caja). Se agregó al spec una sección `## Proyección — Haz Ahora (PPT)`, al final del archivo, que **solo lee `generar-ppt-clase`** — el Colab no la ve, así que el notebook aprobado no se toca. Proyecta la consigna y la lista de tareas; el detalle lo tiene cada estudiante en su pantalla.
+
+**Cuatro bugs del generador que este spec destapó, todos corregidos:**
+- El número de clase no aceptaba decimales: la portada salía "Clase None".
+- El `## Propósito` se comía las secciones intermedias (`## OAs MINEDUC`, `## Apertura`) y las imprimía en la slide 2.
+- Las dos preguntas del Cierre salían vacías: el parser solo aceptaba el texto en la línea siguiente a la etiqueta, no en la misma línea.
+- **Texto dibujado fuera de su caja** (anterior a esta clase): con ejemplos de 10-11 líneas, el código se salía del terminal negro y la Idea clave de su recuadro ámbar. El reparto de alturas era proporcional a una densidad estimada, sin mirar el largo real del contenido. Ahora hay un solver que mide y busca los tamaños con que todo cabe, apretando primero la prosa y dejando el código para el final. Verificado sin regresiones en las clases 14, 16 y 20.
+
+Efecto colateral asumido: en los slides de los conceptos 2 y 3 el código quedó en 14pt, porque son ejemplos de 11 líneas.
+
+## 2026-08-02 — Se saca toda alusión a la evaluación
+
+Diego postergó la entrega de los Colabs de devolución (dos casos de sospecha de copia todavía abiertos) y pidió sacar del material **toda** referencia a la prueba. Cambios en el spec, con Colab, Solucionario, JSON y PPT regenerados:
+
+| Antes | Ahora |
+|---|---|
+| Título: `Clase 19.5 — Revisión Evaluación Condicionales` | `Clase 19.5 — Condicionales: independientes, excluyentes y anidadas` |
+| Haz Ahora: "Tres programas **de la prueba** que estuvieron mal resueltos" | "Tres programas que tienen algo mal: cada uno hace casi lo que debía, pero no del todo" |
+| Pregunta 4: "¿cuál se parece a un error que cometiste tú **en la prueba**? Míralo en tu **Colab de devolución**" | "¿cuál te costó más darte cuenta de qué estaba mal? ¿Qué fue lo que te hizo verlo?" |
+| Form, "Tema de la clase de hoy": `revision evaluacion` | `condicionales independientes` |
+| Apertura: entregar los cuadernos + "la nota está cerrada, no hay recuperativa" | Sin entrega y sin mencionar la evaluación; los ~4 min quedan de holgura para la Independiente |
+| Frase de entrada al HTML: "dos de estos tres los reconocen **de la prueba**" | "dos de estas tres formas ya las conocen" |
+
+**Los nombres de archivo y de carpeta NO se renombraron** a propósito: los links de Colab ya pusheados a GitHub apuntan a `clase-19b-revision-evaluacion`, y renombrar los rompería, además de obligar a tocar `Historial-Curricular.md`. El desfase es solo interno — lo que ven los estudiantes es el título de la primera celda, que sí cambió.
+
+Para poder cambiar el nombre breve del Form sin renombrar la carpeta, `generar-colab-clase` ahora acepta `- **Tema breve (Form):** ...` en el Contexto del spec, y ese valor manda por sobre el slug de la carpeta.
+
+La pedagogía no cambió: los tres programas del Haz Ahora siguen siendo los ítems reales mal resueltos, solo que ya no se nombran como tales.
+
+## 2026-08-02 — HTML de los tres ríos desplegado en Vercel
+
+`Clase 19.5 - Revisión Evaluación Condicionales - Tres Formas.html` quedó además publicado en línea, como complemento al uso offline en la sala:
+
+**https://clase-19-5-tres-rios.vercel.app**
+
+Proyecto `diegovp2001/clase-19-5-tres-rios`, primer deploy del proyecto (por eso Vercel lo asignó directo a producción). Verificado en navegador: carga completo, sin dependencias externas rotas. De paso quedó autenticado el Vercel CLI local (cuenta `diegovp2001-9146`), reutilizable para desplegar material de proyección de otras clases sin volver a loguearse.
+
 ---
 
 ## Pendientes
 
-- **Gate abierto que bloquea la clase:** Diego debe revisar los 22 Colabs de devolución de la Evaluación 2 antes de poder entregarlos el lunes. Mientras eso no ocurra, `puntajes_evaluacion2.json` sigue con todos los puntajes en `null`. Ver el plan de revisión en la carpeta de la Clase 19.
-- Revisar el Colab de clase generado y, con eso aprobado, generar el PPT (`generar-ppt-clase`) y el PPT aparte del Ticket de Salida.
+- **PPT aparte del Ticket de Salida** — no está automatizado en la skill. Se proyecta el día de la clase y nunca se sube antes.
+- **Aprobación del PPT de la clase** y, con eso, el commit + push de la carpeta.
+- **Entrega de los 22 Colabs de devolución: postergada**, no es bloqueante para esta clase. Queda pendiente resolver los dos casos de sospecha de copia y, con eso, escribir `puntajes_evaluacion2.json` (hoy con todo en `null`). Ver el plan de revisión en la carpeta de la Clase 19.
 - Sin decisiones abiertas de diseño: las rutas diferenciadas se descartaron y con ellas la duda de sus rótulos.

@@ -1,4 +1,4 @@
-# Clase 19.5 — Revisión Evaluación Condicionales
+# Clase 19.5 — Condicionales: independientes, excluyentes y anidadas
 
 **Estado:** Spec aprobada — 2026-08-01
 **Clase Picuino:** N/A — clase de cierre formativo (retoma N°11 *if anidadas* y N°12 *elif*, e introduce el contraste con `if` independientes)
@@ -14,7 +14,8 @@
 - **Fecha prevista:** lunes 3 de agosto de 2026
 - **Contenidos previos asumidos:** booleanos y comparaciones (Clase 8a), operadores lógicos (Clase 8b), análisis de condiciones (Clase 8c), `if`/`else` (Clase 11), `if` anidadas (Clase 13), `elif` (Clase 14), `input()` y conversión de tipos (Clase 7)
 - **Contenidos nuevos:** varios `if` independientes seguidos, contrastados explícitamente con `elif` y con el anidamiento; probar el valor del borde como hábito de verificación
-- **Contextos temáticos:** los mismos ítems de la Evaluación 2 (app de hábitos de estudio, torneo de equipos, micro Isla de Maipo–Talagante, alcancía digital en dólares)
+- **Contextos temáticos:** app de hábitos de estudio, torneo de equipos, micro Isla de Maipo–Talagante, alcancía digital en dólares
+- **Tema breve (Form):** condicionales independientes
 
 ## Objetivo
 
@@ -36,9 +37,11 @@ La rigurosidad es revisar justo el caso donde algo puede fallar, en vez de confi
 
 ## Apertura (4 min)
 
-Bloque propio, antes del Haz Ahora. Se entregan los Colabs de devolución de la Evaluación 2 y se dice de frente, en una frase: **la nota está cerrada, no hay recuperativa, y hoy no se negocian puntos.** El encuadre es que la prueba ya cumplió su función de medir, y lo que queda es el error que le costó puntos a casi todo el curso — al tramo alto también.
+Bloque propio, antes del Haz Ahora. **No se entrega nada ni se menciona la evaluación** (decisión del 2026-08-02: la entrega de los Colabs de devolución quedó postergada por dos casos de sospecha de copia todavía abiertos). El encuadre es simplemente que hay una forma de escribir condicionales que no se ha visto y que explica un error que aparece harto.
 
-Los cuadernos se abren y se miran ~2 minutos en silencio. **No se revisa ítem por ítem en voz alta**: al tramo alto la Sección 2 no le dejó nada que corregir (97-100%), así que una corrección proyectada los desperdiciaría.
+Al no haber entrega, este bloque se acorta y los ~4 minutos quedan de holgura para la Práctica Independiente, que con 20 min va justa.
+
+> Cuando los cuadernos se entreguen —en otra clase— sí conviene abrirlos ~2 minutos en silencio y **no revisar ítem por ítem en voz alta**: al tramo alto la Sección 2 no le dejó nada que corregir (97-100%), así que una corrección proyectada los desperdiciaría.
 
 ## Estructura de la clase
 
@@ -46,7 +49,7 @@ Los cuadernos se abren y se miran ~2 minutos en silencio. **No se revisa ítem p
 
 > Nota de conducción: el timer del PPT cubre solo este tramo de trabajo autónomo (`⚡ Haz Ahora <<7:00>>`). La revisión en conjunto de las respuestas toma ~5 min adicionales y la conduce Diego sin reloj.
 
-Tres programas de la prueba que estuvieron mal resueltos, tal como quedaron. Están en celdas ejecutables: se corren, no se adivinan. Debajo de cada uno está la pregunta y el espacio para responderla.
+Tres programas que tienen algo mal: cada uno hace casi lo que debía, pero no del todo. Están en celdas ejecutables: se corren, no se adivinan. Debajo de cada uno está la pregunta y el espacio para responderla.
 
 **Programa 1 — La app de hábitos de estudio**
 
@@ -114,7 +117,7 @@ else:
 
 **Para cerrar**
 
-4. De los tres programas, ¿cuál se parece a un error que cometiste tú en la prueba? Míralo en tu Colab de devolución.
+4. De los tres programas, ¿cuál te costó más darte cuenta de qué estaba mal? ¿Qué fue lo que te hizo verlo?
 
 [[respuesta]]
 
@@ -122,13 +125,13 @@ else:
 1. Imprime `"Racha en marcha: no la cortes."`. Debería imprimir `"Buena constancia."`, porque 12 días ya pasó los 7.
 2. El resultado quedó equivocado con 18: dice que queda eliminado, pero 18 es exactamente el mínimo para clasificar. Con 19 el resultado está bien.
 3. Imprime dos líneas. No pueden ser verdaderas las dos: si sube gratis con su pase, la pregunta del saldo ni siquiera corresponde hacerla.
-4. Registro personal, sin respuesta única. Se responde mirando el Colab de devolución que acaban de recibir.
+4. Registro personal, sin respuesta única. Sirve para que cada uno nombre qué le costó ver y con qué lo vio (ejecutar, cambiar un dato, leerlo de nuevo). Se comparte a viva voz solo si Diego lo pide.
 
 ### 2. Introducción al Contenido Nuevo (15 min)
 
 Se proyecta el material ya terminado `Clase 19.5 - Revisión Evaluación Condicionales - Tres Formas.html` (los tres casos representados como ríos animados). Cada pregunta que quedó abierta en el Haz Ahora se cierra con una tarjeta del HTML.
 
-Frase de entrada al pasar del Haz Ahora al HTML: *"dos de estos tres los reconocen de la prueba. El tercero no lo hemos visto nunca — y es el que explica por qué el tercer programa se comportó así."*
+Frase de entrada al pasar del Haz Ahora al HTML: *"dos de estas tres formas ya las conocen. La tercera no la hemos visto nunca — y es la que explica por qué el tercer programa se comportó así."*
 
 **Concepto 1: Independientes — varios `if` seguidos**
 - Definición: Cuando dos preguntas no tienen nada que ver entre sí, cada una va en su propio `if`. Python revisa todos, uno por uno, sin que el resultado de uno afecte al siguiente.
@@ -609,3 +612,20 @@ La tarjeta 1 es la única sin error asociado **porque nunca se enseñó** — ve
 **Convención `== True` explícito.** Toda condición sobre una variable booleana se escribe `if bateria_baja == True:`, nunca la forma idiomática de Python. Aplica al HTML, al ICN y a la Pregunta 3 del Ticket. Las comparaciones numéricas y de texto quedan tal cual. Decisión pedagógica deliberada de Diego — no corregirla.
 
 **Actitud elegida: Rigurosidad** (por sobre Criterio, Método y Autocrítica). Calza con la herramienta transversal de la clase —probar el valor del borde— y es la que se puede volver observable en el Ticket de Salida.
+
+---
+
+## Proyección — Haz Ahora (PPT)
+
+> Sección que consume **solo** `generar-ppt-clase`; el Colab ignora esta parte del spec. El Haz Ahora del Colab trae los tres programas completos en celdas ejecutables, y eso no cabe en una slide — ni hace falta, porque cada estudiante lo tiene en su propia pantalla. Lo que se proyecta mientras trabajan es la consigna y la lista de lo que hay que hacer.
+
+Abre el Colab de la clase. Vas a encontrar tres programas que tienen algo mal: ejecútalos, no los adivines. Debajo de cada uno está la pregunta y el espacio para responderla.
+
+Responde en el Colab, debajo de cada programa:
+
+1. Programa 1 — La app de hábitos de estudio: ¿qué imprime? ¿Y qué debería imprimir con una racha de 12 días?
+2. Programa 2 — El torneo de equipos: ejecútalo, cambia el puntaje a 19 y ejecútalo otra vez. ¿En cuál de los dos casos el resultado quedó equivocado?
+3. Programa 3 — La micro a Talagante: ¿cuántas líneas imprime? ¿Pueden ser verdaderas las dos al mismo tiempo?
+4. ¿Cuál de los tres te costó más? ¿Qué fue lo que te hizo darte cuenta?
+
+Cuando se acabe el tiempo las revisamos juntos.
