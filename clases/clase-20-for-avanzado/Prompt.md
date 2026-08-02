@@ -1,7 +1,7 @@
-# Prompt de sesión — Clase N°20: continue, break, for anidado
+# Prompt de sesión — Clase N°20: For Anidado
 
 **Fecha programada:** jueves 2026-08-06
-**Estado:** Planificada — sin spec aún.
+**Estado:** Spec aprobada — 2026-07-28 (revisada 2026-07-29). Colab de clase y Solucionario generados.
 
 ## Contexto acordado (planificación del 2026-07-28)
 
