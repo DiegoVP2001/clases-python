@@ -55,7 +55,7 @@
 | Lunes | 2026-08-03 | **N° 19.5 — Revisión Evaluación Condicionales** (spec aprobada 2026-08-01). El Haz Ahora es la revisión de los errores comunes con ítems reales de la prueba; el ICN los cierra con el HTML "Tres Formas"; la Práctica Independiente va diferenciada en parejas cruzadas |
 | Martes | 2026-08-04 | N° 16 — for + range() |
 | Jueves | 2026-08-06 | N° 20 — For anidado (contenido nuevo — spec aprobada 2026-07-28) |
-| Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza el `Ejercicios.ipynb` propio de Clase 16, que no se generará) |
+| Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza los `Ejercicios.ipynb` propios de Clase 16 y Clase 20, que no se generarán) |
 
 > Nota de orden: N° 17 se dicta antes que N° 16 en el calendario real (la ejercitación de condicionales estaba lista y hacía falta consolidar antes de introducir loops), aunque el spec de C16 se aprobó primero. La numeración N° real no se altera — identifica el artefacto, no necesariamente el orden estricto de dictado.
 
