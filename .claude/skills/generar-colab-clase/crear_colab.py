@@ -296,7 +296,7 @@ def parsear_guiada(texto: str) -> dict:
     """Parsea la sección de Práctica Guiada."""
     guiada = {
         "situacion": None, "variables": None, "pasos": [], "pasos_tabla": [],
-        "el_programa_debe": [], "pistas": [], "resultado": None,
+        "el_programa_debe": [], "pistas": [], "nota": None, "resultado": None,
         "resultado_tabla": None, "solucion": None, "codigo_error": None,
     }
 
@@ -324,6 +324,11 @@ def parsear_guiada(texto: str) -> dict:
         pistas_encontradas = re.findall(r"<details>.*?</details>", texto, re.DOTALL)
         guiada["pistas"] = [p.strip() for p in pistas_encontradas]
         texto_sin_pistas = re.sub(r"\n*<details>.*?</details>\n*", "\n", texto, flags=re.DOTALL)
+
+        match_nota = re.search(r"\*\*Nota:\*\*\s*(.+?)(?=\n\s*\*\*|\Z)", texto_sin_pistas, re.DOTALL)
+        if match_nota:
+            guiada["nota"] = match_nota.group(1).strip()
+            texto_sin_pistas = (texto_sin_pistas[:match_nota.start()] + texto_sin_pistas[match_nota.end():]).strip()
 
         match_debe = re.search(
             r"\*\*El programa debe:\*\*\s*\n(.*?)(?=\n\s*\*{0,2}Resultado esperado:|\Z)",
@@ -435,7 +440,7 @@ def parsear_independiente(texto: str) -> list:
             "numero": num, "titulo": titulo, "ruta": None,
             "contexto": None, "enunciado": None,
             "parte_a": None, "parte_b": None,
-            "el_programa_debe": [], "etiqueta_debe": "El programa debe:", "pistas": [],
+            "el_programa_debe": [], "etiqueta_debe": "El programa debe:", "pistas": [], "nota": None,
             "resultado": None, "resultado_tabla": None, "codigo_error": None,
             "celda_respuesta": None, "plantilla": None, "solucion_referencia": None,
             "celda_verificacion": None,
@@ -521,6 +526,15 @@ def parsear_independiente(texto: str) -> list:
         ejercicio["pistas"] = [p.strip() for p in pistas_encontradas]
         if pistas_encontradas:
             contenido = re.sub(r"\n*<details>.*?</details>\n*", "\n", contenido, flags=re.DOTALL).strip()
+
+        # Nota breve (ej. por qué se piden nombres de variable exactos para el
+        # autochequeo) — va después de los bullets/pistas y antes de Resultado
+        # esperado. Se extrae antes de correr match_debe para no perderse dentro
+        # del filtro de bullets (que solo conserva líneas que empiezan con "-").
+        match_nota = re.search(r"\*\*Nota:\*\*\s*(.+?)(?=\n\s*\*\*|\Z)", contenido, re.DOTALL)
+        if match_nota:
+            ejercicio["nota"] = match_nota.group(1).strip()
+            contenido = (contenido[:match_nota.start()] + contenido[match_nota.end():]).strip()
 
         # Formato canónico actual (igual al de la Evaluación): narrativa + bullets
         # "El programa debe" + resultado único. Ver CLAUDE.md regla 15/16.
@@ -943,6 +957,8 @@ def generar_seccion_guiada_intro(spec: dict) -> str:
         bloque += "\n"
         for pista in g.get("pistas", []):
             bloque += formatear_pista(pista) + "\n\n"
+        if g.get("nota"):
+            bloque += f"*Nota: {backticks_a_code(g['nota'])}*\n\n"
         if g.get("resultado_tabla"):
             bloque += backticks_a_code(g["resultado_tabla"]) + "\n"
         elif g.get("resultado"):
@@ -982,7 +998,7 @@ def generar_seccion_independiente_intro(spec: dict) -> str:
     intro = limpiar_notas_internas(spec.get("independiente_intro") or "")
     if intro:
         return bloque + intro
-    return bloque + "Resuelve los siguientes ejercicios en pareja. Si se traban, pregunten al profe."
+    return bloque + "Resuelve los siguientes ejercicios. Si se traban, pregunten al profe."
 
 
 def generar_ejercicio_independiente(ejercicio: dict) -> str:
@@ -1000,6 +1016,8 @@ def generar_ejercicio_independiente(ejercicio: dict) -> str:
         bloque += "\n"
         for pista in ejercicio.get("pistas", []):
             bloque += formatear_pista(pista) + "\n\n"
+        if ejercicio.get("nota"):
+            bloque += f"*Nota: {backticks_a_code(ejercicio['nota'])}*\n\n"
         if ejercicio.get("resultado_tabla"):
             bloque += backticks_a_code(ejercicio["resultado_tabla"]) + "\n"
         elif ejercicio.get("resultado"):
@@ -1275,7 +1293,11 @@ def main():
 
     print(f"📖 Leyendo spec: {ruta_spec}")
     spec = parsear_spec(ruta_spec)
-    spec["tema_breve_form"] = derivar_tema_breve_form(ruta_spec.parent.name)
+    # El nombre breve del Form sale del slug de la carpeta, salvo que el spec
+    # declare uno propio en el Contexto (`- **Tema breve (Form):** ...`), para
+    # los casos en que el nombre de la carpeta no sirve de cara a los estudiantes.
+    spec["tema_breve_form"] = (spec.get("contexto", {}).get("Tema breve (Form)")
+                               or derivar_tema_breve_form(ruta_spec.parent.name))
 
     print(f"✅ Spec parseado: Clase {spec['numero_clase']} — {spec['tema']}")
     print(f"   - {len(spec['icn']['conceptos'])} conceptos en ICN")
