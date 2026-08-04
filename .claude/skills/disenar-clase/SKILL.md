@@ -101,15 +101,13 @@ Tiene dos funciones (pueden coexistir):
 1. **Calentar** conocimiento previo que será útil en la clase de hoy.
 2. **Spoiler sutil**: plantear el problema de la clase en lenguaje cotidiano sin revelar la sintaxis Python — los estudiantes no se dan cuenta de que ya están "haciendo" lo que aprenderán.
 
-**Patrón por defecto — alineado con la Guiada (validado en Clase 14):** cuando el foco de la clase es clasificar/decidir entre casos (rangos, categorías, condiciones), el Haz Ahora debe reutilizar **el mismo escenario, tabla o dato** que después aparece en la Práctica Guiada — no uno análogo, el mismo. Los estudiantes resuelven a mano en el Haz Ahora exactamente lo que en la Guiada van a automatizar con código: así el momento "aha" ocurre al notar que ya sabían la lógica, solo faltaba escribirla. Preguntas simples y directas (2-5), resolubles sin ambigüedad y respondibles en un par de palabras en markdown en el cuaderno — no preguntas abiertas de opinión.
-Si la clase no tiene ese tipo de foco (ej. bucles, funciones, listas), usa otra variante: predicción de output de código ya visto, detectar un error típico de la clase anterior, o un dilema entre dos formas de resolver algo — mantén siempre la conexión con lo que se hará en la Guiada, aunque no sea la tabla idéntica.
+**Patrón por defecto — mismo escenario que la Guiada, siempre (default desde Clase 20; validado antes solo para clasificación desde Clase 14).** El Haz Ahora y la Práctica Guiada comparten **el mismo escenario narrativo** — no uno análogo, el mismo — sin importar el tipo de contenido (clasificación/rangos, bucles, funciones, listas, lo que sea). El Haz Ahora presenta el escenario sin código y plantea 2-5 preguntas cerradas y concretas: piden un dato, una cantidad, o qué viene después — resolubles sin ambigüedad y en un par de palabras. Evita preguntas de opinión y evita disyuntivas obvias que telegrafían la respuesta dentro de la propia pregunta (ej. no "¿pasa a la fila 2 o repite la fila 1?" — mejor "¿cuál butaca revisa justo después?"). Cierra la narrativa con un gancho hacia la Guiada, del estilo: "el/la [personaje del escenario], sabiendo de sus habilidades de programación, les pide ayuda para automatizar esto — pero antes, quiere que tengan clara la lógica:" y ahí van las preguntas. La Guiada retoma el mismo escenario con una pregunta relacionada pero distinta, ya "bajada a código" (ver Paso 3 más abajo).
 
 Regla crítica: **NO revelar explícitamente** el contenido nuevo de hoy. No mostrar operadores, funciones ni sintaxis que se introducirán en el ICN. La actividad puede ser desconectada (papel) o tener una celda de código si es pertinente (para activar algo ya visto).
 
 Duración: usa un número exacto de minutos, no un rango (ej. `(6 min)`, no `(5-8 min)`) — `generar-ppt-clase` lo lee para armar el timer en pantalla del slide (`⚡ Haz Ahora <<6:00>>`). Este timer es exclusivo del Haz Ahora; la Guiada no lleva timer en el PPT porque no se trabaja desde ahí.
 
-Propósito: [qué conocimiento previo activa Y/O qué intuición construye para hoy]
-Actividad: [descripción breve — papel, predicción, código previo, etc.]
+**Nunca uses las etiquetas "Propósito:" ni "Actividad:" como texto literal, ni en la propuesta de chat ni en el spec final.** Son categorías de tu propio razonamiento de diseño, no contenido para estudiantes — un bug detectado en Clase 20 mostró que si se escriben en el spec (con o sin negrita), pueden filtrarse literalmente al notebook. Al proponer en el chat, describe la actividad directamente como narrativa + preguntas; si quieres dejar registro del razonamiento de diseño, va en "Decisiones de diseño relevantes" del spec final, nunca en el cuerpo del Haz Ahora.
 
 ### 2. Introducción al Contenido Nuevo (15-20 min)
 Presentación de cada concepto con DEFINICIÓN + EJEMPLO + IDEA CLAVE.
@@ -121,22 +119,23 @@ Conceptos a presentar (3-4 máx):
 Errores típicos a anticipar: [2-3 errores predecibles para tabla]
 
 ### 3. Práctica Guiada (20-25 min)
-Construcción paso a paso CON el curso. No entregar código resuelto al inicio.
-Los pasos se redactan en **lenguaje natural de alto nivel**: describen QUÉ hacer sin revelar el nombre exacto de la variable ni el operador/comando a usar — eso lo aporta la clase. Ejemplo correcto: "Crea una variable que registre el saldo del usuario". Ejemplo incorrecto: "Crea `saldo = int(input(...))`".
-Situación: [contexto narrativo]
-Pasos y resultado: cada paso (o grupo de pasos que va junto) se presenta con su propio resultado esperado parcial, no solo un output final — se renderiza como tabla de 2 columnas (qué debe hacer el programa | resultado esperado). Agrupa pasos que no producen output propio con el paso que sí lo hace.
+Construcción CON el curso, en el mismo escenario del Haz Ahora (ver Paso 1), con una pregunta relacionada pero distinta — ya "bajada a código". No entregar código resuelto al inicio. Mismo formato canónico que Independiente (ver Paso 4): narrativa (sin necesidad de etiqueta "Situación") + `**El programa debe:**` en lenguaje natural de alto nivel (describe QUÉ hacer sin revelar nombre exacto de variable ni operador/comando — eso lo aporta la clase) + pista `<details>` opcional si algo lo amerita + resultado esperado.
+Situación/narrativa: [retoma el escenario del Haz Ahora]
+El programa debe: [bullets de requisitos, en lenguaje natural de alto nivel]
+Resultado esperado: [output esperado — un solo bloque si no hay `input()` con valores variables, tabla `Ejemplo 1`/`Ejemplo 2` si sí lo hay]
 
 ### 4. Práctica Independiente (15-18 min)
 Trabajo individual, alineado con la guiada pero NO copia literal. Formato "revisión rápida": ejercicios breves y directos, no problemas extensos multi-parte.
 Los enunciados NO incluyen nombres de variables, operadores ni comandos — solo descripción en lenguaje natural de qué calcular. Los ejemplos de input/output usan lenguaje natural ("si alguien ingresa un saldo de \$80.000..."), nunca nombres de variables. Los outputs esperados tienen etiquetas descriptivas. Recuerda escapar el signo peso como `\$` — ver CLAUDE.md restricción 21.
-Cantidad de ejercicios: **1 obligatorio + 1 bonus/décimas extra (fijo — no preguntar)**
+Cantidad de ejercicios: **2 obligatorios (fijo — no preguntar; default desde Clase 20, reemplaza el esquema anterior de 1 obligatorio + 1 bonus)**. Ambos con el mismo formato canónico y la misma exigencia de narrativa — ninguno se presenta como bonus ni con narrativa más breve.
 Contextos: [variados entre los 2 ejercicios]
 Criterio de logro: [qué evidencia el aprendizaje]
 
 ### 5. Ticket de Salida (5-8 min)
-2-3 preguntas de alternativas (4 opciones, rotuladas A/B/C/D) sobre lo más importante de la clase. Se responden vía Google Form (ver CLAUDE.md regla 17) — las preguntas y alternativas NO se incluyen en el Colab de clase (solo un aviso de que se proyectan en la tele), van completas solo en el Solucionario.
-Cantidad de preguntas: [2 si el ICN tiene 1-2 conceptos centrales relacionados; 3 si cubre 3+ conceptos o si dos conceptos son claramente independientes — no preguntar, decidir con este criterio]
-Preguntas: [enunciado + 4 alternativas (A/B/C/D) + cuál es correcta + justificación breve, para cada una]
+3 preguntas de alternativas (4 opciones, rotuladas A/B/C/D) sobre lo más importante de la clase — cantidad fija desde Clase 20, no preguntar. Se responden vía Google Form (ver CLAUDE.md regla 17) — las preguntas y alternativas NO se incluyen en el Colab de clase (solo un aviso de que se proyectan en la tele), van completas solo en el Solucionario.
+Cada pregunta lleva un bloque de código breve aludiendo a ella (código como foco — se predice output/comportamiento — o código como referencia — solo ilustra el enunciado conceptual; mezcla ambos entre las 3 preguntas). Si la pregunta pide identificar una línea específica del código, márcala con un comentario inline (ej. `print()  # <- esta línea`).
+Preguntas: [código + enunciado + 4 alternativas (A/B/C/D) + cuál es correcta + justificación breve, para cada una]
+Reparte la respuesta correcta en una letra distinta por pregunta — nunca las 3 caen en la misma alternativa.
 
 ### Cierre (5 min)
 **Objetivo de la clase:** [copiar el objetivo aprobado]
@@ -179,7 +178,16 @@ Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/Clase 
 ## Estructura de la clase
 
 ### 1. Haz Ahora (N min)
-[Descripción detallada. N es un número exacto de minutos (ej. `(6 min)`), no un rango — `generar-ppt-clase` lo usa para el timer del slide.]
+[Narrativa del escenario (2-4 líneas) + gancho hacia la Guiada + preguntas numeradas (2-5), sin las etiquetas "Propósito:" ni "Actividad:" — ver Paso 4 arriba. N es un número exacto de minutos (ej. `(6 min)`), no un rango — `generar-ppt-clase` lo usa para el timer del slide.]
+
+1. [pregunta cerrada 1]
+2. [pregunta cerrada 2]
+3. [pregunta cerrada 3]
+
+**Respuestas esperadas:**
+1. [respuesta 1]
+2. [respuesta 2]
+3. [respuesta 3]
 
 ### 2. Introducción al Contenido Nuevo (15-20 min)
 
@@ -233,41 +241,63 @@ Ejemplos:
 - ❌ "La función input() siempre devuelve un valor de tipo str"
 
 ### 3. Práctica Guiada (20-25 min)
-**Situación:** [contexto narrativo]
+[Narrativa (2-4 líneas) que retoma el mismo escenario del Haz Ahora, con una pregunta relacionada pero distinta, ya "bajada a código". Sin etiqueta "Situación:" — el texto libre antes de "El programa debe:" es la narrativa.]
 
-[Opcional — solo si la situación incluye una tabla de correspondencia (ej: rango de monto → actividad, temperatura → nivel): escríbela como tabla HTML con `<th>` y `<td>` en lugar de un bloque de código de texto plano. El generador la pasa tal cual al notebook y se renderiza limpiamente en Colab. No uses esto para situaciones narrativas sin tabla.]
+**El programa debe:**
+- [requisito 1, en lenguaje natural de alto nivel, sin revelar variable/operador]
+- [requisito 2]
+- [requisito 3]
 
-**Variables:**
-```python
-[variables iniciales]
+[Opcional — pista `<details>` si algo lo amerita, mismo formato que en Independiente más abajo.]
+
+**Resultado esperado:**
 ```
-**Pasos guiados (tabla):**
+[output esperado — un solo bloque si no hay input() con valores variables; acórtalo con `...` si es largo y repetitivo]
+```
 
-- Paso 1: [texto del paso, en lenguaje natural, sin revelar variable/operador]
-  Resultado:
-  ```
-  [output esperado de este paso, o una nota tipo "(todavía no hay output — es solo la variable inicial)" si el paso no produce output propio]
-  ```
-
-- Paso 2: [texto del paso]
-  Resultado:
-  ```
-  [output esperado]
+- Solución:
+  ```python
+  [código de referencia que produce el resultado esperado]
   ```
 
-[Agrega tantas filas como pasos agrupados necesites — típicamente 3 a 5. Agrupa en una misma fila los pasos que no producen output propio con el paso que sí lo hace (ej: "construye el bucle" + "dentro del bucle, muestra en pantalla"), para que ninguna fila quede con un resultado vacío. Si el resultado de una fila es una secuencia larga y repetitiva, acórtala con `...` para que la tabla no quede demasiado larga de mostrar. Los backticks dentro de `paso` o `resultado` se convierten automáticamente a código con estilo — no hace falta escribir `<code>` a mano.]
+**Formato antiguo (retrocompatible, solo para regenerar clases previas a Clase 20):** `**Situación:**` + `**Pasos guiados (tabla):**` con un bloque `- Paso N: ... / Resultado: \`\`\`...\`\`\`` por fila, renderizado como tabla de 2 columnas. El parser detecta automáticamente cuál formato usa el spec — no mezclar ambos en una misma clase.
 
 ### 4. Práctica Independiente (15-18 min)
-**Ejercicio 1 — [contexto] (obligatorio)**
-[Enunciado breve, formato revisión rápida]
-Resultado esperado: ...
+**Ejercicio 1 — [contexto]**
+[Narrativa 3-4 líneas, formato revisión rápida — nunca "la pareja"/"ustedes" como sujeto de la narrativa ni ninguna otra referencia a la modalidad de trabajo: Diego decide y anuncia la modalidad en vivo, en clase, no el notebook]
 
-**Ejercicio 2 — [contexto distinto] (Bonus — décimas extra, solo si terminaron el Ejercicio 1)**
-[Enunciado breve, formato revisión rápida]
-Resultado esperado: ...
+**El programa debe:**
+- [requisito 1]
+- [requisito 2]
+
+[Opcional — pista `<details>` si el ejercicio lo amerita:]
+<details>
+<summary>💡 Pista — [subtítulo]</summary>
+[texto orientador]
+</details>
+
+[Opcional — `**Nota:**` para una aclaración breve que no cabe en un bullet ni en una pista (ej. por qué esta vez se piden nombres de variable exactos, cuando el ejercicio trae autochequeo — ver `generar-colab-clase/SKILL.md`):]
+**Nota:** [aclaración breve]
+
+**Resultado esperado:**
+```
+[output esperado; tabla Ejemplo 1/Ejemplo 2 en vez de este bloque único si el ejercicio usa input() con valores variables]
+```
+
+- Solución:
+  ```python
+  [código de referencia]
+  ```
+
+**Ejercicio 2 — [contexto distinto]**
+[Mismo formato que el Ejercicio 1 — ambos obligatorios desde Clase 20 (no hace falta escribirlo en el título, ninguno se marca como bonus ni con narrativa más breve)]
 
 ### 5. Ticket de Salida (5-8 min)
-**Pregunta 1:** [enunciado]
+**Pregunta 1:**
+```python
+[código breve aludiendo a la pregunta — como foco o como referencia]
+```
+[enunciado]
 - A: [alternativa]
 - B: [alternativa]
 - C: [alternativa]
@@ -275,15 +305,31 @@ Resultado esperado: ...
 **Respuesta correcta:** [A/B/C/D]
 **Justificación:** [explicación breve, para que Diego la use al revelar la respuesta en vivo]
 
-**Pregunta 2:** [enunciado]
+**Pregunta 2:**
+```python
+[código breve]
+```
+[enunciado]
 - A: [alternativa]
 - B: [alternativa]
 - C: [alternativa]
 - D: [alternativa]
-**Respuesta correcta:** [A/B/C/D]
+**Respuesta correcta:** [A/B/C/D, distinta de la Pregunta 1]
 **Justificación:** [explicación breve]
 
-[Agregar **Pregunta 3** solo si el ICN de esta clase cubre 3+ conceptos, o si dos conceptos son claramente independientes y ambos ameritan verificación separada — ver criterio en CLAUDE.md.]
+**Pregunta 3:**
+```python
+[código breve]
+```
+[enunciado]
+- A: [alternativa]
+- B: [alternativa]
+- C: [alternativa]
+- D: [alternativa]
+**Respuesta correcta:** [A/B/C/D, distinta de las Preguntas 1 y 2]
+**Justificación:** [explicación breve]
+
+[3 preguntas fijas siempre (default desde Clase 20 — ya no depende de la cantidad de conceptos del ICN). El bloque de código es opcional pero es el default: sin él, la pregunta queda solo como texto conceptual. Si el código debe señalar una línea específica, márcala con un comentario inline (ej. `print()  # <- esta línea`).]
 
 ### Cierre (5 min)
 **Objetivo de la clase:** [copiar el objetivo aprobado]
