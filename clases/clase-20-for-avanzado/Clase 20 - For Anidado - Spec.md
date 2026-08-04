@@ -125,13 +125,88 @@ Fila 3 - Asiento 1  Fila 3 - Asiento 2  Fila 3 - Asiento 3  Fila 3 - Asiento 4  
   ```
 
 ### 4. Práctica Independiente (16 min)
+
+Resuelve los siguientes ejercicios en pareja. Si se traban, pregunten al profe. Antes de empezar, ejecuten la celda de configuración de abajo: deja listos los verificadores con los que van a revisar su propio trabajo, sin tener que esperar a que el profe pase por el puesto.
+
+**Celda de configuración:**
+```python
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+def verificar_ejercicio_1():
+    necesarias = ["cantidad_rondas", "total_partidos_verificador", "suma_rondas_verificador", "suma_partidos_verificador"]
+    faltantes = [v for v in necesarias if v not in globals()]
+    if faltantes:
+        print("⬜ Todavía te falta definir:", ", ".join(faltantes))
+        return
+    esperado_total, esperado_suma_rondas, esperado_suma_partidos = 0, 0, 0
+    for ronda in range(1, cantidad_rondas + 1):
+        for partido in range(1, ronda + 1):
+            esperado_total = esperado_total + 1
+            esperado_suma_rondas = esperado_suma_rondas + ronda
+            esperado_suma_partidos = esperado_suma_partidos + partido
+    chequeos = [
+        ("Cantidad total de partidos", total_partidos_verificador, esperado_total),
+        ("Suma de los números de ronda", suma_rondas_verificador, esperado_suma_rondas),
+        ("Suma de los números de partido", suma_partidos_verificador, esperado_suma_partidos),
+    ]
+    correctos = 0
+    for nombre, obtenido, esperado in chequeos:
+        if obtenido == esperado:
+            print("✅", nombre, "está bien.")
+            correctos += 1
+        else:
+            print("❌", nombre, "no calza. Tu programa dio", obtenido, "y se esperaba", esperado)
+    print()
+    print(correctos, "de", len(chequeos), "chequeos correctos.")
+
+def verificar_ejercicio_2():
+    necesarias = ["filas_tablero", "columnas_tablero", "cantidad_claras", "cantidad_oscuras",
+                  "suma_filas_verificador", "suma_columnas_verificador", "primera_casilla_es_clara"]
+    faltantes = [v for v in necesarias if v not in globals()]
+    if faltantes:
+        print("⬜ Todavía te falta definir:", ", ".join(faltantes))
+        return
+    esperado_claras, esperado_oscuras = 0, 0
+    esperado_suma_filas, esperado_suma_columnas = 0, 0
+    for fila in range(1, filas_tablero + 1):
+        for columna in range(1, columnas_tablero + 1):
+            esperado_suma_filas = esperado_suma_filas + fila
+            esperado_suma_columnas = esperado_suma_columnas + columna
+            if (fila + columna) % 2 == 0:
+                esperado_claras = esperado_claras + 1
+            else:
+                esperado_oscuras = esperado_oscuras + 1
+    chequeos = [
+        ("Cantidad de casillas claras", cantidad_claras, esperado_claras),
+        ("Cantidad de casillas oscuras", cantidad_oscuras, esperado_oscuras),
+        ("Suma de los números de fila recorridos", suma_filas_verificador, esperado_suma_filas),
+        ("Suma de los números de columna recorridos", suma_columnas_verificador, esperado_suma_columnas),
+        ("Total de casillas (claras + oscuras)", cantidad_claras + cantidad_oscuras, esperado_claras + esperado_oscuras),
+        ("La casilla (fila 1, columna 1) es clara", primera_casilla_es_clara, True),
+    ]
+    correctos = 0
+    for nombre, obtenido, esperado in chequeos:
+        if obtenido == esperado:
+            print("✅", nombre, "está bien.")
+            correctos += 1
+        else:
+            print("❌", nombre, "no calza. Tu programa dio", obtenido, "y se esperaba", esperado)
+    print()
+    print(correctos, "de", len(chequeos), "chequeos correctos.")
+```
+
 **Ejercicio 1 — Torneo de tenis de mesa (obligatorio)**
 Un campeonato de tenis de mesa entre cursos tiene 5 rondas, y en cada ronda se juegan tantos partidos como el número de la ronda: la ronda 1 tiene 1 partido, la ronda 2 tiene 2 partidos, y así sucesivamente hasta la ronda 5. La organización quiere el programa que imprima cada partido de cada ronda, para pegarlo en el diario mural del gimnasio.
 
 **El programa debe:**
-- Recorrer las 5 rondas del campeonato
+- Recorrer las 5 rondas del campeonato, guardando esa cantidad en una variable llamada exactamente `cantidad_rondas`
 - Por cada ronda, recorrer sus partidos (tantos como el número de ronda)
 - Mostrar el número de ronda y el número de partido de cada uno
+- Llevar la cuenta de cuántos partidos mostraste en total, en una variable llamada exactamente `total_partidos_verificador` (inicializada en 0 antes de los ciclos)
+- Sumar cada número de ronda que uses, en una variable llamada exactamente `suma_rondas_verificador` (inicializada en 0 antes de los ciclos)
+- Sumar cada número de partido que uses, en una variable llamada exactamente `suma_partidos_verificador` (inicializada en 0 antes de los ciclos)
+
+> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo. Las tres variables de conteo no se imprimen, son solo para que te autorrevises.
 
 **Resultado esperado:**
 ```
@@ -143,23 +218,39 @@ Ronda 3 - Partido 1
 Ronda 5 - Partido 5
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_1()
+```
+
 - Solución:
   ```python
   cantidad_rondas = 5
+  total_partidos_verificador = 0
+  suma_rondas_verificador = 0
+  suma_partidos_verificador = 0
 
   for ronda in range(1, cantidad_rondas + 1):
       for partido in range(1, ronda + 1):
           print("Ronda", ronda, "- Partido", partido)
+          total_partidos_verificador = total_partidos_verificador + 1
+          suma_rondas_verificador = suma_rondas_verificador + ronda
+          suma_partidos_verificador = suma_partidos_verificador + partido
   ```
 
 **Ejercicio 2 — Diseño de un tablero de ajedrez (obligatorio)**
 Un tablero de ajedrez tiene 8 filas y 8 columnas, y sus casillas alternan entre claras y oscuras según su posición: si sumas el número de fila y el número de columna de una casilla, el resultado indica si es clara (par) u oscura (impar). Antes de fabricar tableros nuevos, el taller de carpintería quiere un programa que recorra el patrón completo, casilla por casilla, para verificar que la alternancia quede correcta en las 64 casillas.
 
 **El programa debe:**
-- Recorrer las 8 filas del tablero
-- Por cada fila, recorrer sus 8 columnas
+- Recorrer las 8 filas del tablero, guardando esa cantidad en una variable llamada exactamente `filas_tablero`
+- Por cada fila, recorrer sus 8 columnas, guardando esa cantidad en una variable llamada exactamente `columnas_tablero`
 - Mostrar si cada casilla es clara u oscura, según si la suma de su fila y columna es par o impar
 - Saltar de línea al terminar cada fila
+- Contar cuántas casillas resultaron claras y cuántas oscuras, en variables llamadas exactamente `cantidad_claras` y `cantidad_oscuras` (ambas inicializadas en 0 antes de los ciclos)
+- Sumar cada número de fila que uses, en una variable llamada exactamente `suma_filas_verificador`, y cada número de columna, en una variable llamada exactamente `suma_columnas_verificador` (ambas inicializadas en 0 antes de los ciclos)
+- Guardar si la primera casilla (fila 1, columna 1) resultó clara u oscura, en una variable llamada exactamente `primera_casilla_es_clara` (`True` si fue clara, `False` si fue oscura)
+
+> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo. Las variables de conteo no se imprimen, son solo para que te autorrevises.
 
 <details>
 <summary>💡 Pista — el operador módulo</summary>
@@ -173,17 +264,33 @@ Oscura Clara Oscura Clara Oscura Clara Oscura Clara
 ...
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_2()
+```
+
 - Solución:
   ```python
   filas_tablero = 8
   columnas_tablero = 8
+  cantidad_claras = 0
+  cantidad_oscuras = 0
+  suma_filas_verificador = 0
+  suma_columnas_verificador = 0
+  primera_casilla_es_clara = False
 
   for fila in range(1, filas_tablero + 1):
       for columna in range(1, columnas_tablero + 1):
+          suma_filas_verificador = suma_filas_verificador + fila
+          suma_columnas_verificador = suma_columnas_verificador + columna
           if (fila + columna) % 2 == 0:
               print("Clara", end=" ")
+              cantidad_claras = cantidad_claras + 1
+              if fila == 1 and columna == 1:
+                  primera_casilla_es_clara = True
           else:
               print("Oscura", end=" ")
+              cantidad_oscuras = cantidad_oscuras + 1
       print()
   ```
 
@@ -249,3 +356,4 @@ Si se elimina la línea marcada, ¿qué cambia en el resultado?
 - **Propósito acortado** a solo definición de la actitud + conexión con el contenido de hoy, sin la frase intermedia de proyección "más allá del liceo" del formato canónico de 3 frases — decisión explícita de Diego para esta clase.
 - **Ticket de Salida con alternativas A/B/C/D.** Cambio de convención aplicado desde esta clase en adelante (antes: conteo de dedos en vivo) — actualizado también en `CLAUDE.md` regla 17, ya que el mecanismo de respuesta migró a Google Form y dejó de tener sentido mostrar dedos.
 - **Revisión 2026-07-29 (Haz Ahora → Ticket de Salida):** el Haz Ahora original (actividad abierta única, sin preguntas numeradas, con una nota interna "Propósito:" que se filtró al notebook de estudiante por un bug del generador) se reemplazó por una narrativa del Cinemark del Mall Plaza Oeste con 3 preguntas cerradas. La Práctica Guiada dejó el escenario de "talleres extraprogramáticos" y pasó a compartir el mismo escenario Cinemark del Haz Ahora, en el formato canónico de ejercicio (narrativa + "El programa debe" + resultado) en vez de la tabla de pasos de 2 columnas. La Práctica Independiente pasó de "1 obligatorio + 1 bonus" a **2 ejercicios obligatorios**, ambos en el mismo formato canónico; el Ejercicio 2 (ajedrez) agregó una pista `<details>` sobre el operador módulo, ya que antes ese operador solo aparecía en la versión bonus. El Ticket de Salida pasó de 2 a 3 preguntas fijas, cada una con un bloque de código breve (como foco o como referencia), con las respuestas correctas repartidas en letras distintas (A, C, D) para no clusterizarlas.
+- **Autochequeo agregado 2026-08-04** (capacidad opcional, pedida explícitamente por Diego): una sola celda de configuración compartida al inicio de la sección 4, con los verificadores de los dos ejercicios. Como ninguno de los dos ejercicios tiene `input()` (parámetros fijos: 5 rondas, tablero 8×8), no existen "corridas" distintas que probar — el checker hace varios chequeos puntuales dentro de la única ejecución en vez de acumular casos como en Clase 16 (3 chequeos en Torneo: total de partidos, suma de rondas, suma de partidos; 6 en Tablero: claras, oscuras, suma de filas, suma de columnas, total, y la casilla (1,1)). Cada ejercicio exige nombres de variable exactos (`cantidad_rondas`, `total_partidos_verificador`, `suma_rondas_verificador`, `suma_partidos_verificador` / `filas_tablero`, `columnas_tablero`, `cantidad_claras`, `cantidad_oscuras`, `suma_filas_verificador`, `suma_columnas_verificador`, `primera_casilla_es_clara`) — excepción puntual y deliberada a la regla 8 del `CLAUDE.md`. Los acumuladores de verificación usan solo sumas y contadores dentro del mismo `for` anidado que el ejercicio ya pide: a esta altura del curso no existen listas (Picuino 25) ni concatenación de strings (Picuino 21), así que no hay forma más simple de dejar "evidencia" del recorrido para revisar sin retipear nada. **Chequeo `primera_casilla_es_clara` agregado tras probar el verificador**: los 4 chequeos originales del Tablero (claras, oscuras, suma filas, suma columnas) no detectan invertir la condición par/impar (`!=` en vez de `==`), porque en un tablero 8×8 simétrico el conteo de claras/oscuras da 32/32 en ambos sentidos — el error pasa piola. Un chequeo puntual sobre una casilla conocida cierra ese punto ciego.

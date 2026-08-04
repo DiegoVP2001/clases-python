@@ -31,3 +31,12 @@ Clase se dicta el jueves 2026-08-06. Se ejecutó `PLAN-Reparacion-C16-C20.md`: e
 - **Reel:** declinado — Diego decidió no generar Reel para esta clase.
 - **Ejercicios.ipynb:** no se genera para esta clase — la Ayudantía N°21 (2026-08-10) reemplaza esta pieza, igual que ya estaba decidido para Clase 16 (ver `Historial-Curricular.md`).
 - Clase queda ✅ completa para dictarse el jueves 2026-08-06.
+
+## 2026-08-04 — Autochequeo agregado a Práctica Independiente
+
+Mismo pedido y mismo diseño que en Clase 16 (ver esa Historial para el contexto completo de la decisión): una sola celda de configuración compartida al inicio de la sección, checker sin argumentos que lee variables del estudiante por nombre exacto, sin listas ni concatenación de strings (todavía no vistas a esta altura del curso).
+
+- Como ninguno de los dos ejercicios usa `input()` (parámetros fijos: 5 rondas, tablero 8×8), no hay "corridas" distintas que acumular — el checker hace varios chequeos puntuales en la única ejecución: 3 en Torneo (total de partidos, suma de rondas, suma de partidos) y 6 en Tablero (claras, oscuras, suma de filas, suma de columnas, total, y la casilla fila 1/columna 1).
+- **Punto ciego encontrado y corregido antes de cerrar:** los primeros 4 chequeos del Tablero no detectaban invertir la condición par/impar (`!=` en vez de `==`), porque en un tablero 8×8 simétrico el conteo de claras/oscuras da 32/32 en ambos sentidos — el error pasaba piola. Se agregó `primera_casilla_es_clara`, un chequeo puntual sobre la casilla (1,1), que sí lo detecta. Probado con la solución correcta y con el bug deliberadamente introducido antes de dar el diseño por bueno.
+- Regeneración con `crear_colab.py` verificada cell por cell contra la versión previa en git: sin ediciones manuales post-generación pendientes en esta clase (a diferencia de Clase 16), así que no hubo nada que restaurar aparte de la frase por defecto "Resuelve los siguientes ejercicios en pareja..." de la intro de Independiente, que se agregó de vuelta al spec junto con la nueva oración del autochequeo.
+- Verificado con `nbconvert --execute` (Clase.ipynb y Solucionario.ipynb, sin errores).
