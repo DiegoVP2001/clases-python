@@ -142,16 +142,62 @@ partidos_contados = 0
 
 ### 4. Práctica Independiente (15-18 min)
 
+Resuelve los siguientes ejercicios en pareja. Si se traban, pregunten al profe. Antes de empezar, ejecuten la celda de configuración de abajo: deja listos los verificadores con los que van a revisar su propio trabajo, sin tener que esperar a que el profe pase por el puesto.
+
+**Celda de configuración:**
+```python
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+_casos_ej1 = set()
+_casos_ej2 = set()
+
+def verificar_ejercicio_1():
+    variables_necesarias = ["partidos_jugados", "promedio_goles_por_partido", "total_goles_estimado"]
+    faltantes = [v for v in variables_necesarias if v not in globals()]
+    if faltantes:
+        print("⬜ Todavía te falta definir:", ", ".join(faltantes))
+        return
+    esperado = partidos_jugados * promedio_goles_por_partido
+    if abs(total_goles_estimado - esperado) < 0.01:
+        _casos_ej1.add((partidos_jugados, promedio_goles_por_partido))
+        print("✅ Con", partidos_jugados, "partidos y promedio", promedio_goles_por_partido, "tu total está bien.")
+    else:
+        print("❌ El total no calza. Se esperaba algo cercano a", esperado, "y tu programa dio", total_goles_estimado)
+    print()
+    print("Casos distintos superados:", len(_casos_ej1), "/ 5")
+    if len(_casos_ej1) >= 5:
+        print("🎉 ¡Ya probaste 5 casos distintos! Buen trabajo revisando bordes.")
+
+def verificar_ejercicio_2():
+    variables_necesarias = ["dias_para_el_partido", "suma_dias_verificador"]
+    faltantes = [v for v in variables_necesarias if v not in globals()]
+    if faltantes:
+        print("⬜ Todavía te falta definir:", ", ".join(faltantes))
+        return
+    esperado = dias_para_el_partido * (dias_para_el_partido + 1) // 2
+    if suma_dias_verificador == esperado:
+        _casos_ej2.add(dias_para_el_partido)
+        print("✅ Con", dias_para_el_partido, "días tu cuenta regresiva está bien armada.")
+    else:
+        print("❌ Algo no calza en tu cuenta regresiva. Revisa dónde empieza y dónde termina tu rango.")
+    print()
+    print("Casos distintos superados:", len(_casos_ej2), "/ 5")
+    if len(_casos_ej2) >= 5:
+        print("🎉 ¡Ya probaste 5 casos distintos!")
+```
+
 **Ejercicio 1 — Racha goleadora (obligatorio)**
 
 Un equipo llegó a cuartos de final con una racha goleadora que todos comentan. La pareja quiere armar un programa que, sabiendo cuántos partidos jugó ese equipo en el torneo y cuántos goles anota en promedio por partido, vaya mostrando cuánto lleva acumulado después de cada partido, hasta llegar al total estimado.
 
 **El programa debe:**
-- **Pedir** cuántos partidos jugó el equipo en el torneo.
-- **Pedir** el promedio de goles que anota por partido.
-- **Recorrer** cada partido uno por uno, acumulando el total de goles estimado.
+- **Pedir** cuántos partidos jugó el equipo en el torneo, y guardarlo en una variable llamada exactamente `partidos_jugados`.
+- **Pedir** el promedio de goles que anota por partido, y guardarlo en una variable llamada exactamente `promedio_goles_por_partido`.
+- **Recorrer** cada partido uno por uno, acumulando el total en una variable llamada exactamente `total_goles_estimado` (inicializada en 0 antes del bucle).
 - **Mostrar**, después de cada partido, cuántos goles lleva acumulados el equipo hasta ese momento.
-- **Mostrar** al final el total de goles estimado en todo el torneo.
+- **Mostrar** al final el total de goles estimado en todo el torneo, usando esa misma variable `total_goles_estimado`.
+
+> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo.
 
 <table>
 <tr><th></th><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
@@ -176,17 +222,22 @@ Total estimado en el torneo: 9 goles</pre></td>
 </tr>
 </table>
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_1()
+```
+
 - Solución:
   ```python
   partidos_jugados = int(input("¿Cuántos partidos jugó el equipo en el torneo? "))
-  promedio_goles = int(input("¿Cuál es su promedio de goles por partido? "))
+  promedio_goles_por_partido = int(input("¿Cuál es su promedio de goles por partido? "))
 
-  goles_acumulados = 0
+  total_goles_estimado = 0
   for numero_partido in range(1, partidos_jugados + 1):
-      goles_acumulados = goles_acumulados + promedio_goles
-      print("Después del partido", numero_partido, ": ", goles_acumulados, "goles acumulados")
+      total_goles_estimado = total_goles_estimado + promedio_goles_por_partido
+      print("Después del partido", numero_partido, ": ", total_goles_estimado, "goles acumulados")
 
-  print("Total estimado en el torneo:", goles_acumulados, "goles")
+  print("Total estimado en el torneo:", total_goles_estimado, "goles")
   ```
 
 **Ejercicio 2 — Cuenta regresiva personalizada (obligatorio)**
@@ -194,9 +245,12 @@ Total estimado en el torneo: 9 goles</pre></td>
 Hay un partido de esta recta final que la pareja no se quiere perder. Si indican cuántos días faltan para ese partido, el programa debe armar la cuenta regresiva completa, día por día, hasta anunciar que por fin llegó el día.
 
 **El programa debe:**
-- **Pedir** cuántos días faltan para el partido que quieren ver.
+- **Pedir** cuántos días faltan para el partido que quieren ver, y guardarlo en una variable llamada exactamente `dias_para_el_partido`.
 - **Recorrer** la cuenta regresiva completa, mostrando cuántos días faltan en cada vuelta.
+- **Ir sumando**, en cada vuelta, el día que corresponde, en una variable llamada exactamente `suma_dias_verificador` (inicializada en 0 antes del bucle; no se imprime, es solo para que el verificador de más abajo revise tu trabajo).
 - **Mostrar**, al llegar a cero, un mensaje especial anunciando que el partido es hoy.
+
+> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo.
 
 <table>
 <tr><th></th><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
@@ -218,12 +272,19 @@ Faltan 1 días
 </tr>
 </table>
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_2()
+```
+
 - Solución:
   ```python
   dias_para_el_partido = int(input("¿Cuántos días faltan para el partido que quieres ver? "))
 
+  suma_dias_verificador = 0
   for dias_restantes in range(dias_para_el_partido, 0, -1):
       print("Faltan", dias_restantes, "días")
+      suma_dias_verificador = suma_dias_verificador + dias_restantes
 
   print("¡Hoy se juega!")
   ```
@@ -297,3 +358,4 @@ Construir programas en Python que utilicen la sentencia `for` y la función `ran
 - Práctica Independiente: originalmente 1 ejercicio obligatorio + 1 bonus (décimas extra); corregido el 2026-08-02 a **2 ejercicios obligatorios**, alineado con la convención vigente (`CLAUDE.md` regla 16) — Diego revisa uno de los dos en vivo trayendo a una pareja a explicarlo al curso.
 - Todas las soluciones de esta clase (Haz Ahora, Guiada, Independiente, Ticket) van únicamente a `Clase 16 - for + range() - Solucionario.ipynb`, que se genera junto con el Colab de clase.
 - El Haz Ahora recupera el bloque "contar con VARIABLE desde X hasta Y de a Z hacer" de programación por bloques para anclar la idea de repetición controlada antes de traducirla a `range()`.
+- **Autochequeo agregado 2026-08-04** (capacidad opcional, pedida explícitamente por Diego): una sola celda de configuración compartida al inicio de la sección 4, con los verificadores de los dos ejercicios. Cada ejercicio exige nombres de variable exactos (`partidos_jugados`, `promedio_goles_por_partido`, `total_goles_estimado`, `dias_para_el_partido`, `suma_dias_verificador`) — excepción puntual y deliberada a la regla 8 del `CLAUDE.md` (no revelar nombres de variable), necesaria para que el checker lea las variables del estudiante sin pedirle que retipee nada. `suma_dias_verificador` es un acumulador que no se imprime, agregado solo para que el Ejercicio 2 (una secuencia de prints sin variable de resultado natural) sea verificable — a esta altura del curso todavía no existen listas (Picuino 25) ni concatenación de strings (Picuino 21), así que el acumulador numérico es la única herramienta disponible.
