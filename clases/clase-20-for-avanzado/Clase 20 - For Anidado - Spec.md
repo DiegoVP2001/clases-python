@@ -126,7 +126,7 @@ Fila 3 - Asiento 1  Fila 3 - Asiento 2  Fila 3 - Asiento 3  Fila 3 - Asiento 4  
 
 ### 4. Práctica Independiente (16 min)
 
-Resuelve los siguientes ejercicios en pareja. Si se traban, pregunten al profe. Antes de empezar, ejecuten la celda de configuración de abajo: deja listos los verificadores con los que van a revisar su propio trabajo, sin tener que esperar a que el profe pase por el puesto.
+Resuelve los siguientes ejercicios. Si te traban, pregunta al profe. Antes de empezar, ejecuta la celda de configuración de abajo: deja listos los verificadores con los que vas a revisar tu propio trabajo, sin tener que esperar a que el profe pase por el puesto. Cuando un ejercicio dice "guardando esa cantidad en una variable llamada exactamente `X`", significa simplemente escribir `X = ...`.
 
 **Celda de configuración:**
 ```python
@@ -195,7 +195,7 @@ def verificar_ejercicio_2():
     print(correctos, "de", len(chequeos), "chequeos correctos.")
 ```
 
-**Ejercicio 1 — Torneo de tenis de mesa (obligatorio)**
+**Ejercicio 1 — Torneo de tenis de mesa**
 Un campeonato de tenis de mesa entre cursos tiene 5 rondas, y en cada ronda se juegan tantos partidos como el número de la ronda: la ronda 1 tiene 1 partido, la ronda 2 tiene 2 partidos, y así sucesivamente hasta la ronda 5. La organización quiere el programa que imprima cada partido de cada ronda, para pegarlo en el diario mural del gimnasio.
 
 **El programa debe:**
@@ -206,7 +206,7 @@ Un campeonato de tenis de mesa entre cursos tiene 5 rondas, y en cada ronda se j
 - Sumar cada número de ronda que uses, en una variable llamada exactamente `suma_rondas_verificador` (inicializada en 0 antes de los ciclos)
 - Sumar cada número de partido que uses, en una variable llamada exactamente `suma_partidos_verificador` (inicializada en 0 antes de los ciclos)
 
-> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo. Las tres variables de conteo no se imprimen, son solo para que te autorrevises.
+**Nota:** usa esos nombres de variable exactos — el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo. Las tres variables de conteo no se imprimen, son solo para que te autorrevises.
 
 **Resultado esperado:**
 ```
@@ -220,6 +220,7 @@ Ronda 5 - Partido 5
 
 **Celda de verificación:**
 ```python
+# Ejecuta esto para revisar tu Ejercicio 1 — puedes correrlo las veces que quieras
 verificar_ejercicio_1()
 ```
 
@@ -238,7 +239,7 @@ verificar_ejercicio_1()
           suma_partidos_verificador = suma_partidos_verificador + partido
   ```
 
-**Ejercicio 2 — Diseño de un tablero de ajedrez (obligatorio)**
+**Ejercicio 2 — Diseño de un tablero de ajedrez**
 Un tablero de ajedrez tiene 8 filas y 8 columnas, y sus casillas alternan entre claras y oscuras según su posición: si sumas el número de fila y el número de columna de una casilla, el resultado indica si es clara (par) u oscura (impar). Antes de fabricar tableros nuevos, el taller de carpintería quiere un programa que recorra el patrón completo, casilla por casilla, para verificar que la alternancia quede correcta en las 64 casillas.
 
 **El programa debe:**
@@ -250,7 +251,7 @@ Un tablero de ajedrez tiene 8 filas y 8 columnas, y sus casillas alternan entre 
 - Sumar cada número de fila que uses, en una variable llamada exactamente `suma_filas_verificador`, y cada número de columna, en una variable llamada exactamente `suma_columnas_verificador` (ambas inicializadas en 0 antes de los ciclos)
 - Guardar si la primera casilla (fila 1, columna 1) resultó clara u oscura, en una variable llamada exactamente `primera_casilla_es_clara` (`True` si fue clara, `False` si fue oscura)
 
-> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo. Las variables de conteo no se imprimen, son solo para que te autorrevises.
+**Nota:** usa esos nombres de variable exactos — el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo. Las variables de conteo no se imprimen, son solo para que te autorrevises.
 
 <details>
 <summary>💡 Pista — el operador módulo</summary>
@@ -266,6 +267,7 @@ Oscura Clara Oscura Clara Oscura Clara Oscura Clara
 
 **Celda de verificación:**
 ```python
+# Ejecuta esto para revisar tu Ejercicio 2 — puedes correrlo las veces que quieras
 verificar_ejercicio_2()
 ```
 
@@ -357,3 +359,4 @@ Si se elimina la línea marcada, ¿qué cambia en el resultado?
 - **Ticket de Salida con alternativas A/B/C/D.** Cambio de convención aplicado desde esta clase en adelante (antes: conteo de dedos en vivo) — actualizado también en `CLAUDE.md` regla 17, ya que el mecanismo de respuesta migró a Google Form y dejó de tener sentido mostrar dedos.
 - **Revisión 2026-07-29 (Haz Ahora → Ticket de Salida):** el Haz Ahora original (actividad abierta única, sin preguntas numeradas, con una nota interna "Propósito:" que se filtró al notebook de estudiante por un bug del generador) se reemplazó por una narrativa del Cinemark del Mall Plaza Oeste con 3 preguntas cerradas. La Práctica Guiada dejó el escenario de "talleres extraprogramáticos" y pasó a compartir el mismo escenario Cinemark del Haz Ahora, en el formato canónico de ejercicio (narrativa + "El programa debe" + resultado) en vez de la tabla de pasos de 2 columnas. La Práctica Independiente pasó de "1 obligatorio + 1 bonus" a **2 ejercicios obligatorios**, ambos en el mismo formato canónico; el Ejercicio 2 (ajedrez) agregó una pista `<details>` sobre el operador módulo, ya que antes ese operador solo aparecía en la versión bonus. El Ticket de Salida pasó de 2 a 3 preguntas fijas, cada una con un bloque de código breve (como foco o como referencia), con las respuestas correctas repartidas en letras distintas (A, C, D) para no clusterizarlas.
 - **Autochequeo agregado 2026-08-04** (capacidad opcional, pedida explícitamente por Diego): una sola celda de configuración compartida al inicio de la sección 4, con los verificadores de los dos ejercicios. Como ninguno de los dos ejercicios tiene `input()` (parámetros fijos: 5 rondas, tablero 8×8), no existen "corridas" distintas que probar — el checker hace varios chequeos puntuales dentro de la única ejecución en vez de acumular casos como en Clase 16 (3 chequeos en Torneo: total de partidos, suma de rondas, suma de partidos; 6 en Tablero: claras, oscuras, suma de filas, suma de columnas, total, y la casilla (1,1)). Cada ejercicio exige nombres de variable exactos (`cantidad_rondas`, `total_partidos_verificador`, `suma_rondas_verificador`, `suma_partidos_verificador` / `filas_tablero`, `columnas_tablero`, `cantidad_claras`, `cantidad_oscuras`, `suma_filas_verificador`, `suma_columnas_verificador`, `primera_casilla_es_clara`) — excepción puntual y deliberada a la regla 8 del `CLAUDE.md`. Los acumuladores de verificación usan solo sumas y contadores dentro del mismo `for` anidado que el ejercicio ya pide: a esta altura del curso no existen listas (Picuino 25) ni concatenación de strings (Picuino 21), así que no hay forma más simple de dejar "evidencia" del recorrido para revisar sin retipear nada. **Chequeo `primera_casilla_es_clara` agregado tras probar el verificador**: los 4 chequeos originales del Tablero (claras, oscuras, suma filas, suma columnas) no detectan invertir la condición par/impar (`!=` en vez de `==`), porque en un tablero 8×8 simétrico el conteo de claras/oscuras da 32/32 en ambos sentidos — el error pasa piola. Un chequeo puntual sobre una casilla conocida cierra ese punto ciego.
+- **Corrección 2026-08-04 (mismo día): la nota de nombres de variable de ambos ejercicios se estaba perdiendo en silencio.** El parser de `crear_colab.py` solo conserva las líneas que empiezan con `-` dentro del bloque "El programa debe"; el `>` de "nombres de variable obligatorios" quedaba entre medio y se descartaba sin avisar (a diferencia de Clase 16, aquí la tabla de `Resultado esperado` sí se salvaba porque esta clase no usa `input()` y ya traía la etiqueta `**Resultado esperado:**`). Corregido migrando la nota a la nueva directiva `**Nota:**` (soportada ahora en `crear_colab.py`, ver `generar-colab-clase/SKILL.md`). De paso: se sacó "(obligatorio)" de ambos títulos (redundante con la regla 16), se sacó "en pareja" de la intro de Independiente (Diego decide la modalidad en vivo, no en el notebook), y se agregó un comentario aclaratorio arriba de cada `verificar_ejercicio_N()`.

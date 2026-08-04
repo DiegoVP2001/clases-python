@@ -40,3 +40,13 @@ Mismo pedido y mismo diseño que en Clase 16 (ver esa Historial para el contexto
 - **Punto ciego encontrado y corregido antes de cerrar:** los primeros 4 chequeos del Tablero no detectaban invertir la condición par/impar (`!=` en vez de `==`), porque en un tablero 8×8 simétrico el conteo de claras/oscuras da 32/32 en ambos sentidos — el error pasaba piola. Se agregó `primera_casilla_es_clara`, un chequeo puntual sobre la casilla (1,1), que sí lo detecta. Probado con la solución correcta y con el bug deliberadamente introducido antes de dar el diseño por bueno.
 - Regeneración con `crear_colab.py` verificada cell por cell contra la versión previa en git: sin ediciones manuales post-generación pendientes en esta clase (a diferencia de Clase 16), así que no hubo nada que restaurar aparte de la frase por defecto "Resuelve los siguientes ejercicios en pareja..." de la intro de Independiente, que se agregó de vuelta al spec junto con la nueva oración del autochequeo.
 - Verificado con `nbconvert --execute` (Clase.ipynb y Solucionario.ipynb, sin errores).
+
+## 2026-08-04 — Corrección: la nota de nombres de variable del autochequeo se perdía en silencio
+
+Mismo hallazgo que en Clase 16 (ver esa Historial para el detalle completo del bug y del fix). Aquí el síntoma era más acotado: la tabla/bloque de "Resultado esperado" de ambos ejercicios sí se mostraba bien (esta clase no usa `input()`, así que ya traía la etiqueta `**Resultado esperado:**` desde el diseño original), pero la nota `> Los nombres de variable exactos son obligatorios...` quedaba atrapada entre los bullets de "El programa debe" y esa etiqueta — el parser de `crear_colab.py` solo conserva las líneas que empiezan con `-` dentro de ese bloque, así que la nota se descartaba sin avisar.
+
+- Migrada a la nueva directiva `**Nota:**` (agregada a `crear_colab.py` en esta misma sesión, ver `generar-colab-clase/SKILL.md`), que ahora sí se renderiza en el notebook.
+- Se sacó `(obligatorio)` de ambos títulos de Independiente (redundante con la regla 16 del `CLAUDE.md`) y "en pareja" de la intro de la sección (Diego decide la modalidad de trabajo en vivo, no la quiere fija en el notebook) — este segundo cambio también se hizo permanente en el texto por defecto de `crear_colab.py` (`generar_seccion_independiente_intro`).
+- Se agregó un comentario aclaratorio arriba de cada `verificar_ejercicio_N()` (`# Ejecuta esto para revisar tu Ejercicio N — puedes correrlo las veces que quieras`).
+- Sin ediciones manuales post-generación que restaurar en esta clase (a diferencia de Clase 16) — la regeneración fue directa.
+- Verificado con `nbconvert --execute` (Clase.ipynb y Solucionario.ipynb, sin errores) y confirmado por grep que la Nota ahora sí aparece en el notebook de estudiante.
