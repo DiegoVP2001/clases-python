@@ -89,44 +89,26 @@ Con ese bloque en mente, respondan en papel: si quisiéramos contar, uno por uno
 
 ### 3. Práctica Guiada (20-25 min)
 
-**Situación:** La semana pasada ya sabíamos todos los resultados hasta los octavos de final del Mundial 2026. Ahora entramos a la recta final: quedan por jugarse los partidos de cuartos, semifinales y la gran final — 7 partidos en total. Vamos a contarlos uno por uno con `range()`, tal como lo hacíamos con el bloque que ya conocíamos, y armar además una cuenta regresiva de los días que faltan para la final.
+La semana pasada ya sabíamos todos los resultados hasta los octavos de final del Mundial 2026. Ahora entramos a la recta final: quedan por jugarse los partidos de cuartos, semifinales y la gran final — 7 partidos en total. Vamos a contarlos uno por uno con `range()`, tal como lo hacíamos con el bloque que ya conocíamos, y armar además una cuenta regresiva de los 11 días que faltan para la final.
 
-**Variables:**
-```python
-partidos_contados = 0
+**El programa debe:**
+- Crear una variable que registre cuántos partidos llevas contados, comenzando en cero, antes de empezar a repetir nada.
+- Recorrer los números del 1 al 7 — los partidos que faltan del Mundial — usando `range()` con inicio, fin y salto, igual que el bloque "desde X hasta Y de a Z" que ya conocías. En cada vuelta, sumar 1 a la variable que cuenta los partidos y mostrar en pantalla en qué número de partido vas.
+- Mostrar, después del bucle (sin indentación), el total de partidos contados.
+- Construir un segundo bucle que recorra, en cuenta regresiva, los 11 días que faltan para la final, mostrando en cada vuelta cuántos días faltan.
+
+**Resultado esperado:**
 ```
-
-**Pasos guiados (tabla):**
-
-- Paso 1: Crea una variable que registre cuántos partidos llevas contados, comenzando en cero, antes de empezar a repetir nada.
-  Resultado:
-  ```
-  (todavía no hay output — es solo la variable inicial)
-  ```
-
-- Paso 2: Construye un bucle que recorra los números del 1 al 7 — los partidos que faltan del Mundial — usando `range()` con inicio, fin y salto, igual que el bloque "desde X hasta Y de a Z" que ya conocías. En cada vuelta, suma 1 a la variable que cuenta los partidos y muestra en pantalla en qué número de partido vas.
-  Resultado:
-  ```
-  Partido 1 de los que quedan
-  Partido 2 de los que quedan
-  ...
-  Partido 7 de los que quedan
-  ```
-
-- Paso 3: Después del bucle (sin indentación), muestra en pantalla el total de partidos contados.
-  Resultado:
-  ```
-  Total de partidos que quedan: 7
-  ```
-
-- Paso 4: Construye un segundo bucle que recorra, en cuenta regresiva, los días que faltan para la final: desde 11 hasta 1, mostrando en cada vuelta cuántos días faltan.
-  Resultado:
-  ```
-  Faltan 11 días para la final
-  Faltan 10 días para la final
-  ...
-  Faltan 1 días para la final
-  ```
+Partido 1 de los que quedan
+Partido 2 de los que quedan
+...
+Partido 7 de los que quedan
+Total de partidos que quedan: 7
+Faltan 11 días para la final
+Faltan 10 días para la final
+...
+Faltan 1 días para la final
+```
 
 - Solución:
   ```python
@@ -142,7 +124,7 @@ partidos_contados = 0
 
 ### 4. Práctica Independiente (15-18 min)
 
-Resuelve los siguientes ejercicios en pareja. Si se traban, pregunten al profe. Antes de empezar, ejecuten la celda de configuración de abajo: deja listos los verificadores con los que van a revisar su propio trabajo, sin tener que esperar a que el profe pase por el puesto.
+Resuelve los siguientes ejercicios. Si te traban, pregunta al profe. Antes de empezar, ejecuta la celda de configuración de abajo: deja listos los verificadores con los que vas a revisar tu propio trabajo, sin tener que esperar a que el profe pase por el puesto. Cuando un ejercicio dice "guardarlo en una variable llamada exactamente `X`", significa simplemente escribir `X = ...` — por ejemplo, `partidos_jugados = int(input(...))`.
 
 **Celda de configuración:**
 ```python
@@ -186,9 +168,9 @@ def verificar_ejercicio_2():
         print("🎉 ¡Ya probaste 5 casos distintos!")
 ```
 
-**Ejercicio 1 — Racha goleadora (obligatorio)**
+**Ejercicio 1 — Racha goleadora**
 
-Un equipo llegó a cuartos de final con una racha goleadora que todos comentan. La pareja quiere armar un programa que, sabiendo cuántos partidos jugó ese equipo en el torneo y cuántos goles anota en promedio por partido, vaya mostrando cuánto lleva acumulado después de cada partido, hasta llegar al total estimado.
+Un equipo llegó a cuartos de final con una racha goleadora que todos comentan. Arma un programa que, sabiendo cuántos partidos jugó ese equipo en el torneo y cuántos goles anota en promedio por partido, vaya mostrando cuánto lleva acumulado después de cada partido, hasta llegar al total estimado.
 
 **El programa debe:**
 - **Pedir** cuántos partidos jugó el equipo en el torneo, y guardarlo en una variable llamada exactamente `partidos_jugados`.
@@ -197,8 +179,9 @@ Un equipo llegó a cuartos de final con una racha goleadora que todos comentan. 
 - **Mostrar**, después de cada partido, cuántos goles lleva acumulados el equipo hasta ese momento.
 - **Mostrar** al final el total de goles estimado en todo el torneo, usando esa misma variable `total_goles_estimado`.
 
-> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo.
+**Nota:** usa esos nombres de variable exactos — el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo, sin que tengas que reescribir nada.
 
+**Resultado esperado:**
 <table>
 <tr><th></th><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
 <tr>
@@ -224,6 +207,7 @@ Total estimado en el torneo: 9 goles</pre></td>
 
 **Celda de verificación:**
 ```python
+# Ejecuta esto para revisar tu Ejercicio 1 — puedes correrlo las veces que quieras
 verificar_ejercicio_1()
 ```
 
@@ -240,9 +224,9 @@ verificar_ejercicio_1()
   print("Total estimado en el torneo:", total_goles_estimado, "goles")
   ```
 
-**Ejercicio 2 — Cuenta regresiva personalizada (obligatorio)**
+**Ejercicio 2 — Cuenta regresiva personalizada**
 
-Hay un partido de esta recta final que la pareja no se quiere perder. Si indican cuántos días faltan para ese partido, el programa debe armar la cuenta regresiva completa, día por día, hasta anunciar que por fin llegó el día.
+Hay un partido de esta recta final que no te quieres perder. Si indicas cuántos días faltan para ese partido, el programa debe armar la cuenta regresiva completa, día por día, hasta anunciar que por fin llegó el día.
 
 **El programa debe:**
 - **Pedir** cuántos días faltan para el partido que quieren ver, y guardarlo en una variable llamada exactamente `dias_para_el_partido`.
@@ -250,8 +234,9 @@ Hay un partido de esta recta final que la pareja no se quiere perder. Si indican
 - **Ir sumando**, en cada vuelta, el día que corresponde, en una variable llamada exactamente `suma_dias_verificador` (inicializada en 0 antes del bucle; no se imprime, es solo para que el verificador de más abajo revise tu trabajo).
 - **Mostrar**, al llegar a cero, un mensaje especial anunciando que el partido es hoy.
 
-> Los nombres de variable exactos son obligatorios: el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo.
+**Nota:** usa esos nombres de variable exactos — el verificador de la celda de configuración los busca por ese nombre para revisar tu trabajo, sin que tengas que reescribir nada.
 
+**Resultado esperado:**
 <table>
 <tr><th></th><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
 <tr>
@@ -274,6 +259,7 @@ Faltan 1 días
 
 **Celda de verificación:**
 ```python
+# Ejecuta esto para revisar tu Ejercicio 2 — puedes correrlo las veces que quieras
 verificar_ejercicio_2()
 ```
 
@@ -359,3 +345,4 @@ Construir programas en Python que utilicen la sentencia `for` y la función `ran
 - Todas las soluciones de esta clase (Haz Ahora, Guiada, Independiente, Ticket) van únicamente a `Clase 16 - for + range() - Solucionario.ipynb`, que se genera junto con el Colab de clase.
 - El Haz Ahora recupera el bloque "contar con VARIABLE desde X hasta Y de a Z hacer" de programación por bloques para anclar la idea de repetición controlada antes de traducirla a `range()`.
 - **Autochequeo agregado 2026-08-04** (capacidad opcional, pedida explícitamente por Diego): una sola celda de configuración compartida al inicio de la sección 4, con los verificadores de los dos ejercicios. Cada ejercicio exige nombres de variable exactos (`partidos_jugados`, `promedio_goles_por_partido`, `total_goles_estimado`, `dias_para_el_partido`, `suma_dias_verificador`) — excepción puntual y deliberada a la regla 8 del `CLAUDE.md` (no revelar nombres de variable), necesaria para que el checker lea las variables del estudiante sin pedirle que retipee nada. `suma_dias_verificador` es un acumulador que no se imprime, agregado solo para que el Ejercicio 2 (una secuencia de prints sin variable de resultado natural) sea verificable — a esta altura del curso todavía no existen listas (Picuino 25) ni concatenación de strings (Picuino 21), así que el acumulador numérico es la única herramienta disponible.
+- **Corrección 2026-08-04 (mismo día): la tabla de ejemplos y la nota de nombres de variable de ambos ejercicios se estaban perdiendo en silencio.** El parser de `crear_colab.py` solo reconoce el bloque `<table>` de ejemplos (📥/📤) cuando viene precedido de la etiqueta literal `**Resultado esperado:**`; como el spec original la omitía, tanto la tabla como el `>` de "nombres de variable obligatorios" quedaban descartados y el notebook de estudiante mostraba solo bullets + celda vacía + un `verificar_ejercicio_N()` sin ningún ejemplo ni explicación. Corregido agregando la etiqueta antes de cada tabla y migrando la nota a una nueva directiva `**Nota:**` (soportada ahora en `crear_colab.py`, ver `generar-colab-clase/SKILL.md`). De paso: se sacó "(obligatorio)" de ambos títulos (redundante con la regla 16), se reescribió la narrativa de ambos ejercicios para no usar "la pareja" como sujeto (Diego decide la modalidad de trabajo en vivo, no en el notebook), se agregó un comentario aclaratorio arriba de cada `verificar_ejercicio_N()`, se convirtió la Práctica Guiada del formato antiguo de tabla de pasos al formato canónico (narrativa + "El programa debe" + Resultado esperado), y se agregó una frase en la intro de Independiente explicando qué significa en la práctica "guardar en una variable".
