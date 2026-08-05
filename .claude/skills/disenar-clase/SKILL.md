@@ -127,8 +127,9 @@ Resultado esperado: [output esperado — un solo bloque si no hay `input()` con 
 ### 4. Práctica Independiente (15-18 min)
 Trabajo individual, alineado con la guiada pero NO copia literal. Formato "revisión rápida": ejercicios breves y directos, no problemas extensos multi-parte.
 Los enunciados NO incluyen nombres de variables, operadores ni comandos — solo descripción en lenguaje natural de qué calcular. Los ejemplos de input/output usan lenguaje natural ("si alguien ingresa un saldo de \$80.000..."), nunca nombres de variables. Los outputs esperados tienen etiquetas descriptivas. Recuerda escapar el signo peso como `\$` — ver CLAUDE.md restricción 21.
-Cantidad de ejercicios: **2 obligatorios (fijo — no preguntar; default desde Clase 20, reemplaza el esquema anterior de 1 obligatorio + 1 bonus)**. Ambos con el mismo formato canónico y la misma exigencia de narrativa — ninguno se presenta como bonus ni con narrativa más breve.
-Contextos: [variados entre los 2 ejercicios]
+**Presupuesto de palabras (default desde Clase 20 v2, 2026-08-05):** narrativa + bullets apunta a 60-90 palabras por ejercicio (sin contar el resultado esperado), para que los dos obligatorios alcancen a resolverse en el tiempo de la sección — ver CLAUDE.md regla 15. Si el ejercicio trae autochequeo, no hace falta instrumentación en los bullets: usa el "Verificador por salida" (`generar-colab-clase/SKILL.md`), que revisa lo que el programa imprime, no nombres de variable.
+Cantidad de ejercicios: **2 obligatorios + 1 desafío opcional (fijo — no preguntar la cantidad de obligatorios; default desde Clase 20 v2, reemplaza el esquema anterior de solo 2 obligatorios)**. Los 2 obligatorios usan el mismo formato canónico y la misma exigencia de narrativa — ninguno se presenta como bonus ni con narrativa más breve. El desafío (Ejercicio 3) es para quien termine antes los dos primeros: mismo formato canónico, con algo más de margen de narrativa que el presupuesto de arriba.
+Contextos: [variados entre los ejercicios]
 Criterio de logro: [qué evidencia el aprendizaje]
 
 ### 5. Ticket de Salida (5-8 min)
@@ -276,7 +277,7 @@ Ejemplos:
 [texto orientador]
 </details>
 
-[Opcional — `**Nota:**` para una aclaración breve que no cabe en un bullet ni en una pista (ej. por qué esta vez se piden nombres de variable exactos, cuando el ejercicio trae autochequeo — ver `generar-colab-clase/SKILL.md`):]
+[Opcional — `**Nota:**` para una aclaración breve que no cabe en un bullet ni en una pista. Ya no hace falta para pedir nombres de variable exactos — el "Verificador por salida" (`generar-colab-clase/SKILL.md`) no los necesita:]
 **Nota:** [aclaración breve]
 
 **Resultado esperado:**
@@ -291,6 +292,9 @@ Ejemplos:
 
 **Ejercicio 2 — [contexto distinto]**
 [Mismo formato que el Ejercicio 1 — ambos obligatorios desde Clase 20 (no hace falta escribirlo en el título, ninguno se marca como bonus ni con narrativa más breve)]
+
+**Ejercicio 3 — Desafío: [contexto]** *(opcional, default desde Clase 20 v2 — ver CLAUDE.md regla 16)*
+[Mismo formato canónico, para quien termine antes los dos primeros. Puede llevar algo más de narrativa que el presupuesto de palabras de los obligatorios (ver arriba). No adelantes contenido no visto — reutiliza sintaxis ya vista en clases anteriores para el giro extra del desafío.]
 
 ### 5. Ticket de Salida (5-8 min)
 **Pregunta 1:**

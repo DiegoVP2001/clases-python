@@ -62,7 +62,7 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
 | n | Markdown | Tabla de errores típicos |
 | n+1 | Markdown | Sección "3️⃣ Práctica Guiada" con situación y pasos (SIN celda "Mis respuestas" — ver regla abajo) |
 | n+2 | Code | Espacio en blanco para construir el código |
-| n+3 | Markdown | Sección "4️⃣ Práctica Independiente" (2 ejercicios obligatorios — default desde Clase 20) |
+| n+3 | Markdown | Sección "4️⃣ Práctica Independiente" (2 ejercicios obligatorios + 1 desafío opcional — default desde Clase 20 v2) |
 | ... | MD+Code alternados | Cada ejercicio con su enunciado y celda vacía |
 | n+k | Markdown | Sección "🎫 Ticket de Salida" — anuncio de que se proyecta en la tele + link al Form + nombre breve a escribir en "Tema de la clase de hoy", sin preguntas (ver regla abajo) |
 | último | Markdown | Cierre y preguntas de reflexión |
@@ -252,7 +252,7 @@ El campo `**Respuestas esperadas:**` en el spec captura todo el texto hasta el f
 
 **Formato canónico de ejercicios (Práctica Independiente y Práctica Guiada — mismo formato, default desde Clase 20)**
 
-**2 ejercicios obligatorios** (fijo, no preguntar — reemplaza el esquema anterior "1 obligatorio + 1 bonus/décimas extra"). Ambos con la misma exigencia de narrativa, ninguno se marca como bonus. La Guiada usa este mismo formato como un ejercicio único guiado (ver más arriba). Cada ejercicio sigue esta estructura fija en orden, implementada en `parsear_independiente()` / `generar_ejercicio_independiente()` (y su equivalente `parsear_guiada()` / `generar_seccion_guiada_intro()` para la Guiada) en `crear_colab.py`:
+**2 ejercicios obligatorios + 1 desafío opcional** (default desde Clase 20 v2, 2026-08-05 — reemplaza el esquema anterior de solo 2 obligatorios). Cantidad de obligatorios fija, no preguntar. Los 2 obligatorios tienen la misma exigencia de narrativa, ninguno se marca como bonus; el desafío (`**Ejercicio 3 — Desafío: [contexto]**`) es para quien termine antes, con algo más de margen de narrativa. La Guiada usa este mismo formato como un ejercicio único guiado (ver más arriba). Cada ejercicio sigue esta estructura fija en orden, implementada en `parsear_independiente()` / `generar_ejercicio_independiente()` (y su equivalente `parsear_guiada()` / `generar_seccion_guiada_intro()` para la Guiada) en `crear_colab.py` — el parser no tiene tope de ejercicios, así que un tercero se agrega solo escribiendo `**Ejercicio 3 — ...**` en el spec, sin cambios de código:
 
 1. **Narrativa** — 3-4 líneas de prosa, sin bullets. Contexto rico, fluye sin revelar operadores ni nombres de variables. Es todo el texto libre antes de `**El programa debe:**` — no necesita ninguna etiqueta.
 2. **`**El programa debe:**`** — bullets con términos clave en **negrita**. Describe qué hace el programa, no cómo. El parser corta este bloque en la primera línea que empieza con `-` hasta encontrar `Resultado esperado:` (con o sin negrita) o el final de la sección.
@@ -263,7 +263,7 @@ El campo `**Respuestas esperadas:**` en el spec captura todo el texto hasta el f
    texto orientador + bloque de código si aplica
    </details>
    ```
-4. **`**Nota:**` (opcional, desde 2026-08-04)** — una frase breve que se renderiza en cursiva justo después de las pistas y antes del resultado esperado. Pensada para lo que no cabe en un bullet de "El programa debe" ni en una pista: típicamente, explicarle al estudiante por qué esta vez sí se le exigen nombres de variable exactos (excepción a la regla 8 del `CLAUDE.md`, necesaria cuando el ejercicio trae autochequeo). El parser (`parsear_independiente()` / `parsear_guiada()`) la extrae con `\*\*Nota:\*\*` antes de correr el filtro de bullets — si se escribe como texto suelto sin la etiqueta, se pierde en silencio igual que le pasaba antes a cualquier bloque HTML sin `**Resultado esperado:**` delante.
+4. **`**Nota:**` (opcional, desde 2026-08-04)** — una frase breve que se renderiza en cursiva justo después de las pistas y antes del resultado esperado. Pensada para cualquier aclaración breve que no cabe en un bullet de "El programa debe" ni en una pista. **Ya no hace falta para pedir nombres de variable exactos**: eso era necesario con el autochequeo antiguo (lectura de `globals()` por nombre, excepción puntual a la regla 8 del `CLAUDE.md`, usado en Clase 16 y en v1 de Clase 20); el "Verificador por salida", canónico desde Clase 20 v2, no lee variables — ver "Autochequeo" más abajo. El parser (`parsear_independiente()` / `parsear_guiada()`) la extrae con `\*\*Nota:\*\*` antes de correr el filtro de bullets — si se escribe como texto suelto sin la etiqueta, se pierde en silencio igual que le pasaba antes a cualquier bloque HTML sin `**Resultado esperado:**` delante.
 5. **Resultado esperado** — el generador SIEMPRE lo renderiza con el mismo lenguaje visual que las evaluaciones (ícono + `<em>` + `<pre>`), nunca como bloque de código markdown plano ni como etiqueta `**Resultado esperado:**` a secas — aunque en el spec se escriba como bloque simple (`**Resultado esperado:**` seguido de un bloque ` ``` `), es el generador (`generar_ejercicio_independiente()` / `generar_seccion_guiada_intro()`) el que lo transforma al renderizar. Dos variantes según si el ejercicio usa `input()` con valores que varían:
    - **Sin input() (caso típico de `for`/`for` anidado — valores fijos, salida determinista):** `📤 <em>El programa imprime:</em>` seguido de `<pre>...</pre>` con el output esperado. Acórtalo con `...` si es una secuencia larga y repetitiva (ver Clase 20 como referencia).
    - **Con input() de valor variable:** tabla HTML side-by-side — dos columnas, dos filas de datos:
@@ -306,11 +306,83 @@ Orden obligatorio dentro del bloque de un ejercicio: narrativa → `**El program
 
 En la intro de `### 4. Práctica Independiente`, un bloque `**Celda de configuración:**` + ` ```python ` se emite como celda de código justo después del texto introductorio de la sección. Es donde viven las funciones `verificar_*` / `comparar_*` que después llaman las celdas de verificación de cada ejercicio. Convención heredada de la Clase 17: primera línea `#@title 🔧 … (no la edites)`, que en Colab colapsa la celda a solo el título — importante, porque adentro suele estar la lógica correcta.
 
-Sirve para que los estudiantes se autorrevisen sin esperar a que el profe pase por el puesto. Dos formas que ya están probadas:
-- **Comparador**: recibe unos datos, corre internamente dos versiones de un programa y dice si se comportaron igual o distinto. Convierte "encuentra el caso que rompe este programa" en algo verificable sin que el estudiante tenga nada que escribir todavía.
-- **Chequeo de bordes**: recibe lo que el programa del estudiante imprimió para ciertos valores y lo compara. Normaliza el texto (minúsculas, sin tildes) y matchea por subcadena, así un `Nivel: ¡Excelente semana!` calza con `Excelente semana` — sin eso, cualquier diferencia de puntuación da un falso ❌.
+Sirve para que los estudiantes se autorrevisen sin esperar a que el profe pase por el puesto. Como todavía no se enseñan funciones, el estudiante solo **llama** a estas funciones con datos (o sin argumentos); nunca las escribe ni las lee.
 
-Como todavía no se enseñan funciones, el estudiante solo **llama** a estas funciones con datos; nunca las escribe ni las lee.
+**Verificador por salida — forma canónica desde Clase 20 v2 (2026-08-05).** Vuelve a ejecutar la celda de solución del estudiante y compara lo que imprime, línea por línea, contra el resultado esperado — sin leer ninguna variable. Reemplaza como default a las dos formas anteriores (lectura de `globals()` por nombre exacto y contador acumulado), que quedan documentadas más abajo como históricas/alternativas para casos puntuales.
+
+Por qué es el default: la lectura de variables por `globals()` (usada en Clase 16 y en v1 de Clase 20) obligaba a dictar 6-7 nombres de variable por ejercicio en el enunciado — más de la mitad de sus bullets eran instrumentación del verificador, no el problema real — y necesitaba una `**Nota:**` aparte explicando por qué. Cuando el ejercicio usaba `input()` (Clase 16), tampoco había forma de re-ejecutar el código del estudiante con distintas entradas, así que el progreso se medía acumulando combinaciones probadas en un `set()` contra una meta hardcodeada (`"Casos distintos superados: X / 5"`) — un estudiante que resolvía bien en su primer intento veía `1 / 5`, que se lee como "aprobaste 1 de 5 pruebas" en vez de "llevas 1 de 5 entradas distintas probadas". El verificador por salida no tiene ninguno de los dos problemas: el enunciado no necesita instrumentación, y el denominador (cantidad de líneas esperadas) es real y alcanzable en una sola corrida.
+
+Cómo funciona: ubica la celda de solución del estudiante en el historial `In` de IPython/Colab por el comentario de su primera línea (`# Tu solución — Ejercicio N`, que ya emite `crear_colab.py` en la celda vacía de cada ejercicio), la vuelve a ejecutar con `exec` + `contextlib.redirect_stdout`, y compara su salida contra una lista de líneas esperadas, normalizando tildes/mayúsculas/espacios pero preservando números y orden — así detecta errores de lógica real sin ser quisquilloso con el formato exacto del texto.
+
+Preámbulo reutilizable (copiar tal cual en `**Celda de configuración:**`; cada spec solo agrega sus propias `verificar_ejercicio_N()` con la lista `esperadas` de ese ejercicio — ver `Clase 20 - For Anidado - Spec.md` en `clase-20-for-avanzado/v2-acotada/` como referencia completa):
+
+```python
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+import io, re, contextlib, unicodedata
+from IPython import get_ipython
+
+def _fuente_solucion(marca):
+    for fuente in reversed(get_ipython().user_ns.get("In", [])):
+        if fuente.strip().startswith(marca):
+            return fuente
+    return None
+
+def _normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto.lower())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", texto).strip()
+
+def _revisar(marca, esperadas):
+    fuente = _fuente_solucion(marca)
+    if fuente is None:
+        print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
+        print("   su primera línea:", marca)
+        return
+    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+        print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
+        return
+    salida = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(salida):
+            exec(compile(fuente, "<tu solución>", "exec"), {"__name__": "__main__"})
+    except Exception as error:
+        print("❌ Tu programa se detuvo con un error:", type(error).__name__, "-", error)
+        return
+    obtenidas = [l.rstrip() for l in salida.getvalue().splitlines() if l.strip()]
+    correctas, primer_error = 0, None
+    for i, esperada in enumerate(esperadas):
+        obtenida = obtenidas[i] if i < len(obtenidas) else ""
+        if _normalizar(obtenida) == _normalizar(esperada):
+            correctas += 1
+        elif primer_error is None:
+            primer_error = (i + 1, esperada, obtenida)
+    print("Líneas correctas:", correctas, "de", len(esperadas))
+    if primer_error is None and len(obtenidas) == len(esperadas):
+        print("✅ ¡Perfecto! Tu programa imprime exactamente lo que se pedía.")
+        return
+    if len(obtenidas) > len(esperadas):
+        print("⚠️ Tu programa imprimió", len(obtenidas) - len(esperadas), "línea(s) de más.")
+    if primer_error:
+        numero, esperada, obtenida = primer_error
+        print("❌ La primera diferencia está en la línea", numero)
+        print("   Se esperaba:", esperada)
+        print("   Tu programa dio:", obtenida if obtenida else "(nada)")
+
+def verificar_ejercicio_1():
+    esperadas = []
+    # arma la lista de líneas esperadas con la misma lógica que la solución oficial
+    _revisar("# Tu solución — Ejercicio 1", esperadas)
+```
+
+Limitación aceptada: un ciclo infinito en la celda del estudiante cuelga el verificador. Sin `while` (se ve recién en Clase 22) el riesgo es bajo, y la propia celda del estudiante ya se habría colgado antes de llegar a ejecutar el verificador.
+
+Probado con 8 casos antes de adoptarlo como default (solución correcta de tres ejercicios distintos, celda vacía, bug de rango, excepción, paridad invertida en un patrón simétrico, falta de un `print()` de cierre de fila, y una variante con nombres de variable y espaciado distintos) — ver `Clase 20 - For Anidado - Historial.md` (entrada 2026-08-05) para el detalle de cada caso.
+
+**Formas anteriores (históricas — usar solo si el ejercicio no produce una secuencia de líneas comparable, ej. el producto no es texto impreso sino una decisión que el estudiante explica en markdown):**
+- **Lectura de variables por `globals()`** (Clase 16, v1 de Clase 20): el checker recalcula el valor correcto y lo compara contra variables del estudiante, leídas por nombre exacto — obliga a dictar esos nombres en el enunciado (excepción a la regla 8 del `CLAUDE.md`) y, sin `input()`, hace varios chequeos puntuales en la única corrida; con `input()`, acumula un `set()` de combinaciones probadas contra una meta hardcodeada (ver el problema del "`X / 5`" explicado arriba).
+- **Comparador** (Clase 19.5): recibe unos datos, corre internamente dos versiones de un programa y dice si se comportaron igual o distinto. Sigue siendo útil para "encuentra el caso que rompe este programa", donde el estudiante no escribe código todavía.
+- **Chequeo de bordes por texto** (Clase 19.5): el estudiante retipea lo que su programa imprimió para ciertos valores, y el checker lo compara normalizando texto y matcheando por subcadena. Útil cuando no conviene re-ejecutar el código del estudiante (ej. su programa pide datos por `input()` interactivo en varios pasos).
 
 **Formato antiguo (retrocompatible, solo para regenerar clases anteriores a Clase 20):** narrativa + `Ejemplo:` inline + bloque de código de output, sin bullets "El programa debe" ni pistas. El generador detecta automáticamente cuál formato usa cada ejercicio (`el_programa_debe` presente o no) y no hace falta indicarlo.
 
