@@ -357,18 +357,32 @@ for bloque in range(1, 3):
 **Pregunta 3:**
 ```python
 for fila in range(1, 3):
-    for asiento in range(1, 4):
-        print(asiento, end=" ")
-    print()  # <- esta línea
+    for columna in range(1, 4):
+        print(fila, columna)
 ```
-Si se elimina la línea marcada, ¿qué cambia en el resultado?
-- A: Nada, el resultado es idéntico
-- B: El programa deja de funcionar y lanza un error
-- C: Solo se imprimiría la primera fila
-- D: Todos los asientos de todas las filas quedarían impresos en una sola línea corrida
+¿Qué imprime este programa?
+- A: 1 1 / 2 1 / 1 2 / 2 2 / 1 3 / 2 3
+- B: 1 1 / 1 2 / 1 3 / 2 1 / 2 2 / 2 3
+- C: 1 1 / 1 2 / 1 3
+- D: 1 1
+
+**Respuesta correcta:** B
+**Justificación:** Por cada valor de `fila` (primero 1, después 2), el ciclo interno recorre completas sus 3 columnas antes de que `fila` avance — por eso salen primero las 3 combinaciones de la fila 1, y recién después las de la fila 2.
+
+**Pregunta 4:**
+```python
+for semana in range(1, 4):
+    for sesion in range(1, semana + 1):
+        print("S", semana, "-", sesion)
+```
+¿Cuál de las siguientes es la salida correcta?
+- A: S1-1 / S2-1 / S3-1
+- B: S1-1 S1-2 S1-3 / S2-1 S2-2 S2-3 / S3-1 S3-2 S3-3
+- C: S3-1 S3-2 S3-3 / S2-1 S2-2 / S1-1
+- D: S1-1 / S2-1 S2-2 / S3-1 S3-2 S3-3
 
 **Respuesta correcta:** D
-**Justificación:** Sin ese `print()` vacío, nunca se salta de línea entre filas.
+**Justificación:** El ciclo interno depende de `semana` — por eso la semana 1 tiene 1 sesión, la semana 2 tiene 2, y la semana 3 tiene 3, igual que la lógica que ya usaron en el Ejercicio 1 del torneo.
 
 ### Cierre (5 min)
 **Objetivo de la clase:** Construir programas con ciclos `for` anidados que generen tablas y patrones organizados en filas y columnas, con orden.
@@ -384,4 +398,5 @@ Si se elimina la línea marcada, ¿qué cambia en el resultado?
 - **Cierre adicional del punto ciego del tablero simétrico.** La v1 necesitó un chequeo puntual extra (`primera_casilla_es_clara`) porque comparar solo conteos de claras/oscuras no detectaba invertir la condición de paridad en un tablero 8×8 (32/32 en ambos sentidos). El nuevo verificador compara el patrón línea por línea, así que ese error se detecta solo, en la primera fila — no hizo falta ningún chequeo adicional.
 - **Ejercicio 3 (desafío) agregado**, a pedido explícito de Diego: retoma el escenario Cinemark del Haz Ahora/Guiada con un giro real (recorrido en zigzag), exigiendo `for` anidado + `if` + `range()` con paso negativo (ya visto en Clase 16, así que no adelanta contenido). No es obligatorio — está pensado para quien termine antes los dos primeros.
 - **Tiempos ajustados:** Guiada 22→20 min, Independiente 16→18 min, para dejar margen a los tres ejercicios sin recortar el Haz Ahora, el ICN ni el Ticket de Salida (que no cambian respecto a v1).
+- **Ticket de Salida: Pregunta 3 reemplazada y Pregunta 4 agregada (excepción puntual a la regla 17 del `CLAUDE.md`, que fija 3 — Diego pidió subir a 4 solo para esta clase, no como default).** La Pregunta 3 original ("si eliminas esta línea marcada, ¿qué cambia?") se consideró muy particular/puntual; se reemplazó por una pregunta de predicción de salida completa de una tabla 2×3 simple, sin trucos. La Pregunta 4 pasó por dos diseños: el primero reutilizaba el código exacto del Concepto 4 del ICN (`end=" "` + `print()` vacío) — Diego lo rechazó porque no piensa enseñar/enfatizar ese mecanismo lo suficiente como para evaluarlo, aunque aparezca como ejemplo en el ICN. La versión final usa el patrón de rango interno dependiente de la variable externa (mismo tipo de lógica del Ejercicio 1 del torneo, pero con otro contexto — semanas/sesiones en vez de rondas/partidos — para que no sea memorización literal del ejercicio). Respuestas correctas repartidas en las 4 letras (A/B/C/D), una por pregunta: P1=A, P2=C, P3=B, P4=D.
 - El resto de las decisiones de diseño (actitud "Orden", propósito acortado, Ticket con alternativas A/B/C/D, escenario Cinemark compartido) se mantienen idénticas a v1 — ver su Historial para el detalle completo.

@@ -70,3 +70,19 @@ Diego pidió una versión con enunciados más cortos para clases de martes/jueve
 - Bajada de Práctica Independiente reformateada de párrafo a bullets, agregando un punto nuevo que destaca que el verificador ya no exige nombres de variable específicos (a diferencia de v1).
 - Enunciado del Ejercicio 3 (desafío) extendido: retoma explícitamente al equipo de aseo y al supervisor del Cinemark, explicando el porqué del zigzag (evitar volver caminando), en vez de la versión más telegráfica de la primera pasada.
 - Regenerado con `crear_colab.py`, reverificado con `nbconvert --execute` (ambos notebooks, sin errores) y por grep que no hay fugas de nombres de variable ni soluciones en el notebook de estudiante.
+
+**Segundo ajuste tras revisión de Diego (mismo día): Ticket de Salida — Pregunta 3 reemplazada y Pregunta 4 agregada.**
+- Diego no quiso la Pregunta 3 original ("si eliminas esta línea marcada, ¿qué cambia?") por ser muy particular/puntual — pidió una alternativa más aplicada a "qué imprimirá", con varias opciones para elegir.
+- Se propusieron 4 diseños (tabla simple, misma idea con `end=`/`print()` pero en formato de predicción completa, patrón triangular del torneo, conteo de ejecuciones) — eligió la tabla 2×3 simple.
+- De paso, aclaró que el Ticket ya tenía 3 preguntas (no 2 como había dicho) y pidió subir a **4 preguntas, solo para esta clase** (excepción puntual a la regla 17 del `CLAUDE.md`, que sigue fija en 3 para el resto de las clases).
+- La 4ª pregunta nueva reutiliza el concepto de `end=" "` + `print()` vacío (Concepto 4 del ICN) que la Pregunta 3 original cubría, pero en formato "¿qué imprime?" en vez de "qué pasa si borro esta línea" — así no se pierde cobertura de ese concepto.
+- Respuestas correctas repartidas en las 4 letras: P1=A, P2=C, P3=B, P4=D.
+- Regenerado `Clase.ipynb` + `Solucionario.ipynb` + `Ticket de Salida Respuestas.json` (ahora con las 4 casillas llenas, ninguna "No se preguntó"). Reverificado con `nbconvert --execute` y por grep que no hay fugas.
+- Generado `Ticket de Salida.pptx` con `crear_ppt_ticket.py` (soporta cantidad variable de preguntas sin cambios de código): 10 slides (portada + 4 preguntas + formulario + 4 revisiones). Verificado el texto de cada slide con python-pptx — el intro de la portada ajusta solo el conteo ("Son 4 preguntas").
+- `python-pptx` no estaba instalado en este entorno; se instaló (`pip install python-pptx`), ya documentado como dependencia estándar del workspace en el `CLAUDE.md` raíz.
+
+**Tercer ajuste (mismo día): Pregunta 4 rediseñada — sin `end=""`/`print()`.**
+- La primera versión de la Pregunta 4 reutilizaba el código exacto del Concepto 4 del ICN (`end=" "` + `print()` vacío). Diego la rechazó: no piensa enseñar/enfatizar ese mecanismo lo suficiente como para evaluarlo en el Ticket, aunque aparezca como ejemplo en el ICN.
+- Reemplazada por el patrón de rango interno dependiente de la variable externa (mismo tipo de lógica del Ejercicio 1 del torneo, con otro contexto — semanas/sesiones en vez de rondas/partidos — para no ser memorización literal). Respuesta correcta: D (mantiene el reparto A/C/B/D entre las 4 preguntas).
+- Regenerado `Clase.ipynb` + `Solucionario.ipynb` + `Ticket de Salida Respuestas.json`, reverificado con `nbconvert --execute` y por grep que no hay fugas.
+- Regenerado `Ticket de Salida.pptx` (10 slides), verificado el texto de las slides 4 (pregunta) y 9 (revisión) con python-pptx. `Presentación.pptx` **no se tocó** — Diego pidió explícitamente no modificarla en esta iteración.
