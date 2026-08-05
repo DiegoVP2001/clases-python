@@ -126,7 +126,12 @@ Fila 3 - Asiento 1  Fila 3 - Asiento 2  Fila 3 - Asiento 3  Fila 3 - Asiento 4  
 
 ### 4. Práctica Independiente (18 min)
 
-Resuelve los siguientes ejercicios. Si te traban, pregunta al profe. Antes de empezar, ejecuta la celda de configuración de abajo: deja listos los verificadores para que revises tu propio trabajo sin esperar a que el profe pase por el puesto. Después de cada ejercicio, ejecuta su celda de revisión: vuelve a correr tu programa y lo compara, línea por línea, con el resultado esperado. Ojo: no borres el comentario de la primera línea de cada celda de solución — es lo que usa el verificador para encontrar tu código.
+Resuelve los siguientes ejercicios. Si te traban, pregunta al profe.
+
+- Antes de empezar, ejecuta la celda de configuración de abajo: deja listos los verificadores para que revises tu propio trabajo sin esperar a que el profe pase por el puesto.
+- No necesitas usar nombres de variable específicos: el verificador revisa lo que tu programa imprime, no cómo llamaste tus variables.
+- Después de cada ejercicio, ejecuta su celda de revisión: vuelve a correr tu programa y lo compara, línea por línea, con el resultado esperado.
+- Ojo: no borres el comentario de la primera línea de cada celda de solución — es lo que usa el verificador para encontrar tu código.
 
 **Celda de configuración:**
 ```python
@@ -283,7 +288,7 @@ verificar_ejercicio_2()
   ```
 
 **Ejercicio 3 — Desafío: revisión en zigzag**
-Para no devolverse caminando, el equipo de aseo revisa la Fila 1 de izquierda a derecha, la Fila 2 de derecha a izquierda, y así alternando. La sala tiene 4 filas de 5 asientos.
+Al equipo de aseo del Cinemark se le ocurrió una forma más rápida de revisar la sala: en vez de volver caminando hasta el asiento 1 cada vez que empieza una fila nueva, revisa la Fila 1 de izquierda a derecha, sigue de inmediato con la Fila 2 pero de derecha a izquierda, y así va alternando el sentido en cada fila. El supervisor quiere probar el programa en la Sala 6 (4 filas de 5 asientos) antes de aplicar el mismo truco en el resto de las salas.
 
 **El programa debe:**
 - Recorrer las 4 filas de la sala

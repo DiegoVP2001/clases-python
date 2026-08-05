@@ -65,3 +65,8 @@ Diego pidió una versión con enunciados más cortos para clases de martes/jueve
 - Tiempos ajustados dentro de la sección: Guiada 22→20 min, Independiente 16→18 min. Haz Ahora, ICN, Ticket de Salida y Cierre quedan idénticos a v1 — el PPT no requiere regeneración.
 - Verificado con `nbconvert --execute` sobre `Clase.ipynb` y `Solucionario.ipynb` (sin errores) y por grep que el notebook de estudiante no filtra ninguna solución ni ninguna `Nota:` de nombres de variable.
 - **Alcance:** solo Clase 20. Clase 16 (ya dictada) no se toca — el `1 / 5` de su Historial queda anotado como pendiente para cuando se retome esa clase.
+
+**Ajuste tras revisión de Diego (mismo día):**
+- Bajada de Práctica Independiente reformateada de párrafo a bullets, agregando un punto nuevo que destaca que el verificador ya no exige nombres de variable específicos (a diferencia de v1).
+- Enunciado del Ejercicio 3 (desafío) extendido: retoma explícitamente al equipo de aseo y al supervisor del Cinemark, explicando el porqué del zigzag (evitar volver caminando), en vez de la versión más telegráfica de la primera pasada.
+- Regenerado con `crear_colab.py`, reverificado con `nbconvert --execute` (ambos notebooks, sin errores) y por grep que no hay fugas de nombres de variable ni soluciones en el notebook de estudiante.
