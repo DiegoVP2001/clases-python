@@ -34,10 +34,10 @@ El método es seguir un procedimiento ordenado, sabiendo exactamente cuándo sal
 ## Estructura de la clase
 
 ### 1. Haz Ahora (6 min)
-Un compañero, Tomás, organiza un torneo de Free Fire entre el curso. Para que no entre cualquiera a la sala de la partida, puso un código de acceso y decidió que cada persona solo puede intentar adivinarlo un número limitado de veces. Tomás, que sabe programar en Python, les pide ayuda para automatizar esa verificación — pero antes, quiere que tengan clara la lógica:
+Un estudiante del curso organiza un torneo de Free Fire para sus compañeros. Para que no entre cualquiera a la sala de la partida, puso un código de acceso y decidió que cada persona solo puede intentar adivinarlo un número limitado de veces. Ese estudiante, que sabe programar en Python, les pide ayuda para automatizar esa verificación — pero antes, quiere que tengan clara la lógica:
 
 1. Si alguien acierta el código al segundo intento, ¿tiene sentido seguir pidiéndole el intento 3 y el 4?
-2. Según lo que decidió Tomás, ¿cuántos intentos como máximo tiene cada persona antes de quedar fuera?
+2. Según lo que decidió, ¿cuántos intentos como máximo tiene cada persona antes de quedar fuera?
 3. Si alguien falla en el intento 1 y acierta en el intento 2, ¿en qué intento se detiene el proceso?
 4. Si alguien agota todos sus intentos sin acertar, ¿qué debería pasar?
 
@@ -54,7 +54,7 @@ Un compañero, Tomás, organiza un torneo de Free Fire entre el curso. Para que 
 - Ejemplo:
   ```python
   for numero in range(1, 11):
-      if numero % 3 == 0:
+      if numero % 3 == 0:      # ej: si numero vale 3, 3 % 3 == 0 → se cumple, se salta
           continue
       print("Número:", numero)
   ```
@@ -65,7 +65,7 @@ Un compañero, Tomás, organiza un torneo de Free Fire entre el curso. Para que 
 - Ejemplo:
   ```python
   for numero in range(1, 11):
-      if numero % 7 == 0:
+      if numero % 7 == 0:      # ej: si numero vale 7, 7 % 7 == 0 → se cumple, aquí se corta
           print("Encontré un múltiplo de 7:", numero)
           break
   ```
@@ -77,11 +77,11 @@ Un compañero, Tomás, organiza un torneo de Free Fire entre el curso. Para que 
   ```python
   encontrado = False
   for numero in range(1, 11):
-      if numero % 7 == 0:
+      if numero % 7 == 0:      # ej: si numero vale 7, 7 % 7 == 0 → se cumple, guardamos el hallazgo
           encontrado = True
           break
 
-  if encontrado:
+  if encontrado == True:       # se pregunta explícitamente por el valor de la bandera
       print("Sí hay un múltiplo de 7 en el rango")
   else:
       print("No hay ningún múltiplo de 7 en el rango")
@@ -96,7 +96,7 @@ Un compañero, Tomás, organiza un torneo de Free Fire entre el curso. Para que 
 | Olvidar actualizar la bandera justo antes del `break`, o revisarla dentro del ciclo | El mensaje final queda incorrecto o se muestra antes de tiempo | Actualizar la bandera justo antes del `break` y consultarla recién después de que el ciclo completo termina |
 
 ### 3. Práctica Guiada (23 min)
-Retoma el torneo de Free Fire de Tomás: ahora quiere que el programa reciba los intentos de una persona y avise apenas acierte, sin seguir preguntando después de eso.
+Retoma el torneo de Free Fire: el estudiante que lo organiza ahora quiere que el programa reciba los intentos de una persona y avise apenas acierte, sin seguir preguntando después de eso.
 
 **El programa debe:**
 - Guardar el código secreto y el máximo de intentos.
@@ -118,8 +118,8 @@ Retoma el torneo de Free Fire de Tomás: ahora quiere que el programa reciba los
 </pre>
 📤 *El programa imprime*
 <pre>
-Intento 1: código incorrecto
-Intento 2: acceso concedido
+Intento 1 - código incorrecto
+Intento 2 - acceso concedido
 </pre>
 
 </td>
@@ -134,10 +134,10 @@ Intento 2: acceso concedido
 </pre>
 📤 *El programa imprime*
 <pre>
-Intento 1: código incorrecto
-Intento 2: código incorrecto
-Intento 3: código incorrecto
-Intento 4: código incorrecto
+Intento 1 - código incorrecto
+Intento 2 - código incorrecto
+Intento 3 - código incorrecto
+Intento 4 - código incorrecto
 Acceso denegado. Se acabaron los intentos.
 </pre>
 
@@ -155,16 +155,96 @@ Acceso denegado. Se acabaron los intentos.
       numero_ingresado = int(input("Ingresa el código: "))
       if numero_ingresado == codigo_secreto:
           acceso_concedido = True
-          print("Intento", intento, ": acceso concedido")
+          print("Intento", intento, "- acceso concedido")
           break
       else:
-          print("Intento", intento, ": código incorrecto")
+          print("Intento", intento, "- código incorrecto")
 
-  if not acceso_concedido:
+  if acceso_concedido == False:
       print("Acceso denegado. Se acabaron los intentos.")
   ```
 
 ### 4. Práctica Independiente (18 min)
+
+En cada ejercicio escribe tu programa dentro de la celda que ya trae el comentario `# Tu solución — Ejercicio N` — no borres esa primera línea, el verificador la usa para encontrar tu código. Tampoco necesitas usar nombres de variable en particular: el verificador revisa lo que tu programa imprime, no cómo llamaste tus variables.
+
+**Celda de configuración:**
+```python
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+import io, re, contextlib, unicodedata
+from IPython import get_ipython
+
+def _fuente_solucion(marca):
+    for fuente in reversed(get_ipython().user_ns.get("In", [])):
+        if fuente.strip().startswith(marca):
+            return fuente
+    return None
+
+def _normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto.lower())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", texto).strip()
+
+def _revisar(marca, esperadas):
+    fuente = _fuente_solucion(marca)
+    if fuente is None:
+        print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
+        print("   su primera línea:", marca)
+        return
+    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+        print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
+        return
+    salida = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(salida):
+            exec(compile(fuente, "<tu solución>", "exec"), {"__name__": "__main__"})
+    except Exception as error:
+        print("❌ Tu programa se detuvo con un error:", type(error).__name__, "-", error)
+        return
+    obtenidas = [l.rstrip() for l in salida.getvalue().splitlines() if l.strip()]
+    correctas, primer_error = 0, None
+    for i, esperada in enumerate(esperadas):
+        obtenida = obtenidas[i] if i < len(obtenidas) else ""
+        if _normalizar(obtenida) == _normalizar(esperada):
+            correctas += 1
+        elif primer_error is None:
+            primer_error = (i + 1, esperada, obtenida)
+    print("Líneas correctas:", correctas, "de", len(esperadas))
+    if primer_error is None and len(obtenidas) == len(esperadas):
+        print("✅ ¡Perfecto! Tu programa imprime exactamente lo que se pedía.")
+        return
+    if len(obtenidas) > len(esperadas):
+        print("⚠️ Tu programa imprimió", len(obtenidas) - len(esperadas), "línea(s) de más.")
+    if primer_error:
+        numero, esperada, obtenida = primer_error
+        print("❌ La primera diferencia está en la línea", numero)
+        print("   Se esperaba:", esperada)
+        print("   Tu programa dio:", obtenida if obtenida else "(nada)")
+
+def verificar_ejercicio_1():
+    esperadas = ["Canción: " + str(numero) for numero in range(1, 26) if numero % 4 != 0]
+    _revisar("# Tu solución — Ejercicio 1", esperadas)
+
+def verificar_ejercicio_2():
+    print("Para revisar, ingresa los mismos tiempos del Ejemplo 1: 6, 7, 9")
+    esperadas = [
+        "Serie 1 - 6 minutos",
+        "Serie 2 - 7 minutos",
+        "Serie 3 - 9 minutos",
+        "Serie 3 superó la meta de 8 minutos",
+    ]
+    _revisar("# Tu solución — Ejercicio 2", esperadas)
+
+def verificar_ejercicio_3():
+    print("Para revisar, ingresa los mismos datos del Ejemplo 1: normal, silenciada, urgente")
+    esperadas = [
+        "Notificación 1 - normal",
+        "Notificación 3 - urgente",
+        "Notificación 3 es urgente. Se detiene la revisión.",
+    ]
+    _revisar("# Tu solución — Ejercicio 3", esperadas)
+```
 
 **Ejercicio 1 — Playlist**
 Una app de música numera las canciones de una playlist del 1 al 25, según el orden en que se agregaron. Pero cada 4 canciones cae una versión instrumental que el sistema no debe mostrar en la lista de reproducción visible. Necesitas armar el listado que sí se le muestra a quien escucha.
@@ -185,6 +265,11 @@ Canción: 5
 Canción: 25
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_1()
+```
+
 - Solución:
   ```python
   for numero_cancion in range(1, 26):
@@ -194,12 +279,12 @@ Canción: 25
   ```
 
 **Ejercicio 2 — Entrenamiento**
-Un entrenador registra, serie por serie, los tiempos (en minutos) de hasta 6 series de entrenamiento de un atleta. Apenas alguna serie supere los 8 minutos, el programa debe avisar en qué número de serie ocurrió y dejar de pedir el resto — no hace falta seguir registrando después de encontrar la primera que se pasó de la meta.
+Un atleta hace hasta 6 series de entrenamiento y anota cuánto duró cada una, en minutos. Si alguna serie se pasa de los 8 minutos, quieres avisar altiro y no seguir preguntando por las que faltan.
 
 **El programa debe:**
-- Pedir, serie por serie (hasta un máximo de 6), el tiempo registrado.
-- Detener el registro apenas un tiempo supere los 8 minutos, indicando en qué serie ocurrió.
-- Si ninguna serie supera los 8 minutos, avisar que el atleta se mantuvo dentro de la meta en todas.
+- Pedir el tiempo de cada serie, una por una (máximo 6).
+- Detenerse apenas una serie supere los 8 minutos, avisando en cuál ocurrió.
+- Si ninguna se pasa, avisar que todas quedaron dentro de la meta.
 
 <details>
 <summary>💡 Pista — recuerda la bandera</summary>
@@ -221,9 +306,9 @@ Necesitas saber, después del ciclo, si alguna serie superó la meta o no. Usa u
 </pre>
 📤 *El programa imprime*
 <pre>
-Serie 1: 6 minutos
-Serie 2: 7 minutos
-Serie 3: 9 minutos
+Serie 1 - 6 minutos
+Serie 2 - 7 minutos
+Serie 3 - 9 minutos
 Serie 3 superó la meta de 8 minutos
 </pre>
 
@@ -241,12 +326,12 @@ Serie 3 superó la meta de 8 minutos
 </pre>
 📤 *El programa imprime*
 <pre>
-Serie 1: 5 minutos
-Serie 2: 6 minutos
-Serie 3: 7 minutos
-Serie 4: 6 minutos
-Serie 5: 5 minutos
-Serie 6: 7 minutos
+Serie 1 - 5 minutos
+Serie 2 - 6 minutos
+Serie 3 - 7 minutos
+Serie 4 - 6 minutos
+Serie 5 - 5 minutos
+Serie 6 - 7 minutos
 El atleta se mantuvo dentro de la meta en todas las series
 </pre>
 
@@ -254,20 +339,25 @@ El atleta se mantuvo dentro de la meta en todas las series
 </tr>
 </table>
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_2()
+```
+
 - Solución:
   ```python
   max_series = 6
   supero_la_meta = False
 
   for serie in range(1, max_series + 1):
-      tiempo = float(input("Tiempo de la serie " + str(serie) + ": "))
-      print("Serie", serie, ":", tiempo, "minutos")
+      tiempo = int(input("Tiempo de la serie " + str(serie) + ": "))
+      print("Serie", serie, "-", tiempo, "minutos")
       if tiempo > 8:
           supero_la_meta = True
           print("Serie", serie, "superó la meta de 8 minutos")
           break
 
-  if not supero_la_meta:
+  if supero_la_meta == False:
       print("El atleta se mantuvo dentro de la meta en todas las series")
   ```
 
@@ -295,8 +385,8 @@ urgente
 </pre>
 📤 *El programa imprime*
 <pre>
-Notificación 1: normal
-Notificación 3: urgente
+Notificación 1 - normal
+Notificación 3 - urgente
 Notificación 3 es urgente. Se detiene la revisión.
 </pre>
 
@@ -316,17 +406,22 @@ normal
 </pre>
 📤 *El programa imprime*
 <pre>
-Notificación 1: normal
-Notificación 3: normal
-Notificación 5: normal
-Notificación 6: normal
-Notificación 8: normal
+Notificación 1 - normal
+Notificación 3 - normal
+Notificación 5 - normal
+Notificación 6 - normal
+Notificación 8 - normal
 No hubo notificaciones urgentes
 </pre>
 
 </td>
 </tr>
 </table>
+
+**Celda de verificación:**
+```python
+verificar_ejercicio_3()
+```
 
 - Solución:
   ```python
@@ -337,13 +432,13 @@ No hubo notificaciones urgentes
       tipo = input("Tipo de la notificación " + str(numero) + ": ")
       if tipo == "silenciada":
           continue
-      print("Notificación", numero, ":", tipo)
+      print("Notificación", numero, "-", tipo)
       if tipo == "urgente":
           hubo_urgente = True
           print("Notificación", numero, "es urgente. Se detiene la revisión.")
           break
 
-  if not hubo_urgente:
+  if hubo_urgente == False:
       print("No hubo notificaciones urgentes")
   ```
 
@@ -390,7 +485,7 @@ for numero in range(2, 10):
         encontrado = True
         break
 
-if encontrado:
+if encontrado == True:
     print("Se encontró un múltiplo de 7")
 else:
     print("No se encontró")
@@ -420,4 +515,6 @@ else:
 - **Guiada usa el patrón de "intentos limitados"** (más rico para construir con el curso) en vez del patrón de "búsqueda que se detiene"; este segundo patrón se reserva para el Ejercicio 2 de Independiente, así ambos patrones de `break` sugeridos en la planificación quedan cubiertos sin repetirse.
 - **Contexto Free Fire** (torneo con código de acceso) pedido explícitamente por Diego para Haz Ahora y Guiada, en reemplazo de la propuesta inicial (Brawl Stars).
 - **Contextos del resto de la clase variados a propósito** (música, deporte, redes sociales) para no concentrar toda la Práctica Independiente en videojuegos, ya que ese contexto ya está cubierto por la Guiada.
-- **Autochequeo no incluido en esta spec.** Sigue la convención del proyecto: se pregunta explícitamente si Diego lo quiere recién al generar el Colab (`generar-colab-clase`), no se asume de antemano.
+- **Autochequeo incluido (verificador por salida), confirmado por Diego al generar el Colab (2026-08-07).** Los 3 ejercicios de Independiente llevan `verificar_ejercicio_N()`. Como el Ejercicio 2 y el Ejercicio 3 usan `input()`, cada verificador imprime primero un aviso pidiendo ingresar los mismos datos del Ejemplo 1 del enunciado — así la comparación queda determinística contra un caso de prueba fijo, en vez de intentar adivinar cualquier combinación de entradas.
+- **Corrección técnica: se reemplazó el patrón `print("Etiqueta", variable, ":", resto)` por `print("Etiqueta", variable, "-", resto)` en la Guiada y en los Ejercicios 2 y 3.** Con coma antes de `":"` como argumento aparte, `print()` agrega un espacio extra antes del dos puntos (`"Intento 1 : acceso concedido"` en vez de `"Intento 1: acceso concedido"`), lo que no calzaba con el resultado esperado documentado. El guion evita el problema sin recurrir a `+`/`str()` (regla 14 del CLAUDE.md). Ajuste ejecutado sin gate de aprobación, por CLAUDE.md regla 6 (corrección técnica intermedia).
+- **Corrección técnica: el Ejercicio 2 pasó de `float(input(...))` a `int(input(...))`.** Los ejemplos del enunciado siempre usan minutos enteros (6, 7, 9...); con `float()` el resultado esperado real habría sido `6.0` en vez de `6`, otro desajuste entre el código y el resultado documentado.
