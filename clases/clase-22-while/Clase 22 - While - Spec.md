@@ -54,7 +54,7 @@ El Centro de Estudiantes, sabiendo que ustedes programan, les pide ayuda para au
 - Idea clave: `while` revisa la condición ANTES de cada vuelta — si la condición nunca se vuelve falsa, el ciclo no termina.
 
 **Concepto 2: `for` vs `while` — ¿cuál corresponde?**
-- Definición: se usa `for` cuando se sabe de antemano cuántas repeticiones habrá (recorrer un rango, una lista). Se usa `while` cuando eso depende de una condición que solo se conoce mientras el programa corre.
+- Definición: Se usa `for` cuando se sabe de antemano cuántas repeticiones habrá (recorrer un rango, una lista). Se usa `while` cuando eso depende de una condición que solo se conoce mientras el programa corre.
 - Ejemplo:
   ```python
   for numero in range(5):
@@ -79,7 +79,7 @@ El Centro de Estudiantes, sabiendo que ustedes programan, les pide ayuda para au
 - Idea clave: `while True` + `break` sirve cuando conviene revisar la condición de salida en medio del proceso, no antes de empezar.
 
 **Concepto 4: bucle infinito**
-- Definición: si la condición del `while` nunca se vuelve falsa (o nunca se llega al `break`), el programa se repite para siempre.
+- Definición: Si la condición del `while` nunca se vuelve falsa (o nunca se llega al `break`), el programa se repite para siempre.
 - Ejemplo:
   ```python
   contador = 0
