@@ -27,8 +27,9 @@
 | **19** | **🎯 Evaluación individual — Condicionales** (if/else, if anidadas, elif) | `clase-19-evaluacion-condicionales` | N/A — evaluación sumativa individual | Spec + Evaluación + Solucionario generados — se rinde hoy | **2026-07-28** | OA1, OA3 \| OAd |
 | **19.5** | **Revisión Evaluación Condicionales** (independientes / excluyentes / dependientes + probar el valor del borde) | `clase-19b-revision-evaluacion` | N/A — cierre formativo (retoma N°11 y N°12, e introduce el contraste con `if` independientes) | Spec aprobada | **2026-08-03** | OA1, OA3 \| OAd |
 | **20** | **For anidado** | `clase-20-for-avanzado` | N°17 — Sentencias for anidadas | Spec aprobada | **2026-08-06** | OA1, OA3 |
-| **21** | **Ayudantía — Ejercitación Ciclos** (for+range, continue/break/for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Planificada (sin propuesta aún) | **2026-08-10** | OA1, OA3 |
-| **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Planificada | sep 2026 | OA1, OA3 |
+| **21** | **Ayudantía — Ejercitación Ciclos** (for+range, for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Planificada (sin propuesta aún) | **2026-08-10** | OA1, OA3 |
+| **21.5** | **continue y break** | `clase-21b-continue-break` | N°15, N°16 — Sentencia continue + Sentencia break | Spec aprobada | **2026-08-11** | OA1, OA3 |
+| **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Planificada (sin propuesta aún) | **2026-08-13** | OA1, OA3 |
 | **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | sep 2026 | OA1, OA3 |
 | **23** | **Funciones — def, parámetros, return** | `clase-23-funciones` | N°19, N°20 — Definición de funciones + parámetros por omisión | Planificada | sep 2026 | OA1, OA3 |
 | **24** | **Strings — indexing y slicing** | `clase-24-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
@@ -55,7 +56,9 @@
 | Lunes | 2026-08-03 | **N° 19.5 — Revisión Evaluación Condicionales** (spec aprobada 2026-08-01). El Haz Ahora es la revisión de los errores comunes con ítems reales de la prueba; el ICN los cierra con el HTML "Tres Formas"; la Práctica Independiente va diferenciada en parejas cruzadas |
 | Martes | 2026-08-04 | N° 16 — for + range() |
 | Jueves | 2026-08-06 | N° 20 — For anidado (contenido nuevo — spec aprobada 2026-07-28) |
-| Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza los `Ejercicios.ipynb` propios de Clase 16 y Clase 20, que no se generarán) |
+| Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza los `Ejercicios.ipynb` propios de Clase 16 y Clase 20, que no se generarán). Alcance NO incluye continue/break (ver fila 21.5) |
+| Martes | 2026-08-11 | N° 21.5 — continue y break (contenido nuevo — resuelve el pendiente anotado 2026-07-28, spec aprobada 2026-08-07) |
+| Jueves | 2026-08-13 | N° 22 — while (contenido nuevo, sin propuesta aún) |
 
 > Nota de orden: N° 17 se dicta antes que N° 16 en el calendario real (la ejercitación de condicionales estaba lista y hacía falta consolidar antes de introducir loops), aunque el spec de C16 se aprobó primero. La numeración N° real no se altera — identifica el artefacto, no necesariamente el orden estricto de dictado.
 
@@ -65,7 +68,7 @@
 
 > Ritmo semanal acordado el 2026-07-28: **lunes = ejercitación/práctica de lo visto en las clases recientes; jueves = contenido nuevo.** Aplica desde la semana del 2026-08-03 en adelante, salvo indicación contraria de Diego.
 
-> **Pendiente anotado 2026-07-28 — continue y break sin clase asignada:** al diseñar la Clase N°20, Diego decidió enfocarla 100% en for anidado (Picuino N°17), dejando continue y break (Picuino N°15-16) fuera de su alcance. Falta agendar una clase futura para continue+break — sin fecha ni N° real todavía, explícitamente no urgente (no se renumera nada por esto). Esto deja además una inconsistencia menor a resolver más adelante: la Ayudantía N°21 (2026-08-10) dice hoy "for+range, continue/break, for anidado" como clases foco, pero continue/break aún no se habrán enseñado en esa fecha — revisar el alcance de esa ayudantía cuando se agende la clase pendiente de continue+break.
+> **Resuelto 2026-08-04 — pendiente de continue/break agendado:** el pendiente anotado 2026-07-28 (continue y break sin clase asignada, tras el recorte de alcance de Clase 20 a solo for anidado) quedó resuelto: se agendó como **N°21.5 — continue y break** (`clase-21b-continue-break`, martes 2026-08-11), evaluado en contraste con la alternativa de saltárselo por completo. Se decidió mantenerla porque `break` no es reemplazable solo con `if` (agrega capacidad real: búsquedas y validaciones con intentos limitados), aunque `continue` sí lo es (equivale a envolver el resto del cuerpo en `if not condición:`). Numeración elegida: decimal (21.5, mismo patrón que N°19.5) en vez de correr en cascada N°22 en adelante — así while y todo lo posterior mantienen su número. De paso se corrigió la inconsistencia que arrastraba el `Prompt.md` de la Ayudantía N°21 (mencionaba "continue/break" en sus clases foco, pese a dictarse antes de que se enseñen) — su alcance real es solo Clase 16 + Clase 20. Ver `clases/Plan Semana 2026-08-10 - Cierre de Ciclos.md` para el detalle completo de la discusión y el contenido propuesto para N°21.5.
 
 > **Renumeración 2026-07-28 (ayudantías pasan a numerarse como clases):** de ahora en adelante las ayudantías se integran a `clases/` con numeración real — ya no viven en `ayudantias/`. Se insertó **N°21 — Ayudantía Ejercitación Ciclos** (dúos, 2026-08-10, clases foco 16 y 20), corriendo +1 todo lo que venía después: while (N°22), Evaluación de Ciclos (N°22.5), funciones (N°23), strings (N°24–25), listas (N°26–27), integración (N°28), Evaluación Funciones+Strings+Listas (N°28.5), proyectos (N°29–34). Ver también "Organización de archivos" del `CLAUDE.md` del proyecto para la nueva convención de carpeta/nombrado de ayudantías.
 
