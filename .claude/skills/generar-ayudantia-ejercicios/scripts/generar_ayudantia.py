@@ -86,6 +86,10 @@ def build_student_notebook(proposal: dict) -> dict:
     if proposal.get("objetivo"):
         cells.append(md_cell(f"---\n\n## 🎯 Objetivo\n\n{proposal['objetivo']}"))
 
+    resumen = proposal.get("resumen_rapido_md")
+    if resumen:
+        cells.append(md_cell(f"---\n\n## 📌 Resumen rápido\n\n{resumen}"))
+
     guided = proposal.get("guided_exercise")
     if guided:
         topic = proposal.get("class_topic", "lo visto")
@@ -97,6 +101,18 @@ def build_student_notebook(proposal: dict) -> dict:
 
     cells.append(md_cell("---\n\n## 🎯 Serie de ejercicios"))
 
+    verifier_setup = proposal.get("verifier_setup_py")
+    if verifier_setup:
+        cells.append(md_cell(
+            "Antes de empezar, ejecuta la celda de configuración de abajo: deja listos los "
+            "verificadores con los que vas a revisar tu propio trabajo, sin tener que esperar "
+            "a que el profe pase por el puesto."
+        ))
+        cells.append(code_cell(
+            "#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)\n\n"
+            f"{verifier_setup}"
+        ))
+
     ex_num = 1
     for ex in proposal["exercises"]:
         if ex.get("difficulty") == "trivial":
@@ -105,6 +121,12 @@ def build_student_notebook(proposal: dict) -> dict:
             f"---\n\n### Ejercicio {ex_num} — {ex['title']}\n\n{ex['statement_md']}"
         ))
         cells.append(code_cell("# Tu código aquí\n"))
+        verifier_call = ex.get("verifier_call")
+        if verifier_call:
+            cells.append(code_cell(
+                f"# Ejecuta esto para revisar tu Ejercicio {ex_num} — puedes correrlo las veces que quieras\n"
+                f"{verifier_call}"
+            ))
         ex_num += 1
 
     return _notebook(cells, f"{slug}-ejercicios")
@@ -192,7 +214,40 @@ def build_solucionario(proposal: dict) -> dict:
         cells.append(code_cell(f"# ✅ Solución esperada\n{ex.get('solution_py', '')}"))
         ex_num += 1
 
+    ticket = proposal.get("ticket_de_salida")
+    if ticket:
+        cells.append(md_cell(
+            "---\n\n## 🎫 Ticket de Salida\n\n"
+            "Preguntas de alternativas proyectadas el día de la ayudantía (PPT aparte). "
+            "Nunca van en el notebook de estudiante."
+        ))
+        for i, preg in enumerate(ticket["preguntas"], start=1):
+            alt_lines = "\n".join(f"- {letra}: {texto}" for letra, texto in preg["alternativas"])
+            codigo_block = f"```python\n{preg['codigo']}\n```\n\n" if preg.get("codigo") else ""
+            cells.append(md_cell(
+                f"---\n\n### Pregunta {i}\n\n"
+                f"{codigo_block}"
+                f"{preg['enunciado']}\n\n"
+                f"{alt_lines}\n\n"
+                f"**Respuesta correcta:** {preg['correcta']}\n"
+                f"**Justificación:** {preg['justificacion']}"
+            ))
+
     return _notebook(cells, f"{slug}-solucionario")
+
+
+def build_ticket_respuestas(proposal: dict) -> dict:
+    ticket = proposal["ticket_de_salida"]
+    preguntas = ticket["preguntas"]
+    respuestas = {}
+    for i in range(4):
+        clave = f"Respuestas a ticket [{i + 1}]"
+        respuestas[clave] = preguntas[i]["correcta"] if i < len(preguntas) else "No se preguntó"
+    return {
+        "clase": int(proposal["class_number"]) if str(proposal["class_number"]).isdigit() else proposal["class_number"],
+        "tema": ticket.get("tema_breve_form", ""),
+        "respuestas": respuestas,
+    }
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -235,6 +290,14 @@ def main():
     print("Generado:")
     print(f"  {student_path}  (subir a Colab)")
     print(f"  {sol_path}  (subir a Classroom despues)")
+
+    if proposal.get("ticket_de_salida"):
+        respuestas_path = out_dir / f"{file_prefix} - Ticket de Salida Respuestas.json"
+        respuestas_path.write_text(
+            json.dumps(build_ticket_respuestas(proposal), ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"  {respuestas_path}  (para la skill trazabilidad-ticket-salida)")
 
 
 if __name__ == "__main__":

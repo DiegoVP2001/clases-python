@@ -75,11 +75,13 @@ Los campos requeridos por el generador:
   "set_slug": "nombre-kebab-case",
   "set_title": "Título visible en el notebook",
   "objetivo": "1-2 frases con el objetivo de la sesión",
+  "resumen_rapido_md": "OPCIONAL — resumen rápido en markdown de los conceptos de las clases foco, uno por uno (subtítulo + definición breve + bloque ```python``` de ejemplo), NUNCA como tabla HTML/side-by-side — un <table> con <pre> dentro de las celdas se ve mal en Jupyter/Colab (confirmado por Diego 2026-08-07). Se inserta como una sola celda entre el Objetivo y el ejercicio guiado. Solo inclúyelo si Diego lo pide explícitamente para esa ayudantía.",
   "guided_exercise": {
     "title": "Título del ejercicio guiado",
     "statement_md": "Enunciado completo en markdown (formato aprobado, más breve que los de la serie)",
     "solution_py": "código Python de la solución de referencia"
   },
+  "verifier_setup_py": "OPCIONAL — código Python con las funciones verificar_ejercicio_N() de toda la serie, mismo patrón de la celda de configuración de generar-colab-clase (ver ejemplo en Clase 16/20). Se inserta como una sola celda de código antes del primer ejercicio.",
   "exercises": [
     {
       "slug": "nombre-ejercicio",
@@ -90,13 +92,30 @@ Los campos requeridos por el generador:
         {"name": "...", "stdin": "...", "stdout": "...", "hidden": false},
         {"name": "...", "stdin": "...", "stdout": "...", "hidden": true}
       ],
+      "verifier_call": "OPCIONAL — línea que invoca el verificador de este ejercicio, ej. \"verificar_ejercicio_1()\". Requiere verifier_setup_py definido a nivel de propuesta.",
       "solution_py": "código Python de la solución"
     }
-  ]
+  ],
+  "ticket_de_salida": {
+    "tema_breve_form": "texto breve para el campo \"Tema de la clase de hoy\" del Google Form, mismo campo que usan las clases regulares",
+    "preguntas": [
+      {
+        "enunciado": "Texto de la pregunta (sin alternativas)",
+        "codigo": "OPCIONAL — bloque de código Python breve que ilustra o es el foco de la pregunta",
+        "alternativas": [["A", "texto"], ["B", "texto"], ["C", "texto"], ["D", "texto"]],
+        "correcta": "A",
+        "justificacion": "1-2 frases explicando por qué es la correcta"
+      }
+    ]
+  }
 }
 ```
 
 `class_number` + `set_slug` determinan la carpeta (`clase-{class_number}-ayudantia-{set_slug}`); `class_number` + `class_topic` determinan el prefijo de los archivos (`Clase {class_number} - Ayudantía {class_topic} - ...`). Los ejercicios de la serie con `difficulty: trivial` se omiten de ambos notebooks; el ejercicio guiado nunca se omite.
+
+`verifier_setup_py` y `verifier_call` son opcionales y capacidad puntual (igual que en `generar-colab-clase`) — solo inclúyelos si Diego pidió explícitamente autochequeo ejecutable para esta ayudantía (ver regla correspondiente en `generar-colab-clase/SKILL.md` sobre no incluirlo por defecto). El notebook de estudiante inserta `verifier_setup_py` como una celda de código antes de "Serie de ejercicios", y `verifier_call` como una celda propia después de la celda de código vacía de cada ejercicio. El Solucionario no repite estas celdas — sigue usando `tests` para la rúbrica de casos visibles/ocultos.
+
+`ticket_de_salida` es opcional y capacidad puntual — solo inclúyelo si Diego lo pide explícitamente para esa ayudantía (por defecto las ayudantías no tienen Ticket de Salida, a diferencia de las clases regulares). Siempre exactamente 4 preguntas (a diferencia de las 3 de una clase regular — la ayudantía consolida más de una clase foco). Nunca aparece en el notebook de estudiante: el generador solo lo agrega como sección `## 🎫 Ticket de Salida` al final del Solucionario, y escribe aparte `Clase {class_number} - Ayudantía {class_topic} - Ticket de Salida Respuestas.json` con el mismo formato que usan las clases regulares (`clase`, `tema`, `respuestas` con claves `"Respuestas a ticket [1]"`..`"[4]"`) para que la skill `trazabilidad-ticket-salida` lo cruce igual que cualquier clase. El PPT aparte (`... - Ticket de Salida.pptx`, mismo diseño que `crear_ppt_ticket.py` genera para las clases regulares) **no lo produce este script** — se arma aparte alimentando `crear_ppt_ticket.py` con los datos de `ticket_de_salida` (ver `generar-ppt-clase/SKILL.md`), porque ese generador ya sabe maquetar preguntas + alternativas + revisión con la plantilla de marca y no vale la pena duplicar esa lógica aquí.
 
 ## Después de generar
 
