@@ -27,9 +27,9 @@
 | **19** | **🎯 Evaluación individual — Condicionales** (if/else, if anidadas, elif) | `clase-19-evaluacion-condicionales` | N/A — evaluación sumativa individual | Spec + Evaluación + Solucionario generados — se rinde hoy | **2026-07-28** | OA1, OA3 \| OAd |
 | **19.5** | **Revisión Evaluación Condicionales** (independientes / excluyentes / dependientes + probar el valor del borde) | `clase-19b-revision-evaluacion` | N/A — cierre formativo (retoma N°11 y N°12, e introduce el contraste con `if` independientes) | Spec aprobada | **2026-08-03** | OA1, OA3 \| OAd |
 | **20** | **For anidado** | `clase-20-for-avanzado` | N°17 — Sentencias for anidadas | Spec aprobada | **2026-08-06** | OA1, OA3 |
-| **21** | **Ayudantía — Ejercitación Ciclos** (for+range, for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Planificada (sin propuesta aún) | **2026-08-10** | OA1, OA3 |
+| **21** | **Ayudantía — Ejercitación Ciclos** (for+range, for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Notebooks + Ticket de Salida generados — programada para dictarse | **2026-08-10** | OA1, OA3 |
 | **21.5** | **continue y break** | `clase-21b-continue-break` | N°15, N°16 — Sentencia continue + Sentencia break | Spec aprobada | **2026-08-11** | OA1, OA3 |
-| **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Planificada (sin propuesta aún) | **2026-08-13** | OA1, OA3 |
+| **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Spec aprobada | **2026-08-13** | OA1, OA3 |
 | **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | sep 2026 | OA1, OA3 |
 | **23** | **Funciones — def, parámetros, return** | `clase-23-funciones` | N°19, N°20 — Definición de funciones + parámetros por omisión | Planificada | sep 2026 | OA1, OA3 |
 | **24** | **Strings — indexing y slicing** | `clase-24-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
@@ -58,7 +58,7 @@
 | Jueves | 2026-08-06 | N° 20 — For anidado (contenido nuevo — spec aprobada 2026-07-28) |
 | Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza los `Ejercicios.ipynb` propios de Clase 16 y Clase 20, que no se generarán). Alcance NO incluye continue/break (ver fila 21.5) |
 | Martes | 2026-08-11 | N° 21.5 — continue y break (contenido nuevo — resuelve el pendiente anotado 2026-07-28, spec aprobada 2026-08-07) |
-| Jueves | 2026-08-13 | N° 22 — while (contenido nuevo, sin propuesta aún) |
+| Jueves | 2026-08-13 | N° 22 — while (contenido nuevo — spec aprobada 2026-08-07) |
 
 > Nota de orden: N° 17 se dicta antes que N° 16 en el calendario real (la ejercitación de condicionales estaba lista y hacía falta consolidar antes de introducir loops), aunque el spec de C16 se aprobó primero. La numeración N° real no se altera — identifica el artefacto, no necesariamente el orden estricto de dictado.
 
