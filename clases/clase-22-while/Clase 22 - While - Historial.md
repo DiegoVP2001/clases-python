@@ -14,3 +14,9 @@
 - Generados con la skill `generar-colab-clase` a partir del spec aprobado.
 - Verificación de código: como los ejemplos del ICN (Concepto 2 y 3) y todos los ejercicios usan `input()`, y el Concepto 4 es un bucle infinito intencional, `nbconvert --execute` no sirve para el notebook completo (falla con `StdinNotImplementedError` en las celdas con `input()`). Se verificó cada snippet manualmente con `input()` simulado (mock de stdin) contra los resultados esperados del spec — Guiada, Ejercicios 1-3 y las 3 preguntas del Ticket coinciden exactamente. El Concepto 1 (sin `input()`) sí se ejecutó y quedó con su output cacheado en el notebook, como corresponde al ICN; el resto de las celdas de ejemplo/ejercicio quedan sin output (se ejecutan interactivamente en Colab).
 - Corrección menor al spec durante la verificación: dos definiciones del ICN (Conceptos 2 y 4) empezaban con minúscula tras "Definición:" — se corrigió capitalización y se regeneró el notebook.
+
+## 2026-08-11 — Ticket de Salida.pptx generado
+- Archivo: `Clase 22 - While - Ticket de Salida.pptx` (8 slides: portada/reglas + 3 preguntas + slide del Google Form + 3 slides de revisión).
+- Generado con `crear_ppt_ticket.py` (skill `generar-ppt-clase`) a partir de la sección `### 5. Ticket de Salida` del spec aprobado.
+- Respuestas correctas: P1=A, P2=C, P3=B — coinciden con `Clase 22 - While - Ticket de Salida Respuestas.json`.
+- **No commiteado ni pusheado.** La clase está programada para el 2026-08-13 (jueves) y el repo es público — el archivo se sube a GitHub recién después de dictarla.
