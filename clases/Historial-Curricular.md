@@ -5,6 +5,8 @@
 > **Consulta este archivo ANTES de diseñar cualquier clase nueva o ayudantía**, para saber con certeza qué se ha visto y qué número real corresponde a continuación — sin adelantar contenidos. La referencia externa del programa Picuino (clases 1-33) está en [`../.claude/skills/referencia-curriculo/curriculo_picuino_completo.md`](../.claude/skills/referencia-curriculo/curriculo_picuino_completo.md); este archivo registra qué pasó realmente en la sala.
 >
 > **OAs MINEDUC:** ver [`OAs-referencia.md`](OAs-referencia.md) para las descripciones completas y la guía de uso. Formato en la columna: `OA1, OA3 | OAd` (principales | transversales). Máximo 3 OAs en total por clase.
+>
+> **Panorama agosto-noviembre 2026:** ver [`Plan Cierre 4to Medio y Continuidad 3ro - Agosto a Noviembre 2026.md`](Plan%20Cierre%204to%20Medio%20y%20Continuidad%203ro%20-%20Agosto%20a%20Noviembre%202026.md) — aprobado por Diego el 2026-08-11, cubre el calendario día a día hasta que 4to egresa (29-oct) y noviembre solo con 3ro, los feriados confirmados, la compresión de los proyectos OA4/OA5, y la plantilla fija de "lunes estándar" (ejercitación + control + revisión) con el mecanismo de controles. **Consultarlo siempre junto con este archivo al planificar o diseñar cualquier clase de ese tramo** — este archivo (`Historial-Curricular.md`) sigue siendo la fuente de verdad de qué se dictó y con qué N° real; el otro documento es el mapa de fechas y estructura semanal.
 
 ## Clases dictadas y plan curricular completo (orden real)
 
@@ -30,35 +32,40 @@
 | **21** | **Ayudantía — Ejercitación Ciclos** (for+range, for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Notebooks + Ticket de Salida generados — programada para dictarse | **2026-08-10** | OA1, OA3 |
 | **21.5** | **continue y break** | `clase-21b-continue-break` | N°15, N°16 — Sentencia continue + Sentencia break | Colab de clase aprobado | **2026-08-11** | OA1, OA3 |
 | **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Colab de clase aprobado (ejercicios pendientes) | **2026-08-13** | OA1, OA3 |
-| **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | sep 2026 | OA1, OA3 |
-| **23** | **Funciones — def, parámetros, return** | `clase-23-funciones` | N°19, N°20 — Definición de funciones + parámetros por omisión | Planificada | sep 2026 | OA1, OA3 |
-| **24** | **Strings — indexing y slicing** | `clase-24-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
-| **25** | **Strings — métodos y f-strings** | `clase-25-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | oct 2026 | OA2, OA3 |
-| **26** | **Listas — creación y acceso** | `clase-26-listas` | N°25, N°26 — Listas + índices de listas | Planificada | oct 2026 | OA1, OA2, OA3 |
-| **27** | **Listas — iteración y métodos** | `clase-27-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | oct 2026 | OA1, OA3 |
-| **28** | **Listas + funciones — integración** | `clase-28-integracion` | N/A — clase de integración | Planificada | oct 2026 | OA1, OA3 |
-| **28.5** | **🎯 Evaluación individual — Funciones + Strings + Listas** | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | oct 2026 | OA1, OA2, OA3 |
-| **29** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | nov 2026 | OA1, OA3, OA4 |
-| **30** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | nov 2026 | OA1, OA3, OA4 |
-| **31** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | nov 2026 | OA1, OA5, OA6 |
-| **32** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | nov 2026 | OA1, OA5, OA6 |
-| **33** | **Proyecto OA5 — Git + GitHub Pages** | `proyecto-app-ia` | N/A — proyecto | Planificada | dic 2026 | OA1, OA5, OA6 |
-| **34** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | dic 2026 | OA4, OA5, OA6 |
+| **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | **2026-08-27** | OA1, OA3 |
+| **23** | **🔁⚡ Lunes estándar — While y Break** (ejercitación en parejas sorteadas + control individual con nota) | `clase-23-lunes-while-break` | N/A — consolidación (clases foco: N°21.5 y N°22) | En diseño | **2026-08-17** | OA1, OA3 |
+| **24a** | **Funciones — def, parámetros, return** | `clase-24a-funciones-def` | N°19 — Definición de funciones | Spec aprobada | **2026-08-18** | OA1, OA3 |
+| **24b** | **Funciones — valores por omisión** | `clase-24b-funciones-valores-omision` | N°20 — Parámetros con valores por omisión | Planificada | 2026-08-20 | OA1, OA3 |
+| **25** | **Strings — indexing y slicing** | `clase-25-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
+| **26** | **Strings — métodos y f-strings** | `clase-26-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | sep 2026 | OA2, OA3 |
+| **27** | **Listas — creación y acceso** | `clase-27-listas` | N°25, N°26 — Listas + índices de listas | Planificada | sep 2026 | OA1, OA2, OA3 |
+| **28** | **Listas — iteración y métodos** | `clase-28-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | sep 2026 | OA1, OA3 |
+| **29** | **Listas + funciones — integración** | `clase-29-integracion` | N/A — clase de integración | Planificada | sep 2026 | OA1, OA3 |
+| **29.5** | **🎯 Evaluación individual — Funciones + Strings + Listas** | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | 2026-10-01 | OA1, OA2, OA3 |
+| **30** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
+| **31** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
+| **32** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **33** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **34** | **Proyecto OA5 — Git + GitHub Pages** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **35** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | 2026-10-27 | OA4, OA5, OA6 |
 
 ## Próxima clase disponible
 
-**Calendario confirmado de esta semana y la siguiente** (actualizado con Diego el 2026-07-28):
+**Calendario confirmado de esta semana y la siguiente** (actualizado con Diego el 2026-08-12; el tramo completo hasta noviembre vive en [`Plan Cierre 4to Medio y Continuidad 3ro - Agosto a Noviembre 2026.md`](Plan%20Cierre%204to%20Medio%20y%20Continuidad%203ro%20-%20Agosto%20a%20Noviembre%202026.md)):
 
 | Día | Fecha | Qué se dicta |
 |---|---|---|
-| Martes (hoy) | 2026-07-28 | N° 19 — 🎯 Evaluación individual — Condicionales |
-| Jueves | 2026-07-30 | Sin clases |
-| Lunes | 2026-08-03 | **N° 19.5 — Revisión Evaluación Condicionales** (spec aprobada 2026-08-01). El Haz Ahora es la revisión de los errores comunes con ítems reales de la prueba; el ICN los cierra con el HTML "Tres Formas"; la Práctica Independiente va diferenciada en parejas cruzadas |
-| Martes | 2026-08-04 | N° 16 — for + range() |
-| Jueves | 2026-08-06 | N° 20 — For anidado (contenido nuevo — spec aprobada 2026-07-28) |
-| Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos: dúos consolidando Clase 16 + Clase 20 (reemplaza los `Ejercicios.ipynb` propios de Clase 16 y Clase 20, que no se generarán). Alcance NO incluye continue/break (ver fila 21.5) |
-| Martes | 2026-08-11 | N° 21.5 — continue y break (contenido nuevo — resuelve el pendiente anotado 2026-07-28, Colab de clase aprobado 2026-08-07) |
-| Jueves | 2026-08-13 | N° 22 — while (contenido nuevo — Colab de clase aprobado 2026-08-07; Colab de ejercicios pendiente para otra sesión) |
+| Lunes | 2026-08-10 | N° 21 — Ayudantía Ejercitación Ciclos ✅ dictada (última con el formato de ayudantía suelta) |
+| Martes | 2026-08-11 | N° 21.5 — continue y break ✅ dictada |
+| Jueves (hoy+1) | 2026-08-13 | N° 22 — while (Colab de clase aprobado; su `Ejercicios.ipynb` propio no se generará — lo reemplaza la ejercitación del lunes N°23) |
+| **Lunes** | **2026-08-17** | **N° 23 — 🔁⚡ Lunes estándar: While y Break.** Estreno del formato de 3 fases (ejercitación en parejas sorteadas + control individual **con nota** + reflexión). Clases foco: N°21.5 y N°22. Ver "Workflow: lunes estándar" en el `CLAUDE.md` del proyecto |
+| Martes | 2026-08-18 | N° 24a — Funciones parte 1 (def, parámetros, return) — Spec aprobada, falta generar Colab/PPT |
+| Jueves | 2026-08-20 | N° 24b — Funciones parte 2 (valores por omisión + aplicación) — pendiente de diseñar |
+| Lunes | 2026-08-24 | 🔁⚡ Lunes estándar sobre Funciones *(N° se asigna al diseñarlo)* |
+| Martes | 2026-08-25 | 📘 Simulacro — problemas estilo evaluación sobre Ciclos |
+| Jueves | 2026-08-27 | N° 22.5 — 🎯 Evaluación individual — Ciclos |
+
+> **Renumeración 2026-08-12 (los lunes estándar toman número entero propio):** Diego decidió que el lunes de consolidación del 2026-08-17 quede como **N°23** —número entero, no decimal— porque desde ahora los lunes dejan de ser "ayudantías" sueltas y pasan a ser sesiones con control **con nota** (ver "Workflow: lunes estándar" en el `CLAUDE.md`). Todo lo que venía después corrió **+1**: Funciones 23→**24**, Strings 24→**25** y 25→**26**, Listas 26→**27** y 27→**28**, Integración 28→**29**, Evaluación Funciones+Strings+Listas 28.5→**29.5**, Proyecto OA4 29-30→**30-31**, Proyecto OA5 31-34→**32-35**. **N°22.5 (Evaluación de Ciclos) no cambia** pese a dictarse el 27-ago, después de N°23 y N°24: su decimal marca que cierra el bloque de Ciclos, y el N° identifica el artefacto, no el orden estricto de dictado (mismo criterio que ya aplicaba a N°16/N°17). **Convención vigente para los próximos lunes estándar:** cada uno toma el siguiente entero libre al momento de diseñarse, corriendo +1 lo que quedaba planificado — no se reservan números por adelantado, porque el calendario de septiembre todavía tiene sesiones inciertas (ver riesgo del jueves 17-sep en el Plan de Cierre).
 
 > Nota de orden: N° 17 se dicta antes que N° 16 en el calendario real (la ejercitación de condicionales estaba lista y hacía falta consolidar antes de introducir loops), aunque el spec de C16 se aprobó primero. La numeración N° real no se altera — identifica el artefacto, no necesariamente el orden estricto de dictado.
 
@@ -74,7 +81,7 @@
 
 > La clase 15 (`clase-15-diagnostico`) es una evaluación externa de medio semestre para Enseña Chile, ya generada (docx estudiante + solucionario). Es **meramente diagnóstica — no suma nota**. No sigue el flujo de 5 pasos de `disenar-clase` — no requiere spec ni Colab/PPT propios.
 
-> **Evaluaciones individuales sumativas acordadas (2026-07-13):** tres en total, una por bloque de contenidos — Condicionales (N°19, post-17/18, rendida 2026-07-28), Ciclos (N°22.5, post-22), y Funciones+Strings+Listas (N°28.5, post-28, aprovechando que esa clase ya integra listas+funciones). Ninguna de las últimas dos tiene fecha exacta ni notebook generado todavía.
+> **Evaluaciones individuales sumativas acordadas (2026-07-13):** tres en total, una por bloque de contenidos — Condicionales (N°19, post-17/18, rendida 2026-07-28), Ciclos (N°22.5, post-22), y Funciones+Strings+Listas (N°29.5, post-29, aprovechando que esa clase ya integra listas+funciones). Fechas fijadas en el Plan de Cierre: Ciclos el 2026-08-27, F+S+L el 2026-10-01. Ninguna de las dos tiene notebook generado todavía.
 
 ## Bloques temáticos del año
 
@@ -84,12 +91,12 @@
 | Lógica y control | 8a–14, 17 | Booleanos, condicionales completos, ejercitación | OA1, OA3 \| OAd |
 | Evaluación | 15 | Diagnóstico medio semestre (Enseña Chile) | OA1, OA2, OA3 \| OAd |
 | Consolidación + evaluación | 18–19 | Reforzamiento de condicionales + Evaluación individual | OA1, OA3 \| OAd |
-| Iteración | 16, 20–22 | Bucles for y while (incluye ayudantía de refuerzo N°21) | OA1, OA3 |
-| Abstracción | 23 | Funciones | OA1, OA3 |
-| Datos textuales | 24–25 | Strings | OA2, OA3 |
-| Datos colección | 26–28 | Listas | OA1, OA2, OA3 |
-| Proyecto análisis | 29–30 | Análisis estadístico con Python | OA1, OA3, **OA4** |
-| Proyecto app | 31–34 | App móvil con IA + Git | OA1, **OA4, OA5, OA6** |
+| Iteración | 16, 20–23 | Bucles for y while (incluye la ayudantía de refuerzo N°21 y el lunes estándar N°23) | OA1, OA3 |
+| Abstracción | 24 | Funciones | OA1, OA3 |
+| Datos textuales | 25–26 | Strings | OA2, OA3 |
+| Datos colección | 27–29 | Listas | OA1, OA2, OA3 |
+| Proyecto análisis | 30–31 | Análisis estadístico con Python | OA1, OA3, **OA4** |
+| Proyecto app | 32–35 | App móvil con IA + Git | OA1, **OA4, OA5, OA6** |
 
 ## Ayudantías realizadas (registro histórico, previo a 2026-07-28)
 
@@ -101,7 +108,7 @@
 
 ## Cómo se mantiene este archivo
 
-- **`disenar-clase`** lo lee primero —antes que [`curriculo_picuino_completo.md`](../.claude/skills/referencia-curriculo/curriculo_picuino_completo.md)— en su Paso 1, para confirmar con certeza el próximo número real y qué contenidos ya se vieron. Al guardar una spec aprobada (Paso 5), agrega o actualiza la fila correspondiente en la tabla (incluyendo la columna OAs) y recalcula la "Próxima clase disponible".
+- **`disenar-clase`** lo lee primero —antes que [`curriculo_picuino_completo.md`](../.claude/skills/referencia-curriculo/curriculo_picuino_completo.md)— en su Paso 1, para confirmar con certeza el próximo número real y qué contenidos ya se vieron. Al guardar una spec aprobada (Paso 5), agrega o actualiza la fila correspondiente en la tabla (incluyendo la columna OAs) y recalcula la "Próxima clase disponible". Para las filas de N°22.5 en adelante (todavía con fechas aproximadas tipo "sep 2026"), la fecha exacta y el formato de la sesión (contenido nuevo, lunes estándar, evaluación, proyecto) ya están decididos en el `Plan Cierre 4to Medio y Continuidad 3ro - Agosto a Noviembre 2026.md` — usarlo como referencia al fijar la fecha real en cada spec, no reinventar el calendario desde cero.
 - **`disenar-ayudantia-ejercicios`** y **`generar-ayudantia-ejercicios`** lo consultan para identificar qué clases foco existen y para fijar el próximo N° real disponible (desde 2026-07-28, las ayudantías se registran como una fila más en la tabla principal, no en "Ayudantías realizadas" — esa tabla quedó congelada como registro histórico).
 - **OAs:** al proponer el objetivo de cada clase nueva (Paso 2 de `disenar-clase`), se proponen también los OAs que cubre. Diego los valida en el mismo gate que el objetivo. Al guardar el spec, se registran en la columna `OAs` usando el formato `OA1, OA3 | OAd`. Ver [`OAs-referencia.md`](OAs-referencia.md) y su "Guía rápida" para decidir cuáles aplican.
 - El número real de Diego **no tiene que coincidir** con el número Picuino de referencia: cuando una clase profundiza, se divide en partes (8a/8b/8c) o se inserta como refuerzo, el número real avanza aunque el Picuino de referencia se repita, quede en `N/A`, o no siga el orden 1-33. Este archivo es la fuente de verdad de la secuencia real; Picuino sigue siendo solo la referencia conceptual externa.
