@@ -9,6 +9,14 @@ description: Diseña propuestas de ejercicios de práctica para ayudantías, org
 
 Proponer ejercicios de práctica organizados por clases foco. Esta skill solo diseña y espera aprobación; la generación de notebooks la hace `generar-ayudantia-ejercicios`.
 
+## ⚠️ Cuándo NO usar esta skill — los lunes de consolidación regular (desde 2026-08-17)
+
+Desde el lunes 2026-08-17 (Clase 23), **los lunes de consolidación regular ya no son ayudantías**: siguen la plantilla de **lunes estándar** de 3 fases (ejercitación en parejas sorteadas + control individual **con nota** + revisión). Ese formato tiene sus propios artefactos (`Ejercitación.ipynb` con soluciones colapsadas al final, `Control.ipynb`, `Control Solucionario.ipynb` con rúbrica parcelada) y se diseña al revés: **primero el control, después la ejercitación que lo entrena**.
+
+Si Diego pide "la ayudantía del lunes", "el control del lunes" o "la ejercitación de la semana", **no actives esta skill** — sigue la sección "Workflow: lunes estándar" del `CLAUDE.md` del proyecto, y usa `clases/clase-23-lunes-while-break/` como implementación de referencia (su `Propuesta.json` es el schema y su `generar_lunes.py` el generador; el calendario de qué lunes usan la plantilla está en la §4 del `Plan Cierre 4to Medio y Continuidad 3ro - Agosto a Noviembre 2026.md`).
+
+Esta skill sigue vigente para **ayudantías fuera de esa plantilla**: sesiones de refuerzo sueltas, práctica autónoma sin control, o cualquier set de ejercicios que Diego pida como tarea aparte y sin nota. Ante la duda, pregunta si lleva control con nota: si lo lleva, es lunes estándar.
+
 ## Cuándo usar el path Dodona en vez de este
 
 Esta skill cubre el **path por defecto** del workflow de ayudantías: salida en Jupyter/Colab. Si Diego pide explícitamente que los ejercicios vayan a la plataforma Dodona ("súbelo a Dodona", "para Dodona", "que quede autocorregible en la plataforma"), no actives esta skill — activa `disenar-dodona-ejercicios` en su lugar. Ante cualquier duda, confirma con Diego cuál es el destino antes de proponer.

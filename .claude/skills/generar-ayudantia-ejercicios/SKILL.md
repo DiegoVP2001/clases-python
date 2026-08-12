@@ -13,6 +13,12 @@ Materializar una propuesta JSON aprobada en dos notebooks Jupyter listos para us
 
 **Cambio vigente desde 2026-07-28:** ya no se genera dentro de `ayudantias/`. La carpeta de salida es `clases/clase-NN-ayudantia-tema-breve/`, con el mismo patrón de nombrado de archivos que cualquier clase.
 
+## ⚠️ No aplica a los lunes de consolidación regular (desde 2026-08-17)
+
+Desde el lunes 2026-08-17 (Clase 23), los lunes de consolidación regular usan la plantilla de **lunes estándar** (ejercitación + control con nota + revisión), no el formato de ayudantía. Esos generan **tres** notebooks distintos —`Ejercitación.ipynb` (con soluciones colapsadas al final), `Control.ipynb` y `Control Solucionario.ipynb`— desde un `Propuesta.json` propio y con su propio script. Ver "Workflow: lunes estándar" en el `CLAUDE.md` del proyecto y `clases/clase-23-lunes-while-break/generar_lunes.py` como referencia.
+
+Este generador sigue siendo el correcto para ayudantías fuera de esa plantilla (refuerzo suelto, práctica autónoma, sin nota).
+
 ## Prerequisito
 
 Debe existir `clases/clase-NN-ayudantia-tema-breve/Clase NN - Ayudantía Tema - Ejercicios propuesta.json` con la propuesta aprobada por Diego (creada por `disenar-ayudantia-ejercicios`, que ya fijó el N° real y el tema breve).

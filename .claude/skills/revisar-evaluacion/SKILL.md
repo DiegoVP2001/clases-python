@@ -13,6 +13,16 @@ Orquestar la revisión completa de una evaluación Python: desde la lectura de n
 
 Cuando Diego diga algo como "vamos a revisar la evaluación", "quiero calificar los notebooks" o "revisemos las entregas de Classroom".
 
+### También para los controles del lunes estándar (desde 2026-08-17)
+
+Los controles semanales de los lunes estándar (ver "Workflow: lunes estándar" en el `CLAUDE.md`) se corrigen con este mismo flujo, con tres diferencias:
+
+1. **La rúbrica parcelada no hay que calibrarla desde cero** (Fase 2): ya viene escrita, componente por componente y con su puntaje, dentro del `Control Solucionario.ipynb` que genera el script del lunes. Ese notebook también trae embebido el bloque de criterios dirigido al agente que corrige.
+2. **Los errores de corrección los reclaman los estudiantes** (decisión de Diego, 2026-08-12). No se audita entrega por entrega: se corrige, se entrega, y si alguien plantea que un ítem quedó mal calificado se revisa ese caso puntual.
+3. **El resultado alimenta `clases/Controles - Trazabilidad.xlsx`** (log crudo acumulativo + script que reconstruye el Excel por estudiante × sesión), no solo el resumen de la evaluación. La nota semestral por este concepto es el promedio de todos los controles, con eliminación de los X peores para quien haya rendido todos.
+
+Las Fases 0.5 (extracción programática del código) y 3-5 se aplican sin cambios.
+
 ---
 
 ## Flujo de trabajo
