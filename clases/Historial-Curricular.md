@@ -33,7 +33,7 @@
 | **21.5** | **continue y break** | `clase-21b-continue-break` | N°15, N°16 — Sentencia continue + Sentencia break | Colab de clase aprobado | **2026-08-11** | OA1, OA3 |
 | **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Colab de clase aprobado (ejercicios pendientes) | **2026-08-13** | OA1, OA3 |
 | **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | **2026-08-27** | OA1, OA3 |
-| **23** | **🔁⚡ Lunes estándar — While y Break** (ejercitación en parejas sorteadas + control individual con nota) | `clase-23-lunes-while-break` | N/A — consolidación (clases foco: N°21.5 y N°22) | En diseño | **2026-08-17** | OA1, OA3 |
+| **23** | **🔁⚡ Lunes estándar — While y Break** (ejercitación en parejas sorteadas + control individual con nota) | `clase-23-lunes-while-break` | N/A — consolidación (clases foco: N°21.5 y N°22) | Ejercitación + Control + Solucionario generados y verificados (19/19 casos) | **2026-08-17** | OA1, OA3 |
 | **24a** | **Funciones — def, parámetros, return** | `clase-24a-funciones-def` | N°19 — Definición de funciones | Spec aprobada | **2026-08-18** | OA1, OA3 |
 | **24b** | **Funciones — valores por omisión** | `clase-24b-funciones-valores-omision` | N°20 — Parámetros con valores por omisión | Planificada | 2026-08-20 | OA1, OA3 |
 | **25** | **Strings — indexing y slicing** | `clase-25-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
