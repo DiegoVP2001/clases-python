@@ -35,7 +35,7 @@
 | **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | **2026-08-27** | OA1, OA3 |
 | **23** | **🔁⚡ Lunes estándar — While y Break** (ejercitación en parejas sorteadas + control individual con nota) | `clase-23-lunes-while-break` | N/A — consolidación (clases foco: N°21.5 y N°22) | Ejercitación + Control + Solucionario generados y verificados (19/19 casos) | **2026-08-17** | OA1, OA3 |
 | **24a** | **Funciones — def, parámetros, return** | `clase-24a-funciones-def` | N°19 — Definición de funciones | Spec aprobada | **2026-08-18** | OA1, OA3 |
-| **24b** | **Funciones — valores por omisión** | `clase-24b-funciones-valores-omision` | N°20 — Parámetros con valores por omisión | Spec aprobada | **2026-08-20** | OA1, OA3 |
+| **24b** | **Funciones — valores por omisión** | `clase-24b-funciones-valores-omision` | N°20 — Parámetros con valores por omisión | Colab de clase aprobado (Ejercicios/PPT pendientes; Ticket de Salida.pptx generado, local hasta dictar la clase) | **2026-08-20** | OA1, OA3 |
 | **25** | **Strings — indexing y slicing** | `clase-25-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
 | **26** | **Strings — métodos y f-strings** | `clase-26-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | sep 2026 | OA2, OA3 |
 | **27** | **Listas — creación y acceso** | `clase-27-listas` | N°25, N°26 — Listas + índices de listas | Planificada | sep 2026 | OA1, OA2, OA3 |
@@ -60,7 +60,7 @@
 | Jueves (hoy+1) | 2026-08-13 | N° 22 — while (Colab de clase aprobado; su `Ejercicios.ipynb` propio no se generará — lo reemplaza la ejercitación del lunes N°23) |
 | **Lunes** | **2026-08-17** | **N° 23 — 🔁⚡ Lunes estándar: While y Break.** Estreno del formato de 3 fases (ejercitación en parejas sorteadas + control individual **con nota** + reflexión). Clases foco: N°21.5 y N°22. Ver "Workflow: lunes estándar" en el `CLAUDE.md` del proyecto |
 | Martes | 2026-08-18 | N° 24a — Funciones parte 1 (def, parámetros, return) — Spec aprobada, falta generar Colab/PPT |
-| Jueves | 2026-08-20 | N° 24b — Funciones parte 2 (valores por omisión + aplicación) — Spec aprobada, falta generar Colab/PPT |
+| Jueves | 2026-08-20 | N° 24b — Funciones parte 2 (valores por omisión + aplicación) — Colab de clase aprobado, falta Ejercicios/PPT |
 | Lunes | 2026-08-24 | 🔁⚡ Lunes estándar sobre Funciones *(N° se asigna al diseñarlo)* |
 | Martes | 2026-08-25 | 📘 Simulacro — problemas estilo evaluación sobre Ciclos |
 | Jueves | 2026-08-27 | N° 22.5 — 🎯 Evaluación individual — Ciclos |
