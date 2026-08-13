@@ -113,10 +113,19 @@ El kiosco quiere una función que reciba el precio de un producto y si la person
 
 **Resultado esperado:**
 
-| | Ejemplo 1 | Ejemplo 2 |
-|---|---|---|
-| 📥 *El usuario ingresa* | `1200`, `si` | `800`, `no` |
-| 📤 *El programa imprime* | `Debe pagar: 900` | `Debe pagar: 800` |
+<table>
+<tr><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
+<tr>
+<td>📥 <em>El usuario ingresa</em><pre>1200
+si</pre></td>
+<td>📥 <em>El usuario ingresa</em><pre>800
+no</pre></td>
+</tr>
+<tr>
+<td>📤 <em>El programa imprime</em><pre>Debe pagar: 900</pre></td>
+<td>📤 <em>El programa imprime</em><pre>Debe pagar: 800</pre></td>
+</tr>
+</table>
 
 - Solución:
   ```python
@@ -145,10 +154,17 @@ El huerto del liceo organiza brigadas de cosecha y junta los tomates en cajones 
 
 **Resultado esperado:**
 
-| | Ejemplo 1 | Ejemplo 2 |
-|---|---|---|
-| 📥 | `50` | `137` |
-| 📤 | `Cajones completos: 4` | `Cajones completos: 11` |
+<table>
+<tr><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
+<tr>
+<td>📥 <em>El usuario ingresa</em><pre>50</pre></td>
+<td>📥 <em>El usuario ingresa</em><pre>137</pre></td>
+</tr>
+<tr>
+<td>📤 <em>El programa imprime</em><pre>Cajones completos: 4</pre></td>
+<td>📤 <em>El programa imprime</em><pre>Cajones completos: 11</pre></td>
+</tr>
+</table>
 
 - Solución:
   ```python
@@ -170,10 +186,19 @@ El Club Deportivo cobra una cuota mensual fija, y algunos socios llegan atrasado
 
 **Resultado esperado:**
 
-| | Ejemplo 1 | Ejemplo 2 |
-|---|---|---|
-| 📥 | `5000`, `3` | `8000`, `2` |
-| 📤 | `Total a pagar: 15000` | `Total a pagar: 16000` |
+<table>
+<tr><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
+<tr>
+<td>📥 <em>El usuario ingresa</em><pre>5000
+3</pre></td>
+<td>📥 <em>El usuario ingresa</em><pre>8000
+2</pre></td>
+</tr>
+<tr>
+<td>📤 <em>El programa imprime</em><pre>Total a pagar: 15000</pre></td>
+<td>📤 <em>El programa imprime</em><pre>Total a pagar: 16000</pre></td>
+</tr>
+</table>
 
 - Solución:
   ```python
@@ -196,10 +221,19 @@ La Peña de la Vendimia, la fiesta típica de Isla de Maipo, cobra entrada gener
 
 **Resultado esperado:**
 
-| | Ejemplo 1 | Ejemplo 2 |
-|---|---|---|
-| 📥 | `8`, `5000` | `70`, `5000` |
-| 📤 | `Debe pagar: 0` | `Debe pagar: 2500` |
+<table>
+<tr><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
+<tr>
+<td>📥 <em>El usuario ingresa</em><pre>8
+5000</pre></td>
+<td>📥 <em>El usuario ingresa</em><pre>70
+5000</pre></td>
+</tr>
+<tr>
+<td>📤 <em>El programa imprime</em><pre>Debe pagar: 0</pre></td>
+<td>📤 <em>El programa imprime</em><pre>Debe pagar: 2500</pre></td>
+</tr>
+</table>
 
 - Solución:
   ```python
