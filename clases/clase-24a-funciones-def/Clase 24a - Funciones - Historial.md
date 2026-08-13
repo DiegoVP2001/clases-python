@@ -16,3 +16,8 @@
 - Generados con la skill `generar-colab-clase`. Notebook ejecutado sin errores (`nbconvert --execute`); outputs del ICN verificados contra el spec.
 - **Bug de parser corregido en el spec (técnico, no cambia contenido):** las 4 tablas "Resultado esperado" con `input()` (Guiada, Ejercicios 1-3) estaban escritas como tabla markdown (`| Ejemplo 1 | Ejemplo 2 |`), formato que el generador no reconoce y descarta en silencio — se convirtieron a la tabla HTML canónica (mismos datos), sin lo cual esas cuatro secciones habrían quedado vacías en el notebook de estudiante.
 - **Mismo bug detectado en la Clase 22 ya publicada** (sus Ejercicios 1-4 perdieron el "Resultado esperado" en el `.ipynb` subido) — pendiente que Diego decida si corregirla también.
+
+## 2026-08-13 — Ticket de Salida (PPT) aprobado
+- Archivo: `Clase 24a - Funciones - Ticket de Salida.pptx` (8 slides: portada + 3 preguntas + pantalla del Form + 3 slides de revisión).
+- Generado con `crear_ppt_ticket.py`. Respuestas correctas: P1=B, P2=C, P3=A.
+- **No se commitea ni pushea a GitHub todavía** — regla fija de la skill (repo público, el archivo expone preguntas y respuestas): se sube recién después de dictada la clase.
