@@ -341,11 +341,14 @@ def parsear_guiada(texto: str) -> dict:
                 if l.strip().startswith("-")
             ]
         match_resultado = re.search(
-            r"\*{0,2}Resultado esperado:\*{0,2}\s*\n```\n(.*?)```", texto_sin_pistas, re.DOTALL
+            r"\*{0,2}Resultado esperado:\*{0,2}\s*\n(?:📤[^\n]*\n)?```\n(.*?)```", texto_sin_pistas, re.DOTALL
         )
         if match_resultado:
             guiada["resultado"] = match_resultado.group(1).rstrip()
         guiada["resultado_tabla"] = extraer_resultado_tabla(texto_sin_pistas)
+        advertir_si_resultado_perdido(
+            texto_sin_pistas, guiada["resultado"], guiada["resultado_tabla"], "Práctica Guiada"
+        )
     elif re.search(r"\*\*Pasos guiados \(tabla\):\*\*", texto):
         # Formato tabla (retrocompatible, anterior a Clase 20): cada paso trae su propio
         # resultado esperado, se renderiza como tabla de 2 columnas.
@@ -367,7 +370,9 @@ def parsear_guiada(texto: str) -> dict:
                 if re.match(r"^\d+\.", l.strip())
             ]
 
-        match_resultado = re.search(r"\*\*Resultado esperado:\*\*\s*\n```\n(.*?)```", texto, re.DOTALL)
+        match_resultado = re.search(
+            r"\*\*Resultado esperado:\*\*\s*\n(?:📤[^\n]*\n)?```\n(.*?)```", texto, re.DOTALL
+        )
         if match_resultado:
             guiada["resultado"] = match_resultado.group(1).rstrip()
 
@@ -379,18 +384,45 @@ def parsear_guiada(texto: str) -> dict:
 
 
 def extraer_resultado_tabla(texto: str) -> str | None:
-    """Extrae el resultado esperado cuando viene como tabla HTML side-by-side
+    """Extrae el resultado esperado cuando viene como tabla side-by-side
     (📥 lo que ingresa el usuario / 📤 lo que imprime el programa, en dos
     columnas Ejemplo 1 y Ejemplo 2), que es la variante para ejercicios con
     `input()` de valor variable — ver CLAUDE.md regla 15. La otra variante
     (bloque ``` con salida determinista) la sigue tomando `resultado`.
+
+    Formato canónico: tabla markdown GFM (`| Ejemplo 1 | Ejemplo 2 |` +
+    fila separadora + filas de datos con `<br>` para saltos de línea dentro
+    de cada celda) — se renderiza de forma más confiable en Colab que una
+    tabla `<table>` HTML cruda, que a veces se descuadra en pantalla (por
+    eso dejó de ser el default el 2026-08-13). `<table>` HTML se sigue
+    reconociendo como formato legado, para specs anteriores a esa fecha.
     """
+    match = re.search(
+        r"\*{0,2}Resultado esperado:\*{0,2}\s*\n((?:[ \t]*\|.*\|[ \t]*(?:\n|\Z))+)", texto
+    )
+    if match:
+        return match.group(1).rstrip()
     match = re.search(
         r"\*{0,2}Resultado esperado:\*{0,2}\s*\n\s*(<table>.*?</table>)", texto, re.DOTALL
     )
     if match:
         return match.group(1).strip()
     return None
+
+
+def advertir_si_resultado_perdido(texto: str, resultado, resultado_tabla, etiqueta: str) -> None:
+    """Si el spec declara 'Resultado esperado:' pero no se pudo extraer ni
+    como bloque ``` (`resultado`) ni como tabla markdown/HTML
+    (`resultado_tabla`), el bloque se perdería en silencio en el notebook
+    generado — como pasó en Clase 22 (3 ejercicios sin ningún ejemplo
+    📥/📤, feedback de Diego 2026-08-13). Avisa en vez de fallar callado.
+    """
+    if re.search(r"\*{0,2}Resultado esperado:\*{0,2}", texto) and not resultado and not resultado_tabla:
+        print(
+            f"⚠️  ADVERTENCIA: '{etiqueta}' declara 'Resultado esperado:' pero no se pudo "
+            f"extraer (ni como bloque ``` ni como tabla). Revisa el formato en el spec — "
+            f"ver 'Resultado esperado' en generar-colab-clase/SKILL.md."
+        )
 
 
 def parsear_independiente_estructura(texto: str) -> tuple:
@@ -558,13 +590,19 @@ def parsear_independiente(texto: str) -> list:
         ejercicio["enunciado"] = contenido.strip()
 
         texto_resultado = resto if match_debe else contenido
-        match_resultado = re.search(r"\*{0,2}Resultado esperado:\*{0,2}\s*\n```\n(.*?)```", texto_resultado, re.DOTALL)
+        match_resultado = re.search(
+            r"\*{0,2}Resultado esperado:\*{0,2}\s*\n(?:📤[^\n]*\n)?```\n(.*?)```", texto_resultado, re.DOTALL
+        )
         if match_resultado:
             ejercicio["resultado"] = match_resultado.group(1).rstrip()
             if not match_debe:
                 ejercicio["enunciado"] = contenido[:match_resultado.start()].strip()
                 ejercicio["contexto"] = ejercicio["enunciado"]
         ejercicio["resultado_tabla"] = extraer_resultado_tabla(texto_resultado)
+        advertir_si_resultado_perdido(
+            texto_resultado, ejercicio["resultado"], ejercicio["resultado_tabla"],
+            f"Ejercicio {num} — {titulo}"
+        )
 
         ejercicios.append(ejercicio)
 
@@ -659,6 +697,17 @@ def backticks_a_code(texto: str) -> str:
     no reprocesa markdown inline dentro de HTML crudo, así que los backticks quedarían
     literales en vez de renderizarse con estilo de código."""
     return re.sub(r"`([^`]+)`", r"<code>\1</code>", texto)
+
+
+def emitir_resultado_tabla(tabla: str) -> str:
+    """Renderiza la tabla de resultado esperado extraída por extraer_resultado_tabla().
+    Formato canónico (markdown GFM): se emite tal cual — Jupyter/Colab sí reprocesa
+    markdown inline (backticks, <br>) dentro de una tabla `| ... |`, a diferencia de
+    un bloque <table> HTML crudo. Formato legado (<table> HTML): sigue necesitando
+    backticks_a_code(), porque ahí el markdown inline no se reprocesa."""
+    if tabla.lstrip().startswith("<table>"):
+        return backticks_a_code(tabla)
+    return tabla
 
 
 def formatear_pista(pista: str) -> str:
@@ -960,7 +1009,7 @@ def generar_seccion_guiada_intro(spec: dict) -> str:
         if g.get("nota"):
             bloque += f"*Nota: {backticks_a_code(g['nota'])}*\n\n"
         if g.get("resultado_tabla"):
-            bloque += backticks_a_code(g["resultado_tabla"]) + "\n"
+            bloque += emitir_resultado_tabla(g["resultado_tabla"]) + "\n"
         elif g.get("resultado"):
             bloque += f"📤 <em>El programa imprime:</em>\n\n<pre>\n{g['resultado']}\n</pre>\n"
         return bloque
@@ -1019,7 +1068,7 @@ def generar_ejercicio_independiente(ejercicio: dict) -> str:
         if ejercicio.get("nota"):
             bloque += f"*Nota: {backticks_a_code(ejercicio['nota'])}*\n\n"
         if ejercicio.get("resultado_tabla"):
-            bloque += backticks_a_code(ejercicio["resultado_tabla"]) + "\n"
+            bloque += emitir_resultado_tabla(ejercicio["resultado_tabla"]) + "\n"
         elif ejercicio.get("resultado"):
             bloque += f"📤 <em>El programa imprime:</em>\n\n<pre>\n{ejercicio['resultado']}\n</pre>\n"
         return bloque

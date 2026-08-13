@@ -1,6 +1,6 @@
 ---
 name: generar-colab-clase
-description: Genera el Jupyter notebook principal de una clase (Clase NN - Tema - Clase.ipynb) a partir de un Clase NN - Tema - Spec.md aprobado. Usa esta skill solo después de que la skill disenar-clase haya producido y Diego haya aprobado el spec. Produce un .ipynb sin ninguna solución, listo para subir a Google Colab, con Haz Ahora, ICN, Práctica Guiada, Práctica Independiente y Cierre, y además genera/inicia Clase NN - Tema - Solucionario.ipynb con TODAS las soluciones (Haz Ahora, Guiada, Independiente y las preguntas MCQ del Ticket de Salida) — solo para el profesor.
+description: Genera el Jupyter notebook principal de una clase (Clase NN - Tema - Clase.ipynb) a partir de un Clase NN - Tema - Spec.md aprobado. Usa esta skill solo después de que la skill disenar-clase haya producido y Diego haya aprobado el spec. Produce un .ipynb sin ninguna solución, listo para subir a Google Colab, con Haz Ahora, ICN, Práctica Guiada, Práctica Independiente y Cierre, y además genera/inicia Clase NN - Tema - Solucionario.ipynb con TODAS las soluciones (Haz Ahora, Guiada, Independiente y las preguntas MCQ del Ticket de Salida) — solo para el profesor. Si el spec trae Ticket de Salida, en este mismo paso también genera Clase NN - Tema - Ticket de Salida Respuestas.json y Clase NN - Tema - Ticket de Salida.pptx (el PPT que se proyecta el día de la clase).
 ---
 
 # Skill: Generar Colab de clase (Clase NN - Tema - Clase.ipynb)
@@ -28,7 +28,7 @@ Antes de ejecutar el script, valida:
 2. **El spec está aprobado.** El estado en el archivo debe decir "Spec aprobada".
 3. **Python y nbformat disponibles.** Verifica con `python --version` y `python -c "import nbformat"`. Si falla nbformat, ejecuta `pip install nbformat` (en Windows con Python del sistema, normalmente funciona sin más; en sistemas con `pip` restringido puede necesitarse `pip install --user nbformat`).
 4. **No existe ya un `Clase NN - Tema - Clase.ipynb` con cambios manuales.** Si existe, pregunta a Diego si quiere sobrescribir.
-5. **Si la clase podría usar autochequeo, pregúntaselo a Diego antes de escribirlo.** Ver "Autochequeo" más abajo — es opcional y su inclusión la decide él, no Claude.
+5. **El autochequeo (verificador automático) es el default para Práctica Independiente — inclúyelo siempre, sin preguntar.** Ver "Autochequeo" más abajo. Solo `Control.ipynb` y `Evaluación.ipynb` van sin él (no se generan con esta skill de todos modos).
 6. **Los conceptos del spec corresponden a la clase Picuino indicada.** Consulta `referencia-curriculo` para confirmar que no se adelantan contenidos fuera de la progresión 1 a N (ver restricción permanente "No adelantes contenidos no vistos" en `CLAUDE.md`). Si detectas un desajuste, avisa a Diego antes de generar.
 
 ## Cómo se ejecuta
@@ -46,6 +46,14 @@ python -X utf8 ".claude/skills/generar-colab-clase/crear_colab.py" "clases/clase
 ```
 
 **Nota Windows:** usar siempre `-X utf8` para evitar `UnicodeEncodeError`. Los nombres de archivo con tildes y espacios requieren comillas.
+
+**Si el spec tiene Ticket de Salida (`ticket_mcq`), en este mismo paso genera también el PPT del Ticket** (vigente desde 2026-08-13 — antes era un comando aparte que Diego pedía más adelante). El script vive en la carpeta de la skill `generar-ppt-clase`, pero se invoca aquí mismo, apuntando al mismo spec y a la carpeta de esta clase:
+
+```powershell
+python -X utf8 ".claude/skills/generar-ppt-clase/crear_ppt_ticket.py" "clases/clase-NN-tema/Clase NN - Tema - Spec.md" "clases/clase-NN-tema/Clase NN - Tema - Ticket de Salida.pptx"
+```
+
+No requiere aprobación aparte — queda cubierto por el mismo gate del Colab de clase. Ver `generar-ppt-clase/SKILL.md` § "PPT del Ticket de Salida" para el detalle de qué genera el script (portada + una slide por pregunta + slide del Form + revisión). **Este archivo nunca se pushea en este gate** — ver "Después de generar", paso 6.
 
 ## Estructura del notebook generado
 
@@ -67,7 +75,7 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
 | n+k | Markdown | Sección "🎫 Ticket de Salida" — anuncio de que se proyecta en la tele + link al Form + nombre breve a escribir en "Tema de la clase de hoy", sin preguntas (ver regla abajo) |
 | último | Markdown | Cierre y preguntas de reflexión |
 
-**Este notebook NO contiene ninguna solución, ni siquiera oculta con `<details>`.** Ni el Ticket de Salida, ni las respuestas del Haz Ahora, ni la solución de la Guiada, ni las de Independiente. Todo eso se genera en un segundo archivo, `Clase NN - Tema - Solucionario.ipynb`, en el mismo paso — ver sección "Solucionario (todas las soluciones)" más abajo. Si la clase tiene Ticket de Salida, además se genera un tercer archivo liviano, `Clase NN - Tema - Ticket de Salida Respuestas.json`, solo con las respuestas correctas — ver sección "JSON de respuestas del Ticket de Salida" más abajo.
+**Este notebook NO contiene ninguna solución, ni siquiera oculta con `<details>`.** Ni el Ticket de Salida, ni las respuestas del Haz Ahora, ni la solución de la Guiada, ni las de Independiente. Todo eso se genera en un segundo archivo, `Clase NN - Tema - Solucionario.ipynb`, en el mismo paso — ver sección "Solucionario (todas las soluciones)" más abajo. Si la clase tiene Ticket de Salida, además se genera un tercer archivo liviano, `Clase NN - Tema - Ticket de Salida Respuestas.json`, solo con las respuestas correctas — ver sección "JSON de respuestas del Ticket de Salida" más abajo — y un cuarto archivo, `Clase NN - Tema - Ticket de Salida.pptx`, con las preguntas para proyectar el día de la clase (ver "Cómo se ejecuta" más arriba y `generar-ppt-clase/SKILL.md` § "PPT del Ticket de Salida" para el detalle del script).
 
 **Práctica Guiada — nunca lleva celda "Mis respuestas".** Diego siempre escribe el código directamente en la celda de código (`# Tu programa`), nunca respuestas de texto aparte. El notebook pasa directo del enunciado/pasos guiados a la celda de código vacía. (Esto es específico de la Guiada — la celda "Mis respuestas — Parte A" de ejercicios Independiente con análisis de error, y la celda "Mis respuestas" del Haz Ahora y del Cierre, no cambian.)
 
@@ -88,7 +96,7 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
    python -X utf8 ".claude/skills/generar-colab-clase/limpiar_outputs_haz_ahora.py" "clases/clase-NN-tema/Clase NN - Tema - Clase.ipynb"
    ```
    La ejecución de verificación deja los outputs guardados dentro del `.ipynb`. **Solo el ICN debe conservarlos** (el estudiante lee el ejemplo junto a su resultado, sin depender de haber ejecutado en orden); el script limpia todas las demás secciones. Un Haz Ahora cuyo trabajo es *ejecutar y observar* pierde el sentido si el resultado ya viene impreso, y una celda de verificación que trae su salida invita a leerla en vez de correrla.
-2. Confirma a Diego que el archivo se creó, se ejecutó sin errores, y dónde está. Confirma también que `Clase NN - Tema - Solucionario.ipynb` se generó (o actualizó) junto con él, y recuérdale que ese archivo es exclusivamente para él — el Ticket de Salida se proyecta en clase, y el resto (Haz Ahora, Guiada, Independiente) recién se sube a Classroom después de dictar la clase, nunca antes.
+2. Confirma a Diego que el archivo se creó, se ejecutó sin errores, y dónde está. Confirma también que `Clase NN - Tema - Solucionario.ipynb` se generó (o actualizó) junto con él, y recuérdale que ese archivo es exclusivamente para él — el Ticket de Salida se proyecta en clase, y el resto (Haz Ahora, Guiada, Independiente) recién se sube a Classroom después de dictar la clase, nunca antes. Si el spec trae Ticket de Salida, confirma también que `Clase NN - Tema - Ticket de Salida Respuestas.json` y `Clase NN - Tema - Ticket de Salida.pptx` quedaron generados — y recuérdale que ninguno de los dos se pushea todavía (ver paso 6).
 3. **Recomienda subirlo a Google Colab** para revisarlo en el entorno real antes de aprobar:
    - Abrir https://colab.research.google.com
    - `Archivo` → `Subir cuaderno`
@@ -103,15 +111,15 @@ El script produce un notebook con esta estructura fija (las skills posteriores c
 - [notas de iteraciones si las hubo]
 ```
 
-6. Commitea y pushea **solo la carpeta de esta clase** a GitHub (ver "Protocolo de cierre de etapa" en el `CLAUDE.md` raíz) — incluye `Clase.ipynb` y `Solucionario.ipynb`:
+6. Commitea y pushea a GitHub (ver "Protocolo de cierre de etapa" en el `CLAUDE.md` raíz). **Si la clase tiene Ticket de Salida, agrega los archivos uno por uno en vez de la carpeta completa** — `Ticket de Salida.pptx` (recién agregado a este gate) nunca se pushea antes de dictar la clase, aunque se haya generado en este mismo paso (mismo criterio que ya rige para `Ticket de Salida.pptx` en el gate del PPT — repo público, preguntas y alternativas expuestas de antemano). El JSON de respuestas sí se pushea normalmente, como siempre:
 
 ```
-git add "clases/clase-NN-tema-breve/"
+git add "clases/clase-NN-tema-breve/Clase NN - Tema - Spec.md" "clases/clase-NN-tema-breve/Clase NN - Tema - Clase.ipynb" "clases/clase-NN-tema-breve/Clase NN - Tema - Solucionario.ipynb" "clases/clase-NN-tema-breve/Clase NN - Tema - Ticket de Salida Respuestas.json" "clases/clase-NN-tema-breve/Clase NN - Tema - Historial.md"
 git commit -m "Clase NN - Tema: Colab de clase aprobado"
 git push
 ```
 
-Si el push falla, avisa a Diego con el error explícito — no reintentes con `--force`.
+Si la clase no tiene Ticket de Salida, se puede volver a usar `git add "clases/clase-NN-tema-breve/"` (carpeta completa) sin riesgo. Si el push falla, avisa a Diego con el error explícito — no reintentes con `--force`.
 
 7. Confirma qué se subió a GitHub y entrega el link directo de Google Colab para `Clase.ipynb`:
    `https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-NN-tema-breve/Clase%20NN%20-%20Tema%20-%20Clase.ipynb`
@@ -266,21 +274,14 @@ El campo `**Respuestas esperadas:**` en el spec captura todo el texto hasta el f
 4. **`**Nota:**` (opcional, desde 2026-08-04)** — una frase breve que se renderiza en cursiva justo después de las pistas y antes del resultado esperado. Pensada para cualquier aclaración breve que no cabe en un bullet de "El programa debe" ni en una pista. **Ya no hace falta para pedir nombres de variable exactos**: eso era necesario con el autochequeo antiguo (lectura de `globals()` por nombre, excepción puntual a la regla 8 del `CLAUDE.md`, usado en Clase 16 y en v1 de Clase 20); el "Verificador por salida", canónico desde Clase 20 v2, no lee variables — ver "Autochequeo" más abajo. El parser (`parsear_independiente()` / `parsear_guiada()`) la extrae con `\*\*Nota:\*\*` antes de correr el filtro de bullets — si se escribe como texto suelto sin la etiqueta, se pierde en silencio igual que le pasaba antes a cualquier bloque HTML sin `**Resultado esperado:**` delante.
 5. **Resultado esperado** — el generador SIEMPRE lo renderiza con el mismo lenguaje visual que las evaluaciones (ícono + `<em>` + `<pre>`), nunca como bloque de código markdown plano ni como etiqueta `**Resultado esperado:**` a secas — aunque en el spec se escriba como bloque simple (`**Resultado esperado:**` seguido de un bloque ` ``` `), es el generador (`generar_ejercicio_independiente()` / `generar_seccion_guiada_intro()`) el que lo transforma al renderizar. Dos variantes según si el ejercicio usa `input()` con valores que varían:
    - **Sin input() (caso típico de `for`/`for` anidado — valores fijos, salida determinista):** `📤 <em>El programa imprime:</em>` seguido de `<pre>...</pre>` con el output esperado. Acórtalo con `...` si es una secuencia larga y repetitiva (ver Clase 20 como referencia).
-   - **Con input() de valor variable:** tabla HTML side-by-side — dos columnas, dos filas de datos:
-     ```html
-     <table>
-     <tr><th>Ejemplo 1</th><th>Ejemplo 2</th></tr>
-     <tr>
-     <td>📥 <em>El usuario ingresa</em><pre>valores de input...</pre></td>
-     <td>📥 <em>El usuario ingresa</em><pre>valores de input...</pre></td>
-     </tr>
-     <tr>
-     <td>📤 <em>El programa imprime</em><pre>output del programa...</pre></td>
-     <td>📤 <em>El programa imprime</em><pre>output del programa...</pre></td>
-     </tr>
-     </table>
+   - **Con input() de valor variable:** tabla **markdown GFM** side-by-side — dos columnas, dos filas de datos, con `<br>` para los saltos de línea dentro de cada celda (una tabla `<table>` HTML cruda a veces se descuadra en pantalla en Colab, por eso markdown es el formato canónico desde 2026-08-13):
+     ```markdown
+     | Ejemplo 1 | Ejemplo 2 |
+     |---|---|
+     | 📥 *El usuario ingresa:*<br>`valor1`<br>`valor2` | 📥 *El usuario ingresa:*<br>`valor1`<br>`valor2` |
+     | 📤 *El programa imprime:*<br>`línea de output` | 📤 *El programa imprime:*<br>`línea de output` |
      ```
-     Encabezados siempre `Ejemplo 1` y `Ejemplo 2` — sin descriptores adicionales. Cada celda combina ícono + `<em>` + `<pre>` (igual al formato usado en las evaluaciones, ej. `Clase 19 - Evaluación Condicionales - Evaluación.ipynb`). **Implementado desde Clase 19.5** (`extraer_resultado_tabla()` en `crear_colab.py`): en el spec se escribe `**Resultado esperado:**` seguido del `<table>` HTML crudo — el generador se queda con la tabla y descarta la etiqueta, para que quede igual que en las evaluaciones. Los saltos de línea dentro de un `<pre>` van como saltos reales, no como `<br>`. Si el spec usa una tabla markdown (`| … |`) en vez del `<table>`, el parser no la reconoce y el resultado esperado **se pierde en silencio** — usa siempre HTML.
+     Encabezados siempre `Ejemplo 1` y `Ejemplo 2` — sin descriptores adicionales. Cada celda combina ícono + `*cursiva*` + `<br>` entre líneas (mismo lenguaje visual que las evaluaciones). **`extraer_resultado_tabla()` en `crear_colab.py`** reconoce este formato: en el spec se escribe `**Resultado esperado:**` seguido de la tabla markdown — el generador captura desde la fila de encabezado hasta la última fila `| ... |` consecutiva y la inserta tal cual (Jupyter/Colab reprocesa el markdown inline dentro de una tabla, así que los backticks y `<br>` se renderizan bien sin conversión). **Formato legado (`<table>` HTML crudo):** el parser lo sigue reconociendo como fallback, para specs anteriores al 2026-08-13 — no lo uses en specs nuevos. Si el spec declara `**Resultado esperado:**` pero no matchea ni el bloque ``` ni ninguna de las dos variantes de tabla, `crear_colab.py` imprime una advertencia explícita en vez de perderlo en silencio (bug real detectado en Clase 22, feedback de Diego 2026-08-13: 3 ejercicios quedaron sin ejemplo 📥/📤 porque el spec usaba tabla markdown y el parser de entonces solo reconocía `<table>`).
 6. **Celda de código vacía** — solo `# Tu solución del Ejercicio N` (Independiente) o `# Tu programa` (Guiada). Sin starter code.
 
 **Práctica Independiente diferenciada por rutas (desde Clase 19.5)**
@@ -300,9 +301,13 @@ Orden obligatorio dentro del bloque de un ejercicio: narrativa → `**El program
 
 **Autochequeo: `**Celda de configuración:**` (desde Clase 19.5)**
 
-> ⚠️ **Pregúntale siempre a Diego antes de incluirlo.** El autochequeo NO es parte del formato por defecto de una clase: es una capacidad opcional que se agrega solo cuando él lo pide. Antes de escribir cualquier celda de configuración o de verificación en un spec, pregúntale explícitamente si quiere incluir el verificador en esta clase, y espera su respuesta. Esta es una excepción deliberada a la regla general de "aprobación solo en los gates formales" (`CLAUDE.md` restricción 6): agregar el verificador cambia cómo se trabaja la Práctica Independiente en aula y cuesta tiempo de clase, así que la decisión es suya, no una elección de diseño que Claude pueda tomar por su cuenta.
+> **Default incluido siempre en la Práctica Independiente (vigente desde 2026-08-13 — reemplaza la política anterior de "preguntar antes de incluirlo").** Diego confirmó que lo quiere en toda clase regular; no hace falta preguntar caso a caso. `disenar-clase` ya lo redacta como parte estándar del spec (bloque `**Celda de configuración:**` + una `**Celda de verificación:**` por ejercicio) — esta skill solo lo genera.
 >
-> Cuándo tiene sentido ofrecerlo: cuando la Práctica Independiente exige comprobar algo concreto (valores del borde, comparar dos programas, casos límite) y Diego no alcanza a pasar por cada puesto. Cuándo no: ejercicios de escritura libre donde no hay un resultado único contra el cual chequear.
+> **Excepciones fijas — nunca lleva autochequeo:** `Control.ipynb` (lunes estándar) y `Evaluación.ipynb` (evaluación sumativa). Ninguno de los dos se genera con esta skill, así que en la práctica esta excepción no aplica dentro de `generar-colab-clase` — se deja documentada aquí solo para que quede clara la regla completa si alguna vez se comparte código entre generadores.
+>
+> **Único caso donde sigue sin sentido incluirlo:** un ejercicio de escritura libre sin resultado único contra el cual chequear (ej. una batería de casos de prueba en markdown, `**Celda de respuesta:**` no-código). Ahí simplemente no hay `**Celda de verificación:**` para ese ejercicio puntual — el resto de la Independiente igual la lleva.
+>
+> **Nota para clases de `while`:** el verificador re-ejecuta la celda del estudiante con `exec`; si esa celda tiene un ciclo infinito, el verificador queda colgado con ella — limitación aceptada (ver más abajo), no motivo para omitirlo por default.
 
 En la intro de `### 4. Práctica Independiente`, un bloque `**Celda de configuración:**` + ` ```python ` se emite como celda de código justo después del texto introductorio de la sección. Es donde viven las funciones `verificar_*` / `comparar_*` que después llaman las celdas de verificación de cada ejercicio. Convención heredada de la Clase 17: primera línea `#@title 🔧 … (no la edites)`, que en Colab colapsa la celda a solo el título — importante, porque adentro suele estar la lógica correcta.
 

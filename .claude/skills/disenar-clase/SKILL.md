@@ -122,21 +122,27 @@ Errores típicos a anticipar: [2-3 errores predecibles para tabla]
 Construcción CON el curso, en el mismo escenario del Haz Ahora (ver Paso 1), con una pregunta relacionada pero distinta — ya "bajada a código". No entregar código resuelto al inicio. Mismo formato canónico que Independiente (ver Paso 4): narrativa (sin necesidad de etiqueta "Situación") + `**El programa debe:**` en lenguaje natural de alto nivel (describe QUÉ hacer sin revelar nombre exacto de variable ni operador/comando — eso lo aporta la clase) + pista `<details>` opcional si algo lo amerita + resultado esperado.
 Situación/narrativa: [retoma el escenario del Haz Ahora]
 El programa debe: [bullets de requisitos, en lenguaje natural de alto nivel]
-Resultado esperado: [output esperado — un solo bloque si no hay `input()` con valores variables, tabla `Ejemplo 1`/`Ejemplo 2` si sí lo hay]
+Resultado esperado: [output esperado — un solo bloque si no hay `input()` con valores variables, tabla `Ejemplo 1`/`Ejemplo 2` en **markdown GFM** (`| Ejemplo 1 | Ejemplo 2 |` — nunca `<table>` HTML, que a veces se descuadra en pantalla en Colab) si sí lo hay]
 
 ### 4. Práctica Independiente (15-18 min)
 Trabajo individual, alineado con la guiada pero NO copia literal. Formato "revisión rápida": ejercicios breves y directos, no problemas extensos multi-parte.
 Los enunciados NO incluyen nombres de variables, operadores ni comandos — solo descripción en lenguaje natural de qué calcular. Los ejemplos de input/output usan lenguaje natural ("si alguien ingresa un saldo de \$80.000..."), nunca nombres de variables. Los outputs esperados tienen etiquetas descriptivas. Recuerda escapar el signo peso como `\$` — ver CLAUDE.md restricción 21.
-**Presupuesto de palabras (default desde Clase 20 v2, 2026-08-05):** narrativa + bullets apunta a 60-90 palabras por ejercicio (sin contar el resultado esperado), para que los dos obligatorios alcancen a resolverse en el tiempo de la sección — ver CLAUDE.md regla 15. Si el ejercicio trae autochequeo, no hace falta instrumentación en los bullets: usa el "Verificador por salida" (`generar-colab-clase/SKILL.md`), que revisa lo que el programa imprime, no nombres de variable.
-Cantidad de ejercicios: **2 obligatorios + 1 desafío opcional (fijo — no preguntar la cantidad de obligatorios; default desde Clase 20 v2, reemplaza el esquema anterior de solo 2 obligatorios)**. Los 2 obligatorios usan el mismo formato canónico y la misma exigencia de narrativa — ninguno se presenta como bonus ni con narrativa más breve. El desafío (Ejercicio 3) es para quien termine antes los dos primeros: mismo formato canónico, con algo más de margen de narrativa que el presupuesto de arriba.
+**Presupuesto de palabras (default desde Clase 20 v2, 2026-08-05):** narrativa + bullets apunta a 60-90 palabras por ejercicio (sin contar el resultado esperado), para que los tres obligatorios alcancen a resolverse en el tiempo de la sección — ver CLAUDE.md regla 15/16. El autochequeo (ver abajo) no necesita instrumentación en los bullets: usa el "Verificador por salida" (`generar-colab-clase/SKILL.md`), que revisa lo que el programa imprime, no nombres de variable.
+Cantidad de ejercicios: **3 obligatorios (2 directos + 1 contextualizado) + 1 desafío opcional (fijo — no preguntar la cantidad; default desde Clase 24, 2026-08-12 — ver CLAUDE.md regla 16)**. Los obligatorios usan el mismo formato canónico y la misma exigencia de narrativa — ninguno se presenta como bonus ni con narrativa más breve. El desafío (Ejercicio 4) es para quien termine antes los tres obligatorios: mismo formato canónico, con algo más de margen de narrativa que el presupuesto de arriba.
 Contextos: [variados entre los ejercicios]
 Criterio de logro: [qué evidencia el aprendizaje]
 
+**Autochequeo — default incluido siempre (vigente desde 2026-08-13, salvo que la clase alimente un Control o Evaluación, que no pasan por esta skill).** No preguntar si Diego lo quiere: redacta el spec asumiendo que sí, para cada ejercicio que produzca una secuencia de líneas impresas comparable (el caso normal). Agrega:
+- Un bloque `**Celda de configuración:**` en la intro de la sección 4, con el preámbulo reutilizable tal cual (copiarlo sin modificar) — ver "Verificador por salida" en `generar-colab-clase/SKILL.md`.
+- Una `**Celda de verificación:**` por ejercicio, con su propia `verificar_ejercicio_N()` y la lista `esperadas` (las líneas exactas que debe imprimir la solución de referencia — se derivan directo del `- Solución:` de ese ejercicio, no hace falta inventarlas aparte).
+- Único caso sin `**Celda de verificación:**`: un ejercicio cuyo producto no es una secuencia de líneas impresas (ej. `**Celda de respuesta:**` en markdown, una batería de casos de prueba) — ahí no hay contra qué comparar.
+- Para clases de `while`: el verificador re-ejecuta la celda del estudiante, así que un ciclo infinito en su código cuelga también al verificador — riesgo ya aceptado (documentado en `generar-colab-clase/SKILL.md`), no motivo para omitirlo.
+
 ### 5. Ticket de Salida (5-8 min)
-3 preguntas de alternativas (4 opciones, rotuladas A/B/C/D) sobre lo más importante de la clase — cantidad fija desde Clase 20, no preguntar. Se responden vía Google Form (ver CLAUDE.md regla 17) — las preguntas y alternativas NO se incluyen en el Colab de clase (solo un aviso de que se proyectan en la tele), van completas solo en el Solucionario.
-Cada pregunta lleva un bloque de código breve aludiendo a ella (código como foco — se predice output/comportamiento — o código como referencia — solo ilustra el enunciado conceptual; mezcla ambos entre las 3 preguntas). Si la pregunta pide identificar una línea específica del código, márcala con un comentario inline (ej. `print()  # <- esta línea`).
+3 preguntas de alternativas (4 opciones, rotuladas A/B/C/D) sobre lo más importante de la clase — cantidad fija desde Clase 20, no preguntar (si Diego pide explícitamente una 4ta pregunta para una clase puntual, es una excepción de esa clase, no cambia el default — ver CLAUDE.md regla 17). Se responden vía Google Form (ver CLAUDE.md regla 17) — las preguntas y alternativas NO se incluyen en el Colab de clase (solo un aviso de que se proyectan en la tele), van completas solo en el Solucionario.
+Cada pregunta lleva un bloque de código breve aludiendo a ella (código como foco — se predice output/comportamiento — o código como referencia — solo ilustra el enunciado conceptual; mezcla ambos entre las preguntas). **Prioriza predicción de salida directa ("¿qué imprime este programa?") sobre preguntas "truco" centradas en un detalle puntual** (default desde Clase 20 v2, 2026-08-05) — las alternativas deben representar errores de comprensión reales, no variaciones cosméticas. Antes de reusar el código de un ejemplo del ICN, confirma que sea algo que Diego realmente va a enseñar/enfatizar — aparecer en el ICN no lo vuelve automáticamente evaluable. Si la pregunta pide identificar una línea específica del código, márcala con un comentario inline (ej. `print()  # <- esta línea`).
 Preguntas: [código + enunciado + 4 alternativas (A/B/C/D) + cuál es correcta + justificación breve, para cada una]
-Reparte la respuesta correcta en una letra distinta por pregunta — nunca las 3 caen en la misma alternativa.
+Reparte la respuesta correcta en una letra distinta por pregunta — nunca todas caen en la misma alternativa.
 
 ### Cierre (5 min)
 **Objetivo de la clase:** [copiar el objetivo aprobado]
@@ -264,6 +270,11 @@ Ejemplos:
 **Formato antiguo (retrocompatible, solo para regenerar clases previas a Clase 20):** `**Situación:**` + `**Pasos guiados (tabla):**` con un bloque `- Paso N: ... / Resultado: \`\`\`...\`\`\`` por fila, renderizado como tabla de 2 columnas. El parser detecta automáticamente cuál formato usa el spec — no mezclar ambos en una misma clase.
 
 ### 4. Práctica Independiente (15-18 min)
+**Celda de configuración:**
+```python
+[preámbulo reutilizable del "Verificador por salida" — copiarlo tal cual desde "Autochequeo" en generar-colab-clase/SKILL.md, sin modificar]
+```
+
 **Ejercicio 1 — [contexto]**
 [Narrativa 3-4 líneas, formato revisión rápida — nunca "la pareja"/"ustedes" como sujeto de la narrativa ni ninguna otra referencia a la modalidad de trabajo: Diego decide y anuncia la modalidad en vivo, en clase, no el notebook]
 
@@ -282,19 +293,33 @@ Ejemplos:
 
 **Resultado esperado:**
 ```
-[output esperado; tabla Ejemplo 1/Ejemplo 2 en vez de este bloque único si el ejercicio usa input() con valores variables]
+[output esperado; si el ejercicio usa input() con valores variables, tabla `Ejemplo 1`/`Ejemplo 2` en markdown GFM en vez de este bloque único — ver formato exacto abajo]
 ```
+
+[Formato de la tabla cuando hay input() con valores variables — markdown, nunca `<table>` HTML (se descuadra en pantalla en Colab):]
+| Ejemplo 1 | Ejemplo 2 |
+|---|---|
+| 📥 *El usuario ingresa:*<br>`valor1`<br>`valor2` | 📥 *El usuario ingresa:*<br>`valor1`<br>`valor2` |
+| 📤 *El programa imprime:*<br>`línea de output` | 📤 *El programa imprime:*<br>`línea de output` |
 
 - Solución:
   ```python
   [código de referencia]
   ```
 
-**Ejercicio 2 — [contexto distinto]**
-[Mismo formato que el Ejercicio 1 — ambos obligatorios desde Clase 20 (no hace falta escribirlo en el título, ninguno se marca como bonus ni con narrativa más breve)]
+**Celda de verificación:**
+```python
+[llamada a verificar_ejercicio_1(), con su propia lista `esperadas` derivada de la solución de arriba — ver "Autochequeo" en generar-colab-clase/SKILL.md. Omitir solo si el ejercicio no produce una secuencia de líneas impresas comparable]
+```
 
-**Ejercicio 3 — Desafío: [contexto]** *(opcional, default desde Clase 20 v2 — ver CLAUDE.md regla 16)*
-[Mismo formato canónico, para quien termine antes los dos primeros. Puede llevar algo más de narrativa que el presupuesto de palabras de los obligatorios (ver arriba). No adelantes contenido no visto — reutiliza sintaxis ya vista en clases anteriores para el giro extra del desafío.]
+**Ejercicio 2 — [contexto distinto]**
+[Mismo formato que el Ejercicio 1, incluida su propia `**Celda de verificación:**` — los 3 obligatorios usan el mismo formato canónico (no hace falta escribirlo en el título, ninguno se marca como bonus ni con narrativa más breve)]
+
+**Ejercicio 3 — [contexto contextualizado, más complejo]** *(obligatorio desde Clase 24 — ver CLAUDE.md regla 16)*
+[Mismo formato canónico + `**Celda de verificación:**` propia. Narrativa más contextualizada, combina o profundiza el concepto principal — este es también el nivel que fija el techo de dificultad de la Guiada.]
+
+**Ejercicio 4 — Desafío: [contexto]** *(opcional, default desde Clase 24 — ver CLAUDE.md regla 16)*
+[Mismo formato canónico + `**Celda de verificación:**` propia, para quien termine antes los tres obligatorios. Puede llevar algo más de narrativa que el presupuesto de palabras de los obligatorios (ver arriba). No adelantes contenido no visto — reutiliza sintaxis ya vista en clases anteriores para el giro extra del desafío.]
 
 ### 5. Ticket de Salida (5-8 min)
 **Pregunta 1:**
