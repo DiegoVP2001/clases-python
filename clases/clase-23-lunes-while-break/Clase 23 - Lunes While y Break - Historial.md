@@ -61,3 +61,25 @@ Resultado al generar: **19/19 casos OK**, puntajes cuadrados (25 + 30 + 45 = 100
 
 - `Ejercitación.ipynb` puede subirse el mismo lunes en la mañana.
 - **`Control.ipynb` y `Control Solucionario.ipynb` no se pushean hasta después de aplicado el control** — el repo es público, mismo criterio que rige para los `Ticket de Salida.pptx`.
+
+## 2026-08-13 — Cierre de actitud agregado al Control
+
+El `CLAUDE.md` sumó ese mismo día la regla de "Cierre de actitud en Control y Evaluación" (pregunta individual, escrita, sin nota, al final del `Control.ipynb`/`Evaluación.ipynb`). Como esta Clase 23 ya estaba generada, se actualizó para incorporarla.
+
+- **Actitud elegida:** Perseverancia — de las dos clases foco (N°21.5 = Método, N°22 = Perseverancia), Diego eligió Perseverancia como la representativa de este control.
+- **Pregunta del banco:** #1 — Evidencia directa: *"En este control, cuenta en qué ítem tuviste que aplicar la perseverancia y cómo se vio en lo que hiciste."* (adaptada de "evaluación" a "control").
+- **Ubicación:** última celda de `Control.ipynb`, después de "✅ Antes de entregar".
+- **Implementación:** se agregó `control.cierre_actitud` (`actitud`, `pregunta_familia`, `pregunta_md`) a la Propuesta.json, y `build_control()` en `generar_lunes.py` ahora la renderiza siempre (con `ValueError` explícito si el campo falta, para que ningún lunes futuro se genere sin preguntarle a Diego primero). No se tocó `Control Solucionario.ipynb`: la pregunta no lleva nota ni respuesta correcta que registrar.
+- Se regeneraron los tres notebooks; solo cambiaron los IDs de celda de `Ejercitación.ipynb` (ruido de regeneración, sin cambios de contenido) y las 2 celdas nuevas en `Control.ipynb`.
+
+## 2026-08-13 — Apertura con actitud + propósito, y ajustes de modalidad/orden
+
+Segunda vuelta el mismo día: Diego pidió que la actitud también abriera la sesión (no solo la cerrara), ligada al propósito, en ambos notebooks del día.
+
+- **Se agregó un bloque `actitud` a nivel raíz de la Propuesta** (`nombre`, `proposito_md`, `frase_control_md`), compartido entre `Ejercitación.ipynb` y `Control.ipynb`. `cierre_actitud` dejó de repetir el nombre de la actitud (ahora vive una sola vez).
+- **`Ejercitación.ipynb`** abre con `## 🎯 Objetivo` + `## 💡 Propósito` (cita reflexiva, mismo estilo que `disenar-clase`) ligando la actitud a lo que se entrena hoy.
+- **`Control.ipynb`** abre, justo después del título y antes de "Antes de partir", con `## 💪 Actitud del control: Perseverancia` + una frase directa en imperativo ("**En este control debemos perseverar hasta el último ítem.** Si algo no te sale a la primera, no lo dejes: sigue intentando antes de pasar al siguiente.") — registro distinto del propósito reflexivo de la Ejercitación, más orientado a la instancia evaluativa.
+- **Se sacó toda mención a "parejas sorteadas" de `Ejercitación.ipynb`** (la intro y el encabezado "Ahora en parejas..." de la serie de ejercicios) — rompía la regla ya vigente de no fijar la modalidad de trabajo en material que se sube con anticipación (Diego la anuncia en vivo). El texto de "sin nota, se evalúa el Control" se mantuvo, solo sin la mención a la modalidad.
+- **Se reordenó el cierre de `Control.ipynb`:** la reflexión de actitud (pregunta + "Mi respuesta") ahora va **antes** del checklist "✅ Antes de entregar", que pasa a ser la última celda del notebook.
+- **CLAUDE.md actualizado** (`Workflow: lunes estándar`): se documentaron las tres reglas de arriba como default para todo lunes estándar futuro, no solo para esta clase.
+- Se regeneró todo con `python generar_lunes.py`; verificación de puntajes y casos de prueba en verde (25+30+45=100 pts, 19/19 casos OK).

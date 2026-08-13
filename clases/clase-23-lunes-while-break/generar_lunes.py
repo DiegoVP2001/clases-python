@@ -80,6 +80,7 @@ def bloque_ejemplo(test: dict) -> str:
 
 def build_ejercitacion(data: dict) -> dict:
     ej = data["ejercitacion"]
+    actitud = data["actitud"]
     cells = [
         md_cell(
             f"# 🔁 Clase {data['class_number']} — Ejercitación: While, continue y break\n\n"
@@ -88,12 +89,16 @@ def build_ejercitacion(data: dict) -> dict:
             "**Curso:** _______________________\n\n"
             "---"
         ),
-        md_cell(f"## 🎯 Objetivo\n\n{data['objetivo']}\n\n{ej['modalidad_nota']}"),
+        md_cell(
+            f"## 🎯 Objetivo\n\n{data['objetivo']}\n\n"
+            f"## 💡 Propósito\n\n> {actitud['proposito_md']}\n\n"
+            f"{ej['modalidad_nota']}"
+        ),
         md_cell(ej["recordatorio_md"]),
         md_cell("---\n\n## 🤝 Ejercicio guiado — lo resolvemos juntos"),
         md_cell(f"### {ej['guided_exercise']['title']}\n\n{ej['guided_exercise']['statement_md']}"),
         code_cell("# Tu programa"),
-        md_cell("---\n\n## 🎯 Serie de ejercicios\n\nAhora en parejas. Escribe cada programa en su celda."),
+        md_cell("---\n\n## 🎯 Serie de ejercicios\n\nEscribe cada programa en su celda."),
     ]
 
     for numero, ex in enumerate(ej["exercises"], start=1):
@@ -132,6 +137,7 @@ def build_ejercitacion(data: dict) -> dict:
 
 def build_control(data: dict) -> dict:
     ctrl = data["control"]
+    actitud = data["actitud"]
     cells = [
         md_cell(
             # Título deliberadamente neutro: nombrar las tres estructuras acá delataría
@@ -141,6 +147,10 @@ def build_control(data: dict) -> dict:
             "**Nombre:** _______________________  \n"
             "**Curso:** _______________________\n\n"
             "---"
+        ),
+        md_cell(
+            f"## 💪 Actitud del control: {actitud['nombre']}\n\n"
+            f"{actitud['frase_control_md']}"
         ),
         md_cell(
             f"## 📋 Antes de partir\n\n{ctrl['modalidad_md']}\n\n"
@@ -157,11 +167,25 @@ def build_control(data: dict) -> dict:
         ))
         cells.append(code_cell(f"# Tu solución del Ítem {item['id']}"))
 
+    cierre = ctrl.get("cierre_actitud")
+    if not cierre:
+        raise ValueError(
+            "Falta 'control.cierre_actitud' en la Propuesta — el CLAUDE.md exige preguntarle "
+            "a Diego qué actitud y qué pregunta del banco usar antes de generar el Control."
+        )
+    cells.append(md_cell(
+        "---\n\n## 🎯 Cierre — reflexión individual\n\n"
+        f"{cierre['pregunta_md']}\n\n"
+        "*(Esta pregunta no lleva nota — respóndela con confianza.)*"
+    ))
+    cells.append(md_cell("### 📝 Mi respuesta\n\n*(haz doble click para editar y escribir tu respuesta)*\n\n"))
+
     cells.append(md_cell(
         "---\n\n## ✅ Antes de entregar\n\n"
         "- Ejecuta cada celda una última vez para confirmar que tu programa corre.\n"
         "- Sube este mismo archivo a Classroom."
     ))
+
     return notebook(cells, f"Clase {data['class_number']} - {data['class_topic']} - Control")
 
 
