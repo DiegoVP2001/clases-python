@@ -21,3 +21,9 @@
 - Archivo: `Clase 24a - Funciones - Ticket de Salida.pptx` (8 slides: portada + 3 preguntas + pantalla del Form + 3 slides de revisión).
 - Generado con `crear_ppt_ticket.py`. Respuestas correctas: P1=B, P2=C, P3=A.
 - **No se commitea ni pushea a GitHub todavía** — regla fija de la skill (repo público, el archivo expone preguntas y respuestas): se sube recién después de dictada la clase.
+
+## 2026-08-13 — Retrofit de autochequeo en la Práctica Independiente
+- Esta clase se generó (2026-08-13) antes de que el autochequeo pasara a ser default en `disenar-clase`/`generar-colab-clase` (mismo día, cambio de política aplicado después). Diego pidió corregirlo.
+- Spec actualizado: `**Celda de configuración:**` (preámbulo reutilizable del "Verificador por salida") + una `**Celda de verificación:**` por ejercicio (Ejercicios 1-4, incluido el desafío).
+- Ejercicios 1-3 y el desafío usan `input()`: cada `verificar_ejercicio_N()` imprime primero un aviso pidiendo reingresar los mismos datos del Ejemplo 1 (o del ejemplo único del desafío), igual que el patrón ya usado en `clase-21b-continue-break`.
+- `Clase.ipynb` y `Solucionario.ipynb` regenerados con `generar-colab-clase`, ejecutados sin errores. Probado además con las 4 soluciones de referencia (input hardcodeado en vez de `input()` real) contra sus verificadores: los 4 dieron "✅ ¡Perfecto!".

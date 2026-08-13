@@ -143,6 +143,86 @@ no</pre></td>
 
 ### 4. Práctica Independiente (18 min)
 
+En cada ejercicio escribe tu programa dentro de la celda que ya trae el comentario `# Tu solución — Ejercicio N` — no borres esa primera línea, el verificador la usa para encontrar tu código. Tampoco necesitas usar nombres de variable en particular: el verificador revisa lo que tu programa imprime, no cómo llamaste tus variables o tu función.
+
+**Celda de configuración:**
+```python
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+import io, re, contextlib, unicodedata
+from IPython import get_ipython
+
+def _fuente_solucion(marca):
+    for fuente in reversed(get_ipython().user_ns.get("In", [])):
+        if fuente.strip().startswith(marca):
+            return fuente
+    return None
+
+def _normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto.lower())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", texto).strip()
+
+def _revisar(marca, esperadas):
+    fuente = _fuente_solucion(marca)
+    if fuente is None:
+        print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
+        print("   su primera línea:", marca)
+        return
+    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+        print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
+        return
+    salida = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(salida):
+            exec(compile(fuente, "<tu solución>", "exec"), {"__name__": "__main__"})
+    except Exception as error:
+        print("❌ Tu programa se detuvo con un error:", type(error).__name__, "-", error)
+        return
+    obtenidas = [l.rstrip() for l in salida.getvalue().splitlines() if l.strip()]
+    correctas, primer_error = 0, None
+    for i, esperada in enumerate(esperadas):
+        obtenida = obtenidas[i] if i < len(obtenidas) else ""
+        if _normalizar(obtenida) == _normalizar(esperada):
+            correctas += 1
+        elif primer_error is None:
+            primer_error = (i + 1, esperada, obtenida)
+    print("Líneas correctas:", correctas, "de", len(esperadas))
+    if primer_error is None and len(obtenidas) == len(esperadas):
+        print("✅ ¡Perfecto! Tu programa imprime exactamente lo que se pedía.")
+        return
+    if len(obtenidas) > len(esperadas):
+        print("⚠️ Tu programa imprimió", len(obtenidas) - len(esperadas), "línea(s) de más.")
+    if primer_error:
+        numero, esperada, obtenida = primer_error
+        print("❌ La primera diferencia está en la línea", numero)
+        print("   Se esperaba:", esperada)
+        print("   Tu programa dio:", obtenida if obtenida else "(nada)")
+
+def verificar_ejercicio_1():
+    print("Para revisar, ingresa el mismo dato del Ejemplo 1: 50")
+    esperadas = ["Cajones completos: 4"]
+    _revisar("# Tu solución — Ejercicio 1", esperadas)
+
+def verificar_ejercicio_2():
+    print("Para revisar, ingresa los mismos datos del Ejemplo 1: 5000, 3")
+    esperadas = ["Total a pagar: 15000"]
+    _revisar("# Tu solución — Ejercicio 2", esperadas)
+
+def verificar_ejercicio_3():
+    print("Para revisar, ingresa los mismos datos del Ejemplo 1: 8, 5000")
+    esperadas = ["Debe pagar: 0"]
+    _revisar("# Tu solución — Ejercicio 3", esperadas)
+
+def verificar_ejercicio_4():
+    print("Para revisar, ingresa los mismos datos del ejemplo: Fernanda, 14, Benjamín, 22, listo")
+    esperadas = [
+        "A Fernanda le faltan 6 horas.",
+        "A Benjamín le faltan 0 horas.",
+    ]
+    _revisar("# Tu solución — Ejercicio 4", esperadas)
+```
+
 **Ejercicio 1 — Huerto escolar**
 
 El huerto del liceo organiza brigadas de cosecha y junta los tomates en cajones de 12 para venderlos en la feria del sábado. Cada brigadista anota cuántos tomates cosechó, pero armar los cajones a mano y contar los que sobran ya generó más de un error.
@@ -165,6 +245,12 @@ El huerto del liceo organiza brigadas de cosecha y junta los tomates en cajones 
 <td>📤 <em>El programa imprime</em><pre>Cajones completos: 11</pre></td>
 </tr>
 </table>
+
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 1 — puedes correrlo las veces que quieras
+verificar_ejercicio_1()
+```
 
 - Solución:
   ```python
@@ -199,6 +285,12 @@ El Club Deportivo cobra una cuota mensual fija, y algunos socios llegan atrasado
 <td>📤 <em>El programa imprime</em><pre>Total a pagar: 16000</pre></td>
 </tr>
 </table>
+
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 2 — puedes correrlo las veces que quieras
+verificar_ejercicio_2()
+```
 
 - Solución:
   ```python
@@ -235,6 +327,12 @@ La Peña de la Vendimia, la fiesta típica de Isla de Maipo, cobra entrada gener
 </tr>
 </table>
 
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 3 — puedes correrlo las veces que quieras
+verificar_ejercicio_3()
+```
+
 - Solución:
   ```python
   def cobro_entrada(edad, precio_general):
@@ -267,6 +365,12 @@ A Fernanda le faltan 6 horas.
 ¿Cuántas horas practicó? 22
 A Benjamín le faltan 0 horas.
 ¿Nombre del estudiante? (o "listo" para terminar) listo
+```
+
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 4 — puedes correrlo las veces que quieras
+verificar_ejercicio_4()
 ```
 
 - Solución:
