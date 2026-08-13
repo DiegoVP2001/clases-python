@@ -41,51 +41,35 @@ El equipo de estudiantes que programa un videojuego para jugar en los recreos es
 
 ### 2. Introducción al Contenido Nuevo (20 min)
 
-**Concepto 1: Qué es un valor por omisión**
-- Definición: un parámetro puede tener un valor "por omisión" (o "por defecto") escrito en la propia definición de la función. Si quien la llama no indica ese argumento, Python usa automáticamente ese valor.
-- Ejemplo:
-  ```python
-  def saludo(nombre="María"):
-      print("Hola,", nombre)
-
-  saludo()
-  saludo("Camila")
-  ```
-  ```
-  >> Hola, María
-  >> Hola, Camila
-  ```
-- Idea clave: un valor por omisión anticipa el caso más común, para que quien usa la función no tenga que escribir siempre el mismo dato.
-
-**Concepto 2: Sintaxis — declarar el valor por omisión**
-- Definición: se escribe con `=` justo después del nombre del parámetro, dentro de los paréntesis de `def`: `def funcion(parametro, opcional=valor):`.
+**Concepto 1: Qué es un valor por omisión y cómo se declara**
+- Definición: un parámetro puede tener un valor "por omisión" (o "por defecto") escrito en la propia definición de la función, con `=` justo después del nombre del parámetro: `def funcion(parametro, opcional=valor):`. Si quien la llama no indica ese argumento, Python usa automáticamente ese valor.
 - Ejemplo:
   ```python
   def nueva_partida(nombre_jugador, dificultad="normal"):
       print("Jugador:", nombre_jugador, "- Dificultad:", dificultad)
-  ```
-- Idea clave: el `=` dentro de `def` no es una comparación ni una asignación común — define el valor que se usa cuando el argumento se omite.
 
-**Concepto 3: Omitir o indicar el argumento al llamar**
-- Definición: al llamar la función, se puede omitir el argumento que tiene valor por omisión (y se usa ese valor) o indicarlo explícitamente (y ese valor reemplaza al de por omisión, solo para esa llamada).
-- Ejemplo:
-  ```python
   nueva_partida("Fernanda")
-  nueva_partida("Benjamín", "difícil")
   ```
   ```
   >> Jugador: Fernanda - Dificultad: normal
+  ```
+- Idea clave: un valor por omisión anticipa el caso más común, para que quien usa la función no tenga que escribir siempre el mismo dato.
+
+**Concepto 2: Omitir o indicar el argumento al llamar**
+- Definición: al llamar la función, se puede omitir el argumento que tiene valor por omisión (y se usa ese valor) o indicarlo explícitamente (y ese valor reemplaza al de por omisión, solo para esa llamada).
+- Ejemplo:
+  ```python
+  nueva_partida("Benjamín", "difícil")
+  ```
+  ```
   >> Jugador: Benjamín - Dificultad: difícil
   ```
 - Idea clave: el valor por omisión no es fijo para siempre — solo se usa cuando esa llamada específica no trae ese argumento.
 
-**Concepto 4: Regla de orden — opcionales a la derecha**
+**Concepto 3: Regla de orden — opcionales a la derecha**
 - Definición: los parámetros con valor por omisión siempre se escriben después de los parámetros obligatorios. Python no permite lo contrario.
 - Ejemplo:
   ```python
-  def funcion_valida(obligatorio, opcional=10):
-      return obligatorio + opcional
-
   def funcion_invalida(opcional=10, obligatorio):
       return obligatorio + opcional
   ```
@@ -97,7 +81,6 @@ El equipo de estudiantes que programa un videojuego para jugar en los recreos es
 **Errores típicos:**
 | Error | Qué ocurre | Cómo corregirlo |
 |---|---|---|
-| Escribir el parámetro opcional antes del obligatorio | `SyntaxError: non-default argument follows default argument` | Ordenar los parámetros: obligatorios primero, opcionales al final |
 | Pensar que el valor por omisión sigue aplicando aunque se pase un argumento distinto | El valor pasado reemplaza al de por omisión solo para esa llamada — no cambia la definición de la función | Recordar que cada llamada es independiente; el valor por omisión solo se usa si se omite el argumento |
 | Confundir "parámetro opcional" con "parámetro que no importa" | Si se decide omitirlo, igual afecta el resultado (usa el valor por omisión, no `None` ni vacío) | Verificar cuál es el valor por omisión y si tiene sentido para el caso que se está probando |
 
