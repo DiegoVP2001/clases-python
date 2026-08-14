@@ -4,9 +4,10 @@ Fuente de verdad: "Clase 23 - Lunes While y Break - Propuesta.json".
 Nunca editar los .ipynb a mano: cambiar el JSON y volver a correr este script.
 
 Produce:
-  - Clase 23 - Lunes While y Break - Ejercitación.ipynb       (estudiantes, Colab)
-  - Clase 23 - Lunes While y Break - Control.ipynb            (estudiantes, Classroom)
-  - Clase 23 - Lunes While y Break - Control Solucionario.ipynb (profesor + agente corrector)
+  - Clase 23 - Lunes While y Break - Ejercitación.ipynb                    (estudiantes, Colab)
+  - Clase 23 - Lunes While y Break - Control.ipynb                         (estudiantes, Classroom)
+  - Clase 23 - Lunes While y Break - Control Solucionario Docente.ipynb    (profesor + agente corrector)
+  - Clase 23 - Lunes While y Break - Control Solucionario Estudiantes.ipynb (publicar despues de aplicado el control)
 
 Uso:
     python generar_lunes.py            # genera los tres notebooks
@@ -276,7 +277,7 @@ def build_control(data: dict) -> dict:
     return notebook(cells, f"Clase {data['class_number']} - {data['class_topic']} - Control")
 
 
-# ── Notebook 3: Control Solucionario (profesor + agente corrector) ────────────
+# ── Notebook 3: Control Solucionario — Docente (profesor + agente corrector) ──
 
 CRITERIOS_MD = (
     "---\n\n## 🎯 Criterios de corrección — instrucciones para el agente que revisa\n\n"
@@ -304,14 +305,14 @@ CRITERIOS_MD = (
 )
 
 
-def build_control_solucionario(data: dict) -> dict:
+def build_control_solucionario_docente(data: dict) -> dict:
     ctrl = data["control"]
     filas = "\n".join(
         f"| Ítem {i['id']} | {i['title']} | {i['concepto']} | {i['pts']} |" for i in ctrl["items"]
     )
     cells = [
         md_cell(
-            f"# ✅ Solucionario del Control — Clase {data['class_number']}: While y Break\n\n"
+            f"# ✅ Solucionario del Control (Docente) — Clase {data['class_number']}: While y Break\n\n"
             "**Solo para el profesor y para el agente que corrige.** No se sube a Classroom ni "
             "se pushea al repositorio antes de aplicado el control.\n\n"
             f"**Fecha de aplicación:** {data['fecha']} · "
@@ -356,7 +357,52 @@ def build_control_solucionario(data: dict) -> dict:
         ))
 
     return notebook(
-        cells, f"Clase {data['class_number']} - {data['class_topic']} - Control Solucionario"
+        cells,
+        f"Clase {data['class_number']} - {data['class_topic']} - Control Solucionario Docente",
+    )
+
+
+# ── Notebook 4: Control Solucionario — Estudiantes (publicar tras el control) ─
+# Mismas soluciones que la version Docente, pero sin el bloque de criterios de
+# corrección ni la rúbrica de puntos: cada ítem cierra con un "Qué se revisó"
+# pedagógico, reutilizando el campo `que_evalua` que ya trae la Propuesta.
+
+def build_control_solucionario_estudiantes(data: dict) -> dict:
+    ctrl = data["control"]
+    filas = "\n".join(
+        f"| Ítem {i['id']} | {i['title']} | {i['pts']} |" for i in ctrl["items"]
+    )
+    cells = [
+        md_cell(
+            f"# ✅ Solucionario del Control — Clase {data['class_number']}: While y Break\n\n"
+            "Revisa aquí la solución de cada ítem, con el resultado esperado. Si tu programa "
+            "llegó al mismo resultado por otro camino (otra forma de escribir la condición, "
+            "otros nombres de variable), no significa que estuviera mal — plantea cualquier "
+            "duda puntual al profesor."
+        ),
+        md_cell(
+            f"## 📊 Puntaje por ítem (total {ctrl['puntaje_total']} pts, "
+            f"exigencia {int(ctrl['exigencia'] * 100)}%)\n\n"
+            "| Ítem | Título | Pts |\n|---|---|---|\n" + filas
+        ),
+    ]
+
+    for item in ctrl["items"]:
+        cells.append(md_cell(
+            f"---\n\n## Ítem {item['id']} — {item['title']} ({item['pts']} pts)\n\n"
+            f"{item['statement_md']}"
+        ))
+        cells.append(code_cell(item["solution_py"]))
+        cells.append(md_cell(f"🔎 **Qué se revisó:** {item['que_evalua']}"))
+
+    cells.append(md_cell(
+        "---\n\n## 🏁 Fin del solucionario\n\n"
+        "¿Alguna respuesta no te calzó? Pregúntale al profesor antes de la próxima clase."
+    ))
+
+    return notebook(
+        cells,
+        f"Clase {data['class_number']} - {data['class_topic']} - Control Solucionario Estudiantes",
     )
 
 
@@ -457,7 +503,8 @@ def main() -> int:
     salidas = [
         (f"{prefijo} - Ejercitación.ipynb", build_ejercitacion(data)),
         (f"{prefijo} - Control.ipynb", build_control(data)),
-        (f"{prefijo} - Control Solucionario.ipynb", build_control_solucionario(data)),
+        (f"{prefijo} - Control Solucionario Docente.ipynb", build_control_solucionario_docente(data)),
+        (f"{prefijo} - Control Solucionario Estudiantes.ipynb", build_control_solucionario_estudiantes(data)),
     ]
     print()
     for nombre, nb in salidas:

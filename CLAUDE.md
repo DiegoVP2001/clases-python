@@ -350,7 +350,8 @@ Vigente desde el **lunes 2026-08-17** (primera aplicación: Clase 23). Reemplaza
 | `... - Propuesta.json` | interno | Fuente de verdad única: ejercitación + control + rúbrica. Nunca editar los `.ipynb` a mano |
 | `... - Ejercitación.ipynb` | estudiantes (Colab) | Guiado corto + serie de ejercicios + sección final `## 🔓 Soluciones` con cada solución dentro de un `<details>` |
 | `... - Control.ipynb` | estudiantes (Classroom) | 3 ítems, **todos de programación**. Sin ninguna solución |
-| `... - Control Solucionario.ipynb` | profesor + agente corrector | Soluciones + rúbrica parcelada por componentes + bloque de criterios de corrección |
+| `... - Control Solucionario Docente.ipynb` | profesor + agente corrector | Soluciones + rúbrica parcelada por componentes + bloque de criterios de corrección |
+| `... - Control Solucionario Estudiantes.ipynb` | estudiantes (post-control) | Mismas soluciones, sin rúbrica de puntos ni bloque de criterios de corrección — cada ítem cierra con `🔎 **Qué se revisó:**` reutilizando el campo `que_evalua` del ítem, mismo patrón que ya usa `Solucionario Estudiantes.ipynb` en el workflow de evaluaciones sumativas |
 | `... - Historial.md` | interno | Registro de iteraciones y feedback |
 
 **Estructura fija del Control:** 3 ítems, todos de programación (nada de alternativas ni preguntas de concepto). Ítem 1 y 2 aplican un concepto cada uno; **el Ítem 3 mezcla de forma simple `while` con `continue` o `break` — uno de los dos, no ambos**, y esa lógica se generaliza: el ítem de cierre combina el concepto principal de la semana con uno solo de los secundarios. Cada ítem trae etiqueta explícita de qué evalúa, un ejemplo válido de referencia visible, y casos de prueba con `hidden: true/false`. Además, **antes de generar `Control.ipynb`, preguntar a Diego qué pregunta del banco de "Cierre de actitud en Control y Evaluación" quiere usar** para la actitud definida en el Spec de esa clase, y agregarla en `Control.ipynb` justo después del último ítem, **antes** del checklist final "✅ Antes de entregar" (default desde Clase 23, 2026-08-13: la reflexión de actitud va primero, y el checklist de entrega queda como la última celda del notebook) — sin nota, no va en el Solucionario.
@@ -361,7 +362,7 @@ Vigente desde el **lunes 2026-08-17** (primera aplicación: Clase 23). Reemplaza
 
 **Nota y trazabilidad:** cada control lleva nota (exigencia 50%, escala 2.0-7.0 como el resto del curso). La nota del semestre por este concepto es el **promedio de todos los controles**, con una regla de asistencia: quien haya rendido **todos** los controles puede eliminar los X peores al cierre del semestre (X definido con Diego). El registro acumulado vive en `clases/Controles - Trazabilidad.xlsx`, misma arquitectura que `Ticket de Salida - Trazabilidad.xlsx` (log crudo acumulativo + script que reconstruye el Excel completo por estudiante × sesión), con la diferencia de que la fuente cruda sale del resultado de corrección del agente, no de una Google Sheet.
 
-**Publicación:** la Ejercitación puede subirse al repo el mismo lunes en la mañana. `Control.ipynb` y `Control Solucionario.ipynb` **no se pushean hasta después de aplicado el control** — el repo es público, mismo criterio que ya rige para los `Ticket de Salida.pptx`.
+**Publicación:** la Ejercitación puede subirse al repo el mismo lunes en la mañana. `Control.ipynb`, `Control Solucionario Docente.ipynb` y `Control Solucionario Estudiantes.ipynb` **no se pushean hasta después de aplicado el control** — el repo es público, mismo criterio que ya rige para los `Ticket de Salida.pptx`. El Estudiantes tampoco antes, aunque no traiga rúbrica: sigue teniendo las soluciones completas.
 
 ## Workflow: evaluaciones individuales sumativas — generación
 
