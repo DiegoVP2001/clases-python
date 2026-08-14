@@ -83,3 +83,22 @@ Segunda vuelta el mismo día: Diego pidió que la actitud también abriera la se
 - **Se reordenó el cierre de `Control.ipynb`:** la reflexión de actitud (pregunta + "Mi respuesta") ahora va **antes** del checklist "✅ Antes de entregar", que pasa a ser la última celda del notebook.
 - **CLAUDE.md actualizado** (`Workflow: lunes estándar`): se documentaron las tres reglas de arriba como default para todo lunes estándar futuro, no solo para esta clase.
 - Se regeneró todo con `python generar_lunes.py`; verificación de puntajes y casos de prueba en verde (25+30+45=100 pts, 19/19 casos OK).
+
+## 2026-08-13 — Verificador automático agregado a la Ejercitación
+
+Diego pidió revisar si el `Control.ipynb` y la `Ejercitación.ipynb` traían las consideraciones más recientes que se agregaron a `disenar-clase`/`generar-colab-clase`: el autochequeo (verificador automático) y la correcta indicación de `**El programa debe:**`. Revisión:
+
+- **`**El programa debe:**`** — ya estaba completo en los 3 ítems del Control, el guiado y los 4 ejercicios, con los literales exactos (`botella`, `cierre`, `sin credencial`, `en blanco`) marcados en backtick. Sin cambios acá.
+- **`Control.ipynb`** — correctamente sigue **sin** verificador: es la excepción fija documentada en `generar-colab-clase/SKILL.md` (línea ~306), instancia con nota.
+- **`Ejercitación.ipynb`** — decisión de la entrada del 2026-08-12 fue dejarla **sin** verificador, apoyada solo en las soluciones colapsadas. Esa decisión es anterior en un día al default de autochequeo que se fijó para la Independiente de `Clase.ipynb` (2026-08-13). Diego decidió que Ejercitación **sí** debe llevar ambos mecanismos — el verificador para autorrevisarse sin mirar la solución primero, y las soluciones colapsadas como respaldo final.
+
+**Cambio aplicado en `generar_lunes.py` (`build_ejercitacion`):**
+- Se agregó el preámbulo canónico del "Verificador por salida" (helpers `_fuente_solucion` / `_normalizar` / `_revisar`, copiado tal cual desde `generar-colab-clase/SKILL.md`) como celda de configuración, justo después de la intro de "## 🎯 Serie de ejercicios".
+- Se agregó un `verificar_ejercicio_N()` por cada uno de los 4 ejercicios, con la lista `esperadas` derivada directo del caso de prueba visible de cada uno (`test["stdout"]`), y una pista de qué datos reingresar cuando el ejercicio usa `input()`.
+- El marcador de la celda de solución cambió de `# Tu solución del Ejercicio N` a `# Tu solución — Ejercicio N` (el formato exacto que usa `_fuente_solucion` en el resto del proyecto).
+- El ejercicio guiado **no** lleva verificador — se resuelve en conjunto en clase, mismo criterio que la Práctica Guiada en `Clase.ipynb` nunca lo lleva.
+- La sección `## 🔓 Soluciones` al final se mantiene sin cambios, como respaldo tras usar el verificador.
+
+**Verificación:** se simuló el entorno de Colab (`get_ipython().user_ns["In"]`) fuera del notebook y se corrieron las 4 soluciones de referencia contra sus propios `verificar_ejercicio_N()` — las 4 reportan "¡Perfecto!". Se probó además una solución con bug deliberado (Ejercicio 1) para confirmar que el verificador sí detecta fallas reales, no solo aprueba todo. `python generar_lunes.py --check` sigue en verde (19/19 casos, 25+30+45=100 pts).
+
+Pendiente de decisión de Diego: si este cambio debe quedar como default permanente para todo lunes estándar futuro (actualizando la regla del `CLAUDE.md` que hoy dice que las soluciones colapsadas son la excepción/mecanismo de autorrevisión de la Ejercitación) — por ahora el cambio se aplicó solo a Clase 23.

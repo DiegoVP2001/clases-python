@@ -119,6 +119,85 @@ Bienvenido, Benjamín. Partes con 50 puntos de bono.
 
 ### 4. Práctica Independiente (18 min)
 
+- Antes de empezar, ejecuta la celda de configuración de abajo: deja listos los verificadores para que revises tu propio trabajo sin esperar a que el profe pase por el puesto.
+- No necesitas usar nombres de variable específicos: el verificador revisa lo que tu programa imprime, no cómo llamaste tus variables.
+- Después de cada ejercicio, ejecuta su celda de revisión: vuelve a correr tu programa y lo compara, línea por línea, con el resultado esperado.
+- Ojo: no borres el comentario de la primera línea de cada celda de solución — es lo que usa el verificador para encontrar tu código.
+- Los Ejercicios 3 y 4 piden datos con `input()`: al ejecutar su celda de revisión, el verificador te va a volver a pedir esos mismos datos — ingresa los valores del Ejemplo 1 del enunciado para comprobar tu solución.
+
+**Celda de configuración:**
+```python
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+import io, re, contextlib, unicodedata
+from IPython import get_ipython
+
+def _fuente_solucion(marca):
+    for fuente in reversed(get_ipython().user_ns.get("In", [])):
+        if fuente.strip().startswith(marca):
+            return fuente
+    return None
+
+def _normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto.lower())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", texto).strip()
+
+def _revisar(marca, esperadas):
+    fuente = _fuente_solucion(marca)
+    if fuente is None:
+        print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
+        print("   su primera línea:", marca)
+        return
+    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+        print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
+        return
+    salida = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(salida):
+            exec(compile(fuente, "<tu solución>", "exec"), {"__name__": "__main__"})
+    except Exception as error:
+        print("❌ Tu programa se detuvo con un error:", type(error).__name__, "-", error)
+        return
+    obtenidas = [l.rstrip() for l in salida.getvalue().splitlines() if l.strip()]
+    correctas, primer_error = 0, None
+    for i, esperada in enumerate(esperadas):
+        obtenida = obtenidas[i] if i < len(obtenidas) else ""
+        if _normalizar(obtenida) == _normalizar(esperada):
+            correctas += 1
+        elif primer_error is None:
+            primer_error = (i + 1, esperada, obtenida)
+    print("Líneas correctas:", correctas, "de", len(esperadas))
+    if primer_error is None and len(obtenidas) == len(esperadas):
+        print("✅ ¡Perfecto! Tu programa imprime exactamente lo que se pedía.")
+        return
+    if len(obtenidas) > len(esperadas):
+        print("⚠️ Tu programa imprimió", len(obtenidas) - len(esperadas), "línea(s) de más.")
+    if primer_error:
+        numero, esperada, obtenida = primer_error
+        print("❌ La primera diferencia está en la línea", numero)
+        print("   Se esperaba:", esperada)
+        print("   Tu programa dio:", obtenida if obtenida else "(nada)")
+
+def verificar_ejercicio_1():
+    esperadas = ["¡Bienvenido/a, Valentina! 🎉", "¡Bienvenido/a, Matías! 🏆"]
+    _revisar("# Tu solución — Ejercicio 1", esperadas)
+
+def verificar_ejercicio_2():
+    esperadas = ["Rayando el Sol está sonando a volumen 70", "Himno del Liceo está sonando a volumen 40"]
+    _revisar("# Tu solución — Ejercicio 2", esperadas)
+
+def verificar_ejercicio_3():
+    # Corresponde al Ejemplo 1 del enunciado: precio 8000, en pareja "si"
+    esperadas = ["Debe pagar: 7000"]
+    _revisar("# Tu solución — Ejercicio 3", esperadas)
+
+def verificar_ejercicio_4():
+    # Secuencia del enunciado: 8000/si, 6000/no, luego "listo"
+    esperadas = ["Ese equipo debe pagar: 7000", "Ese equipo debe pagar: 6000", "Total recaudado: 13000"]
+    _revisar("# Tu solución — Ejercicio 4", esperadas)
+```
+
 **Ejercicio 1 — Cuenta de Instagram del CEE**
 
 La cuenta de Instagram del Centro de Estudiantes publica un mensaje de bienvenida cada vez que llega alguien nuevo a seguirla. Casi siempre usan el mismo emoji de fiesta, pero en fechas especiales —el aniversario del liceo, un campeonato ganado— quieren poder cambiar el emoji sin tocar el resto del mensaje.
@@ -132,6 +211,12 @@ La cuenta de Instagram del Centro de Estudiantes publica un mensaje de bienvenid
 ```
 ¡Bienvenido/a, Valentina! 🎉
 ¡Bienvenido/a, Matías! 🏆
+```
+
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 1 — puedes correrlo las veces que quieras
+verificar_ejercicio_1()
 ```
 
 - Solución:
@@ -158,6 +243,12 @@ Rayando el Sol está sonando a volumen 70
 Himno del Liceo está sonando a volumen 40
 ```
 
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 2 — puedes correrlo las veces que quieras
+verificar_ejercicio_2()
+```
+
 - Solución:
   ```python
   def reproducir_cancion(nombre_cancion, volumen=70):
@@ -179,10 +270,16 @@ El Centro de Estudiantes organiza un torneo de videojuegos para recaudar fondos 
 
 **Resultado esperado:**
 
-| | Ejemplo 1 | Ejemplo 2 |
-|---|---|---|
-| 📥 *El usuario ingresa* | `8000`, `si` | `8000`, `no` |
-| 📤 *El programa imprime* | `Debe pagar: 7000` | `Debe pagar: 8000` |
+| Ejemplo 1 | Ejemplo 2 |
+|---|---|
+| 📥 *El usuario ingresa:*<br>`8000`<br>`si` | 📥 *El usuario ingresa:*<br>`8000`<br>`no` |
+| 📤 *El programa imprime:*<br>`Debe pagar: 7000` | 📤 *El programa imprime:*<br>`Debe pagar: 8000` |
+
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 3 — cuando te pida los datos, ingresa 8000 y si (Ejemplo 1)
+verificar_ejercicio_3()
+```
 
 - Solución:
   ```python
@@ -217,6 +314,12 @@ Ese equipo debe pagar: 7000
 Ese equipo debe pagar: 6000
 ¿Precio de inscripción? (o "listo" para terminar) listo
 Total recaudado: 13000
+```
+
+**Celda de verificación:**
+```python
+# Ejecuta esto para revisar tu Ejercicio 4 — ingresa 8000, si, 6000, no y luego listo (mismo orden del enunciado)
+verificar_ejercicio_4()
 ```
 
 - Solución:
@@ -306,3 +409,5 @@ def calcula_total(cantidad, precio_unitario=1000, iva):
 - **Ejercicio 4 reutiliza la misma función del Ejercicio 3** dentro de un ciclo con centinela `"listo"` (mismo patrón que el desafío de Clase 24a), para practicar valor por omisión junto con el acumulador ya visto.
 - **Actitud elegida: Anticipación** — conecta directamente con la esencia de un valor por omisión (pensar de antemano en el caso más común de uso, para que la otra persona no tenga que especificarlo siempre).
 - **Contextos:** videojuego (Haz Ahora/Guiada), Instagram del CEE y sonido del aniversario (Ejercicios 1-2), torneo de e-sports del CEE (Ejercicios 3-4) — variedad respecto a los contextos ya usados en 24a (kiosco CEE, huerto, club deportivo, peña de la vendimia, escuela de rock).
+- **Corrección 2026-08-13 (post-aprobación) — autochequeo agregado + tabla del Ejercicio 3 reparada.** El spec original quedó sin `**Celda de configuración:**` ni `**Celda de verificación:**` por ejercicio (la política de autochequeo-siempre se fijó recién ese mismo día, después de que este Colab ya estaba aprobado). Además, la tabla "Resultado esperado" del Ejercicio 3 usaba un formato de 3 columnas no canónico (columna izquierda con 📥/📤 como etiqueta de fila) que el parser no reconoció — el Ejercicio 3 quedó sin ningún ejemplo 📥/📤 en `Clase.ipynb` (mismo tipo de bug ya visto en Clase 22, memoria `resultado-esperado-tabla-markdown-no-html`, pero con una forma de tabla distinta). Se corrigió la tabla al formato canónico de 2 columnas y se agregó el autochequeo completo a los 4 ejercicios.
+- **Primer uso del autochequeo junto con `input()` (Ejercicios 3 y 4) — sin precedente en clases anteriores.** El "Verificador por salida" re-ejecuta la celda de solución del estudiante; con `input()` eso vuelve a pedir los datos en vivo. Diego confirmó (2026-08-13) usar igual el mecanismo estándar en vez de "Chequeo de bordes por texto": el `esperadas` de cada ejercicio corresponde a la corrida con los valores del Ejemplo 1 del enunciado (Ejercicio 3: 8000/si; Ejercicio 4: 8000/si, 6000/no, "listo"), y el estudiante debe reingresar esos mismos valores al verificar. `esperadas` solo incluye las líneas de `print()`, no el texto de los prompts de `input()` — según el comportamiento de IPython/Colab (el prompt se entrega vía el mecanismo de `input_request` del kernel, no por `sys.stdout`, a diferencia del CPython interactivo plano). **Sin validar en un Colab real todavía** — verificar en vivo antes de confiar en el mecanismo en clase.

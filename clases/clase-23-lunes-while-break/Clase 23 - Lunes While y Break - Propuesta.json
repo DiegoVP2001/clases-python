@@ -1,0 +1,351 @@
+{
+  "class_number": "23",
+  "class_topic": "Lunes While y Break",
+  "folder": "clase-23-lunes-while-break",
+  "fecha": "2026-08-17",
+  "formato": "lunes estandar (ejercitacion + control + revision)",
+  "clases_foco": [
+    "N\u00b021.5 \u2014 continue y break",
+    "N\u00b022 \u2014 while"
+  ],
+  "objetivo": "Consolidar `while`, `continue` y `break` decidiendo por cuenta propia qu\u00e9 estructura pide cada situaci\u00f3n, antes del control individual de la segunda parte de la clase.",
+
+  "actitud": {
+    "nombre": "Perseverancia",
+    "proposito_md": "La perseverancia es seguir intentando algo hasta lograrlo, sin detenerte a la primera dificultad. Hoy la practicas sosteniendo un ciclo hasta que se cumpla la meta, y revisando tu programa las veces que haga falta hasta decidir bien qu\u00e9 estructura corresponde en cada situaci\u00f3n.",
+    "frase_control_md": "**En este control debemos perseverar hasta el \u00faltimo \u00edtem.** Si algo no te sale a la primera, no lo dejes: sigue intentando antes de pasar al siguiente."
+  },
+
+  "ejercitacion": {
+    "titulo": "Ejercitaci\u00f3n \u2014 While, continue y break",
+    "duracion_min": 45,
+    "modalidad_nota": "No lleva nota: lo que se eval\u00faa hoy es el Control de la segunda parte.",
+    "recordatorio_md": "\ud83d\udca1 **Dos cosas que conviene tener frescas antes de partir:**\n\n- `continue` y `break` **no son exclusivos de `for`** \u2014 funcionan igual dentro de un `while`.\n- Un `input()` puede vivir **dentro de un ciclo, dentro de un `if`, o dentro de un `if` que est\u00e1 dentro de un ciclo**. Se pide el dato en el momento en que hace falta, no siempre al principio.",
+
+    "guided_exercise": {
+      "slug": "kiosco-sopaipillas",
+      "title": "Kiosco de sopaipillas del Aniversario",
+      "statement_md": "El kiosco del Aniversario abre con 12 sopaipillas y atiende de a una persona. Quien se arrepiente y pide 0 no descuenta nada y la fila sigue; si alguien pide m\u00e1s de las que quedan, se le ofrece llevarse las \u00faltimas y, si no quiere, el kiosco cierra ah\u00ed mismo.\n\n**El programa debe:**\n- Partir con 12 sopaipillas y atender mientras queden.\n- Si alguien pide 0, avisar que la fila sigue y pasar a la siguiente persona.\n- Si alguien pide m\u00e1s de las que quedan, preguntarle si se lleva las \u00faltimas: si no acepta, cerrar el kiosco de inmediato.\n- Mostrar cu\u00e1ntas sopaipillas quedan despu\u00e9s de cada atenci\u00f3n.",
+      "solution_py": "sopaipillas = 12\nwhile sopaipillas > 0:\n    cantidad = int(input(\"\u00bfCu\u00e1ntas sopaipillas lleva? \"))\n    if cantidad == 0:\n        print(\"Sin pedido, sigue la fila.\")\n        continue\n    if cantidad > sopaipillas:\n        respuesta = input(\"No alcanzan las que pide. \u00bfLleva las que quedan? \")\n        if respuesta == \"no\":\n            print(\"Se cierra el kiosco con\", sopaipillas, \"sopaipillas.\")\n            break\n        cantidad = sopaipillas\n    sopaipillas = sopaipillas - cantidad\n    print(\"Quedan\", sopaipillas, \"sopaipillas.\")",
+      "por_que_este_guiado": "Hace visibles de una sola pasada las dos cosas del recordatorio: el `continue` y el `break` viven dentro de un `while` (no de un `for`), y el segundo `input()` se pide dentro de un `if` que est\u00e1 dentro del ciclo \u2014 solo se le pregunta a quien pidi\u00f3 de m\u00e1s.",
+      "tests": [
+        {
+          "name": "Corrida de ejemplo",
+          "stdin": ["4", "0", "5", "6", "si"],
+          "stdout": "Quedan 8 sopaipillas.\nSin pedido, sigue la fila.\nQuedan 3 sopaipillas.\nQuedan 0 sopaipillas.",
+          "hidden": false
+        },
+        {
+          "name": "Alguien no acepta llevar las \u00faltimas",
+          "stdin": ["10", "5", "no"],
+          "stdout": "Quedan 2 sopaipillas.\nSe cierra el kiosco con 2 sopaipillas.",
+          "hidden": true
+        }
+      ]
+    },
+
+    "exercises": [
+      {
+        "slug": "impresora-sala-profesores",
+        "title": "Impresora de la sala de profesores",
+        "hermano": "\u00cdtem 1 del Control",
+        "concepto": "while con variable de control que se actualiza",
+        "statement_md": "La impresora parte el d\u00eda con 200 hojas y cada trabajo que se manda consume una cantidad distinta. Deja de aceptar trabajos cuando le quedan menos de 10 hojas.\n\n**El programa debe:**\n- Partir con 200 hojas.\n- Ir pidiendo cu\u00e1ntas hojas usa cada trabajo y descontarlas.\n- Dejar de aceptar trabajos cuando queden menos de 10 hojas.\n- Mostrar con cu\u00e1ntas hojas termin\u00f3.",
+        "solution_py": "hojas = 200\nwhile hojas >= 10:\n    trabajo = int(input(\"\u00bfCu\u00e1ntas hojas usa este trabajo? \"))\n    hojas = hojas - trabajo\nprint(\"La impresora se detuvo con\", hojas, \"hojas.\")",
+        "tests": [
+          {
+            "name": "Tres trabajos",
+            "stdin": ["80", "60", "55"],
+            "stdout": "La impresora se detuvo con 5 hojas.",
+            "hidden": false
+          },
+          {
+            "name": "Un solo trabajo enorme",
+            "stdin": ["195"],
+            "stdout": "La impresora se detuvo con 5 hojas.",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "slug": "dia-que-se-pasaron",
+        "title": "El d\u00eda que se pasaron",
+        "hermano": "\u00cdtem 2 del Control",
+        "concepto": "for + break (cortar apenas se encuentra)",
+        "statement_md": "El curso lleva la cuenta de lo que gasta cada d\u00eda en la semana de la kerm\u00e9s. Apenas aparece el primer d\u00eda que se pas\u00f3 de los \\$8.000, hay que avisarlo y dejar de revisar.\n\n**El programa debe:**\n- Revisar hasta 7 d\u00edas, pidiendo el gasto de cada uno.\n- Detenerse apenas uno supere los \\$8.000.\n- Mostrar qu\u00e9 d\u00eda fue.",
+        "solution_py": "for dia in range(1, 8):\n    gasto = int(input(\"\u00bfCu\u00e1nto se gast\u00f3 ese d\u00eda? \"))\n    if gasto > 8000:\n        print(\"El d\u00eda\", dia, \"se pas\u00f3 del presupuesto.\")\n        break",
+        "tests": [
+          {
+            "name": "Se pasan al tercer d\u00eda",
+            "stdin": ["3000", "7500", "9200"],
+            "stdout": "El d\u00eda 3 se pas\u00f3 del presupuesto.",
+            "hidden": false
+          },
+          {
+            "name": "El l\u00edmite exacto no se pasa",
+            "stdin": ["8000", "8001"],
+            "stdout": "El d\u00eda 2 se pas\u00f3 del presupuesto.",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "slug": "encuesta-del-curso",
+        "title": "Encuesta del curso",
+        "hermano": "\u00cdtem 3 del Control",
+        "concepto": "while + continue (saltar lo que no cuenta)",
+        "statement_md": "Para la encuesta del centro de alumnos hacen falta 5 respuestas v\u00e1lidas. Quien deja la hoja en blanco no cuenta, y hay que seguir preguntando hasta completar las 5.\n\n**El programa debe:**\n- Ir registrando lo que responde cada persona.\n- No contar las que llegan como `en blanco` y seguir preguntando.\n- Detenerse al juntar 5 respuestas v\u00e1lidas.\n- Mostrar cu\u00e1ntas quedaron.",
+        "solution_py": "respuestas_validas = 0\nwhile respuestas_validas < 5:\n    respuesta = input(\"\u00bfQu\u00e9 respondi\u00f3? \")\n    if respuesta == \"en blanco\":\n        continue\n    respuestas_validas = respuestas_validas + 1\nprint(\"Encuesta cerrada con\", respuestas_validas, \"respuestas v\u00e1lidas.\")",
+        "tests": [
+          {
+            "name": "Con dos hojas en blanco",
+            "stdin": ["si", "en blanco", "no", "si", "en blanco", "no", "si"],
+            "stdout": "Encuesta cerrada con 5 respuestas v\u00e1lidas.",
+            "hidden": false
+          },
+          {
+            "name": "Sin ninguna en blanco",
+            "stdin": ["si", "si", "no", "no", "si"],
+            "stdout": "Encuesta cerrada con 5 respuestas v\u00e1lidas.",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "slug": "turno-biblioteca",
+        "title": "Turno en la biblioteca",
+        "hermano": "sin hermano \u2014 sube el escal\u00f3n, combina los tres",
+        "concepto": "while + continue + break",
+        "statement_md": "La biblioteca atiende hasta 20 personas por turno. Quien llega sin credencial no se atiende y la fila sigue, y si el encargado escribe `cierre` el turno termina de inmediato.\n\n**El programa debe:**\n- Atender hasta 20 personas.\n- Saltar a quien llegue como `sin credencial`, avisando, sin gastar un cupo.\n- Terminar de inmediato si llega `cierre`.\n- Mostrar a cu\u00e1ntas personas se atendi\u00f3.",
+        "solution_py": "atendidas = 0\nwhile atendidas < 20:\n    persona = input(\"\u00bfQui\u00e9n llega? \")\n    if persona == \"sin credencial\":\n        print(\"No puede ser atendida, sigue la fila.\")\n        continue\n    if persona == \"cierre\":\n        break\n    atendidas = atendidas + 1\nprint(\"Se atendi\u00f3 a\", atendidas, \"personas.\")",
+        "tests": [
+          {
+            "name": "Se cierra el turno antes de tiempo",
+            "stdin": ["Camila", "sin credencial", "Tom\u00e1s", "cierre"],
+            "stdout": "No puede ser atendida, sigue la fila.\nSe atendi\u00f3 a 2 personas.",
+            "hidden": false
+          },
+          {
+            "name": "Dos sin credencial seguidos",
+            "stdin": ["sin credencial", "sin credencial", "Ignacio", "cierre"],
+            "stdout": "No puede ser atendida, sigue la fila.\nNo puede ser atendida, sigue la fila.\nSe atendi\u00f3 a 1 personas.",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  },
+
+  "control": {
+    "titulo": "Control \u2014 While, continue y break",
+    "duracion_min": 20,
+    "puntaje_total": 100,
+    "exigencia": 0.5,
+    "modalidad_md": "**Trabajo individual y con nota.** Escribe tu programa en la celda de cada \u00edtem y entrega este notebook por Classroom antes de que termine la clase. No se pide que uses nombres de variable en particular: se revisa lo que tu programa hace, no c\u00f3mo lo escribiste.",
+    "cierre_actitud": {
+      "pregunta_familia": 1,
+      "pregunta_md": "En este control, cuenta en qu\u00e9 \u00edtem tuviste que aplicar la perseverancia y c\u00f3mo se vio en lo que hiciste."
+    },
+    "items": [
+      {
+        "id": "1",
+        "title": "Bater\u00eda del robot repartidor",
+        "concepto": "while",
+        "pts": 25,
+        "statement_md": "El robot que reparte libros en la biblioteca parte el d\u00eda con 100 de bater\u00eda. Cada entrega le descuenta una cantidad distinta, que el encargado va anotando, y el robot deja de aceptar entregas cuando la bater\u00eda queda bajo 20.\n\n**El programa debe:**\n- Partir con la bater\u00eda en 100.\n- Ir pidiendo cu\u00e1nto consumi\u00f3 cada entrega y descontarlo.\n- Dejar de pedir entregas cuando la bater\u00eda quede bajo 20.\n- Mostrar con cu\u00e1nta bater\u00eda termin\u00f3.",
+        "que_evalua": "Repetir una cantidad de veces que no se conoce de antemano, con una variable de control que se actualiza en cada vuelta.",
+        "solution_py": "bateria = 100\nwhile bateria >= 20:\n    consumo = int(input(\"\u00bfCu\u00e1nto consumi\u00f3 esta entrega? \"))\n    bateria = bateria - consumo\nprint(\"El robot se detuvo con\", bateria, \"de bater\u00eda.\")",
+        "tests": [
+          {
+            "name": "Tres entregas",
+            "stdin": ["30", "25", "40"],
+            "stdout": "El robot se detuvo con 5 de bater\u00eda.",
+            "hidden": false
+          },
+          {
+            "name": "Queda exactamente en 0",
+            "stdin": ["50", "50"],
+            "stdout": "El robot se detuvo con 0 de bater\u00eda.",
+            "hidden": true
+          },
+          {
+            "name": "Una sola entrega grande",
+            "stdin": ["85"],
+            "stdout": "El robot se detuvo con 15 de bater\u00eda.",
+            "hidden": true
+          }
+        ],
+        "componentes": [
+          {
+            "nombre": "Lectura y conversi\u00f3n dentro del ciclo",
+            "pts": 5,
+            "completo": "`input()` dentro del `while`, convertido a n\u00famero",
+            "parcial": "3 \u2014 lo pide dentro pero sin convertir",
+            "cero": "Valor fijo escrito a mano, o el `input()` queda fuera del ciclo"
+          },
+          {
+            "nombre": "Condici\u00f3n del `while`",
+            "pts": 8,
+            "completo": "Compara la bater\u00eda contra 20 con `>=` o equivalente",
+            "parcial": "6 \u2014 usa `>` (falla solo en el l\u00edmite exacto) \u00b7 4 \u2014 compara contra otro valor pero con la l\u00f3gica bien planteada",
+            "cero": "Condici\u00f3n que no depende de la bater\u00eda"
+          },
+          {
+            "nombre": "Actualizaci\u00f3n de la variable de control",
+            "pts": 7,
+            "completo": "Descuenta el consumo ingresado en cada vuelta",
+            "parcial": "4 \u2014 descuenta un valor fijo en vez del ingresado",
+            "cero": "No actualiza (bucle infinito), o suma en vez de restar"
+          },
+          {
+            "nombre": "Salida final con el valor real",
+            "pts": 5,
+            "completo": "Imprime la bater\u00eda que qued\u00f3, despu\u00e9s del ciclo",
+            "parcial": "3 \u2014 imprime dentro del ciclo (repite el mensaje)",
+            "cero": "No imprime, o imprime un valor fijo"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "title": "El primer video que despeg\u00f3",
+        "concepto": "for + break",
+        "pts": 30,
+        "statement_md": "Una cuenta de TikTok revisa las vistas de sus \u00faltimos 8 videos, uno por uno. Apenas aparece el primero que supera las 5.000 vistas, deja de revisar y avisa cu\u00e1l fue.\n\n**El programa debe:**\n- Revisar hasta 8 videos, pidiendo las vistas de cada uno.\n- Detenerse apenas uno supere las 5.000 vistas.\n- Mostrar el n\u00famero del video que lo logr\u00f3.",
+        "que_evalua": "Cortar un recorrido apenas se encuentra lo que se buscaba, en vez de revisarlo todo.",
+        "solution_py": "for numero_video in range(1, 9):\n    vistas = int(input(\"\u00bfCu\u00e1ntas vistas tuvo este video? \"))\n    if vistas > 5000:\n        print(\"El video\", numero_video, \"super\u00f3 las 5.000 vistas.\")\n        break",
+        "tests": [
+          {
+            "name": "El tercero despega",
+            "stdin": ["1200", "3400", "6100"],
+            "stdout": "El video 3 super\u00f3 las 5.000 vistas.",
+            "hidden": false
+          },
+          {
+            "name": "El primero despega",
+            "stdin": ["7000"],
+            "stdout": "El video 1 super\u00f3 las 5.000 vistas.",
+            "hidden": true
+          },
+          {
+            "name": "5000 exactos no cuentan",
+            "stdin": ["900", "5000", "800", "5200"],
+            "stdout": "El video 4 super\u00f3 las 5.000 vistas.",
+            "hidden": true
+          }
+        ],
+        "nota_correccion": "El caso \"ninguno de los 8 supera\" no se exige \u2014 `for...else` est\u00e1 fuera del alcance del curso. No descuenta si el programa no lo cubre.",
+        "componentes": [
+          {
+            "nombre": "Recorrido de 8 videos",
+            "pts": 6,
+            "completo": "`for` con `range` que da 8 vueltas",
+            "parcial": "4 \u2014 cantidad distinta de vueltas, resto bien",
+            "cero": "Sin ciclo, o pide un solo dato"
+          },
+          {
+            "nombre": "Lectura y conversi\u00f3n de cada dato",
+            "pts": 4,
+            "completo": "`input()` dentro del ciclo, convertido a n\u00famero",
+            "parcial": "2 \u2014 sin convertir",
+            "cero": "Fuera del ciclo o valor fijo"
+          },
+          {
+            "nombre": "Condici\u00f3n de detecci\u00f3n",
+            "pts": 8,
+            "completo": "Compara contra 5000 con `>`",
+            "parcial": "6 \u2014 usa `>=` (el caso oculto de 5000 exactos lo detecta) \u00b7 4 \u2014 otro umbral, l\u00f3gica bien planteada",
+            "cero": "Condici\u00f3n que no depende de las vistas"
+          },
+          {
+            "nombre": "Corte efectivo con `break`",
+            "pts": 8,
+            "completo": "Corta apenas encuentra el primero",
+            "parcial": "4 \u2014 corta pero despu\u00e9s de imprimir de m\u00e1s, o usa una bandera que igual detiene el recorrido",
+            "cero": "Sigue revisando los 8 (reporta el \u00faltimo, no el primero)"
+          },
+          {
+            "nombre": "Mensaje identifica cu\u00e1l fue",
+            "pts": 4,
+            "completo": "Imprime el n\u00famero del video correcto",
+            "parcial": "2 \u2014 imprime las vistas en vez del n\u00famero",
+            "cero": "No distingue cu\u00e1l fue"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "title": "M\u00e1quina de reciclaje",
+        "concepto": "while + continue",
+        "pts": 45,
+        "statement_md": "La m\u00e1quina de reciclaje del supermercado suma 5 puntos por cada botella y entrega el vale al llegar a 20 puntos. Si le meten algo que no es botella, lo devuelve, no suma nada y queda esperando lo siguiente.\n\n**El programa debe:**\n- Ir pidiendo qu\u00e9 se ingres\u00f3 a la m\u00e1quina (`botella` u otra cosa).\n- Sumar 5 puntos solo por las botellas.\n- Dejar de pedir al llegar a los 20 puntos y mostrar el total.",
+        "que_evalua": "Combinar un ciclo que se repite hasta cumplir una meta con el salto de los casos que no aportan.",
+        "solution_py": "puntos = 0\nwhile puntos < 20:\n    objeto = input(\"\u00bfQu\u00e9 ingresaste a la m\u00e1quina? \")\n    if objeto != \"botella\":\n        continue\n    puntos = puntos + 5\nprint(\"Vale entregado con\", puntos, \"puntos.\")",
+        "tests": [
+          {
+            "name": "Con una lata entremedio",
+            "stdin": ["botella", "lata", "botella", "botella", "botella"],
+            "stdout": "Vale entregado con 20 puntos.",
+            "hidden": false
+          },
+          {
+            "name": "Solo botellas",
+            "stdin": ["botella", "botella", "botella", "botella"],
+            "stdout": "Vale entregado con 20 puntos.",
+            "hidden": true
+          },
+          {
+            "name": "Empieza con dos objetos inv\u00e1lidos",
+            "stdin": ["caja", "caja", "botella", "botella", "botella", "botella"],
+            "stdout": "Vale entregado con 20 puntos.",
+            "hidden": true
+          }
+        ],
+        "componentes": [
+          {
+            "nombre": "Estructura del ciclo hasta la meta",
+            "pts": 10,
+            "completo": "`while` cuya condici\u00f3n depende de los puntos acumulados",
+            "parcial": "7 \u2014 usa `<=` u otro umbral, l\u00f3gica bien planteada \u00b7 5 \u2014 `while True` con un corte equivalente que s\u00ed funciona",
+            "cero": "Cantidad fija de vueltas (`for`), o condici\u00f3n que no depende de los puntos"
+          },
+          {
+            "nombre": "Lectura dentro del ciclo",
+            "pts": 5,
+            "completo": "`input()` dentro del `while`",
+            "parcial": "3 \u2014 lo pide una sola vez antes del ciclo pero el resto funciona",
+            "cero": "No pide el dato"
+          },
+          {
+            "nombre": "Condici\u00f3n del caso a descartar",
+            "pts": 8,
+            "completo": "Compara contra `\"botella\"` correctamente",
+            "parcial": "5 \u2014 compara contra un booleano o un texto distinto pero apunta bien",
+            "cero": "Condici\u00f3n que no depende de lo ingresado"
+          },
+          {
+            "nombre": "Salto efectivo (no suma y sigue)",
+            "pts": 12,
+            "completo": "Lo que no es botella no suma puntos y el ciclo contin\u00faa. **Resolverlo con `if/else` en vez de `continue` vale el puntaje completo** \u2014 es un equivalente leg\u00edtimo y aqu\u00ed se califica el comportamiento, no la forma",
+            "parcial": "6 \u2014 a medias: no suma pero rompe el ciclo (`break`), o suma igual pero avisa",
+            "cero": "Suma puntos por cualquier cosa"
+          },
+          {
+            "nombre": "Acumulaci\u00f3n de los v\u00e1lidos",
+            "pts": 6,
+            "completo": "Suma 5 por botella",
+            "parcial": "3 \u2014 suma otro valor de forma consistente",
+            "cero": "No acumula"
+          },
+          {
+            "nombre": "Mensaje final",
+            "pts": 4,
+            "completo": "Imprime el total despu\u00e9s del ciclo",
+            "parcial": "2 \u2014 lo imprime dentro del ciclo",
+            "cero": "No imprime el total"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -76,6 +76,80 @@ def bloque_ejemplo(test: dict) -> str:
     )
 
 
+# ── Verificador automático (autochequeo) ──────────────────────────────────────
+# Mismo mecanismo canónico que usa generar-colab-clase para la Práctica
+# Independiente (ver "Verificador por salida" en su SKILL.md) — se re-ejecuta la
+# celda de solución del estudiante y se compara lo que imprime, línea por línea,
+# contra el resultado esperado. No se aplica al ejercicio guiado (se resuelve en
+# conjunto en clase), igual que en Clase.ipynb la Guiada tampoco lo lleva.
+
+VERIFICADOR_BASE = '''#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+import io, re, contextlib, unicodedata
+from IPython import get_ipython
+
+def _fuente_solucion(marca):
+    for fuente in reversed(get_ipython().user_ns.get("In", [])):
+        if fuente.strip().startswith(marca):
+            return fuente
+    return None
+
+def _normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto.lower())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", texto).strip()
+
+def _revisar(marca, esperadas):
+    fuente = _fuente_solucion(marca)
+    if fuente is None:
+        print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
+        print("   su primera línea:", marca)
+        return
+    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+        print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
+        return
+    salida = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(salida):
+            exec(compile(fuente, "<tu solución>", "exec"), {"__name__": "__main__"})
+    except Exception as error:
+        print("❌ Tu programa se detuvo con un error:", type(error).__name__, "-", error)
+        return
+    obtenidas = [l.rstrip() for l in salida.getvalue().splitlines() if l.strip()]
+    correctas, primer_error = 0, None
+    for i, esperada in enumerate(esperadas):
+        obtenida = obtenidas[i] if i < len(obtenidas) else ""
+        if _normalizar(obtenida) == _normalizar(esperada):
+            correctas += 1
+        elif primer_error is None:
+            primer_error = (i + 1, esperada, obtenida)
+    print("Líneas correctas:", correctas, "de", len(esperadas))
+    if primer_error is None and len(obtenidas) == len(esperadas):
+        print("✅ ¡Perfecto! Tu programa imprime exactamente lo que se pedía.")
+        return
+    if len(obtenidas) > len(esperadas):
+        print("⚠️ Tu programa imprimió", len(obtenidas) - len(esperadas), "línea(s) de más.")
+    if primer_error:
+        numero, esperada, obtenida = primer_error
+        print("❌ La primera diferencia está en la línea", numero)
+        print("   Se esperaba:", esperada)
+        print("   Tu programa dio:", obtenida if obtenida else "(nada)")
+'''
+
+
+def _def_verificador(numero: int, test: dict) -> str:
+    """Genera verificar_ejercicio_N() a partir del caso de prueba visible."""
+    esperadas = test["stdout"].split("\n")
+    cuerpo = ",\n        ".join(repr(linea) for linea in esperadas)
+    lineas = [f"def verificar_ejercicio_{numero}():"]
+    if test["stdin"]:
+        pista = "Para revisar, ingresa los mismos datos del ejemplo: " + ", ".join(test["stdin"])
+        lineas.append(f"    print({pista!r})")
+    lineas.append(f"    esperadas = [\n        {cuerpo},\n    ]")
+    lineas.append(f'    _revisar("# Tu solución — Ejercicio {numero}", esperadas)')
+    return "\n".join(lineas)
+
+
 # ── Notebook 1: Ejercitación ──────────────────────────────────────────────────
 
 def build_ejercitacion(data: dict) -> dict:
@@ -98,17 +172,30 @@ def build_ejercitacion(data: dict) -> dict:
         md_cell("---\n\n## 🤝 Ejercicio guiado — lo resolvemos juntos"),
         md_cell(f"### {ej['guided_exercise']['title']}\n\n{ej['guided_exercise']['statement_md']}"),
         code_cell("# Tu programa"),
-        md_cell("---\n\n## 🎯 Serie de ejercicios\n\nEscribe cada programa en su celda."),
+        md_cell(
+            "---\n\n## 🎯 Serie de ejercicios\n\n"
+            "Escribe cada programa en su celda, sin borrar la primera línea "
+            "(`# Tu solución — Ejercicio N`): el verificador la usa para encontrar tu código. "
+            "Ejecuta la celda de verificación después de cada uno para autorrevisarte antes de "
+            "mirar las soluciones."
+        ),
     ]
 
-    for numero, ex in enumerate(ej["exercises"], start=1):
-        visible = next((t for t in ex["tests"] if not t["hidden"]), ex["tests"][0])
+    visibles = [
+        next((t for t in ex["tests"] if not t["hidden"]), ex["tests"][0])
+        for ex in ej["exercises"]
+    ]
+    defs = "\n\n".join(_def_verificador(n, v) for n, v in enumerate(visibles, start=1))
+    cells.append(code_cell(VERIFICADOR_BASE.rstrip("\n") + "\n\n" + defs))
+
+    for numero, (ex, visible) in enumerate(zip(ej["exercises"], visibles), start=1):
         cells.append(md_cell(
             f"### Ejercicio {numero} — {ex['title']}\n\n"
             f"{ex['statement_md']}\n\n"
             f"**Resultado esperado:**\n\n{bloque_ejemplo(visible)}"
         ))
-        cells.append(code_cell(f"# Tu solución del Ejercicio {numero}"))
+        cells.append(code_cell(f"# Tu solución — Ejercicio {numero}"))
+        cells.append(code_cell(f"verificar_ejercicio_{numero}()"))
 
     # Sección final de soluciones colapsadas (excepción a la Restricción 5 del CLAUDE.md,
     # exclusiva del Colab de Ejercitación de los lunes estándar).
