@@ -1,0 +1,1414 @@
+\documentclass[12pt,letterpaper]{article}
+
+% =========================================
+% PAQUETES
+% =========================================
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=2cm, right=2cm, top=2.5cm, bottom=2.5cm, paperwidth=21.59cm, paperheight=35.56cm]{geometry}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta, angles, quotes, babel}
+
+% =========================================
+% CONFIGURACIONES
+% =========================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14.5pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Colores
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{grisclaro}{RGB}{240,240,240}
+\definecolor{verdealerta}{RGB}{0,128,0}
+\definecolor{rojoalerta}{RGB}{180,0,0}
+
+% Formato de secciones
+\titleformat{\section}{\Large\bfseries\color{azuloscuro}}{}{0em}{}[\vspace{-0.3em}\rule{\textwidth}{0.8pt}]
+\titleformat{\subsection}{\large\bfseries\color{azuloscuro}}{}{0em}{}
+\titleformat{\subsubsection}[runin]{\normalsize\bfseries}{}{0em}{}[.\quad]
+
+\decimalpoint
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+\providecommand{\sen}{\operatorname{sen}}
+\providecommand{\tg}{\operatorname{tg}}
+\mathcode`,="013B
+
+% tcolorbox estilos
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{formulabox}[1][]{
+  colback=grisclaro,
+  colframe=azuloscuro,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable
+}
+
+\newtcolorbox{alertabox}[1][]{
+  colback=red!5,
+  colframe=rojoalerta,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable
+}
+
+\newtcolorbox{estrategiabox}[1][]{
+  colback=green!5,
+  colframe=verdealerta,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable
+}
+
+\newtcolorbox{ejemplobox}[1][]{
+  colback=blue!3,
+  colframe=azuloscuro,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable
+}
+
+% Estilo base para gráficos trigonométricos
+\pgfplotsset{
+  trigaxis/.style={
+    width=9cm, height=5.2cm,
+    axis lines=middle,
+    xlabel=$x$, ylabel=$y$,
+    xlabel style={anchor=west},
+    ylabel style={anchor=south},
+    xtick={0,pi/2,pi,3*pi/2,2*pi},
+    xticklabels={$0$,$\frac{\pi}{2}$,$\pi$,$\frac{3\pi}{2}$,$2\pi$},
+    tick label style={font=\scriptsize},
+    scaled ticks=false,
+    samples=200,
+    enlargelimits=0.08,
+  }
+}
+
+% =========================================
+% INICIO DEL DOCUMENTO
+% =========================================
+\begin{document}
+
+% =========================================
+% PORTADA
+% =========================================
+\thispagestyle{empty}
+
+\vspace*{1cm}
+
+\begin{center}
+    \IfFileExists{logo.png}{\includegraphics[width=0.35\textwidth]{logo.png}}{\vspace{1.5cm}}
+\end{center}
+
+\vspace{1.2cm}
+
+\begin{center}
+    \Large \textbf{LICEO BICENTENARIO MARIO BERTERO CEVASCO} \\[0.3cm]
+    \large DEPARTAMENTO MATEMÁTICAS 2026 \\[0.3cm]
+    \normalsize PROFESORES: DIEGO VARGAS PALOMINOS y JUAN ARACENA PIENOVI \\[0.1cm]
+    PD: M2
+\end{center}
+
+\vspace{2cm}
+
+\begin{center}
+    \Huge \textbf{GUÍA DE APRENDIZAJE} \\[0.3cm]
+    \Huge \textbf{FUNCIONES TRIGONOMÉTRICAS} \\
+    \vspace{0.5cm}
+    \Large \textbf{Competencia Matemática 2 (M2)}
+\end{center}
+
+\vspace{2cm}
+
+\begin{center}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabular}{rl}
+        \large \textbf{Nombre:} & \rule{9cm}{0.4pt} \\
+        \large \textbf{Fecha:}  & \rule{9cm}{0.4pt}
+    \end{tabular}
+\end{center}
+
+\vfill
+
+\begin{center}
+    \rule{\textwidth}{0.4pt}
+\end{center}
+
+\newpage
+
+% =========================================
+% ENCABEZADO
+% =========================================
+\lhead{\textbf{Competencia Matemática 2 (M2)}}
+\rhead{Prof. Diego Vargas P. y Juan Aracena}
+
+% =========================================
+% ÍNDICE
+% =========================================
+\tableofcontents
+\newpage
+
+% =========================================
+% 1. CONTENIDO
+% =========================================
+\section{Contenido}
+
+% -----------------------------------------
+\begingroup
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+\subsection{1. Medidas angulares}
+
+En esta guía trabajaremos principalmente con \textbf{radianes}. Las equivalencias fundamentales son:
+\[
+180^\circ=\pi \text{ rad}
+\qquad\text{y}\qquad
+360^\circ=2\pi \text{ rad}.
+\]
+
+\begin{formulabox}[Conversión rápida: regla de tres]
+Para transformar grados a radianes:
+\[
+\frac{\alpha^\circ}{180^\circ}=\frac{x}{\pi}
+\qquad\Longrightarrow\qquad
+x=\frac{\alpha\pi}{180}.
+\]
+\end{formulabox}
+
+\begin{ejemplobox}[Ejemplo breve]
+Convertir $60^\circ$ a radianes:
+\[
+x=\frac{60\pi}{180}=\frac{\pi}{3}.
+\]
+\end{ejemplobox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c|cccccc}
+\toprule
+$\alpha$ en grados & $0^\circ$ & $30^\circ$ & $45^\circ$ & $60^\circ$ & $90^\circ$ & $180^\circ$ \\
+\midrule
+$\alpha$ en radianes & $0$ & $\frac{\pi}{6}$ & $\frac{\pi}{4}$ & $\frac{\pi}{3}$ & $\frac{\pi}{2}$ & $\pi$ \\
+$\sen\alpha$ & $0$ & $\frac12$ & $\frac{\sqrt2}{2}$ & $\frac{\sqrt3}{2}$ & $1$ & $0$ \\
+$\cos\alpha$ & $1$ & $\frac{\sqrt3}{2}$ & $\frac{\sqrt2}{2}$ & $\frac12$ & $0$ & $-1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% -----------------------------------------
+\subsection{2. Circunferencia goniométrica, signos y ángulo de referencia}
+
+En la circunferencia de radio $1$, el punto asociado a un ángulo $\alpha$ tiene coordenadas
+\[
+\boxed{P=(\cos\alpha,\sen\alpha)}.
+\]
+Por ello, $\cos\alpha$ se lee en el eje $x$ y $\sen\alpha$ en el eje $y$; ambos toman valores entre $-1$ y $1$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35]
+    \coordinate (O) at (0,0);
+    \draw[-{Latex}] (-1.25,0) -- (1.25,0) node[right]{$x$};
+    \draw[-{Latex}] (0,-1.25) -- (0,1.25) node[above]{$y$};
+    \draw[thick] (O) circle (1);
+    \coordinate (P) at (40:1);
+    \coordinate (footX) at ({cos(40)},0);
+    \coordinate (footY) at (0,{sin(40)});
+    \draw[thick,blue] (O) -- (P);
+    \draw[dashed,gray] (P) -- (footX);
+    \draw[dashed,gray] (P) -- (footY);
+    \fill (P) circle (0.7pt);
+    \node[above right] at (P) {\footnotesize $P(\cos\alpha,\sen\alpha)$};
+    \node[below] at (footX) {\footnotesize $\cos\alpha$};
+    \node[left] at (footY) {\footnotesize $\sen\alpha$};
+    \draw (0.28,0) arc (0:40:0.28);
+    \node at (0.42,0.15) {\footnotesize $\alpha$};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.25cm}
+
+\noindent
+\begin{minipage}{\textwidth}
+\textbf{Signo y ángulo de referencia.}
+Fuera del primer cuadrante: identifica primero el \textbf{signo} y luego el \textbf{ángulo de referencia} $\alpha'$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.05}
+\small
+\begin{tabular}{ccccc}
+\toprule
+Cuadrante & Intervalo & $\sen$ & $\cos$ & Ángulo de referencia \\
+\midrule
+I & $0<\alpha<\frac{\pi}{2}$ & $+$ & $+$ & $\alpha'=\alpha$ \\
+II & $\frac{\pi}{2}<\alpha<\pi$ & $+$ & $-$ & $\alpha'=\pi-\alpha$ \\
+III & $\pi<\alpha<\frac{3\pi}{2}$ & $-$ & $-$ & $\alpha'=\alpha-\pi$ \\
+IV & $\frac{3\pi}{2}<\alpha<2\pi$ & $-$ & $+$ & $\alpha'=2\pi-\alpha$ \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+\vspace{-0.15cm}
+
+\begin{ejemplobox}[Ejemplo breve]
+\small
+\[
+\frac{5\pi}{4}\in\text{III}
+\quad\Longrightarrow\quad
+\sen\left(\frac{5\pi}{4}\right)\text{ es negativo},
+\qquad
+\alpha'=\frac{5\pi}{4}-\pi=\frac{\pi}{4}.
+\]
+\vspace{-0.2cm}
+\[
+\therefore\quad
+\sen\left(\frac{5\pi}{4}\right)
+=-\sen\left(\frac{\pi}{4}\right)
+=-\frac{\sqrt2}{2}.
+\]
+\normalsize
+\end{ejemplobox}
+\end{minipage}
+\endgroup
+
+% -----------------------------------------
+\subsection{3. Gráficas base de seno y coseno}
+
+Un ciclo completo de seno y coseno se construye con cinco posiciones clave:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{c|ccccc}
+\toprule
+$x$ & $0$ & $\frac{\pi}{2}$ & $\pi$ & $\frac{3\pi}{2}$ & $2\pi$ \\
+\midrule
+$\sen x$ & $0$ & $1$ & $0$ & $-1$ & $0$ \\
+$\cos x$ & $1$ & $0$ & $-1$ & $0$ & $1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[trigaxis, width=8.1cm, height=5cm, domain=0:2*pi, ymin=-1.35, ymax=1.35, ytick={-1,0,1}]
+    \addplot[blue,thick] {sin(deg(x))};
+    \addplot[only marks,mark=*,blue] coordinates {(0,0) (pi/2,1) (pi,0) (3*pi/2,-1) (2*pi,0)};
+    \node[anchor=north west] at (rel axis cs:0.03,0.95) {\footnotesize $y=\sen x$};
+\end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\begin{axis}[trigaxis, width=8.1cm, height=5cm, domain=0:2*pi, ymin=-1.35, ymax=1.35, ytick={-1,0,1}]
+    \addplot[rojoalerta,thick] {cos(deg(x))};
+    \addplot[only marks,mark=*,rojoalerta] coordinates {(0,1) (pi/2,0) (pi,-1) (3*pi/2,0) (2*pi,1)};
+    \node[anchor=north west] at (rel axis cs:0.03,0.95) {\footnotesize $y=\cos x$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{lcc}
+\toprule
+Característica & $y=\sen x$ & $y=\cos x$ \\
+\midrule
+Valor en $x=0$ & $0$ & $1$ \\
+Máximo / mínimo & $1$ / $-1$ & $1$ / $-1$ \\
+Línea media & $y=0$ & $y=0$ \\
+Período & $2\pi$ & $2\pi$ \\
+Recorrido & $[-1,1]$ & $[-1,1]$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{formulabox}[Atajo útil]
+\[
+\sen(-x)=-\sen(x)
+\qquad\text{y}\qquad
+\cos(-x)=\cos(x).
+\]
+El seno es impar y el coseno es par.
+\end{formulabox}
+
+% -----------------------------------------
+\subsection{4. Periodicidad: períodos completos + resto}
+
+Seno y coseno son \textbf{funciones periódicas}: repiten sus valores cada $2\pi$. Por eso, podemos quitar cualquier cantidad de períodos completos de $2\pi$ y trabajar solo con el ángulo que sobra.
+
+\[
+\sen(\theta+2\pi)=\sen\theta,
+\qquad
+\cos(\theta+2\pi)=\cos\theta.
+\]
+
+\begin{estrategiabox}[Idea clave]
+Escribimos el ángulo como
+\[
+\boxed{
+\theta=
+\underbrace{2\pi q}_{\text{períodos completos}}
++
+\underbrace{r}_{\text{resto que importa}}
+}
+\]
+Entonces, los períodos completos no cambian el valor de la función:
+\[
+\boxed{\sen\theta=\sen r}
+\qquad\text{y}\qquad
+\boxed{\cos\theta=\cos r}.
+\]
+\end{estrategiabox}
+
+\begin{estrategiabox}[Torpedo mental]
+\begin{center}
+\textbf{Quitar períodos}
+$\longrightarrow$
+\textbf{ubicar el resto}
+$\longrightarrow$
+\textbf{signo}
+$\longrightarrow$
+\textbf{ángulo de referencia}
+$\longrightarrow$
+\textbf{valor}
+\end{center}
+\end{estrategiabox}
+
+\newpage
+\begin{ejemplobox}[Ejemplo breve]
+Evaluar $\sen\left(\frac{21\pi}{4}\right)$.
+
+\textbf{1. Quitamos períodos completos:}
+\[
+\frac{21\pi}{4}=4\pi+\frac{5\pi}{4}=2(2\pi)+\frac{5\pi}{4}.
+\]
+Por lo tanto,
+\[
+\sen\left(\frac{21\pi}{4}\right)=\sen\left(\frac{5\pi}{4}\right).
+\]
+
+\textbf{2. Ubicamos el resto:} $\frac{5\pi}{4}$ está en el \textbf{III cuadrante}, por lo tanto el seno es \textbf{negativo}.
+
+\textbf{3. Buscamos el ángulo de referencia:}
+\[
+\alpha'=\frac{5\pi}{4}-\pi=\frac{\pi}{4}.
+\]
+
+\textbf{4. Evaluamos:}
+\[
+\sen\left(\frac{21\pi}{4}\right)
+=-\sen\left(\frac{\pi}{4}\right)
+=-\frac{\sqrt2}{2}.
+\]
+\end{ejemplobox}
+
+\begin{alertabox}[Error frecuente: quitar $\pi$ en vez de $2\pi$]
+Las vueltas completas miden $2\pi$. Por ejemplo:
+\[
+\sen\left(\frac{5\pi}{2}\right)
+=\sen\left(\frac{5\pi}{2}-2\pi\right)
+=\sen\left(\frac{\pi}{2}\right)=1.
+\]
+Si restáramos solo $\pi$, obtendríamos
+\[
+\sen\left(\frac{5\pi}{2}-\pi\right)
+=\sen\left(\frac{3\pi}{2}\right)=-1,
+\]
+que es otro valor.
+
+\medskip
+En una función transformada, primero se calcula el \textbf{argumento completo}. Por ejemplo, si $f(x)=\sen(2x)$ y $x=\frac{5\pi}{4}$:
+\[
+2x=\frac{5\pi}{2},
+\]
+y recién ese ángulo se reduce por periodicidad.
+\end{alertabox}
+
+% -----------------------------------------
+\newpage
+\subsection{5. Evaluar una función trigonométrica}
+
+Para una función como
+\[
+f(x)=A\,\sen(Bx-C)+D
+\qquad\text{o}\qquad
+f(x)=A\cos(Bx-C)+D,
+\]
+conviene resolver siempre en el mismo orden.
+
+\begin{estrategiabox}[Procedimiento]
+\begin{enumerate}[leftmargin=*,itemsep=0.2em]
+    \item \textbf{Sustituir} el valor de $x$.
+    \item \textbf{Calcular el argumento} completo $\theta=Bx-C$.
+    \item \textbf{Quitar períodos completos} de $2\pi$, si es necesario.
+    \item \textbf{Evaluar} el seno o coseno usando cuadrante, signo y ángulo de referencia.
+    \item \textbf{Aplicar} los valores externos: $A(\text{valor trigonométrico})+D$.
+\end{enumerate}
+\end{estrategiabox}
+
+\begin{ejemplobox}[Ejemplo breve]
+Sea
+\[
+g(x)=3\sen(x+\pi)+2.
+\]
+Calcular $g\left(\frac{13\pi}{6}\right)$.
+
+\textbf{1. Sustituimos $x$:}
+\[
+g\left(\frac{13\pi}{6}\right)
+=3\sen\left(\frac{13\pi}{6}+\pi\right)+2.
+\]
+
+\textbf{2. Calculamos el argumento:}
+\[
+\frac{13\pi}{6}+\pi=\frac{19\pi}{6}.
+\]
+
+\textbf{3. Quitamos períodos completos:}
+\[
+\frac{19\pi}{6}=2\pi+\frac{7\pi}{6}
+\quad\Longrightarrow\quad
+\sen\left(\frac{19\pi}{6}\right)=\sen\left(\frac{7\pi}{6}\right).
+\]
+
+\textbf{4. Evaluamos el seno:} $\frac{7\pi}{6}$ está en III, por lo tanto el seno es negativo. Además,
+\[
+\alpha'=\frac{7\pi}{6}-\pi=\frac{\pi}{6}
+\quad\Longrightarrow\quad
+\sen\left(\frac{7\pi}{6}\right)=-\frac12.
+\]
+
+\textbf{5. Terminamos la función:}
+\[
+g\left(\frac{13\pi}{6}\right)
+=3\left(-\frac12\right)+2
+=\frac12.
+\]
+\end{ejemplobox}
+
+% -----------------------------------------
+\newpage
+\subsection{6. Transformaciones de seno y coseno}
+
+Usaremos la misma forma general en toda la guía:
+\[
+\boxed{f(x)=A\,\sen(Bx-C)+D}
+\qquad\text{o}\qquad
+\boxed{f(x)=A\cos(Bx-C)+D}.
+\]
+
+\begin{center}
+\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{p{0.25\textwidth}p{0.30\textwidth}p{0.34\textwidth}}
+\toprule
+Qué observar & Qué determina & Regla \\
+\midrule
+$A$ & Amplitud & $\text{amplitud}=|A|$ \\
+$B$ & Período & $P=\dfrac{2\pi}{|B|}$ \\
+$\dfrac{C}{B}$ & Desplazamiento horizontal & $>0$: derecha; $<0$: izquierda \\
+$D$ & Línea media & $y=D$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Además,
+\[
+\boxed{\text{máximo}=D+|A|}
+\qquad
+\boxed{\text{mínimo}=D-|A|}.
+\]
+
+Para leer el desplazamiento horizontal, factorizamos $B$:
+\[
+Bx-C=B\left(x-\frac{C}{B}\right).
+\]
+Por eso,
+\[
+\boxed{\text{desplazamiento horizontal}=\frac{C}{B}}.
+\]
+
+\begin{ejemplobox}[Ejemplo breve]
+Para
+\[
+f(x)=3\sen\left(2x-\frac{\pi}{2}\right)+1,
+\]
+tenemos:
+\[
+\text{amplitud}=3,
+\qquad
+P=\frac{2\pi}{2}=\pi,
+\qquad
+\frac{C}{B}=\frac{\pi/2}{2}=\frac{\pi}{4}\text{ a la derecha},
+\qquad
+D=1.
+\]
+Por tanto, su máximo es $4$ y su mínimo es $-2$.
+\end{ejemplobox}
+
+\begin{alertabox}[Error frecuente]
+El signo del desplazamiento horizontal se interpreta al revés del que vemos junto a $x$. Por ejemplo:
+\[
+x+\pi=x-(-\pi),
+\]
+por lo tanto el desplazamiento es $-\pi$: \textbf{$\pi$ hacia la izquierda}.
+\end{alertabox}
+
+% -----------------------------------------
+\newpage
+\subsection{7. Representar una gráfica con cinco puntos}
+
+No es necesario memorizar cinco fórmulas. Basta con encontrar el período y recordar el \textbf{patrón} de cada función.
+
+\begin{estrategiabox}[Procedimiento]
+\textbf{1.} Calcula el período:
+\[
+P=\frac{2\pi}{|B|}.
+\]
+
+\textbf{2.} Divide un período en cuatro partes iguales:
+\[
+\boxed{\frac{P}{4}}.
+\]
+Marca cinco posiciones separadas por $\frac{P}{4}$. Si hay desplazamiento horizontal, comienza desde ese punto.
+
+\textbf{3.} Sigue el patrón:
+
+\begin{center}
+\textbf{Seno:}
+\quad
+media $\rightarrow$ máximo $\rightarrow$ media $\rightarrow$ mínimo $\rightarrow$ media
+
+\medskip
+\textbf{Coseno:}
+\quad
+máximo $\rightarrow$ media $\rightarrow$ mínimo $\rightarrow$ media $\rightarrow$ máximo
+\end{center}
+\end{estrategiabox}
+
+\begin{ejemplobox}[Ejemplo breve]
+Para
+\[
+f(x)=2\sen x+1,
+\]
+identificamos $A=2$, $B=1$ y $D=1$. Por lo tanto,
+\[
+\text{línea media}=D=1,
+\]
+\[
+\text{máximo}=D+|A|=1+2=3,
+\qquad
+\text{mínimo}=D-|A|=1-2=-1.
+\]
+
+Como $B=1$, el período es
+\[
+P=\frac{2\pi}{|B|}=\frac{2\pi}{1}=2\pi.
+\]
+Dividimos el período en cuatro partes:
+\[
+\frac{P}{4}=\frac{2\pi}{4}=\frac{\pi}{2}.
+\]
+Por tanto, avanzamos en el eje $x$ de $\frac{\pi}{2}$ en $\frac{\pi}{2}$:
+\[
+0,\quad \frac{\pi}{2},\quad \pi,\quad \frac{3\pi}{2},\quad 2\pi.
+\]
+Como es seno, seguimos el patrón
+\[
+\boxed{\text{media}\rightarrow\text{máx.}\rightarrow\text{media}\rightarrow\text{mín.}\rightarrow\text{media}}
+\]
+y obtenemos los valores
+\[
+\boxed{1\rightarrow3\rightarrow1\rightarrow-1\rightarrow1}.
+\]
+\end{ejemplobox}
+
+\newpage
+% -----------------------------------------
+\subsection{8. Reconocer una función a partir de su gráfica}
+
+Cuando se entrega una gráfica, busca solo la información necesaria para distinguir las alternativas.
+
+\begin{estrategiabox}[Procedimiento]
+\begin{enumerate}[leftmargin=*,itemsep=0.15em]
+    \item \textbf{Línea media:}
+    \[
+    D=\frac{\text{máximo}+\text{mínimo}}{2}.
+    \]
+    \item \textbf{Amplitud:}
+    \[
+    |A|=\frac{\text{máximo}-\text{mínimo}}{2}.
+    \]
+    \item \textbf{Período $P$:} distancia horizontal entre dos puntos equivalentes consecutivos.
+    \item \textbf{Si es necesario:}
+    \[
+    |B|=\frac{2\pi}{P}.
+    \]
+    \item Si después de estos pasos \textbf{más de una alternativa coincide}, revisa el desplazamiento horizontal o el sentido de la curva.
+\end{enumerate}
+\end{estrategiabox}
+
+\begin{ejemplobox}[Ejemplo breve]
+Una gráfica tiene máximo $7$, mínimo $-5$ y período $4\pi$.
+Entonces,
+\[
+D=\frac{7+(-5)}{2}=1,
+\qquad
+|A|=\frac{7-(-5)}{2}=6,
+\]
+\[
+|B|=\frac{2\pi}{4\pi}=\frac12.
+\]
+Por lo tanto, buscamos una alternativa con
+\[
+D=1,
+\qquad
+|A|=6,
+\qquad
+|B|=\frac12.
+\]
+Esto identifica
+\[
+\boxed{f(x)=6\sen\left(\frac{x}{2}\right)+1}.
+\]
+\textbf{No es necesario analizar el desplazamiento:} con línea media, amplitud y período ya quedó una sola alternativa posible.
+\end{ejemplobox}
+
+\begin{formulabox}[Estrategia PAES: si hay alternativas]
+Compara primero \textbf{línea media $D$}, \textbf{amplitud $|A|$} y \textbf{período $P$}. Muchas alternativas se descartan sin reconstruir toda la función.
+\end{formulabox}
+\newpage
+% =========================================
+% 2. EJERCICIO MODELADO
+% =========================================
+\section{Ejercicios Modelados}
+
+\subsection*{Ejercicio modelado 1: evaluar una función}
+
+\textbf{Enunciado:} La altura $h(t)$, en metros, de la cabina de una rueda de la fortuna sobre el nivel del suelo, $t$ minutos después de iniciado el paseo, se modela mediante:
+\[
+h(t)=14\cos\left(\frac{\pi}{3}t-\pi\right)+17.
+\]
+¿Cuál es la altura de la cabina a los $t=2$ minutos de iniciado el paseo?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $10\text{ m}$
+    \item $7\text{ m}$
+    \item $24\text{ m}$
+    \item $31\text{ m}$
+\end{enumerate}
+
+\vspace{3cm}
+\subsection*{Ejercicio modelado 2: reconocer una función desde su gráfica}
+
+En la siguiente figura se representa la gráfica de una función trigonométrica. ¿Cuál de las siguientes funciones corresponde a esta gráfica?
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm,height=6cm,
+    axis lines=middle,
+    xlabel=$x$,ylabel=$y$,
+    xmin=-0.3,xmax=4*pi+0.35,
+    ymin=-2,ymax=6,
+    xtick={0,pi,2*pi,3*pi,4*pi},
+    xticklabels={$0$,$\pi$,$2\pi$,$3\pi$,$4\pi$},
+    ytick={-1,2,5},
+    samples=250,
+    scaled ticks=false,
+    enlargelimits=false,
+]
+    \addplot[blue,thick,domain=0:4*pi] {3*sin(deg(x/2))+2};
+    \addplot[dashed,gray,domain=0:4*pi] {2};
+    \addplot[dotted,gray] coordinates {(pi,0) (pi,5)};
+    \addplot[dotted,gray] coordinates {(3*pi,0) (3*pi,-1)};
+    \addplot[only marks,mark=*,blue] coordinates {(0,2) (pi,5) (2*pi,2) (3*pi,-1) (4*pi,2)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\Alph*)]
+    \item $f(x)=3\sen(x)+2$
+    \item $f(x)=3\sen\left(\dfrac{x}{2}\right)+2$
+    \item $f(x)=5\sen\left(\dfrac{x}{2}\right)-1$
+    \item $f(x)=3\cos\left(\dfrac{x}{2}\right)+2$
+\end{enumerate}
+
+\vspace{2cm}
+
+% =========================================
+% 3. FORMULARIO
+% =========================================
+\newpage
+\section{Formulario}
+
+\begin{formulabox}[Caja 1 --- Conversión y valores notables]
+\[
+180^\circ=\pi,
+\qquad
+360^\circ=2\pi,
+\qquad
+x=\frac{\alpha\pi}{180}.
+\]
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|cccccc}
+$\alpha$ en grados & $0^\circ$ & $30^\circ$ & $45^\circ$ & $60^\circ$ & $90^\circ$ & $180^\circ$ \\
+\midrule
+$\alpha$ en radianes & $0$ & $\frac{\pi}{6}$ & $\frac{\pi}{4}$ & $\frac{\pi}{3}$ & $\frac{\pi}{2}$ & $\pi$ \\
+$\sen\alpha$ & $0$ & $\frac12$ & $\frac{\sqrt2}{2}$ & $\frac{\sqrt3}{2}$ & $1$ & $0$ \\
+$\cos\alpha$ & $1$ & $\frac{\sqrt3}{2}$ & $\frac{\sqrt2}{2}$ & $\frac12$ & $0$ & $-1$
+\end{tabular}
+\end{center}
+\end{formulabox}
+
+\vspace{0.25cm}
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+\begin{formulabox}[Caja 2 --- Signos y referencia]
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c|cc}
+Cuad. & $\sen$ & $\cos$ \\
+\midrule
+I & $+$ & $+$ \\
+II & $+$ & $-$ \\
+III & $-$ & $-$ \\
+IV & $-$ & $+$
+\end{tabular}
+\end{center}
+\[
+\text{QII: }\alpha'=\pi-\alpha
+\]
+\[
+\text{QIII: }\alpha'=\alpha-\pi
+\]
+\[
+\text{QIV: }\alpha'=2\pi-\alpha
+\]
+\end{formulabox}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\begin{formulabox}[Caja 3 --- Periodicidad]
+\[
+\theta=
+\underbrace{2\pi q}_{\text{períodos completos}}
++
+\underbrace{r}_{\text{resto}}
+\]
+\[
+\sen\theta=\sen r,
+\qquad
+\cos\theta=\cos r.
+\]
+\vspace{0.1cm}
+\textbf{Torpedo mental:}
+
+\centering
+\small
+Quitar períodos $\rightarrow$ ubicar resto $\rightarrow$ signo $\rightarrow$ referencia $\rightarrow$ valor
+
+\normalsize
+\vspace{0.1cm}
+\[
+\sen(-x)=-\sen x,
+\qquad
+\cos(-x)=\cos x.
+\]
+\end{formulabox}
+\end{minipage}
+
+\vspace{0.25cm}
+\begin{estrategiabox}[Caja 4 --- Evaluar una función]
+\textbf{1.} Sustituir $x$
+$\rightarrow$
+\textbf{2.} calcular el argumento
+$\rightarrow$
+\textbf{3.} quitar períodos
+$\rightarrow$
+\textbf{4.} signo/referencia/valor
+$\rightarrow$
+\textbf{5.} aplicar $A$ y $D$.
+\end{estrategiabox}
+
+\vspace{0.25cm}
+\begin{formulabox}[Caja 5 --- Transformaciones]
+\[
+f(x)=A\sen(Bx-C)+D
+\qquad\text{o}\qquad
+f(x)=A\cos(Bx-C)+D.
+\]
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{ll@{\qquad}ll}
+Amplitud & $|A|$ & Línea media & $y=D$ \\
+Período & $P=\dfrac{2\pi}{|B|}$ & Máximo & $D+|A|$ \\
+Desplazamiento horizontal & $\dfrac{C}{B}$ & Mínimo & $D-|A|$
+\end{tabular}
+\end{center}
+\[
+Bx-C=B\left(x-\frac{C}{B}\right).
+\]
+\end{formulabox}
+
+\vspace{0.25cm}
+\begin{estrategiabox}[Caja 6 --- Reconocer una función desde su gráfica]
+\[
+D=\frac{\text{máximo}+\text{mínimo}}{2},
+\qquad
+|A|=\frac{\text{máximo}-\text{mínimo}}{2}.
+\]
+\[
+P=\text{distancia entre puntos equivalentes consecutivos},
+\qquad
+|B|=\frac{2\pi}{P}.
+\]
+\textbf{PAES:} compara primero línea media, amplitud y período. Revisa desplazamiento o sentido de la curva solo si más de una alternativa sigue coincidiendo.
+\end{estrategiabox}
+
+\newpage
+% =========================================
+% 4. EJERCICIOS TIPO DEMRE
+% =========================================
+\section{Ejercicios tipo DEMRE}
+
+\textbf{Ejercicio 1} \textit{(Modelo 2026, Pregunta 32)}
+
+Considera la función $f$, definida por $f(x) = 5\sen(x+\pi)$. ¿Cuál es el valor de $f\left(\dfrac{\pi}{4}\right)$?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $-\dfrac{5\sqrt2}{2}$
+    \item $-\dfrac{\sqrt2}{2}$
+    \item $\dfrac{\sqrt2}{2}$
+    \item $\dfrac{5\sqrt2}{2}$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 2} \textit{(PAES 2027, Pregunta 33)}
+
+En la siguiente figura se representa la gráfica de una función trigonométrica.
+
+% [IMAGEN PENDIENTE: "demre_2027.pdf", p.1 — gráfico de la función trigonométrica con máximo 7 y mínimo -5]
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{demre_2027_fig1_final.png}
+\end{center}
+
+¿Cuál de las siguientes funciones corresponde a esta gráfica?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $f(x) = 6\cdot\sen(x)+1$
+    \item $f(x) = 7\cdot\sen(x)+1$
+    \item $f(x) = 6\cdot\sen\left(\dfrac{x}{2}\right)+1$
+    \item $f(x) = 6\cdot\sen(x+4)+1$
+\end{enumerate}
+
+\vspace{3.5cm}
+\newpage
+
+\textbf{Ejercicio 3}
+
+Considera la función $g$, definida por $g(x) = 4\cos(x+\pi)$. ¿Cuál es el valor de $g\left(\dfrac{\pi}{3}\right)$?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $2$
+    \item $-2$
+    \item $2\sqrt3$
+    \item $-2\sqrt3$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 4}
+
+Dada la función $f(x) = \sen x$, ¿cuál es el valor de $q$, si $f\left(\dfrac{\pi}{3}\right) = \dfrac{q-3}{2\sqrt3}$?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $3$
+    \item $9$
+    \item $6$
+    \item $12$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+
+\textbf{Ejercicio 5}
+
+Se sabe que la gráfica de una función de la forma $f(x)=A\cos(Bx)+D$ cumple: el valor máximo de la función es $8$, el valor mínimo es $2$, y el período de la función es $6\pi$. ¿Cuál de las siguientes funciones corresponde a esta descripción?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $f(x) = 6\cos\left(\dfrac{x}{3}\right)+5$
+    \item $f(x) = 3\cos(x)+5$
+    \item $f(x) = 3\cos\left(\dfrac{x}{3}\right)+5$
+    \item $f(x) = 3\cos(3x)+5$
+\end{enumerate}
+
+\vspace{3.5cm}
+\newpage
+\textbf{Ejercicio 6}
+
+Josefina y Benjamín analizan la función $h(x)=3\sen(x)-2$ y calculan $h\left(\dfrac{7\pi}{6}\right)$.
+
+Josefina afirma: ``El ángulo de referencia es $\pi/6$, así que $\sen\left(\frac{7\pi}{6}\right)=\sen\left(\frac{\pi}{6}\right)=\frac12$, por lo tanto $h\left(\frac{7\pi}{6}\right)=3\left(\frac12\right)-2=-\frac12$.''
+
+Benjamín afirma: ``El ángulo $\frac{7\pi}{6}$ está en el tercer cuadrante, donde el seno es negativo, así que $\sen\left(\frac{7\pi}{6}\right)=-\frac12$, por lo tanto $h\left(\frac{7\pi}{6}\right)=3\left(-\frac12\right)-2=-\frac72$.''
+
+¿Quién tiene la razón?
+
+\begin{enumerate}[label=\Alph*)]
+    \item Solo Josefina
+    \item Solo Benjamín
+    \item Ambos, llegan al mismo resultado
+    \item Ninguno; el valor correcto es distinto a ambos
+\end{enumerate}
+
+\vspace{3.5cm}
+\newpage
+
+% =========================================
+% 5. TICKET DE SALIDA
+% =========================================
+\section{Ticket de salida}
+
+\textbf{Ejercicio 1}
+
+La temperatura promedio mensual $T$ de una ciudad, en grados Celsius, se modela mediante $T(t)=18+6\sen\left(\dfrac{\pi t}{6}\right)$, donde $t$ es el número de meses transcurridos desde enero ($t=0$). ¿Cuál es la temperatura estimada en el mes de abril?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $24°\text{C}$
+    \item $18°\text{C}$
+    \item $12°\text{C}$
+    \item $30°\text{C}$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 2}
+
+La posición vertical de una boya respecto al nivel del mar, en metros, está dada por $Y(t)=8\cos\left(\dfrac{\pi t}{4}\right)$, donde $t$ se mide en segundos y el desplazamiento positivo corresponde a estar sobre el nivel del mar. ¿Cuál es la posición de la boya en el instante $t=2$ segundos?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $8\text{ m}$ sobre el nivel del mar
+    \item Exactamente en el nivel del mar
+    \item $8\text{ m}$ bajo el nivel del mar
+    \item $4\text{ m}$ bajo el nivel del mar
+\end{enumerate}
+
+\vspace{3.5cm}
+
+
+\textbf{Ejercicio 3}
+
+La amplitud de una señal de alarma, en decibeles, después de $t$ segundos de activada, se modela por $N(t)=25\sen\left(\dfrac{\pi t}{4}\right)+60$. ¿Cuál es la amplitud de la señal a los $14$ segundos?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $35$
+    \item $85$
+    \item $60$
+    \item $10$
+\end{enumerate}
+
+\vspace{3.5cm}
+\newpage
+
+% =========================================
+% 6. SOLUCIONARIO EJERCICIO MODELADO
+% =========================================
+\section{Solucionario ejercicio modelado}
+
+\textbf{Ejercicio Modelado --- Respuesta: C)}
+
+\textbf{Paso 1 --- Sustituir $t=2$ en el argumento:}
+\[ \frac{\pi}{3}(2)-\pi = \frac{2\pi}{3}-\pi = -\frac{\pi}{3} \]
+
+\textbf{Paso 2 --- Aplicar paridad del coseno} (el coseno es una función par: $\cos(-\theta)=\cos\theta$):
+\[ \cos\left(-\frac{\pi}{3}\right) = \cos\left(\frac{\pi}{3}\right) = \frac{1}{2} \]
+
+\textbf{Paso 3 --- Reemplazar en $h(t)$:}
+\[ h(2) = 14\left(\frac{1}{2}\right)+17 = 7+17 = 24\text{ m} \]
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Habilidad DEMRE:} Modelar.
+    \item \textbf{Descarte:} B) surge de tratar el coseno como función impar ($\cos(-\pi/3)=-1/2$ en vez de $+1/2$); A) surge de olvidar sumar el desplazamiento vertical $D=17$; D) surge de confundir la pregunta con la altura máxima ($A+D=14+17=31$) en vez de evaluar en $t=2$.
+\end{itemize}
+
+\newpage
+% =========================================
+% 7. SOLUCIONARIO EJERCICIOS TIPO DEMRE
+% =========================================
+\section{Solucionario ejercicios tipo DEMRE}
+
+\textbf{Ejercicio 1 --- Respuesta: A)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $f\left(\frac{\pi}{4}\right)=5\sen\left(\frac{\pi}{4}+\pi\right)=5\sen\left(\frac{5\pi}{4}\right)$. El ángulo $\frac{5\pi}{4}$ está en el tercer cuadrante, donde el seno es negativo, con ángulo de referencia $\frac{\pi}{4}$:
+          \[ \sen\left(\frac{5\pi}{4}\right)=-\sen\left(\frac{\pi}{4}\right)=-\frac{\sqrt2}{2} \implies f\left(\frac{\pi}{4}\right)=5\cdot\left(-\frac{\sqrt2}{2}\right)=-\frac{5\sqrt2}{2} \]
+    \item \textbf{Habilidad:} Resolver.
+    \item \textbf{Descarte:} B) y C) olvidan el factor $5$; D) olvida el signo negativo del tercer cuadrante.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 2 --- Respuesta: C)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} Máximo $=7$, mínimo $=-5$. Desplazamiento vertical: $D=\frac{7+(-5)}{2}=1$. Amplitud: $A=7-1=6$. El ciclo completo se observa entre $x=0$ y $x=4\pi$, por lo tanto el período es $P=4\pi$, y
+          \[ P=\frac{2\pi}{B} \implies 4\pi=\frac{2\pi}{B} \implies B=\frac12 \]
+          Luego $f(x)=6\sen\left(\frac{x}{2}\right)+1$.
+    \item \textbf{Habilidad:} Representar.
+    \item \textbf{Descarte:} A) y B) usan $B=1$, ignorando el período real; D) confunde el desfase con la frecuencia.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 3 --- Respuesta: B)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $g\left(\frac{\pi}{3}\right)=4\cos\left(\frac{\pi}{3}+\pi\right)=4\cos\left(\frac{4\pi}{3}\right)$. El ángulo $\frac{4\pi}{3}$ está en el tercer cuadrante (coseno negativo), con ángulo de referencia $\frac{\pi}{3}$:
+          \[ \cos\left(\frac{4\pi}{3}\right)=-\cos\left(\frac{\pi}{3}\right)=-\frac12 \implies g\left(\frac{\pi}{3}\right)=4\cdot\left(-\frac12\right)=-2 \]
+    \item \textbf{Habilidad:} Resolver.
+    \item \textbf{Descarte:} A) olvida el signo negativo del tercer cuadrante; C) y D) confunden $\cos(\pi/3)=1/2$ con $\sen(\pi/3)=\sqrt3/2$.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 4 --- Respuesta: C)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $f\left(\frac{\pi}{3}\right)=\sen\left(\frac{\pi}{3}\right)=\frac{\sqrt3}{2}$. Igualando:
+          \[ \frac{\sqrt3}{2}=\frac{q-3}{2\sqrt3} \implies \frac{\sqrt3}{2}\cdot2\sqrt3=q-3 \implies 3=q-3 \implies q=6 \]
+    \item \textbf{Habilidad:} Resolver.
+    \item \textbf{Descarte:} A) se detiene en ``$q-3=3$'' sin despejar $q$; B) confunde $\sqrt3\cdot2\sqrt3=6$ en vez de $6$ (error al simplificar); D) multiplica por $4\sqrt3$ en vez de $2\sqrt3$.
+\end{itemize}
+
+\vspace{1.2cm}
+\newpage
+\textbf{Ejercicio 5 --- Respuesta: C)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $D=\frac{8+2}{2}=5$. $A=8-5=3$. Período: $6\pi=\frac{2\pi}{B}\implies B=\frac13$. Luego $f(x)=3\cos\left(\frac{x}{3}\right)+5$.
+    \item \textbf{Habilidad:} Representar.
+    \item \textbf{Descarte:} A) usa la amplitud sin dividir por $2$; B) olvida el efecto del período sobre $B$; D) invierte $B=1/3$ por $B=3$.
+\end{itemize}
+
+
+\textbf{Ejercicio 6 --- Respuesta: B)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} Josefina identifica correctamente el ángulo de referencia $\pi/6$, pero olvida el signo del cuadrante: $\frac{7\pi}{6}$ está en el tercer cuadrante ($\pi<\frac{7\pi}{6}<\frac{3\pi}{2}$), donde el seno es negativo. Benjamín identifica correctamente tanto el ángulo de referencia como el cuadrante:
+          \[ \sen\left(\frac{7\pi}{6}\right)=-\sen\left(\frac{\pi}{6}\right)=-\frac12 \implies h\left(\frac{7\pi}{6}\right)=3\left(-\frac12\right)-2=-\frac72 \]
+    \item \textbf{Habilidad:} Argumentar.
+    \item \textbf{Descarte:} A), C) y D) validan, total o parcialmente, el error de signo de Josefina.
+\end{itemize}
+
+% =========================================
+% 8. SOLUCIONARIO TICKET DE SALIDA
+% =========================================
+\section{Solucionario ticket de salida}
+
+\textbf{Ejercicio 1 --- Respuesta: A)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} Abril corresponde a $t=3$ (enero: $t=0$, febrero: $t=1$, marzo: $t=2$, abril: $t=3$):
+          \[ T(3)=18+6\sen\left(\frac{\pi\cdot3}{6}\right)=18+6\sen\left(\frac{\pi}{2}\right)=18+6(1)=24°\text{C} \]
+    \item \textbf{Habilidad:} Modelar.
+    \item \textbf{Descarte:} B) omite el término del seno; C) y D) corresponden a errores de signo o de mes.
+\end{itemize}
+
+
+
+\textbf{Ejercicio 2 --- Respuesta: B)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:}
+          \[ Y(2)=8\cos\left(\frac{\pi\cdot2}{4}\right)=8\cos\left(\frac{\pi}{2}\right)=8\cdot0=0\text{ m} \]
+    \item \textbf{Habilidad:} Modelar.
+    \item \textbf{Descarte:} A) y C) confunden $\cos(\pi/2)=0$ con $\pm1$; D) es un valor arbitrario sin sustento en el cálculo.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 3 --- Respuesta: A)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:}
+          \[ N(14)=25\sen\left(\frac{\pi\cdot14}{4}\right)+60=25\sen\left(\frac{7\pi}{2}\right)+60 \]
+          Reducimos el ángulo restando un ciclo completo ($2\pi=\frac{4\pi}{2}$):
+          \[ \frac{7\pi}{2}-\frac{4\pi}{2}=\frac{3\pi}{2} \qquad \sen\left(\frac{3\pi}{2}\right)=-1 \]
+          \[ N(14)=25(-1)+60=35 \]
+    \item \textbf{Habilidad:} Resolver.
+    \item \textbf{Descarte:} B) reduce el ángulo restando solo $\pi$ en vez de $2\pi$; C) olvida el término del seno; D) resta la amplitud dos veces por error de signo.
+\end{itemize}
+
+\newpage
+% =========================================
+% 9. EJERCICIOS PROPUESTOS
+% =========================================
+\section{Ejercicios propuestos}
+
+\textbf{Ejercicio 1}
+
+El modelo de venta planteado para un producto establece que el número de unidades vendidas depende del tiempo, representado por la variable $t$, correspondiente al número de meses transcurridos desde enero ($t=0$). La cantidad de unidades vendidas, en cientos, se modela como:
+\[ V(t) = 32{,}9 + 12{,}78\cos\left(\frac{\pi\cdot t}{8}\right) \]
+¿Cuántas unidades se espera vender en el mes de agosto ($t=8$)?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $4.462$
+    \item $2.012$
+    \item $3.290$
+    \item $3.929$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 2}
+
+La presión arterial $P$, en mm Hg, después de un tiempo $t$ en segundos, se modela por:
+\[ P(t) = 20\cdot\sen\left(\frac{\pi}{2}\cdot t\right) + 100 \]
+¿Cuál será la presión arterial a los $17$ segundos de iniciado el proceso?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $120\text{ mm Hg}$
+    \item $80\text{ mm Hg}$
+    \item $110\text{ mm Hg}$
+    \item $90\text{ mm Hg}$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 3}
+
+Dada la función $f(x)=\cos x$, ¿cuál es el valor de $q$, si $f\left(\dfrac{\pi}{6}\right)=\dfrac{q-1}{2\sqrt3}$?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $8$
+    \item $4$
+    \item $3$
+    \item $5$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 4}
+
+En la figura adjunta se muestra la gráfica de la función $y=a\sen(kx)$, donde $a$ y $k$ son constantes reales, con $k>0$.
+
+% [IMAGEN PENDIENTE: "pdv_uno_propuestos_ensayo.pdf", p.1 — gráfico de y = a sen(kx), un ciclo completo entre x=0 y x=4, máximo 2 y mínimo -2]
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{ensayo1_prop32_grafico.png}
+\end{center}
+
+¿En cuál de las siguientes opciones están correctos los valores de las constantes $a$ y $k$?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $a=1$ y $k=\pi$
+    \item $a=\frac12$ y $k=\frac{\pi}{4}$
+    \item $a=2$ y $k=2\pi$
+    \item $a=4$ y $k=\pi$
+    \item $a=2$ y $k=\dfrac{\pi}{2}$
+\end{enumerate}
+
+\vspace{2.1cm}
+
+\textbf{Ejercicio 5}
+
+En la figura adjunta se muestra la gráfica de la función $y=\sen\left(x-\dfrac{\pi}{3}\right)$.
+
+% [IMAGEN PENDIENTE: "pdv_uno_propuestos_ensayo2.pdf", p.1 — gráfico de y = sen(x - pi/3)]
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{ensayo2_prop32_grafico.png}
+\end{center}
+
+¿Cuál es el desplazamiento horizontal de esta gráfica, respecto a la gráfica de la función $y=\sen x$?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $\dfrac{\pi}{3}$ a la derecha
+    \item $\dfrac{\pi}{3}$ a la izquierda
+    \item $\dfrac{\pi}{6}$ a la derecha
+    \item $\dfrac{\pi}{6}$ a la izquierda
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 6}
+
+La posición horizontal $X(t)$ de un péndulo, en centímetros respecto a su punto de equilibrio, está dada por $X(t)=12\cos\left(\dfrac{\pi}{3}t\right)$, donde $t$ se mide en segundos y el desplazamiento positivo corresponde al desplazamiento hacia la derecha. ¿Cuál es la posición del péndulo en el instante $t=3$ segundos?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $12\text{ cm}$ a la derecha del punto de equilibrio
+    \item Exactamente en el punto de equilibrio
+    \item $12\text{ cm}$ a la izquierda del punto de equilibrio
+    \item $6\text{ cm}$ a la izquierda del punto de equilibrio
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 7}
+
+Valentina y Tomás analizan la función $g(x)=\cos\left(x+\dfrac{\pi}{4}\right)$ y discuten sobre su desplazamiento horizontal respecto a la gráfica de $y=\cos x$.
+
+Valentina afirma: ``Como hay un signo más dentro del paréntesis, la gráfica se desplaza $\frac{\pi}{4}$ unidades hacia la derecha.''
+
+Tomás afirma: ``Como hay un signo más dentro del paréntesis, la gráfica se desplaza $\frac{\pi}{4}$ unidades hacia la izquierda.''
+
+¿Quién tiene la razón?
+
+\begin{enumerate}[label=\Alph*)]
+    \item Solo Valentina
+    \item Solo Tomás
+    \item Ambos, es lo mismo decir ``izquierda'' que ``derecha'' en este caso
+    \item Ninguno; el desplazamiento es vertical, no horizontal
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 8}
+
+Un estudiante analiza el modelo de temperatura del agua de una piscina, $T(t)=4\sen\left(\dfrac{\pi t}{6}\right)+24$ (con $t$ en horas y $T$ en °C), y desarrolla los siguientes pasos:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Paso 1:} la temperatura promedio (eje de equilibrio) es $24°\text{C}$.
+    \item \textbf{Paso 2:} la temperatura máxima es $28°\text{C}$ y la mínima es $20°\text{C}$.
+    \item \textbf{Paso 3:} el período del ciclo completo es $6$ horas.
+\end{itemize}
+¿En cuál paso se encuentra el error?
+
+\begin{enumerate}[label=\Alph*)]
+    \item Paso 1
+    \item Paso 2
+    \item Paso 3
+    \item No hay error; los tres pasos son correctos
+\end{enumerate}
+
+\vspace{3.5cm}
+\newpage
+
+\textbf{Ejercicio 9}
+
+La altura del mar en un puerto, en metros, se modela según $H(t)=3\sen\left(\dfrac{\pi t}{6}\right)+5$, con $t$ en horas desde la medianoche ($t=0$). ¿En qué instante $t\in[0,6]$ el mar alcanza su altura máxima?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $t=3$
+    \item $t=6$
+    \item $t=1{,}5$
+    \item $t=12$
+\end{enumerate}
+
+\vspace{3.5cm}
+
+\textbf{Ejercicio 10}
+
+La profundidad del agua en la entrada de un puerto, en metros, se modela mediante $D(t)=2\sen\left(\dfrac{\pi t}{6}\right)+6$, donde $t$ se mide en horas desde la medianoche. ¿Cuál es la profundidad del agua a las $9$ horas?
+
+\begin{enumerate}[label=\Alph*)]
+    \item $4\text{ m}$
+    \item $8\text{ m}$
+    \item $6\text{ m}$
+    \item $2\text{ m}$
+\end{enumerate}
+
+\vspace{3.5cm}
+\newpage
+
+% =========================================
+% 10. SOLUCIONARIO EJERCICIOS PROPUESTOS
+% =========================================
+\section{Solucionario ejercicios propuestos}
+
+\textbf{Ejercicio 1 --- Respuesta: B)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $V(8)=32{,}9+12{,}78\cos\left(\frac{\pi\cdot8}{8}\right)=32{,}9+12{,}78\cos(\pi)=32{,}9-12{,}78=20{,}12$. Como $V(t)$ está en cientos: $20{,}12\cdot100=2.012$ unidades.
+    \item \textbf{Habilidad:} Modelar.
+    \item \textbf{Descarte:} C) corresponde al valor de equilibrio sin la corrección del coseno; A) y D) surgen de errores de signo al evaluar $\cos(\pi)$.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 2 --- Respuesta: A)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $P(17)=20\sen\left(\frac{17\pi}{2}\right)+100$. Reduciendo el ángulo: $\frac{17\pi}{2}=8\pi+\frac{\pi}{2}$, y $8\pi$ representa $4$ vueltas completas, por lo tanto $\sen\left(\frac{17\pi}{2}\right)=\sen\left(\frac{\pi}{2}\right)=1$. Luego $P(17)=20(1)+100=120\text{ mm Hg}$.
+    \item \textbf{Habilidad:} Modelar.
+    \item \textbf{Descarte:} B) y D) surgen de errores de signo; C) surge de omitir la reducción completa del ángulo.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 3 --- Respuesta: B)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $f\left(\frac{\pi}{6}\right)=\cos\left(\frac{\pi}{6}\right)=\frac{\sqrt3}{2}$. Igualando: $\frac{\sqrt3}{2}=\frac{q-1}{2\sqrt3} \implies \sqrt3\cdot\sqrt3=q-1 \implies 3=q-1 \implies q=4$.
+    \item \textbf{Habilidad:} Resolver.
+    \item \textbf{Descarte:} A), C) y D) surgen de errores al despejar o simplificar $\sqrt3\cdot2\sqrt3$.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 4 --- Respuesta: E)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} El valor máximo de la gráfica es $2$ y el mínimo $-2$, por lo tanto $a=2$. La función completa un ciclo entre $x=0$ y $x=4$, es decir, el período es $P=4$. Como $P=\frac{2\pi}{k}$: $4=\frac{2\pi}{k} \implies k=\frac{2\pi}{4}=\frac{\pi}{2}$.
+    \item \textbf{Habilidad:} Representar.
+    \item \textbf{Descarte:} A), C) y D) usan valores de $a$ o $k$ que no corresponden al período o amplitud observados en la gráfica.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 5 --- Respuesta: A)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} En $\sen\left(x-\frac{\pi}{3}\right)$, la variable $x$ está restada por $c=\frac{\pi}{3}>0$. Para $f(x-c)$ con $c>0$, la gráfica se desplaza hacia la \textbf{derecha} en $c$ unidades. Por lo tanto, el desplazamiento es $\frac{\pi}{3}$ a la derecha.
+    \item \textbf{Habilidad:} Representar.
+    \item \textbf{Descarte:} B) invierte el sentido del desplazamiento; C) y D) confunden la magnitud del desfase.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 6 --- Respuesta: C)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $X(3)=12\cos\left(\frac{\pi}{3}\cdot3\right)=12\cos(\pi)=12\cdot(-1)=-12\text{ cm}$. Como el desplazamiento positivo es hacia la derecha, $-12\text{ cm}$ indica $12\text{ cm}$ a la izquierda del punto de equilibrio.
+    \item \textbf{Habilidad:} Modelar.
+    \item \textbf{Descarte:} A) omite el signo negativo de $\cos(\pi)$; B) y D) surgen de evaluar mal el argumento del coseno.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 7 --- Respuesta: B)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} Para $f(x-c)$: si $c>0$ (signo menos en el argumento), desplazamiento a la derecha; si $c<0$ (signo más, $x+|c|$), desplazamiento a la izquierda. En $g(x)=\cos\left(x+\frac{\pi}{4}\right)$, $c=-\frac{\pi}{4}<0$, por lo tanto el desplazamiento es hacia la \textbf{izquierda} en $\frac{\pi}{4}$ unidades. Tomás aplica correctamente la regla.
+    \item \textbf{Habilidad:} Argumentar.
+    \item \textbf{Descarte:} A) invierte la regla del signo; C) y D) son conclusiones incorrectas sobre el tipo de desplazamiento.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 8 --- Respuesta: C)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} Pasos 1 y 2 son correctos ($D=24$, máximo $28$, mínimo $20$). El período correcto es $P=\frac{2\pi}{B}$ con $B=\frac{\pi}{6}$: $P=\frac{2\pi}{\pi/6}=12$ horas, no $6$ horas como afirma el Paso 3.
+    \item \textbf{Habilidad:} Argumentar.
+    \item \textbf{Descarte:} A) y B) corresponden a pasos correctos; D) ignora el error real del Paso 3.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 9 --- Respuesta: A)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} La altura es máxima cuando $\sen\left(\frac{\pi t}{6}\right)=1$, es decir, cuando $\frac{\pi t}{6}=\frac{\pi}{2} \implies t=3$. Este valor está dentro de $[0,6]$ y es la única solución en ese rango.
+    \item \textbf{Habilidad:} Resolver.
+    \item \textbf{Descarte:} B) y D) están fuera del ciclo relevante; C) corresponde a un cuarto de período, no al máximo.
+\end{itemize}
+
+\vspace{1.2cm}
+
+\textbf{Ejercicio 10 --- Respuesta: A)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Procedimiento:} $D(9)=2\sen\left(\frac{9\pi}{6}\right)+6=2\sen\left(\frac{3\pi}{2}\right)+6$. Como $\sen\left(\frac{3\pi}{2}\right)=-1$: $D(9)=2(-1)+6=4\text{ m}$.
+    \item \textbf{Habilidad:} Modelar.
+    \item \textbf{Descarte:} B) surge de un error de signo al evaluar $\sen(3\pi/2)$ como $+1$; C) confunde $\sen(3\pi/2)$ con $\cos(3\pi/2)=0$; D) surge de un error aritmético al combinar los términos.
+\end{itemize}
+
+\end{document}

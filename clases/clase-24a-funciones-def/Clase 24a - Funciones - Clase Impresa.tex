@@ -1,0 +1,394 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, left=2.2cm, right=2.2cm, top=3cm, bottom=2.4cm, headheight=14.5pt}
+\usepackage{fontspec}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fancyvrb}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0pt}
+\setlist[enumerate]{leftmargin=*, itemsep=1mm}
+\setlist[itemize]{leftmargin=*, itemsep=1mm}
+
+% =========================================
+% COLORES
+% =========================================
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{verdealerta}{RGB}{0,128,0}
+\definecolor{rojoalerta}{RGB}{180,0,0}
+\definecolor{cajagris}{RGB}{244,244,244}
+\definecolor{marcogris}{RGB}{170,170,170}
+
+% =========================================
+% FORMATO DE SECCIONES
+% =========================================
+\titleformat{\section}{\Large\bfseries\color{azuloscuro}}{}{0em}{}[\vspace{-0.3em}\rule{\textwidth}{0.8pt}]
+\titleformat{\subsubsection}[runin]{\normalsize\bfseries\color{azuloscuro}}{}{0em}{}[.\quad]
+
+% =========================================
+% CAJAS
+% =========================================
+\newtcolorbox{cajacodigo}{
+  colback=cajagris, colframe=marcogris, boxrule=0.4pt,
+  arc=1mm, left=3mm, right=3mm, top=1.5mm, bottom=1.5mm, breakable
+}
+\newtcolorbox{cajaescribe}[1][]{
+  colback=white, colframe=marcogris, boxrule=0.6pt,
+  arc=1mm, left=3mm, right=3mm, top=1.5mm, bottom=1.5mm, #1
+}
+\newtcolorbox{formulabox}[1][]{
+  colback=cajagris, colframe=azuloscuro, fonttitle=\bfseries,
+  title=#1, breakable, arc=1mm
+}
+\newtcolorbox{alertabox}[1][]{
+  colback=red!5, colframe=rojoalerta, fonttitle=\bfseries,
+  title=#1, breakable, arc=1mm
+}
+\newtcolorbox{estrategiabox}[1][]{
+  colback=green!5, colframe=verdealerta, fonttitle=\bfseries,
+  title=#1, breakable, arc=1mm
+}
+
+% =========================================
+% ENCABEZADO
+% =========================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\lhead{\small Programación Python --- 4to Medio}
+\rhead{\small Prof. Diego Vargas P.}
+
+\begin{document}
+
+% =========================================
+% PORTADA
+% =========================================
+\thispagestyle{empty}
+
+\vspace*{0.8cm}
+\begin{center}
+    \IfFileExists{logo.png}{\includegraphics[width=0.3\textwidth]{logo.png}}{\vspace{1.2cm}}
+\end{center}
+
+\vspace{0.8cm}
+\begin{center}
+    \Large \textbf{LICEO BICENTENARIO MARIO BERTERO CEVASCO} \\[0.25cm]
+    \large PROGRAMACIÓN PYTHON --- 4TO MEDIO 2026 \\[0.15cm]
+    \normalsize PROFESOR: DIEGO VARGAS PALOMINOS
+\end{center}
+
+\vspace{1.4cm}
+\begin{center}
+    \Huge \textbf{GUÍA DE ESTUDIO} \\[0.3cm]
+    \huge \textbf{CLASE 24A --- FUNCIONES} \\[0.2cm]
+    \Large \texttt{def} \quad $\cdot$ \quad parámetros \quad $\cdot$ \quad \texttt{return}
+\end{center}
+
+\vspace{1.4cm}
+\begin{center}
+\begin{minipage}{0.82\textwidth}
+\textbf{Objetivo de la clase:} Construir funciones propias con \texttt{def} que resuelvan una tarea puntual, con claridad.
+
+\vspace{3mm}
+\textbf{Propósito:} \textit{La claridad es explicar algo de forma que la otra persona entienda sin tener que adivinar ni preguntar de nuevo. Hoy la practicamos nombrando funciones y parámetros que dejan clara su tarea, sin que haga falta leer lo que hacen por dentro.}
+\end{minipage}
+\end{center}
+
+\vspace{1.6cm}
+\begin{center}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabular}{rl}
+        \large \textbf{Nombre:} & \rule{9cm}{0.4pt} \\
+        \large \textbf{Fecha:}  & \rule{9cm}{0.4pt}
+    \end{tabular}
+\end{center}
+
+\vfill
+\begin{center}
+    \rule{\textwidth}{0.4pt}
+\end{center}
+
+\newpage
+
+% =========================================
+% VOCABULARIO NUEVO
+% =========================================
+\section*{Vocabulario nuevo}
+
+\begin{formulabox}[Cuatro palabras que vas a necesitar hoy]
+\begin{itemize}
+  \item \textbf{Función:} un bloque de código con nombre propio que agrupa una tarea, para no repetirla completa cada vez que se necesita.
+  \item \textbf{Parámetro:} una variable que la función espera recibir. Se define al escribir \texttt{def nombre(parametro):}
+  \item \textbf{Argumento:} el valor real que le entregas a la función cuando la llamas --- ocupa el lugar del parámetro.
+  \item \texttt{return}\textbf{:} entrega un valor de vuelta a quien llamó la función y corta la ejecución ahí mismo. Sin \texttt{return}, la función devuelve \texttt{None}.
+\end{itemize}
+\end{formulabox}
+
+% =========================================
+% EJEMPLO GUIADO
+% =========================================
+\section*{El problema del kiosco}
+
+El kiosco del liceo cobra normal a todos, pero a quienes están inscritos en el Centro de Estudiantes (CEE) les da un descuento fijo de \$300 en cualquier compra. El problema es la fila del recreo: llegan decenas de estudiantes seguidos, cada uno con un producto distinto, y para cada uno hay que hacer el mismo cálculo --- preguntar si está inscrito y, si corresponde, restar los \$300 --- todo mientras la fila sigue creciendo. Con tanta repetición y apuro, ya se han cobrado de más a socios del CEE y de menos a quienes no lo son.
+
+Fíjate que el cálculo en sí no cambia entre una persona y otra: son los mismos pasos, una y otra vez, y solo cambian el precio y si la persona está inscrita. Justo ese tipo de tarea --- la misma lógica aplicada repetidamente con datos distintos --- es la que hoy resolvemos construyendo una función: la definimos una sola vez, y la usamos todas las veces que aparezca alguien en la fila.
+
+\subsubsection*{Definir con \texttt{def} y parámetros}
+\texttt{def nombre\_funcion(parametro1, parametro2):} abre el bloque; el cuerpo va indentado debajo. Los parámetros son variables que la función espera recibir.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+def descuento_socio(precio, es_socia):
+    if es_socia:
+        return precio - 1500
+    return precio
+\end{Verbatim}
+\end{cajacodigo}
+\textit{Idea clave: definir la función no la ejecuta --- solo queda "guardada la receta" hasta que alguien la llama.}
+
+\subsubsection*{Llamar la función: argumentos}
+Llamar la función es escribir su nombre con paréntesis y los valores reales (argumentos) que ocupan el lugar de los parámetros.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+precio_final = descuento_socio(8000, True)
+print("Paga:", precio_final)
+\end{Verbatim}
+\end{cajacodigo}
+\textit{Idea clave: parámetro es el nombre en la definición; argumento es el valor que se manda al llamar.}
+
+\subsubsection*{\texttt{return}: devolver un resultado}
+\texttt{return} entrega un valor de vuelta a quien llamó la función y termina la ejecución en ese punto. Sin \texttt{return}, la función devuelve \texttt{None}.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+def saluda(nombre):
+    print("Hola,", nombre)
+
+resultado = saluda("Camila")
+print(resultado)
+\end{Verbatim}
+\end{cajacodigo}
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+>> Hola, Camila
+>> None
+\end{Verbatim}
+\end{cajacodigo}
+\textit{Idea clave: \texttt{print()} muestra algo en pantalla, pero solo \texttt{return} deja el valor disponible para usarlo después.}
+
+\begin{estrategiabox}[Resolvamos el problema del kiosco --- paso a paso]
+
+\textbf{Paso 1 --- Definimos la función.}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+def calcula_cobro(precio, inscrita_cee):
+    # precio e inscrita_cee son los PARAMETROS
+    if inscrita_cee:
+        return precio - 300   # return corta la funcion aqui
+    return precio              # si no esta inscrita, se devuelve tal cual
+\end{Verbatim}
+\end{cajacodigo}
+Definir la función todavía no calcula nada --- solo queda "guardada la receta", lista para usarse con cualquier estudiante que llegue a la fila.
+
+\vspace{2mm}
+\textbf{Paso 2 --- La llamamos con argumentos reales.}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+precio_producto = int(input("¿Cuánto cuesta el producto? "))
+inscrita = input("¿Está inscrita en el CEE? (si/no) ") == "si"
+
+total = calcula_cobro(precio_producto, inscrita)
+# precio_producto e inscrita son los ARGUMENTOS: ocupan el
+# lugar de precio e inscrita_cee al llamar la funcion
+print("Debe pagar:", total)
+\end{Verbatim}
+\end{cajacodigo}
+
+\vspace{2mm}
+\textbf{Paso 3 --- Por qué \texttt{return} y no \texttt{print()} dentro de la función.}
+
+Si \texttt{calcula\_cobro} imprimiera el resultado en vez de devolverlo con \texttt{return}, la variable \texttt{total} quedaría en \texttt{None} --- tendrías el valor en pantalla, pero no disponible para seguir usándolo (como sumarlo, guardarlo o compararlo).
+
+\vspace{2mm}
+\textbf{Programa completo, armado:}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+def calcula_cobro(precio, inscrita_cee):
+    if inscrita_cee:
+        return precio - 300
+    return precio
+
+precio_producto = int(input("¿Cuánto cuesta el producto? "))
+inscrita = input("¿Está inscrita en el CEE? (si/no) ") == "si"
+
+total = calcula_cobro(precio_producto, inscrita)
+print("Debe pagar:", total)
+\end{Verbatim}
+\end{cajacodigo}
+
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{1200}\newline \texttt{si} & \textbf{Entrada:}\newline \texttt{800}\newline \texttt{no} \\
+\hline
+\textbf{Salida:}\newline \texttt{Debe pagar: 900} & \textbf{Salida:}\newline \texttt{Debe pagar: 800} \\
+\hline
+\end{tabularx}
+\end{estrategiabox}
+
+% =========================================
+% ERRORES TÍPICOS
+% =========================================
+\begin{alertabox}[Errores típicos a evitar]
+\noindent\begin{tabularx}{\linewidth}{|X|X|X|}
+\hline
+\textbf{Error} & \textbf{Qué ocurre} & \textbf{Cómo corregirlo} \\
+\hline
+Llamar la función sin paréntesis (\texttt{descuento\_socio}) & No ejecuta nada, solo referencia a la función & Agregar \texttt{()} con los argumentos \\
+\hline
+Confundir \texttt{print()} interno con \texttt{return} & La función "muestra" el resultado pero no lo entrega --- la variable que la recibe queda en \texttt{None} & Usar \texttt{return} si el valor se necesita después \\
+\hline
+Esperar que una variable definida dentro de la función exista afuera & \texttt{NameError} al intentar usarla fuera & Devolver el valor con \texttt{return} y guardarlo en una variable afuera \\
+\hline
+Escribir código después de un \texttt{return} esperando que se ejecute & Ese código nunca corre & Recordar que \texttt{return} corta la función ahí mismo \\
+\hline
+\end{tabularx}
+\end{alertabox}
+
+% =========================================
+% PRÁCTICA INDEPENDIENTE
+% =========================================
+\section*{Práctica Independiente}
+
+\textit{\textbf{Revisa en tu celular:} cuando termines cada ejercicio, revisa tu respuesta en el celular --- la solución completa está en el cuaderno Solucionario subido a Classroom.}
+
+\vspace{2mm}
+
+\subsubsection*{Ejercicio 1 --- Huerto escolar}
+El huerto del liceo organiza brigadas de cosecha y junta los tomates en cajones de 12 para venderlos en la feria del sábado. Cada brigadista anota cuántos tomates cosechó, pero armar los cajones a mano y contar los que sobran ya generó más de un error.
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Definir una función que reciba la cantidad de tomates cosechados y devuelva cuántos cajones completos de 12 se pueden armar.
+  \item Pedir la cantidad cosechada.
+  \item Llamar la función y mostrar el resultado.
+\end{itemize}
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{50} & \textbf{Entrada:}\newline \texttt{137} \\
+\hline
+\textbf{Salida:}\newline \texttt{Cajones completos: 4} & \textbf{Salida:}\newline \texttt{Cajones completos: 11} \\
+\hline
+\end{tabularx}
+\vspace{1mm}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=4.5cm]
+\end{cajaescribe}
+
+\subsubsection*{Ejercicio 2 --- Club Deportivo de Isla de Maipo}
+El Club Deportivo cobra una cuota mensual fija, y algunos socios llegan atrasados varios meses. Quieren calcular rápido cuánto deben pagar en total.
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Definir una función con dos parámetros (cuota mensual, meses atrasados) que devuelva el total a pagar.
+  \item Pedir esos dos datos.
+  \item Llamar la función y mostrar el total.
+\end{itemize}
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{5000}\newline \texttt{3} & \textbf{Entrada:}\newline \texttt{8000}\newline \texttt{2} \\
+\hline
+\textbf{Salida:}\newline \texttt{Total a pagar: 15000} & \textbf{Salida:}\newline \texttt{Total a pagar: 16000} \\
+\hline
+\end{tabularx}
+\vspace{1mm}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=4.5cm]
+\end{cajaescribe}
+
+\subsubsection*{Ejercicio 3 --- Peña de la Vendimia}
+La Peña de la Vendimia, la fiesta típica de Isla de Maipo, cobra entrada general en la puerta, pero los niños menores de 12 años entran liberados y las personas de 65 años o más pagan la mitad. El organizador anota mal los cobros cuando hay mucha gente esperando y quiere automatizarlo.
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Definir una función que reciba la edad de la persona y el precio general, y devuelva cuánto debe pagar.
+  \item Aplicar las tres categorías: menores de 12 (liberado), 65 o más (mitad de precio), el resto (precio general).
+  \item Pedir la edad de un asistente y el precio general, llamar la función, y mostrar cuánto debe pagar.
+\end{itemize}
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{8}\newline \texttt{5000} & \textbf{Entrada:}\newline \texttt{70}\newline \texttt{5000} \\
+\hline
+\textbf{Salida:}\newline \texttt{Debe pagar: 0} & \textbf{Salida:}\newline \texttt{Debe pagar: 2500} \\
+\hline
+\end{tabularx}
+\vspace{1mm}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=4.5cm]
+\end{cajaescribe}
+
+\subsubsection*{Ejercicio 4 --- Desafío: Escuela de Rock}
+\textit{(opcional)}
+
+La profesora de la Escuela de Rock de la comuna lleva el registro de horas de práctica de cada estudiante y necesita saber, para cualquiera de ellos, cuántas horas le faltan para llegar a las 20 horas mínimas del semestre. Como revisa a varios estudiantes seguidos antes de cada clase, quiere repetir el cálculo tantas veces como estudiantes tenga enfrente, sin cerrar el programa entre uno y otro.
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Definir una función que reciba las horas que un estudiante ya practicó y devuelva cuántas horas le faltan para llegar a 20 (nunca un número negativo).
+  \item Repetir el cálculo para distintos estudiantes hasta que la profesora escriba \texttt{"listo"} en vez de un nombre.
+  \item Para cada estudiante, pedir su nombre y sus horas practicadas, llamar la función, y mostrar cuántas horas le faltan.
+\end{itemize}
+\vspace{1mm}\textbf{El programa imprime:}
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+¿Nombre del estudiante? (o "listo" para terminar) Fernanda
+¿Cuántas horas practicó? 14
+A Fernanda le faltan 6 horas.
+¿Nombre del estudiante? (o "listo" para terminar) Benjamín
+¿Cuántas horas practicó? 22
+A Benjamín le faltan 0 horas.
+¿Nombre del estudiante? (o "listo" para terminar) listo
+\end{Verbatim}
+\end{cajacodigo}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=6.0cm]
+\end{cajaescribe}
+
+\vspace{1cm}
+\begin{center}
+\rule{0.6\textwidth}{0.4pt}
+
+\vspace{4mm}
+\textit{Vas bien. Cada función que aprendes a construir es una herramienta más que te queda para siempre --- sigue así.}
+\end{center}
+
+\end{document}

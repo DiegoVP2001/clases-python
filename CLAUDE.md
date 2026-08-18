@@ -69,6 +69,35 @@ El texto del mensaje de `/compact` definido arriba es canónico — los SKILL.md
 - **Etapa 4**: activa `generar-colab-ejercicios`.
 - **Etapa 5**: activa `generar-ppt-clase`.
 - **Etapa 6 (opcional)**: si Diego confirma que quiere el reel, activa `generar-reel-clase`. Siempre ofrecer después del PPT aprobado.
+<!-- why: se agregó el 2026-08-17 al aprobar generar-clase-impresa como skill nueva;
+     Diego pidió explícitamente que quedara "considerado" en el workflow, pero a
+     diferencia del Reel no se genera para toda clase — solo surge cuando un
+     estudiante puntual lo necesita
+     evita: que se ofrezca/genere este PDF automáticamente para cada clase nueva
+     ej: ✅ activarla cuando Diego menciona que un estudiante no tiene computador
+         ❌ ofrecerla por default al cerrar el PPT, como se hace con el Reel -->
+- **Versión impresa (opcional, on-demand — no es una etapa numerada del flujo maestro)**: si un estudiante necesita estudiar sin computador, activa `generar-clase-impresa`. A diferencia del Reel, no se ofrece automáticamente al cerrar el PPT — se activa solo cuando surge la necesidad puntual. Ver "Workflow opcional: versión impresa de una clase" más abajo.
+
+<!-- why: la v1 (transcripción literal del Clase.ipynb a PDF) fue generada, compilada
+     y rechazada por Diego el 2026-08-17 — su veredicto fue que una copia textual no
+     sirve como material de estudio. El rediseño aprobado ese mismo día sobre Clase
+     24a (ejemplo guiado fusionado + Independiente, sin Ticket de Salida/Cierre) es
+     el que documenta esta sección
+     evita: que otra sesión repita el enfoque de transcripción literal ya rechazado,
+     o que trate este PDF como un artefacto obligatorio de toda clase
+     ej: ✅ redactar un ejemplo guiado narrado propio de la clase, activado solo cuando
+         hace falta  ❌ transcribir el Clase.ipynb sección por sección para cada clase -->
+## Workflow opcional: versión impresa de una clase (Clase Impresa)
+
+Workflow paralelo al flujo maestro, no una etapa más — se activa on-demand cuando un estudiante necesita estudiar una clase sin acceso a computador. Diego lo pedirá con frases como "genera la versión impresa de la clase X", "necesito un PDF para que estudie en la casa", o al mencionar que un estudiante en particular no tiene computador.
+
+**Requisito previo:** `Clase NN - Tema - Spec.md` aprobado.
+
+**Qué produce:** `Clase NN - Tema - Clase Impresa.tex`/`.pdf` — NO es una transcripción literal del Colab. Es un ejemplo guiado narrado y muy comentado que fusiona el ICN con la Práctica Guiada, seguido de la Práctica Independiente con espacio para escribir a mano, y cierra siempre con un mensaje motivacional corto y cercano. Nunca incluye Ticket de Salida ni el Cierre reflexivo del Colab (ambos son exclusivos del aula).
+
+Activa la skill `generar-clase-impresa` — ahí está el sistema de diseño completo (motor LaTeX/tectonic confirmado, cajas de color, reglas de contenido). `clases/clase-24a-funciones-def/Clase 24a - Funciones - Clase Impresa.tex` es la plantilla de referencia (primer caso aprobado, 2026-08-17, tras rechazar una v1 que transcribía el Colab literalmente).
+
+**Privacidad:** igual que el apoyo individual (ver memoria `feedback_apoyo_individual_anonimo`), el documento nunca nombra al estudiante ni su situación — Nombre/Fecha quedan en blanco en la portada.
 
 ## Workflow independiente: ayudantías y práctica autónoma
 
@@ -192,6 +221,11 @@ Por ejemplo, si Diego dice "clase 9 (if-else)", asume que ya se vieron: introduc
 
 Cada clase vive en su propia carpeta dentro de `clases/`. La estructura obligatoria es:
 
+<!-- why: "Clase Impresa" es un Tipo nuevo, aprobado 2026-08-17 junto con la skill
+     generar-clase-impresa; necesita constar acá para que otras sesiones nombren
+     el archivo consistente
+     evita: nombres de archivo inventados o inconsistentes para este artefacto
+     ej: ✅ Clase NN - Tema - Clase Impresa.pdf  ❌ Clase NN Impresa.pdf -->
 ```
 clases/
 └── clase-NN-tema-breve/
@@ -203,6 +237,7 @@ clases/
     ├── Clase NN - Tema - Presentación.pptx        # PPT de la clase
     ├── Clase NN - Tema - Ticket de Salida.pptx    # PPT aparte con las preguntas de alternativas del TdS (mismo diseño, nunca se sube antes de dictar la clase)
     ├── Clase NN - Tema - Reel.mp4                 # Reel de contenido vertical 9:16 (opcional)
+    ├── Clase NN - Tema - Clase Impresa.tex/.pdf   # Versión impresa para estudiar sin computador (opcional, on-demand — skill generar-clase-impresa)
     ├── Clase NN - Tema - Historial.md             # Registro de iteraciones y feedback de Diego
     └── Clase NN - Tema - Ejercicios propuesta.md  # Fuente de verdad del Ejercicios.ipynb (interna)
 ```
@@ -211,7 +246,7 @@ Reglas de nombrado:
 - **Carpeta:** `clase-NN-tema-breve` en kebab-case (clase-03-variables, clase-09-if-else, clase-13-ciclo-for).
   `NN` puede incluir sufijo de letra (8a, 8b, 13, 22).
 - **Archivos:** prefijo `Clase NN - Tema - [Tipo].ext`
-  - `Tipo` es uno de: `Spec`, `Clase`, `Solucionario`, `Ticket de Salida Respuestas`, `Ejercicios`, `Presentación`, `Ticket de Salida`, `Reel`, `Historial`, `Ejercicios propuesta`
+  - `Tipo` es uno de: `Spec`, `Clase`, `Solucionario`, `Ticket de Salida Respuestas`, `Ejercicios`, `Presentación`, `Ticket de Salida`, `Reel`, `Clase Impresa`, `Historial`, `Ejercicios propuesta`
   - `Tema` es el nombre legible del contenido (ej: `Operadores Lógicos`, `Condicionales if-else`)
   - Usa tildes y mayúsculas en el nombre: `Operadores Lógicos`, no `operadores-logicos`
   - **`Solucionario.ipynb` se construye en dos etapas, sin ser un gate aparte.** `generar-colab-clase` lo crea junto con `Clase.ipynb` (Ticket de Salida + soluciones de Práctica Independiente). `generar-colab-ejercicios` lo **actualiza** (no lo recrea) agregando las soluciones de `Ejercicios.ipynb` cuando ese gate se aprueba. Diego lo sube a Classroom recién después de dictar la clase — nunca antes, para evitar filtraciones.

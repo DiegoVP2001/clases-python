@@ -27,3 +27,19 @@
 - Spec actualizado: `**Celda de configuración:**` (preámbulo reutilizable del "Verificador por salida") + una `**Celda de verificación:**` por ejercicio (Ejercicios 1-4, incluido el desafío).
 - Ejercicios 1-3 y el desafío usan `input()`: cada `verificar_ejercicio_N()` imprime primero un aviso pidiendo reingresar los mismos datos del Ejemplo 1 (o del ejemplo único del desafío), igual que el patrón ya usado en `clase-21b-continue-break`.
 - `Clase.ipynb` y `Solucionario.ipynb` regenerados con `generar-colab-clase`, ejecutados sin errores. Probado además con las 4 soluciones de referencia (input hardcodeado en vez de `input()` real) contra sus verificadores: los 4 dieron "✅ ¡Perfecto!".
+
+## 2026-08-17 — Clase Impresa (versión PDF sin computador) — v1 rechazada, rediseño aprobado
+- **v1:** transcripción casi literal del `Clase.ipynb` completo a `.tex`/`.pdf` (7 páginas, compiló bien con tectonic, tildes/ñ correctas). Diego evaluó que una copia textual **no sirve como material de estudio** y pidió un rediseño de contenido y de sistema visual (tomando como referencia `a_tex_Guía Final Funciones Trigonométricas.tex` + `logo.png`). Quedó documentado en `Clase 24a - Funciones - Prompt Rediseño Impresa.md` para que otra sesión lo retomara.
+- **Rediseño (esta sesión), decisiones acordadas con Diego vía interview + maquetas de texto antes de escribir el `.tex`:**
+  - Haz Ahora fusionado (sin las 4 preguntas separadas) como párrafo narrativo expandido: explica el enredo concreto del descuento del kiosco y por qué el contenido de la clase (funciones) lo resuelve — a pedido explícito de Diego, con foco en que el cálculo se repite igual para cada persona de la fila.
+  - Objetivo + Propósito en la portada.
+  - Práctica Guiada fusionada con el ICN: viene después de explicar los 4 conceptos, como un `estrategiabox` verde con "Paso 1/2/3" + programa completo armado (mismo código que sería la solución de la Guiada) — implica que esta estudiante ve la solución completa de la Guiada en papel, algo que sus compañeros no ven en `Clase.ipynb` (se acordó como diferencia deliberada: ella estudia sola, sin el andamiaje de la clase en vivo).
+  - Errores típicos como `alertabox` roja.
+  - Nota agregada tras el título de "Práctica Independiente": revisar respuestas en el celular contra el Solucionario subido a Classroom.
+  - Cierre motivacional corto y cercano al final del documento (nuevo default, pedido en esta sesión) — sin nombrar a la estudiante ni su situación.
+  - Sin Ticket de Salida ni Cierre reflexivo del Colab, en ninguna forma.
+  - Arquitectura: `.tex` redactado a mano (no por script) — decisión explícita de Diego, dado que el contenido requiere criterio editorial por clase.
+- **Motor LaTeX confirmado con tectonic:** `fontspec` + `babel[spanish,es-noshorthands]` (no `inputenc`/`fontenc`, sin probar), `tcolorbox[most]`, `fancyvrb` para código, `fancyhdr`, `titlesec`, a4paper. Cajas nuevas: `formulabox` (azul, vocabulario), `alertabox` (roja, errores), `estrategiabox` (verde, ejemplo guiado) — mismo sistema de color que la guía de trigonometría.
+- **Bug encontrado y corregido:** una coma dentro del título de un `tcolorbox` (`\begin{estrategiabox}[texto, con coma]`) rompe la compilación — tcolorbox la interpreta como separador de opciones (`pgfkeys Error`). Se resolvió reemplazando la coma por "---".
+- Archivo final: `Clase 24a - Funciones - Clase Impresa.tex`/`.pdf` (7 páginas), reemplaza a la v1 con el mismo nombre.
+- **Aprobado por Diego.** Se formalizó como flujo permanente: nueva skill `generar-clase-impresa` (`.claude/skills/generar-clase-impresa/SKILL.md`) + nuevo workflow opcional/on-demand documentado en el `CLAUDE.md` raíz del proyecto (§ "Workflow opcional: versión impresa de una clase", nuevo Tipo `Clase Impresa` en "Organización de archivos"). No se genera automáticamente para cada clase — se activa solo cuando un estudiante puntual lo necesita.
