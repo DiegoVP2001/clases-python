@@ -1,0 +1,284 @@
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, left=1.6cm, right=1.6cm, top=2.2cm, bottom=2cm, headheight=14pt}
+\usepackage{fontspec}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fancyvrb}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{multicol}
+
+\setlength{\parindent}{0pt}
+\setlist[enumerate]{leftmargin=*, itemsep=0.5mm, topsep=1mm}
+\setlist[itemize]{leftmargin=*, itemsep=0.5mm, topsep=1mm}
+\setlength{\columnsep}{0.7cm}
+\setlength{\columnseprule}{0.3pt}
+
+% =========================================
+% COLORES
+% =========================================
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{cajagris}{RGB}{244,244,244}
+\definecolor{marcogris}{RGB}{170,170,170}
+
+% =========================================
+% FORMATO DE SECCIONES (regla en \linewidth, no \textwidth, por multicol)
+% =========================================
+\titleformat{\section}{\large\bfseries\color{azuloscuro}}{\thesection.}{0.4em}{}[\vspace{-0.35em}{\color{marcogris}\rule{\linewidth}{0.6pt}}]
+\titlespacing*{\section}{0pt}{2.5mm}{1mm}
+\titleformat{\subsubsection}[runin]{\small\bfseries\color{azuloscuro}}{}{0em}{}[.\quad]
+
+% =========================================
+% CAJAS
+% =========================================
+\newtcolorbox{cajacodigo}{
+  colback=cajagris, colframe=marcogris, boxrule=0.4pt,
+  arc=1mm, left=2mm, right=2mm, top=1mm, bottom=1mm, breakable
+}
+\newtcolorbox{formulabox}[1][]{
+  colback=cajagris, colframe=azuloscuro, fonttitle=\bfseries\small,
+  title=#1, breakable, arc=1mm, left=2mm, right=2mm, top=1mm, bottom=1mm
+}
+
+% =========================================
+% ENCABEZADO
+% =========================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\lhead{\footnotesize Programación Python --- 4to Medio}
+\rhead{\footnotesize Resumen: Fundamentos a Funciones}
+
+\small
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Resumen Python --- Fundamentos a Funciones}\\[0.5mm]
+\footnotesize Datos y variables $\cdot$ Operadores $\cdot$ Entrada/Salida $\cdot$ Condicionales $\cdot$ Ciclos $\cdot$ Funciones
+\end{center}
+
+\vspace{2mm}
+
+\begin{multicols}{2}
+
+% =========================================
+% 1. DATOS Y VARIABLES
+% =========================================
+\section*{1. Datos y variables}
+
+Python guarda información en \textbf{variables}: un nombre que apunta a un valor de un tipo determinado.
+
+\begin{itemize}
+  \item \texttt{int} --- números enteros (\texttt{15}).
+  \item \texttt{float} --- números decimales, con \textbf{punto}, nunca coma (\texttt{5.8}).
+  \item \texttt{str} --- texto, entre comillas (\texttt{"Ana"}).
+  \item \texttt{bool} --- \texttt{True} o \texttt{False}.
+\end{itemize}
+
+Asignación: \texttt{nombre\_variable = valor}. Nombres en \textbf{snake\_case}, significativos, sin palabras reservadas.
+
+Conversión entre tipos: \texttt{int(x)}, \texttt{float(x)}, \texttt{str(x)}.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+altura_persona = 175       # int
+promedio_notas = 5.8       # float
+nombre_estudiante = "Ana"  # str
+esta_inscrito = True       # bool
+\end{Verbatim}
+\end{cajacodigo}
+
+\begin{formulabox}[Palabras reservadas --- no usar como nombre de variable]
+\footnotesize
+\texttt{False, None, True, and, or, not, if, elif, else, for, while, def, return, import, break, continue, in}
+\end{formulabox}
+
+% =========================================
+% 2. OPERADORES
+% =========================================
+\section*{2. Operadores}
+
+\textbf{Aritméticos:} \texttt{+ \ - \ * \ / \ // \ \% \ **}\\
+\texttt{//} es división entera (descarta el resto); \texttt{\%} es el resto (módulo); \texttt{**} es potencia.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+17 // 5   >> 3
+17 % 5    >> 2
+2 ** 5    >> 32
+\end{Verbatim}
+\end{cajacodigo}
+
+\textbf{De comparación} (siempre devuelven \texttt{bool}): \texttt{== \ != \ > \ < \ >= \ <=}
+
+\textbf{Lógicos:}
+\begin{itemize}
+  \item \texttt{and} --- exige que \textbf{ambas} condiciones sean verdaderas.
+  \item \texttt{or} --- basta con que \textbf{una} sea verdadera.
+  \item \texttt{not} --- invierte el valor lógico.
+\end{itemize}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+(edad >= 12) and (edad <= 17)
+\end{Verbatim}
+\end{cajacodigo}
+
+% =========================================
+% 3. ENTRADA Y SALIDA
+% =========================================
+\section*{3. Entrada y salida}
+
+\texttt{print(valor1, valor2, ...)} imprime en pantalla, separando con \textbf{comas} --- nunca concatenar con \texttt{+} y \texttt{str()}. \texttt{sep=} cambia el separador entre valores; \texttt{end=} cambia qué se imprime al final (por defecto, salto de línea).
+
+\texttt{input("mensaje")} muestra el mensaje y devuelve \textbf{siempre texto} (\texttt{str}), aunque la persona escriba números. Para calcular con ese valor hay que convertirlo con \texttt{int()} o \texttt{float()}.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+edad = int(input("¿Cuántos años tienes? "))
+print("Tienes", edad, "años")
+>> Tienes 15 años
+\end{Verbatim}
+\end{cajacodigo}
+
+\textit{Convención de este resumen: el output de \texttt{print()} se muestra con \texttt{>>} en la línea siguiente.}
+
+% =========================================
+% 4. CONDICIONALES
+% =========================================
+\section*{4. Condicionales}
+
+\texttt{if condición:} ejecuta el bloque indentado solo si la condición es \texttt{True}. \texttt{else:} ejecuta si no se cumplió. La \textbf{indentación} (4 espacios) define qué instrucciones pertenecen a cada bloque --- no es estética.
+
+\texttt{elif condición:} agrega alternativas intermedias sin anidar --- equivale a "si no, y si se cumple esto otro".
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+if nota < 4.0:
+    print("Insuficiente")
+elif nota < 5.5:
+    print("Regular")
+else:
+    print("Buena")
+\end{Verbatim}
+\end{cajacodigo}
+
+\textbf{Anidados:} un \texttt{if}/\texttt{else} dentro de otro. Cada nivel agrega su propia indentación.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+if es_socia:
+    if compra >= 10000:
+        print("Doble descuento")
+    else:
+        print("Descuento socia")
+else:
+    print("Sin descuento")
+\end{Verbatim}
+\end{cajacodigo}
+
+% =========================================
+% 5. CICLOS
+% =========================================
+\section*{5. Ciclos}
+
+\texttt{for variable in range(...):} repite el bloque una vez por cada valor que entrega \texttt{range}. \texttt{range(inicio, fin, salto)} --- el \textbf{fin nunca se incluye}. Con un argumento, empieza en 0; con dos, el salto vale 1.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+for numero in range(2, 11, 2):
+    print(numero)
+>> 2
+>> 4
+>> 6
+>> 8
+>> 10
+\end{Verbatim}
+\end{cajacodigo}
+
+\textbf{\texttt{for} anidado:} un \texttt{for} dentro de otro (tablas, patrones) --- el interior completa todo su recorrido por cada paso del exterior.
+
+\texttt{continue} salta el resto de esa iteración y sigue con la siguiente. \texttt{break} termina el ciclo completo de inmediato.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+for numero in range(1, 8):
+    if numero == 5:
+        break
+    if numero % 2 == 0:
+        continue
+    print(numero)
+>> 1
+>> 3
+\end{Verbatim}
+\end{cajacodigo}
+
+\texttt{while condición:} repite \textbf{mientras} la condición sea \texttt{True} --- se usa cuando no se sabe de antemano cuántas repeticiones habrá. Hay que actualizar la variable de control dentro del bloque, o el ciclo nunca termina.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+suma = 0
+while suma < 100:
+    suma = suma + 10
+print("Suma final:", suma)
+>> Suma final: 100
+\end{Verbatim}
+\end{cajacodigo}
+
+\texttt{while True:} junto a un \texttt{if} + \texttt{break} interno crea un ciclo que se repite hasta que se cumple una condición decidida dentro del propio bloque.
+
+% =========================================
+% 6. FUNCIONES
+% =========================================
+\section*{6. Funciones}
+
+\texttt{def nombre\_funcion(parametro1, parametro2):} define la función; el cuerpo va indentado debajo. \textbf{Definir la función todavía no la ejecuta} --- solo queda "guardada la receta" hasta que alguien la llama.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+def calcula_total(precio, cantidad):
+    return precio * cantidad
+\end{Verbatim}
+\end{cajacodigo}
+
+\textbf{Parámetro:} variable que la función espera recibir (en la definición). \textbf{Argumento:} el valor real que se entrega al llamarla.
+
+\texttt{return valor} entrega el resultado a quien llamó la función y \textbf{corta la ejecución ahí mismo}. Sin \texttt{return}, la función devuelve \texttt{None}.
+
+\begin{formulabox}[Patrón clave]
+\footnotesize
+\texttt{resultado = funcion(argumento)} --- siempre guardar lo que la función devuelve en una variable, para poder usarlo después (imprimirlo, compararlo, sumarlo). Si la función usa \texttt{print()} en vez de \texttt{return}, esa variable queda en \texttt{None}.
+\end{formulabox}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+total = calcula_total(1500, 3)
+print("Total:", total)
+>> Total: 4500
+\end{Verbatim}
+\end{cajacodigo}
+
+\textbf{Valores por omisión:} \texttt{def funcion(parametro=valor):} vuelve ese parámetro opcional al llamar --- siempre a la derecha de los parámetros obligatorios.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\footnotesize]
+def calcula_total(precio, cantidad=1):
+    return precio * cantidad
+
+calcula_total(1500)      # cantidad = 1
+calcula_total(1500, 3)   # cantidad = 3
+\end{Verbatim}
+\end{cajacodigo}
+
+\end{multicols}
+
+\end{document}
