@@ -46,18 +46,22 @@ Con el ritmo de 3 sesiones semanales (lunes/martes/jueves — se asume que novie
 
 | N° | Tema | Sesiones estimadas |
 |---|---|---|
-| 22.5 | 🎯 Evaluación individual — Ciclos | 1 |
 | 24 | Funciones (parte 1: def, parámetros, return · parte 2: valores por omisión + aplicación) | 2 |
-| 25 | Strings — indexing y slicing | 1 |
-| 26 | Strings — métodos y f-strings | 1 |
-| 27 | Listas — creación y acceso | 1 |
-| 28 | Listas — iteración y métodos | 1 |
-| 29 | Listas + funciones — integración | 1 |
-| 29.5 | 🎯 Evaluación individual — Funciones+Strings+Listas | 1 |
-| 30–31 | Proyecto OA4 — análisis de datos | 2 (planificadas originalmente para nov) |
-| 32–35 | Proyecto OA5 — app con IA (prompting, HTML, Git+Pages, presentación) | 4 (planificadas originalmente para nov-dic) |
+| 27 | 🎯 Evaluación individual — Ciclos | 1 |
+| 28 | Strings — indexing y slicing | 1 |
+| 29 | Strings — métodos y f-strings | 1 |
+| 30 | Listas — creación y acceso | 1 |
+| 31 | Listas — iteración y métodos | 1 |
+| 32 | Listas + funciones — integración | 1 |
+| 32.5 | 🎯 Evaluación individual — Funciones+Strings+Listas | 1 |
+| 33–34 | Proyecto OA4 — análisis de datos | 2 (planificadas originalmente para nov) |
+| 35–38 | Proyecto OA5 — app con IA (prompting, HTML, Git+Vercel, presentación) | 4 (planificadas originalmente para nov-dic) |
 
-> **Renumeración 2026-08-12:** los números de esta tabla corrieron **+1** respecto a la versión original del documento, porque el lunes estándar del 17-ago pasó a ocupar el **N°23** como sesión con número entero propio (antes los lunes de ejercitación no consumían número, o lo hacían como decimal). El detalle y la convención para los lunes siguientes están en `Historial-Curricular.md`. N°22.5 no cambió.
+> **Renumeración 2026-08-12:** los números de esta tabla corrieron **+1** respecto a la versión original del documento, porque el lunes estándar del 17-ago pasó a ocupar el **N°23** como sesión con número entero propio (antes los lunes de ejercitación no consumían número, o lo hacían como decimal). El detalle y la convención para los lunes siguientes están en `Historial-Curricular.md`. N°22.5 no cambió en esta ronda.
+>
+> **Renumeración 2026-08-19-a:** corrieron **+2** más porque la semana del 24-ago suma dos sesiones con número entero propio: N°25 (Lunes estándar — Control Funciones, 24-ago) y N°26 (Simulacro — Ciclos, 25-ago). N°22.5 seguía sin cambiar en esta ronda.
+>
+> **Renumeración 2026-08-19-b:** la Evaluación de Ciclos deja de ser decimal — Diego decidió que las evaluaciones sumativas toman el siguiente entero libre, como cualquier otra sesión. Pasa de **N°22.5** a **N°27** (después del Simulacro N°26), corriendo **+1** más todo lo posterior. N°31.5 (Evaluación Funciones+Strings+Listas) queda igual, sin cambiar de criterio, salvo que Diego pida lo mismo para ella. Detalle completo en `Historial-Curricular.md`.
 
 Total mínimo de contenido nuevo + evaluaciones + proyectos: **15 sesiones** (Funciones ahora cuenta 2, no 1 — se dividió en dos partes, ver sección 4). Con 27 sesiones confirmadas disponibles hasta el 29-oct, quedan **12 sesiones** para los lunes estándar (ejercitación+control+revisión), clases de repaso/simulacro y colchón — ajustado, porque los dos proyectos que antes vivían cómodos en noviembre-diciembre ahora hay que meterlos en este mismo tramo.
 
@@ -65,8 +69,8 @@ Total mínimo de contenido nuevo + evaluaciones + proyectos: **15 sesiones** (Fu
 
 Revisando la columna OAs de `Historial-Curricular.md`, todas las clases dictadas hasta ahora citan **OA1, OA2 o OA3** (más transversales OAd/OAa). Los que nunca han aparecido son:
 
-- **OA4** — Aplicaciones y análisis mediante procesadores de análisis estadístico → vive en el Proyecto de análisis de datos (N°30–31).
-- **OA5** — Apps para dispositivos móviles → vive en el Proyecto app con IA (N°32–35). (OA6, uso responsable de TIC, viaja como transversal dentro de ese mismo proyecto — por ejemplo, una conversación breve sobre uso responsable de IA al generar código.)
+- **OA4** — Aplicaciones y análisis mediante procesadores de análisis estadístico → vive en el Proyecto de análisis de datos (N°33–34).
+- **OA5** — Apps para dispositivos móviles → vive en el Proyecto app con IA (N°35–38). (OA6, uso responsable de TIC, viaja como transversal dentro de ese mismo proyecto — por ejemplo, una conversación breve sobre uso responsable de IA al generar código.)
 
 Es decir: **los dos OAs pendientes ya tenían proyecto asignado — el problema no es que falte diseñarlos, es que el calendario que los alojaba (nov-dic) ya no existe para 4to medio.** Hay que recomprimirlos en las semanas SM41–SM44 (6 de octubre al 29 de octubre), con ambos cursos todavía juntos.
 
@@ -182,8 +186,8 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 05-oct | Lun | — | Revisión formativa de la Evaluación F+S+L |
-| 06-oct | Mar | 🚧 | N°30 — Proyecto OA4 sesión 1: **cada grupo elige su fuente de datos** — encuesta propia al curso o dataset externo real (datos.gob.cl, INE, Kaggle) —, primera exploración con `pandas` |
-| 08-oct | Jue | 🚧 | N°31 — Proyecto OA4 sesión 2: análisis completo con `pandas` + gráfico con `matplotlib` (reemplaza la idea de gráfico ASCII) + mini-presentación de hallazgos en parejas |
+| 06-oct | Mar | 🚧 | N°33 — Proyecto OA4 sesión 1: **cada grupo elige su fuente de datos** — encuesta propia al curso o dataset externo real (datos.gob.cl, INE, Kaggle) —, primera exploración con `pandas` |
+| 08-oct | Jue | 🚧 | N°34 — Proyecto OA4 sesión 2: análisis completo con `pandas` + gráfico con `matplotlib` (reemplaza la idea de gráfico ASCII) + mini-presentación de hallazgos en parejas |
 
 > **Decisión 2026-08-19 (reemplaza la pregunta abierta que tenía este documento):** OA4 usa **pandas + matplotlib** como librerías nuevas — pandas encaja literal con "procesadores de análisis estadístico" (OA4) para leer/filtrar/agrupar los datos, matplotlib para visualizarlos con un gráfico real. Dato: propio (encuesta) o externo, **a elección de cada grupo** — mismo motor de análisis para ambos casos.
 >
@@ -194,15 +198,15 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 12-oct | Lun | 🚫 | **Feriado — Encuentro de Dos Mundos.** Sin clase. Se pierde sin afectar el resto del calendario (OA5 no dependía de este día). |
-| 13-oct | Mar | 🚧 | N°32 — Proyecto OA5 sesión 1: prompting con IA, definir la app |
-| 15-oct | Jue | 🚧 | N°33 — Proyecto OA5 sesión 2: HTML generado, revisión y ajuste |
+| 13-oct | Mar | 🚧 | N°35 — Proyecto OA5 sesión 1: prompting con IA, definir la app |
+| 15-oct | Jue | 🚧 | N°36 — Proyecto OA5 sesión 2: HTML generado, revisión y ajuste |
 
 ### SM43 — reflexión, construir y publicar
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 19-oct | Lun | 💬 | **Sesión de IA responsable e impacto** — casi sin computador, discusión + lápiz y papel: sesgos de los modelos, alucinaciones (actividad "detective de alucinaciones" con respuestas reales de un chatbot), impacto ambiental/energético, impacto laboral, privacidad de lo que se le entrega a un chatbot. Reemplaza el "tiempo de estudio guiado" que tenía este día — decisión 2026-08-19, se hace justo antes de que el curso profundice en construir con IA. Le da cuerpo real al OA6 transversal, que antes solo era una mención de paso. |
-| 20-oct | Mar | 🚧 | N°34 — Proyecto OA5 sesión 3: Git + **Vercel** (reemplaza GitHub Pages), publicar la app — mismo flujo de commit/push, el deploy queda automático en Vercel en cada push |
+| 20-oct | Mar | 🚧 | N°37 — Proyecto OA5 sesión 3: Git + **Vercel** (reemplaza GitHub Pages), publicar la app — mismo flujo de commit/push, el deploy queda automático en Vercel en cada push |
 | 22-oct | Jue | 🚧 | Buffer técnico — soporte de publicación (Vercel suele dar menos problemas que GitHub Pages, pero se mantiene como red de seguridad) o adelantar preparación de la presentación si todo fluyó bien |
 
 ### SM44 — última semana con 4to medio
@@ -210,7 +214,7 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 26-oct | Lun | — | Ensayo — últimos ajustes de las presentaciones |
-| 27-oct | Mar | 🚧🎉 | **N°35 — Presentación final de apps** (showcase — considerar invitar a los terceros, idea 7) |
+| 27-oct | Mar | 🚧🎉 | **N°38 — Presentación final de apps** (showcase — considerar invitar a los terceros, idea 7) |
 | 29-oct | Jue | — | **Última clase de 4to medio.** Cierre: retrospectiva breve, Kahoot "todo lo que aprendimos", despedida |
 
 ## 6. Calendario propuesto — noviembre, solo 3ro medio
@@ -230,7 +234,7 @@ Con 4to fuera, el curso queda más chico. El contenido natural para este tramo e
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 02-nov | Lun | 📘🎮 | Encuadre "ahora somos solo terceros" + Kahoot repaso de Listas (transición suave a la primera semana sin 4to) |
-| 03-nov | Mar | 🆕 | *(N° real a definir — sigue a N°35)* Búsqueda de datos: búsqueda lineal |
+| 03-nov | Mar | 🆕 | *(N° real a definir — sigue a N°38)* Búsqueda de datos: búsqueda lineal |
 | 05-nov | Jue | 🆕 | Búsqueda binaria |
 | 09-nov | Lun | 🔁⚡ | **Lunes estándar** — ejercitación + control + revisión sobre búsqueda lineal y binaria (comparar eficiencia: cuántas comparaciones hace cada una) |
 | 10-nov | Mar | 🆕 | Desplazamiento de datos (intercambio, desplazar izquierda/derecha) |
