@@ -25,6 +25,12 @@
 - `Clase.ipynb`/`Solucionario.ipynb` regenerados y reejecutados sin errores; outputs fuera del ICN limpiados de nuevo.
 - Ajuste fino: Diego pidió que el texto lo presentara como "una regla general", no como "algo que siempre hay que hacer" (framing de hábito). Se reescribió la definición y la idea clave del Concepto 2 con ese lenguaje ("existe una regla general que ordena cualquier programa que use una función..."). Regenerado y reejecutado de nuevo sin errores.
 
+## 2026-08-19 — Clase Impresa generada y aprobada
+- Archivo: `Clase 24b - Funciones - Uso del Retorno - Clase Impresa.tex`/`.pdf`, con la skill `generar-clase-impresa`, a partir del Spec aprobado.
+- Estructura: portada (Objetivo/Propósito + Nombre/Fecha en blanco) → términos de repaso → apertura fusionada (el problema de resultados perdidos o inexistentes, con el ejemplo `saluda()`/`None`, que absorbe el Concepto 1 del ICN) → Concepto 2 (patrón DEFINICIÓN/CONSULTA/EVALUACIÓN/IMPRESIÓN) y Concepto 3 (reutilizar el valor guardado) → errores típicos → ejemplo guiado paso a paso de la Feria de Emprendimiento (fusiona la Práctica Guiada) → los 4 ejercicios de la Independiente con tabla Entrada/Salida y caja para escribir a mano → cierre motivacional. Sin Ticket de Salida ni Cierre reflexivo, como corresponde.
+- Compilado con `tectonic` sin errores (solo warnings cosméticos de underfull hbox); las 8 páginas se revisaron una por una — sin overflow de texto, cajas de color correctas, tildes/ñ bien renderizadas.
+- Aprobado por Diego.
+
 ## 2026-08-13 — Especificación aprobada (diseño anterior, reemplazado el 2026-08-19 — ver entrada de arriba)
 - Objetivo: Diseñar funciones con parámetros con valores por omisión para el caso de uso más frecuente, con anticipación.
 - Alcance decidido con Diego: valores por omisión (Picuino N°20) + síntesis de todo el bloque Abstracción en los Ejercicios 3-4 de la Independiente (integrando def+parámetros+return+valor por omisión+condicional), ya que es la última clase antes de Strings.

@@ -1,0 +1,438 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, left=2.2cm, right=2.2cm, top=3cm, bottom=2.4cm, headheight=14.5pt}
+\usepackage{fontspec}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fancyvrb}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0pt}
+\setlist[enumerate]{leftmargin=*, itemsep=1mm}
+\setlist[itemize]{leftmargin=*, itemsep=1mm}
+
+% =========================================
+% COLORES
+% =========================================
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{verdealerta}{RGB}{0,128,0}
+\definecolor{rojoalerta}{RGB}{180,0,0}
+\definecolor{cajagris}{RGB}{244,244,244}
+\definecolor{marcogris}{RGB}{170,170,170}
+
+% =========================================
+% FORMATO DE SECCIONES
+% =========================================
+\titleformat{\section}{\Large\bfseries\color{azuloscuro}}{}{0em}{}[\vspace{-0.3em}\rule{\textwidth}{0.8pt}]
+\titleformat{\subsubsection}[runin]{\normalsize\bfseries\color{azuloscuro}}{}{0em}{}[.\quad]
+
+% =========================================
+% CAJAS
+% =========================================
+\newtcolorbox{cajacodigo}{
+  colback=cajagris, colframe=marcogris, boxrule=0.4pt,
+  arc=1mm, left=3mm, right=3mm, top=1.5mm, bottom=1.5mm, breakable
+}
+\newtcolorbox{cajaescribe}[1][]{
+  colback=white, colframe=marcogris, boxrule=0.6pt,
+  arc=1mm, left=3mm, right=3mm, top=1.5mm, bottom=1.5mm, #1
+}
+\newtcolorbox{formulabox}[1][]{
+  colback=cajagris, colframe=azuloscuro, fonttitle=\bfseries,
+  title=#1, breakable, arc=1mm
+}
+\newtcolorbox{alertabox}[1][]{
+  colback=red!5, colframe=rojoalerta, fonttitle=\bfseries,
+  title=#1, breakable, arc=1mm
+}
+\newtcolorbox{estrategiabox}[1][]{
+  colback=green!5, colframe=verdealerta, fonttitle=\bfseries,
+  title=#1, breakable, arc=1mm
+}
+
+% =========================================
+% ENCABEZADO
+% =========================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\lhead{\small Programación Python --- 4to Medio}
+\rhead{\small Prof. Diego Vargas P.}
+
+\begin{document}
+
+% =========================================
+% PORTADA
+% =========================================
+\thispagestyle{empty}
+
+\vspace*{0.8cm}
+\begin{center}
+    \IfFileExists{logo.png}{\includegraphics[width=0.3\textwidth]{logo.png}}{\vspace{1.2cm}}
+\end{center}
+
+\vspace{0.8cm}
+\begin{center}
+    \Large \textbf{LICEO BICENTENARIO MARIO BERTERO CEVASCO} \\[0.25cm]
+    \large PROGRAMACIÓN PYTHON --- 4TO MEDIO 2026 \\[0.15cm]
+    \normalsize PROFESOR: DIEGO VARGAS PALOMINOS
+\end{center}
+
+\vspace{1.4cm}
+\begin{center}
+    \Huge \textbf{GUÍA DE ESTUDIO} \\[0.3cm]
+    \huge \textbf{CLASE 24B --- FUNCIONES} \\[0.2cm]
+    \Large \texttt{return} \quad $\cdot$ \quad guardar en variable \quad $\cdot$ \quad reutilizar
+\end{center}
+
+\vspace{1.4cm}
+\begin{center}
+\begin{minipage}{0.82\textwidth}
+\textbf{Objetivo de la clase:} Usar funciones con \texttt{return}, guardando siempre su resultado en una variable antes de utilizarlo en un cálculo o mensaje posterior, con método.
+
+\vspace{3mm}
+\textbf{Propósito:} \textit{El método es seguir siempre el mismo paso, sin importar el caso, para no improvisar a mitad de camino. Hoy lo practicamos guardando siempre en una variable lo que devuelve una función, antes de usarlo.}
+\end{minipage}
+\end{center}
+
+\vspace{1.6cm}
+\begin{center}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabular}{rl}
+        \large \textbf{Nombre:} & \rule{9cm}{0.4pt} \\
+        \large \textbf{Fecha:}  & \rule{9cm}{0.4pt}
+    \end{tabular}
+\end{center}
+
+\vfill
+\begin{center}
+    \rule{\textwidth}{0.4pt}
+\end{center}
+
+\newpage
+
+% =========================================
+% TÉRMINOS QUE REPASAMOS HOY
+% =========================================
+\section*{Términos que repasamos hoy}
+
+\begin{formulabox}[No son conceptos nuevos --- son la base que hoy consolidamos]
+\begin{itemize}
+  \item \textbf{Parámetro / argumento:} el parámetro es la variable que la función espera recibir (se define en \texttt{def nombre(parametro):}); el argumento es el valor real que le entregas al llamarla.
+  \item \texttt{return}\textbf{:} entrega un valor de vuelta a quien llamó la función, para que pueda guardarse en una variable y usarse después.
+  \item \texttt{None}\textbf{:} lo que queda guardado cuando una función no tiene \texttt{return}, o cuando usa \texttt{print()} en vez de devolver el valor.
+  \item \textbf{Patrón "guardar antes de usar":} escribir siempre \texttt{variable = funcion(argumento)} --- nunca usar el resultado de una función sin haberlo guardado primero.
+\end{itemize}
+\end{formulabox}
+
+% =========================================
+% APERTURA FUSIONADA (reemplaza Haz Ahora)
+% =========================================
+\section*{El problema: resultados que se pierden o que nunca existieron}
+
+Cuando un programa usa funciones, hay dos formas típicas de que algo salga mal aunque el código "se vea bien". La primera: llamas la función, ves el resultado aparecer en pantalla, pero cuando intentas usarlo un poco más abajo el programa se detiene con un error que dice que esa variable no existe --- porque en realidad nunca la guardaste, solo la imprimiste de paso. La segunda: guardas el resultado en una variable, pero cuando la usas después descubres que su valor es \texttt{None} --- porque la función mostraba algo en pantalla con \texttt{print()}, pero nunca lo entregó de vuelta con \texttt{return}.
+
+Fíjate en este programa:
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+def saluda(nombre):
+    print("Hola,", nombre)
+
+valor = saluda("Camila")
+print(valor)
+\end{Verbatim}
+\end{cajacodigo}
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+>> Hola, Camila
+>> None
+\end{Verbatim}
+\end{cajacodigo}
+
+La función \texttt{saluda} sí hace algo --- imprime el saludo --- pero no tiene \texttt{return}, así que lo que queda guardado en \texttt{valor} es \texttt{None}. Que una función "muestre algo en pantalla" no significa que ese algo quede disponible para usarlo después: solo \texttt{return} lo deja disponible. Ambos problemas de arriba se evitan con la misma regla, que hoy convertimos en un hábito fijo: definir, consultar los datos, evaluar guardando el resultado, y recién ahí usar ese resultado.
+
+\subsubsection*{El patrón general --- guardar antes de usar}
+Existe una regla que ordena cualquier programa que use una función, en 4 partes: primero \textbf{definir} la función, después \textbf{consultar} los datos que necesita, luego \textbf{evaluarla} guardando su resultado en una variable (\texttt{variable = funcion(argumento)}), y recién ahí \textbf{imprimir} o usar ese resultado.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+# DEFINICION
+def ganancia_venta(precio_venta, costo_producto):
+    return precio_venta - costo_producto
+
+# CONSULTA
+precio_ingresado = 1200
+costo_ingresado = 700
+
+# EVALUACION
+ganancia_helado = ganancia_venta(precio_ingresado, costo_ingresado)
+
+# IMPRESION
+print("Ganancia de esa venta:", ganancia_helado)
+\end{Verbatim}
+\end{cajacodigo}
+\textit{Idea clave: esta regla general --- definición, consulta, evaluación, impresión --- ordena cualquier programa que use una función, y evita el error de usar un resultado antes de haberlo guardado.}
+
+\subsubsection*{Reutilizar el valor guardado}
+Una vez guardado en una variable, ese resultado puede usarse como parte de un cálculo posterior --- no se "pierde" después de imprimirse.
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+ganancia_bebida = ganancia_venta(900, 400)
+ganancia_total = ganancia_helado + ganancia_bebida
+print("Ganancia total:", ganancia_total)
+\end{Verbatim}
+\end{cajacodigo}
+\textit{Idea clave: encadenar cálculos usando variables guardadas es la base de programas más largos --- cada resultado se convierte en el insumo del siguiente paso.}
+
+% =========================================
+% EJEMPLO GUIADO (Práctica Guiada)
+% =========================================
+\begin{estrategiabox}[Resolvamos la Feria de Emprendimiento --- paso a paso]
+
+La Feria de Emprendimiento del liceo tiene puestos que venden distintos productos. Cada puesto quiere calcular la ganancia de una venta (precio de venta menos costo del producto), y después de dos ventas del día, saber si alcanzó la meta de recaudación que se fijó la Feria.
+
+\vspace{2mm}
+\textbf{Paso 1 --- Definimos la función que calcula la ganancia de una venta.}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+def ganancia_venta(precio_venta, costo_producto):
+    return precio_venta - costo_producto
+\end{Verbatim}
+\end{cajacodigo}
+Definir la función todavía no calcula nada --- solo queda lista para usarse con cualquier venta del día.
+
+\vspace{2mm}
+\textbf{Paso 2 --- Pedimos los datos de la primera venta y guardamos su ganancia.}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+precio_1 = int(input("¿Precio de venta del primer producto? "))
+costo_1 = int(input("¿Costo del primer producto? "))
+ganancia_1 = ganancia_venta(precio_1, costo_1)
+\end{Verbatim}
+\end{cajacodigo}
+
+\vspace{2mm}
+\textbf{Paso 3 --- Repetimos para la segunda venta, en su propia variable.}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+precio_2 = int(input("¿Precio de venta del segundo producto? "))
+costo_2 = int(input("¿Costo del segundo producto? "))
+ganancia_2 = ganancia_venta(precio_2, costo_2)
+\end{Verbatim}
+\end{cajacodigo}
+Cada venta llama a la misma función, pero cada resultado se guarda en su propia variable --- ninguna reemplaza a la otra.
+
+\vspace{2mm}
+\textbf{Paso 4 --- Sumamos las dos ganancias ya guardadas.}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+ganancia_total = ganancia_1 + ganancia_2
+print("Ganancia total:", ganancia_total)
+\end{Verbatim}
+\end{cajacodigo}
+
+\vspace{2mm}
+\textbf{Paso 5 --- Pedimos la meta y comparamos el total con ella.}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+meta_recaudacion = int(input("¿Cuál es la meta de recaudación? "))
+if ganancia_total >= meta_recaudacion:
+    print("¡Meta alcanzada!")
+else:
+    print("Todavía no se alcanza la meta.")
+\end{Verbatim}
+\end{cajacodigo}
+
+\vspace{2mm}
+\textbf{Programa completo, armado:}
+
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+def ganancia_venta(precio_venta, costo_producto):
+    return precio_venta - costo_producto
+
+precio_1 = int(input("¿Precio de venta del primer producto? "))
+costo_1 = int(input("¿Costo del primer producto? "))
+ganancia_1 = ganancia_venta(precio_1, costo_1)
+
+precio_2 = int(input("¿Precio de venta del segundo producto? "))
+costo_2 = int(input("¿Costo del segundo producto? "))
+ganancia_2 = ganancia_venta(precio_2, costo_2)
+
+ganancia_total = ganancia_1 + ganancia_2
+print("Ganancia total:", ganancia_total)
+
+meta_recaudacion = int(input("¿Cuál es la meta de recaudación? "))
+if ganancia_total >= meta_recaudacion:
+    print("¡Meta alcanzada!")
+else:
+    print("Todavía no se alcanza la meta.")
+\end{Verbatim}
+\end{cajacodigo}
+
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{1200}\newline \texttt{700}\newline \texttt{900}\newline \texttt{400}\newline \texttt{800} & \textbf{Entrada:}\newline \texttt{1200}\newline \texttt{700}\newline \texttt{900}\newline \texttt{400}\newline \texttt{1500} \\
+\hline
+\textbf{Salida:}\newline \texttt{Ganancia total: 1000}\newline \texttt{¡Meta alcanzada!} & \textbf{Salida:}\newline \texttt{Ganancia total: 1000}\newline \texttt{Todavía no se alcanza la meta.} \\
+\hline
+\end{tabularx}
+\end{estrategiabox}
+
+% =========================================
+% ERRORES TÍPICOS
+% =========================================
+\begin{alertabox}[Errores típicos a evitar]
+\noindent\begin{tabularx}{\linewidth}{|X|X|X|}
+\hline
+\textbf{Error} & \textbf{Qué ocurre} & \textbf{Cómo corregirlo} \\
+\hline
+Llamar la función directo dentro de un \texttt{print()}, sin guardarla en una variable & El resultado se muestra una vez, pero no queda disponible para usarlo en un paso posterior & Guardar siempre el llamado en una variable, aunque el siguiente paso sea solo imprimirlo \\
+\hline
+Asumir que una función sin \texttt{return} "de todas formas entrega algo" porque usa \texttt{print()} internamente & La variable que la recibe queda en \texttt{None}, y cualquier cálculo posterior con ella falla o da un resultado sin sentido & Revisar si la función tiene \texttt{return}; si no lo tiene, agregarlo antes de intentar usar su resultado \\
+\hline
+\end{tabularx}
+\end{alertabox}
+
+% =========================================
+% PRÁCTICA INDEPENDIENTE
+% =========================================
+\section*{Práctica Independiente}
+
+\textit{\textbf{Revisa en tu celular:} cuando termines cada ejercicio, revisa tu respuesta en el celular --- la solución completa está en el cuaderno Solucionario subido a Classroom.}
+
+\vspace{2mm}
+
+\subsubsection*{Ejercicio 1 --- Biblioteca del liceo}
+La biblioteca del liceo cobra una multa por cada día de atraso en la devolución de un libro. A quienes se atrasan por primera vez, la encargada les hace un descuento fijo de \$500 sobre la multa calculada, para no desanimarlos de seguir pidiendo libros --- nunca menos de \$0.
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Definir una función que reciba los días de atraso y el valor de la multa por día, y devuelva el monto total de la multa con \texttt{return}.
+  \item Pedir los días de atraso y el valor por día, llamar la función y guardar el resultado en una variable.
+  \item Restarle a ese resultado guardado el descuento de \$500 (sin bajar de \$0) y mostrar el monto final a pagar.
+\end{itemize}
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{5}\newline \texttt{200} & \textbf{Entrada:}\newline \texttt{1}\newline \texttt{200} \\
+\hline
+\textbf{Salida:}\newline \texttt{Debe pagar de multa: 500} & \textbf{Salida:}\newline \texttt{Debe pagar de multa: 0} \\
+\hline
+\end{tabularx}
+\vspace{1mm}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=5cm]
+\end{cajaescribe}
+
+\subsubsection*{Ejercicio 2 --- Radio escolar}
+La radio escolar arma bloques de canciones para el recreo. Cada bloque dura una cantidad de minutos según cuántas canciones tenga y el promedio de duración de cada una. Quieren saber cuántos bloques iguales necesitan para llegar a la meta de minutos de transmisión del día.
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Definir una función que reciba la cantidad de canciones y la duración promedio por canción, y devuelva la duración total del bloque con \texttt{return}.
+  \item Pedir esos dos datos, llamar la función y guardar el resultado.
+  \item Pedir la meta de minutos del día y usar el resultado guardado para calcular cuántos bloques iguales se necesitan para alcanzarla, mostrando ese número.
+\end{itemize}
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{4}\newline \texttt{3}\newline \texttt{60} & \textbf{Entrada:}\newline \texttt{5}\newline \texttt{2}\newline \texttt{40} \\
+\hline
+\textbf{Salida:}\newline \texttt{Bloques necesarios: 5} & \textbf{Salida:}\newline \texttt{Bloques necesarios: 4} \\
+\hline
+\end{tabularx}
+\vspace{1mm}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=5cm]
+\end{cajaescribe}
+
+\subsubsection*{Ejercicio 3 --- Torneo interno del club de ajedrez}
+El club de ajedrez del liceo organiza un torneo interno y quiere calcular el puntaje final de cada jugador: puntos por partidas ganadas, más un bono si terminó invicto (sin perder ninguna).
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Definir una función que reciba las partidas ganadas y devuelva el puntaje base con \texttt{return} (cada partida ganada vale 10 puntos).
+  \item Pedir las partidas ganadas y las partidas perdidas, llamar la función y guardar el puntaje base.
+  \item Si las partidas perdidas son 0, sumarle al puntaje guardado un bono de 15 puntos por terminar invicto; si no, dejarlo igual.
+  \item Mostrar el puntaje final del jugador.
+\end{itemize}
+\vspace{1mm}
+\noindent\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{Ejemplo 1} & \textbf{Ejemplo 2} \\
+\hline
+\textbf{Entrada:}\newline \texttt{4}\newline \texttt{0} & \textbf{Entrada:}\newline \texttt{3}\newline \texttt{1} \\
+\hline
+\textbf{Salida:}\newline \texttt{Puntaje final: 55} & \textbf{Salida:}\newline \texttt{Puntaje final: 30} \\
+\hline
+\end{tabularx}
+\vspace{1mm}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=5.5cm]
+\end{cajaescribe}
+
+\subsubsection*{Ejercicio 4 --- Desafío: Feria de Emprendimiento (todas las ventas del día)}
+\textit{(opcional)}
+
+El mismo puesto de la Feria de Emprendimiento del ejemplo guiado ahora quiere repetir el cálculo de ganancia para todas las ventas del día, sin cerrar el programa entre una venta y otra, y saber la ganancia acumulada al final.
+
+\textbf{El programa debe:}
+\begin{itemize}
+  \item Reutilizar la misma función de ganancia de una venta (precio de venta menos costo del producto).
+  \item Repetir el cálculo para distintas ventas hasta que se escriba \texttt{"listo"} en vez de un precio.
+  \item Ir acumulando la ganancia de cada venta guardada en una variable de total, y mostrarla al terminar.
+\end{itemize}
+\vspace{1mm}\textbf{El programa imprime:}
+\begin{cajacodigo}
+\begin{Verbatim}[fontsize=\small]
+¿Precio de venta? (o "listo" para terminar) 1200
+¿Costo del producto? 700
+Ganancia de esa venta: 500
+¿Precio de venta? (o "listo" para terminar) 900
+¿Costo del producto? 400
+Ganancia de esa venta: 500
+¿Precio de venta? (o "listo" para terminar) listo
+Ganancia acumulada del día: 1000
+\end{Verbatim}
+\end{cajacodigo}
+\vspace{2mm}\textit{Escribe tu programa aquí:}\vspace{1mm}
+
+\begin{cajaescribe}[height=6.5cm]
+\end{cajaescribe}
+
+\vspace{1cm}
+\begin{center}
+\rule{0.6\textwidth}{0.4pt}
+
+\vspace{4mm}
+\textit{Vas bien. Guardar siempre el resultado antes de usarlo es un paso chico que evita errores grandes --- ese hábito te va a servir en programas mucho más largos que este.}
+\end{center}
+
+\end{document}
