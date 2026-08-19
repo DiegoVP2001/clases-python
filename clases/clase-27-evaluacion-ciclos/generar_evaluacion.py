@@ -1068,5 +1068,4 @@ if __name__ == "__main__":
     _guardar(build_student_notebook(), "Clase 27 - Evaluación Ciclos - Evaluación.ipynb")
     _guardar(build_preview_notebook(), "Clase 27 - Evaluación Ciclos - Preview con Respuestas.ipynb")
     _guardar(build_solucionario_notebook(), "Clase 27 - Evaluación Ciclos - Solucionario.ipynb")
-    # El Solucionario Estudiantes (build_solucionario_estudiantes_notebook) se
-    # genera solo cuando Diego lo pide explícitamente — no por defecto acá.
+    _guardar(build_solucionario_estudiantes_notebook(), "Clase 27 - Evaluación Ciclos - Solucionario Estudiantes.ipynb")
