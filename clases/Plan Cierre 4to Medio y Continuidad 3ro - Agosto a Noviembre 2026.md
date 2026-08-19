@@ -121,7 +121,7 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 
 ## 5. Calendario propuesto — tramo 3ro+4to, día a día
 
-**Convención de columnas:** 🎯 evaluación sumativa · 🆕 contenido nuevo · 🔁⚡ Lunes estándar (ejercitación + control + revisión, ver sección 4) · ⚡ control relámpago aislado (semana de examen) · 🎮 Kahoot · 📘 clase de repaso/aplicación · 🚧 proyecto · ⚠️ riesgo/pendiente de confirmar.
+**Convención de columnas:** 🎯 evaluación sumativa · 🆕 contenido nuevo · 🔁⚡ Lunes estándar (ejercitación + control + revisión, ver sección 4) · ⚡ control relámpago aislado (semana de examen) · 🎮 Kahoot · 📘 clase de repaso/aplicación · 🚧 proyecto · 💬 sesión de discusión/reflexión sin computador · ⚠️ riesgo/pendiente de confirmar.
 
 ### SM34 — cierre de Ciclos, arranca Funciones
 
@@ -182,9 +182,11 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 05-oct | Lun | — | Revisión formativa de la Evaluación F+S+L |
-| 06-oct | Mar | 🚧 | N°30 — Proyecto OA4 sesión 1: dataset real (¿encuesta al propio curso? ver idea 6), primera exploración con listas/funciones |
-| 08-oct | Jue | 🚧 | N°31 — Proyecto OA4 sesión 2: análisis completo + mini-presentación de hallazgos en parejas |
+| 06-oct | Mar | 🚧 | N°30 — Proyecto OA4 sesión 1: **cada grupo elige su fuente de datos** — encuesta propia al curso o dataset externo real (datos.gob.cl, INE, Kaggle) —, primera exploración con `pandas` |
+| 08-oct | Jue | 🚧 | N°31 — Proyecto OA4 sesión 2: análisis completo con `pandas` + gráfico con `matplotlib` (reemplaza la idea de gráfico ASCII) + mini-presentación de hallazgos en parejas |
 
+> **Decisión 2026-08-19 (reemplaza la pregunta abierta que tenía este documento):** OA4 usa **pandas + matplotlib** como librerías nuevas — pandas encaja literal con "procesadores de análisis estadístico" (OA4) para leer/filtrar/agrupar los datos, matplotlib para visualizarlos con un gráfico real. Dato: propio (encuesta) o externo, **a elección de cada grupo** — mismo motor de análisis para ambos casos.
+>
 > **Si Diego opta por la Opción B de la sección 3 (fusionar OA4+OA5):** este es el punto de bifurcación — la sesión del 6-oct pasa a ser el kickoff único del proyecto integrado, y el resto del calendario de octubre se mantiene casi igual pero como una sola línea narrativa.
 
 ### SM42 — feriado + arranca Proyecto OA5
@@ -195,13 +197,13 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | 13-oct | Mar | 🚧 | N°32 — Proyecto OA5 sesión 1: prompting con IA, definir la app |
 | 15-oct | Jue | 🚧 | N°33 — Proyecto OA5 sesión 2: HTML generado, revisión y ajuste |
 
-### SM43 — construir y publicar
+### SM43 — reflexión, construir y publicar
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
-| 19-oct | Lun | 🚧 | Tiempo de estudio guiado — iteración libre del proyecto (Diego circula revisando avances, idea 5) |
-| 20-oct | Mar | 🚧 | N°34 — Proyecto OA5 sesión 3: Git + GitHub Pages, publicar la app |
-| 22-oct | Jue | 🚧 | Buffer técnico — soporte de publicación (Git/Pages suele traer errores dispares por equipo) o adelantar preparación de la presentación si todo fluyó bien |
+| 19-oct | Lun | 💬 | **Sesión de IA responsable e impacto** — casi sin computador, discusión + lápiz y papel: sesgos de los modelos, alucinaciones (actividad "detective de alucinaciones" con respuestas reales de un chatbot), impacto ambiental/energético, impacto laboral, privacidad de lo que se le entrega a un chatbot. Reemplaza el "tiempo de estudio guiado" que tenía este día — decisión 2026-08-19, se hace justo antes de que el curso profundice en construir con IA. Le da cuerpo real al OA6 transversal, que antes solo era una mención de paso. |
+| 20-oct | Mar | 🚧 | N°34 — Proyecto OA5 sesión 3: Git + **Vercel** (reemplaza GitHub Pages), publicar la app — mismo flujo de commit/push, el deploy queda automático en Vercel en cada push |
+| 22-oct | Jue | 🚧 | Buffer técnico — soporte de publicación (Vercel suele dar menos problemas que GitHub Pages, pero se mantiene como red de seguridad) o adelantar preparación de la presentación si todo fluyó bien |
 
 ### SM44 — última semana con 4to medio
 
@@ -252,7 +254,7 @@ Diego no asegura diciembre, así que este plan no le asigna contenido obligatori
 
 1. **Jueves 17-sep** — confirmar en cuanto se sepa; el calendario de agosto-octubre ya absorbe cualquier resultado sin generar atraso en cascada.
 2. **Opción A vs. B de la sección 3** — ¿proyectos OA4/OA5 separados o fusionados? Definir antes de llegar a la semana del 5-oct.
-3. **Alcance técnico del Proyecto OA4** — "análisis de datos" con las herramientas vistas hasta ahora (listas, funciones) es más limitado que un análisis con librerías como `pandas`; falta decidir si se introduce algo nuevo puntual para este proyecto o si se mantiene acotado a lo ya visto. Se resuelve en el `disenar-clase` de N°30, no en este documento.
+3. ~~**Alcance técnico del Proyecto OA4**~~ — **Resuelto 2026-08-19:** se introducen `pandas` + `matplotlib` como librerías nuevas puntuales para este proyecto (ver nota en SM41). Dato propio o externo, a elección de cada grupo.
 4. **Ritmo de noviembre** — este plan asume que el curso de solo-terceros mantiene el mismo ritmo lunes/martes/jueves de 80 minutos. Si cambia el horario o los días al quedar un curso más chico, hay que rehacer la sección 6.
 5. **Feriados propios de noviembre** — no se pudo verificar de forma independiente si hay algún feriado o actividad institucional en las semanas del 2 al 26 de noviembre (ej. posibles elecciones u otras fechas del calendario escolar). Confirmar con Diego antes de fijar fechas exactas de la sección 6.
 6. **Evaluación de cierre de noviembre** — falta decidir si "Búsqueda y ordenación" amerita una evaluación sumativa completa (como las anteriores) o un control más liviano, considerando que cae a fin de año.
