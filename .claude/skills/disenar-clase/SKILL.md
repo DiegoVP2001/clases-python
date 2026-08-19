@@ -282,7 +282,7 @@ Ejemplos:
 - [requisito 1]
 - [requisito 2]
 
-[Opcional — pista `<details>` si el ejercicio lo amerita:]
+[Default siempre desde Clase 24b (2026-08-19) — 1-2 pistas por ejercicio, a criterio de quien diseña:]
 <details>
 <summary>💡 Pista — [subtítulo]</summary>
 [texto orientador]

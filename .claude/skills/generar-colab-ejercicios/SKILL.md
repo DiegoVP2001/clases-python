@@ -149,7 +149,7 @@ Ninguna solución aparece en este notebook, ni siquiera oculta con `<details>` �
 2. **Nunca generes el .ipynb sin propuesta aprobada** (salvo modo rápido explícito).
 3. **El archivo intermedio `Clase NN - Tema - Ejercicios propuesta.md` es la fuente de verdad.** Si hay discrepancia entre `.md` y `.ipynb`, regenera el `.ipynb`.
 4. **Ninguna solución en `Ejercicios.ipynb`, ni siquiera oculta con `<details>`.** Todas las soluciones se agregan a `Solucionario.ipynb` (documento exclusivo del profesor), en su propia sección al final de ese archivo.
-5. **Pistas colapsables, solo donde el ejercicio lo justifica.** No poner pistas en todos los ejercicios. Cada pista va dentro de `<details><summary>💡 Pista N — subtítulo</summary>...</details>`. Una pista orienta sin revelar la respuesta. Pueden incluir un ejemplo de código "stock" (contexto neutro) para ilustrar un patrón.
+5. **Pistas colapsables, default siempre desde Clase 24b (2026-08-19).** Cada ejercicio lleva 1-2 pistas, a criterio de quien diseña (antes: solo donde el ejercicio lo justificaba). Cada pista va dentro de `<details><summary>💡 Pista N — subtítulo</summary>...</details>`. Una pista orienta sin revelar la respuesta. Pueden incluir un ejemplo de código "stock" (contexto neutro) para ilustrar un patrón.
 6. **No copies literalmente los ejercicios del spec.** El Colab de clase ya tiene la práctica independiente; el de ejercicios trae ejercicios DISTINTOS, aunque del mismo nivel.
 7. **Mezcla contextos.** Si los 3 ejercicios del spec eran de e-commerce, los ejercicios adicionales pueden incluir otros temas para variar (a menos que Diego pida mantener el tema).
 

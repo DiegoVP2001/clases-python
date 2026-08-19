@@ -16,7 +16,7 @@
 [Descripción clara del problema. Una persona de 4to medio debe poder leerlo y entender qué hay que hacer sin ambigüedad. Si involucra varias entradas o varios cálculos, lista los pasos.]
 
 **Pistas:**
-[Opcional. Si el ejercicio es difícil, una pista breve sin dar la respuesta. Si no hay pista, omite esta sección completamente.]
+[Default siempre desde Clase 24b (2026-08-19): 1-2 pistas breves, sin dar la respuesta, a criterio de quien diseña.]
 
 **Resultado esperado:**
 ```

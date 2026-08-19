@@ -264,7 +264,7 @@ El campo `**Respuestas esperadas:**` en el spec captura todo el texto hasta el f
 
 1. **Narrativa** — 3-4 líneas de prosa, sin bullets. Contexto rico, fluye sin revelar operadores ni nombres de variables. Es todo el texto libre antes de `**El programa debe:**` — no necesita ninguna etiqueta.
 2. **`**El programa debe:**`** — bullets con términos clave en **negrita**. Describe qué hace el programa, no cómo. El parser corta este bloque en la primera línea que empieza con `-` hasta encontrar `Resultado esperado:` (con o sin negrita) o el final de la sección.
-3. **Pistas colapsables** — 1-2 según dificultad, solo donde el ejercicio lo justifica (ej: recordar un operador que no es el foco de la clase). El parser las extrae completas vía regex (`<details>.*?</details>`) desde cualquier punto del bloque y las renderiza justo después de los bullets, antes del resultado — no importa en qué línea exacta del spec estén escritas. Formato:
+3. **Pistas colapsables** — default siempre desde Clase 24b (2026-08-19), 1-2 por ejercicio a criterio de quien diseña (antes: solo donde el ejercicio lo justificaba). El parser las extrae completas vía regex (`<details>.*?</details>`) desde cualquier punto del bloque y las renderiza justo después de los bullets, antes del resultado — no importa en qué línea exacta del spec estén escritas. Formato:
    ```html
    <details>
    <summary>💡 Pista N — subtítulo</summary>
