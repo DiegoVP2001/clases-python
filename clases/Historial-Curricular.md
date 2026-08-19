@@ -32,22 +32,24 @@
 | **21** | **Ayudantía — Ejercitación Ciclos** (for+range, for anidado, en dúos) | `clase-21-ayudantia-ciclos` | N/A — ayudantía de refuerzo (clases foco: N°16 y N°20) | Notebooks + Ticket de Salida generados — programada para dictarse | **2026-08-10** | OA1, OA3 |
 | **21.5** | **continue y break** | `clase-21b-continue-break` | N°15, N°16 — Sentencia continue + Sentencia break | Colab de clase aprobado | **2026-08-11** | OA1, OA3 |
 | **22** | **while** | `clase-22-while` | N°18 — Sentencia while | Colab de clase aprobado (ejercicios pendientes) | **2026-08-13** | OA1, OA3 |
-| **22.5** | **🎯 Evaluación individual — Ciclos** (for, range, while, break/continue) | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | **2026-08-27** | OA1, OA3 |
 | **23** | **🔁⚡ Lunes estándar — While y Break** (ejercitación en parejas sorteadas + control individual con nota) | `clase-23-lunes-while-break` | N/A — consolidación (clases foco: N°21.5 y N°22) | Ejercitación + Control + Solucionario generados y verificados (19/19 casos) | **2026-08-17** | OA1, OA3 |
 | **24a** | **Funciones — def, parámetros, return** | `clase-24a-funciones-def` | N°19 — Definición de funciones | Spec aprobada | **2026-08-18** | OA1, OA3 |
 | **24b** | **Funciones — uso del retorno (refuerzo)** | `clase-24b-funciones-uso-retorno` | N°19 — Definición de funciones (refuerzo, no Picuino N°20) | Colab de clase aprobado (Ejercicios/PPT pendientes; Ticket de Salida.pptx generado, local hasta dictar la clase) | **2026-08-20** | OA1, OA3 |
-| **25** | **Strings — indexing y slicing** | `clase-25-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
-| **26** | **Strings — métodos y f-strings** | `clase-26-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | sep 2026 | OA2, OA3 |
-| **27** | **Listas — creación y acceso** | `clase-27-listas` | N°25, N°26 — Listas + índices de listas | Planificada | sep 2026 | OA1, OA2, OA3 |
-| **28** | **Listas — iteración y métodos** | `clase-28-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | sep 2026 | OA1, OA3 |
-| **29** | **Listas + funciones — integración** | `clase-29-integracion` | N/A — clase de integración | Planificada | sep 2026 | OA1, OA3 |
-| **29.5** | **🎯 Evaluación individual — Funciones + Strings + Listas** | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | 2026-10-01 | OA1, OA2, OA3 |
-| **30** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
-| **31** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
-| **32** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
-| **33** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
-| **34** | **Proyecto OA5 — Git + GitHub Pages** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
-| **35** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | 2026-10-27 | OA4, OA5, OA6 |
+| **25** | **🔁⚡ Lunes estándar — Control Funciones** (ejercitación en parejas sorteadas + control individual con nota) | `clase-25-lunes-control-funciones` | N/A — consolidación (clases foco: N°24a y N°24b) | Ejercitación + Control + Solucionarios generados y verificados (18/18 casos) | **2026-08-24** | OA1, OA3 |
+| **26** | **📘 Simulacro — Ciclos** (problemas estilo evaluación, revisión conjunta de errores) | `clase-26-simulacro-ciclos` | N/A — clase de repaso/aplicación (prepara N°27) | Planificada | **2026-08-25** | OA1, OA3 |
+| **27** | **🎯 Evaluación individual — Ciclos** (for, range, for anidado, while, break/continue) | `clase-27-evaluacion-ciclos` | N/A — evaluación sumativa individual | Spec aprobado — en preview de Colab | **2026-08-27** | OA1, OA3 |
+| **28** | **Strings — indexing y slicing** | `clase-28-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas | Planificada | sep 2026 | OA2, OA3 |
+| **29** | **Strings — métodos y f-strings** | `clase-29-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | sep 2026 | OA2, OA3 |
+| **30** | **Listas — creación y acceso** | `clase-30-listas` | N°25, N°26 — Listas + índices de listas | Planificada | sep 2026 | OA1, OA2, OA3 |
+| **31** | **Listas — iteración y métodos** | `clase-31-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | sep 2026 | OA1, OA3 |
+| **32** | **Listas + funciones — integración** | `clase-32-integracion` | N/A — clase de integración | Planificada | sep 2026 | OA1, OA3 |
+| **32.5** | **🎯 Evaluación individual — Funciones + Strings + Listas** | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | 2026-10-01 | OA1, OA2, OA3 |
+| **33** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
+| **34** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
+| **35** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **36** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **37** | **Proyecto OA5 — Git + Vercel** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **38** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | 2026-10-27 | OA4, OA5, OA6 |
 
 ## Próxima clase disponible
 
@@ -61,12 +63,16 @@
 | **Lunes** | **2026-08-17** | **N° 23 — 🔁⚡ Lunes estándar: While y Break.** Estreno del formato de 3 fases (ejercitación en parejas sorteadas + control individual **con nota** + reflexión). Clases foco: N°21.5 y N°22. Ver "Workflow: lunes estándar" en el `CLAUDE.md` del proyecto |
 | Martes | 2026-08-18 | N° 24a — Funciones parte 1 (def, parámetros, return) — Spec aprobada, falta generar Colab/PPT |
 | Jueves | 2026-08-20 | N° 24b — Funciones parte 2 (refuerzo: uso del retorno — guardar y reutilizar; reemplaza el diseño anterior de valores por omisión) — Colab de clase aprobado 2026-08-19, falta Ejercicios/PPT |
-| Lunes | 2026-08-24 | 🔁⚡ Lunes estándar sobre Funciones *(N° se asigna al diseñarlo)* |
-| Martes | 2026-08-25 | 📘 Simulacro — problemas estilo evaluación sobre Ciclos |
-| Jueves | 2026-08-27 | N° 22.5 — 🎯 Evaluación individual — Ciclos |
+| Lunes | 2026-08-24 | N° 25 — 🔁⚡ Lunes estándar: Control Funciones. Ejercitación + Control + Solucionarios generados y verificados (18/18 casos). Clases foco: N°24a y N°24b |
+| Martes | 2026-08-25 | N° 26 — 📘 Simulacro — problemas estilo evaluación sobre Ciclos (carpeta ya creada: `clase-26-simulacro-ciclos`) |
+| Jueves | 2026-08-27 | N° 27 — 🎯 Evaluación individual — Ciclos (carpeta `clase-27-evaluacion-ciclos`) — Spec aprobado, en preview de Colab |
 
 > **Rediseño 2026-08-19 — Clase 24b cambia de contenido (deja de ser Picuino N°20):** tras dictar Clase 24a, Diego diagnosticó que los estudiantes no habían consolidado el modelo mental base de funciones (definir vs. llamar, parámetro vs. argumento, `return` vs. `print`, usar el valor devuelto) — se trababan desde el Ejercicio 1 de la Independiente. Se decidió sacar valores por omisión (Picuino N°20) de la Clase 24b y usar esa sesión para reforzar `def`+parámetros+`return` (patrón "guardar en variable antes de usar" + caso `None`). Valores por omisión queda **postergado sin fecha fija**, a diseñar como clase nueva más adelante cuando el patrón de funciones esté consolidado — no ocupa ningún N° real todavía. Carpeta renombrada de `clase-24b-funciones-valores-omision` a `clase-24b-funciones-uso-retorno`; los artefactos ya generados del diseño anterior (Colab, Solucionario, Ticket de Salida) se eliminaron y se regeneran desde el nuevo Spec. Ver `Clase 24b - Funciones - Uso del Retorno - Historial.md` para el detalle completo del diagnóstico y las iteraciones de diseño.
 
+> **Renumeración 2026-08-19-b (la Evaluación de Ciclos deja de ser decimal):** Diego decidió que las evaluaciones sumativas ya no usan numeración decimal — pasan a tomar el siguiente entero libre, como cualquier otra sesión. La Evaluación de Ciclos pasa de **N°22.5** a **N°27** (después de N°26, el Simulacro). Todo lo que venía después corrió **+1 más**: Strings 27→**28** y 28→**29**, Listas 29→**30** y 30→**31**, Integración 31→**32**, Evaluación Funciones+Strings+Listas 31.5→**32.5**, Proyecto OA4 32-33→**33-34**, Proyecto OA5 34-37→**35-38**. La carpeta `clase-22b-evaluacion-ciclos` se renombró a `clase-27-evaluacion-ciclos`. **Este cambio de criterio no se extiende retroactivamente a N°19.5 ni a N°31.5 (Evaluación Funciones+Strings+Listas)** salvo que Diego lo pida explícitamente — quedan como estaban, decimales.
+>
+> **Renumeración 2026-08-19-a (semana del 24-ago: lunes estándar + simulacro toman número entero propio):** Diego confirmó N°25 para el Lunes estándar de Control de Funciones (24-ago) y N°26 para el Simulacro de Ciclos (25-ago, clase formal de repaso — mismo criterio que ya tuvo N°18 Reforzamiento). En esta ronda N°22.5 (Evaluación de Ciclos, 27-ago) todavía no cambiaba de número — ver la renumeración 2026-08-19-b inmediatamente arriba, que sí lo hizo más tarde el mismo día. Las 3 carpetas de la semana (`clase-25-lunes-control-funciones`, `clase-26-simulacro-ciclos`, `clase-22b-evaluacion-ciclos`) ya existían vacías en disco (creadas por Diego el 2026-08-18) con exactamente esta numeración inicial — este registro solo formalizó en el Historial lo que ya estaba decidido, antes del ajuste posterior de la evaluación.
+>
 > **Renumeración 2026-08-12 (los lunes estándar toman número entero propio):** Diego decidió que el lunes de consolidación del 2026-08-17 quede como **N°23** —número entero, no decimal— porque desde ahora los lunes dejan de ser "ayudantías" sueltas y pasan a ser sesiones con control **con nota** (ver "Workflow: lunes estándar" en el `CLAUDE.md`). Todo lo que venía después corrió **+1**: Funciones 23→**24**, Strings 24→**25** y 25→**26**, Listas 26→**27** y 27→**28**, Integración 28→**29**, Evaluación Funciones+Strings+Listas 28.5→**29.5**, Proyecto OA4 29-30→**30-31**, Proyecto OA5 31-34→**32-35**. **N°22.5 (Evaluación de Ciclos) no cambia** pese a dictarse el 27-ago, después de N°23 y N°24: su decimal marca que cierra el bloque de Ciclos, y el N° identifica el artefacto, no el orden estricto de dictado (mismo criterio que ya aplicaba a N°16/N°17). **Convención vigente para los próximos lunes estándar:** cada uno toma el siguiente entero libre al momento de diseñarse, corriendo +1 lo que quedaba planificado — no se reservan números por adelantado, porque el calendario de septiembre todavía tiene sesiones inciertas (ver riesgo del jueves 17-sep en el Plan de Cierre).
 
 > Nota de orden: N° 17 se dicta antes que N° 16 en el calendario real (la ejercitación de condicionales estaba lista y hacía falta consolidar antes de introducir loops), aunque el spec de C16 se aprobó primero. La numeración N° real no se altera — identifica el artefacto, no necesariamente el orden estricto de dictado.
