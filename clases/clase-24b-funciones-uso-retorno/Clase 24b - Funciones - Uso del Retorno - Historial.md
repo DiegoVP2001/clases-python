@@ -11,7 +11,19 @@
   - Haz Ahora iterado 3 veces: v1 era narrativo sin código (descartado porque Diego quería repaso directo de sintaxis ya vista); v2 mostraba directamente la función real de la Feria (`ganancia_venta`) trazada con preguntas — descartado porque dejaba la Guiada como simple copia de lo ya mostrado; v3 (aprobada) usa una función neutra/genérica (`operacion(dato1, dato2)`) envuelta en una mini-narrativa ("un estudiante de otro curso les pide ayuda"), dejando la Feria íntegra para la Guiada. Pregunta 1 ajustada de "¿cuál valor ocupa el lugar de...?" a "¿cómo llamamos al lugar que ocupan...?" para pedir el término (parámetros), no solo el emparejamiento de valores.
   - Guiada ajustada para que programen la función de la Feria desde cero en vivo (no reutilizar una ya dada), reiterando el proceso completo sin copiar del Haz Ahora.
 - **Cambio sistémico aplicado en la misma sesión (no exclusivo de esta clase):** pistas desplegables (`<details>`) pasan a ser default siempre en toda Práctica Independiente, 1-2 por ejercicio a criterio de quien diseña — antes eran "solo donde aplica". Actualizado en `CLAUDE.md` (regla 15.3) y en los SKILL.md de `disenar-clase`, `generar-colab-clase`, `generar-colab-ejercicios` y su plantilla.
-- Pendiente: `Historial-Curricular.md` actualizado en la misma sesión (Tema, Picuino de referencia, Carpeta, Estado). Valores por omisión queda sin clase asignada — a diseñar más adelante.
+- `Historial-Curricular.md` actualizado en la misma sesión (Tema, Picuino de referencia, Carpeta, Estado). Valores por omisión queda sin clase asignada — a diseñar más adelante.
+
+## 2026-08-19 — Colab de clase aprobado
+- Archivos: `Clase.ipynb`, `Solucionario.ipynb`, `Ticket de Salida Respuestas.json` — generados con la skill `generar-colab-clase` a partir del Spec nuevo, sin errores de parseo (3 conceptos ICN, 4 pasos guiada, 4 ejercicios independientes).
+- `Ticket de Salida.pptx` generado en el mismo paso (8 slides, 3 preguntas, respuestas B/A/C) — queda solo local hasta dictar la clase.
+- `Clase.ipynb` y `Solucionario.ipynb` ejecutados con `nbconvert --execute` sin errores; outputs fuera del ICN limpiados con `limpiar_outputs_haz_ahora.py` (solo los 3 ejemplos de código del ICN conservan output).
+- Aprobado por Diego tras dos rondas de ajuste al Concepto 2 (ver entradas siguientes).
+
+## 2026-08-19 — Ajuste: Concepto 2 destaca las 4 etiquetas DEFINICIÓN/CONSULTA/EVALUACIÓN/IMPRESIÓN
+- Diego pidió resaltar en el Concepto 2 ("el patrón general — guardar antes de usar") el procedimiento en 4 partes que ya venía usando en vivo con el curso.
+- Se agregó como comentarios explícitos en el ejemplo de código (función `ganancia_venta` de la Feria), con valores fijos en la parte CONSULTA (no `input()` real) para mantener la celda ejecutable de una sola pasada dentro del ICN.
+- `Clase.ipynb`/`Solucionario.ipynb` regenerados y reejecutados sin errores; outputs fuera del ICN limpiados de nuevo.
+- Ajuste fino: Diego pidió que el texto lo presentara como "una regla general", no como "algo que siempre hay que hacer" (framing de hábito). Se reescribió la definición y la idea clave del Concepto 2 con ese lenguaje ("existe una regla general que ordena cualquier programa que use una función..."). Regenerado y reejecutado de nuevo sin errores.
 
 ## 2026-08-13 — Especificación aprobada (diseño anterior, reemplazado el 2026-08-19 — ver entrada de arriba)
 - Objetivo: Diseñar funciones con parámetros con valores por omisión para el caso de uso más frecuente, con anticipación.

@@ -68,16 +68,24 @@ print("Resultado:", resultado)
 - Idea clave: que una función "muestre algo en pantalla" no significa que ese algo quede disponible para usarlo después — solo `return` lo deja disponible.
 
 **Concepto 2: el patrón general — guardar antes de usar**
-- Definición: cada vez que se llama una función y se necesita su resultado, la forma correcta es `variable = funcion(argumento)` — guardar el resultado en una variable, y desde ahí usarlo (imprimirlo, calcular con él, etc.).
+- Definición: existe una regla general que ordena cualquier programa que use una función, en 4 partes: primero **definir** la función, después **consultar** los datos que necesita, luego **evaluarla** guardando su resultado en una variable (`variable = funcion(argumento)`), y recién ahí **imprimir** o usar ese resultado.
 - Ejemplo:
   ```python
+  # DEFINICIÓN
   def ganancia_venta(precio_venta, costo_producto):
       return precio_venta - costo_producto
 
-  ganancia_helado = ganancia_venta(1200, 700)
+  # CONSULTA
+  precio_ingresado = 1200
+  costo_ingresado = 700
+
+  # EVALUACIÓN
+  ganancia_helado = ganancia_venta(precio_ingresado, costo_ingresado)
+
+  # IMPRESIÓN
   print("Ganancia de esa venta:", ganancia_helado)
   ```
-- Idea clave: guardar el resultado no es un paso extra opcional — es lo que permite reutilizarlo más adelante en el programa.
+- Idea clave: esta regla general —definición, consulta, evaluación, impresión— ordena cualquier programa que use una función, y evita el error de usar un resultado antes de haberlo guardado.
 
 **Concepto 3: reutilizar el valor guardado**
 - Definición: una vez guardado en una variable, ese resultado puede usarse como parte de un cálculo posterior — no se "pierde" después de imprimirse.
@@ -458,4 +466,5 @@ print(ganancia_1)
 - **Los 4 ejercicios de la Independiente comparten el mismo patrón obligatorio** (guardar en variable → reutilizar en un cálculo posterior), en contextos distintos: biblioteca (Ej. 1, resta un descuento), radio escolar (Ej. 2, usa el valor guardado en una división), club de ajedrez (Ej. 3, combina el valor guardado con un condicional), Feria de Emprendimiento extendida a ciclo con acumulador (Ej. 4, desafío).
 - **Pistas desplegables ahora default siempre (no solo "donde aplica"), decisión tomada en esta misma sesión** — ver regla 15.3 del `CLAUDE.md` raíz, actualizada el 2026-08-19. Cada ejercicio de esta Independiente lleva al menos una.
 - **Actitud elegida: Método** — conecta directo con la idea de seguir siempre el mismo paso (guardar antes de usar) sin importar el caso particular, en vez de decidir caso a caso si conviene guardar el resultado.
+- **Concepto 2 destaca el patrón en 4 etiquetas — DEFINICIÓN / CONSULTA / EVALUACIÓN / IMPRESIÓN — que Diego ya venía usando en vivo para simplificar el procedimiento.** Se incorporó como comentarios explícitos en el código del ejemplo, mapeados a la función de la Feria, para que el "mismo orden siempre" (actitud Método) tenga una forma visual concreta y reconocible de la clase anterior. Se usan valores fijos en vez de `input()` real en este ejemplo del ICN (a diferencia de la Guiada/Independiente) para mantener la celda simple y ejecutable de una sola pasada.
 - **Ticket de Salida diseñado para cubrir ambos puntos de quiebre diagnosticados:** Pregunta 1 (caso `None`), Pregunta 2 (guardar y reutilizar dos resultados distintos), Pregunta 3 (el error real de no guardar en variable — `NameError` al intentar usar un nombre que nunca se creó).
