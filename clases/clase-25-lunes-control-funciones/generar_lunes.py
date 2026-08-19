@@ -66,6 +66,18 @@ def notebook(cells: list, colab_name: str) -> dict:
     }
 
 
+def bloque_pistas(pistas: list) -> str:
+    """Pistas colapsables `<details>` — 1-2 por ejercicio/ítem, ver regla 15.3 del CLAUDE.md."""
+    if not pistas:
+        return ""
+    multiple = len(pistas) > 1
+    bloques = []
+    for numero, pista in enumerate(pistas, start=1):
+        etiqueta = f"💡 Pista {numero} — {pista['titulo']}" if multiple else f"💡 Pista — {pista['titulo']}"
+        bloques.append(f"<details>\n<summary>{etiqueta}</summary>\n\n{pista['texto']}\n\n</details>")
+    return "\n\n".join(bloques) + "\n\n"
+
+
 def bloque_ejemplo(test: dict) -> str:
     """Formato visual de caso de prueba: mismo lenguaje que las evaluaciones."""
     entradas = "\n".join(test["stdin"])
@@ -193,6 +205,7 @@ def build_ejercitacion(data: dict) -> dict:
         cells.append(md_cell(
             f"### Ejercicio {numero} — {ex['title']}\n\n"
             f"{ex['statement_md']}\n\n"
+            f"{bloque_pistas(ex.get('pistas', []))}"
             f"**Resultado esperado:**\n\n{bloque_ejemplo(visible)}"
         ))
         cells.append(code_cell(f"# Tu solución — Ejercicio {numero}"))
@@ -249,6 +262,7 @@ def build_control(data: dict) -> dict:
         cells.append(md_cell(
             f"---\n\n## Ítem {item['id']} — {item['title']} ({item['pts']} pts)\n\n"
             f"{item['statement_md']}\n\n"
+            f"{bloque_pistas(item.get('pistas', []))}"
             f"**Ejemplo válido:**\n\n{bloque_ejemplo(visible)}"
         ))
         cells.append(code_cell(f"# Tu solución del Ítem {item['id']}"))

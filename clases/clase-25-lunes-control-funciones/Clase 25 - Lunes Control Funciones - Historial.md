@@ -60,3 +60,12 @@ Resultado al generar: **18/18 casos OK**, puntajes cuadrados (25 + 30 + 45 = 100
 
 - Corrección de las entregas reales tras dictar la clase (mismo flujo que Clase 23: extractor programático + rúbrica parcelada + Colabs de devolución en `EVALUACIONES-REVISADAS/CONTROLES/`).
 - Sigue pendiente definir **X** (controles eliminables al cierre del semestre) — no bloquea esta clase.
+
+## 2026-08-19 — Pistas desplegables agregadas (Ejercitación y Control)
+
+Diego fijó una regla permanente: de ahora en adelante siempre se agregan 1-2 pistas desplegables (`<details>`) por ejercicio, salvo en instrumentos con nota (Control/Evaluación), donde el default sigue siendo sin pistas y él avisa explícitamente, instancia por instancia, si quiere agregarlas — y confirmó que sí quiere para este Control en particular. Regla 15.3 del `CLAUDE.md` raíz actualizada con el alcance ampliado (aplica también a la `Ejercitación.ipynb` de un lunes estándar, no solo a la Práctica Independiente de una clase regular) y la excepción permanente de Control/Evaluación.
+
+- **Ejercitación** — 1 pista por ejercicio (3 en total): resta simple sin condicional (Ej. 1), guardar el ingreso antes de restar el gasto (Ej. 2), separar el cálculo del total bruto del cálculo del descuento (Ej. 3). El guiado no lleva pista (se resuelve en conjunto en clase).
+- **Control** — 1 pista en los Ítems 1 y 2 (mismo criterio que sus hermanos), 2 pistas en el Ítem 3 (el más difícil): separar el total bruto de la función, y usar `>=` en los límites de tramo.
+- `Propuesta.json` actualizado con el campo `pistas` en cada ejercicio/ítem; `generar_lunes.py` con el helper `bloque_pistas()`, insertado entre `statement_md` y el bloque de resultado esperado/ejemplo válido — mismo lugar canónico que usa `generar-colab-clase` para la Práctica Independiente.
+- Los 4 notebooks se regeneraron; `--check` sigue en verde (18/18 casos, 25+30+45=100 pts).
