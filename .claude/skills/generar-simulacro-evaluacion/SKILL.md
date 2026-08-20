@@ -11,6 +11,8 @@ Un Simulacro es una sesión de práctica formativa (sin nota) que se dicta 1-3 d
 
 Referencia real: `clases/clase-26-simulacro-ciclos/` (simulacro de `clase-27-evaluacion-ciclos`, diseñado y generado el 2026-08-20).
 
+**Nombrado de cara al estudiante: "Ejercitación", nunca "Simulacro" (vigente desde 2026-08-20).** Internamente (carpeta, `Spec.md`, `generar_*.py`, título del `Solucionario.ipynb`) seguimos llamándolo Simulacro — es el nombre de categoría que usa este skill y el resto del proyecto. Pero **ningún texto que vea el estudiante** (título del notebook, Objetivo/Propósito, campo "Tema de la clase de hoy" del Ticket de Salida, o cualquier otra celda) puede usar la palabra "simulacro" ni sus derivados ("simulamos", etc.) — se reemplaza por "Ejercitación"/"practicamos". El archivo del notebook de estudiante se llama `... - Ejercitación.ipynb`, no `... - Simulacro.ipynb`. Ver el punto "Artefactos y nombrado" más abajo para el detalle completo.
+
 ## Cuándo usar esta skill
 
 - Diego pide un "simulacro", "ensayo", "repaso estilo prueba" o "práctica antes de la evaluación" para una Evaluación individual sumativa ya planificada.
@@ -67,14 +69,14 @@ A diferencia de una clase regular (Haz Ahora → ICN → Guiada → Independient
 
 ## Artefactos y nombrado
 
-Carpeta `clases/clase-NN-simulacro-tema-breve/`, prefijo `Clase NN - Simulacro Tema - [Tipo]`:
+Carpeta `clases/clase-NN-simulacro-tema-breve/`, prefijo `Clase NN - Simulacro Tema - [Tipo]` — **excepto el notebook de estudiante, que usa `Tipo = Ejercitación`** (ver nota de nombrado de cara al estudiante, arriba):
 
 ```
 clases/
 └── clase-NN-simulacro-tema-breve/
     ├── Clase NN - Simulacro Tema - Spec.md
     ├── generar_simulacro.py                              # fuente de verdad — no editar los .ipynb a mano
-    ├── Clase NN - Simulacro Tema - Simulacro.ipynb        # estudiantes, sin ninguna solución
+    ├── Clase NN - Simulacro Tema - Ejercitación.ipynb     # estudiantes, sin ninguna solución — nunca dice "simulacro"
     ├── Clase NN - Simulacro Tema - Solucionario.ipynb     # revisión conjunta, sin rúbrica de puntaje
     ├── Clase NN - Simulacro Tema - Ticket de Salida.pptx
     ├── Clase NN - Simulacro Tema - Ticket de Salida Respuestas.json
@@ -88,9 +90,11 @@ clases/
    - Una sección `### N. Ticket de Salida` con bloques `**Pregunta N:**` en el mismo formato que usa una clase regular (código opcional, enunciado, alternativas `- A: ...`..`- D: ...`, `**Respuesta correcta:**`, `**Justificación:**`) — es el formato que espera `crear_ppt_ticket.py`.
    - Una sección final "Decisiones de diseño relevantes" con la tabla de diferenciación ítem por ítem (mismo contenido validado en el chat), para que quede registrado por qué cada ítem no es un clon.
 
-2. **`generar_simulacro.py`** — escribe un script propio por simulacro (mismo patrón que `generar_evaluacion.py` de una Evaluación): los datos de cada ítem (narrativa, código con blanco/bug, solución, pista, resultado esperado, qué se revisó) van embebidos como diccionarios de Python, y el script construye ambos `.ipynb` con `nbformat` (`new_notebook`, `new_markdown_cell`, `new_code_cell`). No intentes reusar el parser de `generar-colab-clase/crear_colab.py` — está hecho para el formato de 5 pasos de una clase regular (Haz Ahora/ICN/Guiada/Independiente/Ticket) y no calza con la estructura del Simulacro.
+2. **`generar_simulacro.py`** — escribe un script propio por simulacro (mismo patrón que `generar_evaluacion.py` de una Evaluación): los datos de cada ítem (narrativa, código con blanco/bug, solución, pista, resultado esperado, qué se revisó) van embebidos como diccionarios de Python, y el script construye ambos `.ipynb` con `nbformat` (`new_notebook`, `new_markdown_cell`, `new_code_cell`). No intentes reusar el parser de `generar-colab-clase/crear_colab.py` — está hecho para el formato de 5 pasos de una clase regular (Haz Ahora/ICN/Guiada/Independiente/Ticket) y no calza con la estructura del Simulacro. Al construir el notebook de estudiante, la función que lo arma se llama `construir_ejercitacion()` (no `construir_simulacro()`) y su título/Propósito/campo del Ticket nunca usan la palabra "simulacro" — ver `clase-26-simulacro-ciclos/generar_simulacro.py` como plantilla ya ajustada.
 
-3. **`Ticket de Salida.pptx`** — no lo generes a mano. Reutiliza el script ya existente de la skill `generar-ppt-clase`:
+3. **Autochequeo en cada ítem/ejercicio, salvo la Guiada (default desde 2026-08-20).** Mismo mecanismo reutilizable que usa `clase-21b-continue-break` (`_revisar()` re-ejecuta la celda de solución del estudiante buscándola por un comentario-marca en la primera línea, y compara su output línea por línea contra una lista de líneas esperadas). Una sola celda de configuración `🔧 Verificador automático` antes de la Sección 1, y una función/llamada `verificar_*()` por cada ítem de Sección 1 y cada ejercicio de Sección 2 — la Práctica Guiada queda excluida (se resuelve en conjunto en clase). Si un ejercicio usa `input()`, el verificador imprime antes de re-ejecutar qué valores ingresar (los mismos del Ejemplo 1 del enunciado). Ver `clase-26-simulacro-ciclos/generar_simulacro.py` (funciones `VERIFICADOR_PREAMBULO`, `_funcion_verificador`, `construir_celda_verificador_config`) como plantilla lista para copiar/adaptar.
+
+4. **`Ticket de Salida.pptx`** — no lo generes a mano. Reutiliza el script ya existente de la skill `generar-ppt-clase`:
    ```bash
    python .claude/skills/generar-ppt-clase/crear_ppt_ticket.py \
      "clases/clase-NN-simulacro-tema-breve/Clase NN - Simulacro Tema - Spec.md" \
@@ -98,7 +102,7 @@ clases/
    ```
    En Windows, si la consola trunca la ejecución por un `UnicodeEncodeError` al imprimir el emoji final, no es un fallo real — el `.pptx` ya se guardó antes de ese print. Verifica abriendo el archivo (`python -c "from pptx import Presentation; print(len(Presentation('...').slides))"`) en vez de confiar en el mensaje de consola.
 
-4. **`Ticket de Salida Respuestas.json`** — mismo formato que cualquier clase (`clase`, `tema`, `respuestas` con claves `"Respuestas a ticket [1]"`..`"[4]"`, `"No se preguntó"` en las que sobren).
+5. **`Ticket de Salida Respuestas.json`** — mismo formato que cualquier clase (`clase`, `tema`, `respuestas` con claves `"Respuestas a ticket [1]"`..`"[4]"`, `"No se preguntó"` en las que sobren).
 
 ## Verificación antes de entregar
 
@@ -106,4 +110,4 @@ Ejecuta **todas** las soluciones (Guiada, cada ítem de Sección 1 en su versió
 
 ## Cierre de etapa
 
-Sigue el protocolo estándar de commit + push del `CLAUDE.md` raíz, con una excepción: **`Ticket de Salida.pptx` y `Ticket de Salida Respuestas.json` no se pushean hasta después de dictada la sesión** (mismo criterio que rige para el Ticket de Salida de cualquier clase — el repo es público). El resto de la carpeta (`Spec.md`, `generar_simulacro.py`, `Simulacro.ipynb`, `Solucionario.ipynb`, `Historial.md`) sí se puede subir apenas Diego apruebe.
+Sigue el protocolo estándar de commit + push del `CLAUDE.md` raíz, con una excepción: **`Ticket de Salida.pptx` y `Ticket de Salida Respuestas.json` no se pushean hasta después de dictada la sesión** (mismo criterio que rige para el Ticket de Salida de cualquier clase — el repo es público). El resto de la carpeta (`Spec.md`, `generar_simulacro.py`, `Ejercitación.ipynb`, `Solucionario.ipynb`, `Historial.md`) sí se puede subir apenas Diego apruebe.

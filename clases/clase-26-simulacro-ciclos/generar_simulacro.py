@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-generar_simulacro.py — Genera Simulacro.ipynb (estudiantes) y
-Solucionario.ipynb (revisión conjunta) para la Clase 26 - Simulacro Ciclos.
+generar_simulacro.py — Genera Ejercitación.ipynb (estudiantes, con
+autochequeo en cada ítem/ejercicio salvo la Guiada) y Solucionario.ipynb
+(revisión conjunta) para la Clase 26 - Simulacro Ciclos.
 
 Fuente de verdad: los datos embebidos en este script (mismo patrón que
 generar_evaluacion.py). No editar los .ipynb generados a mano — si hay que
@@ -99,6 +100,9 @@ SECCION_1 = [
         "codigo_solucion": '''for minuto in range(0, 22, 3):
     print("Anuncio en el minuto", minuto)
 ''',
+        "verificador_esperadas": [
+            f"Anuncio en el minuto {minuto}" for minuto in range(0, 22, 3)
+        ],
         "que_se_reviso": "Que el `range()` use los 3 parámetros (inicio, fin, paso) y que el fin quede uno más allá del minuto 21 para no perderlo.",
     },
     {
@@ -128,6 +132,7 @@ SECCION_1 = [
         print("Atracción en mantenimiento: N°", atraccion)
         break
 ''',
+        "verificador_esperadas": ["Atracción en mantenimiento: N° 9"],
         "que_se_reviso": "Que el `break` quede dentro del `if` (para cortar justo al encontrar la atracción) y no fuera de él.",
     },
     {
@@ -160,6 +165,11 @@ SECCION_1 = [
         numero_actividad = actividad
         print("Cabaña", cabana, "- Actividad", numero_actividad)
 ''',
+        "verificador_esperadas": [
+            f"Cabaña {cabana} - Actividad {actividad}"
+            for cabana in range(1, 4)
+            for actividad in range(1, 5)
+        ],
         "que_se_reviso": "Que el `print()` quede indentado dentro del ciclo interno — el bug lo dejaba a la altura del ciclo externo, así que solo corría una vez por cabaña.",
     },
     {
@@ -196,6 +206,7 @@ for numero_flashcard in range(1, 9):
 
 print("Repaso rápido:", contador_repaso_rapido)
 ''',
+        "verificador_esperadas": ["Repaso rápido: 4"],
         "que_se_reviso": "Que el incremento del contador quede después del `if`/`continue`, para que el `continue` sí lo proteja de contar las flashcards impares.",
     },
 ]
@@ -249,6 +260,10 @@ for bloque in range(1, bloques_totales + 1):
 print("Total de minutos de la feria:", total_minutos_feria)
 print("Bloques que superaron los 24 minutos:", bloques_sobre_24)
 ''',
+        "verificador_esperadas": [
+            "Total de minutos de la feria: 80",
+            "Bloques que superaron los 24 minutos: 1",
+        ],
         "que_se_reviso": "Que el acumulador de minutos del bloque se reinicie en cada vuelta del ciclo externo, y que el contador de bloques se evalúe recién después de cerrar el ciclo interno.",
     },
     {
@@ -299,6 +314,8 @@ for sensor in range(6):
 print("Lecturas normales:", normales)
 print("Lecturas de alerta:", alerta)
 ''',
+        "verificador_esperadas": ["Lecturas normales: 4", "Lecturas de alerta: 2"],
+        "verificador_aviso_input": "Para revisar, ingresa las mismas temperaturas del Ejemplo 1: 20, 30, 18, 28, 15, 22",
         "que_se_reviso": "Que cada lectura sume a una sola de las dos categorías (no a un acumulador de suma) y que los límites 18 y 28 cuenten como normales.",
     },
 ]
@@ -381,15 +398,117 @@ def pre(texto):
 
 
 # =====================================================================
-# SIMULACRO.IPYNB (estudiantes)
+# AUTOCHEQUEO — mismo mecanismo de clase-21b-continue-break: re-ejecuta
+# la celda de solución del estudiante y compara su output línea por línea.
 # =====================================================================
 
-def construir_simulacro():
+VERIFICADOR_PREAMBULO = '''#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+import io, re, contextlib, unicodedata
+from IPython import get_ipython
+
+def _fuente_solucion(marca):
+    for fuente in reversed(get_ipython().user_ns.get("In", [])):
+        if fuente.strip().startswith(marca):
+            return fuente
+    return None
+
+def _normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto.lower())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", texto).strip()
+
+def _revisar(marca, esperadas):
+    fuente = _fuente_solucion(marca)
+    if fuente is None:
+        print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
+        print("   su primera línea:", marca)
+        return
+    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+        print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
+        return
+    salida = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(salida):
+            exec(compile(fuente, "<tu solución>", "exec"), {"__name__": "__main__"})
+    except Exception as error:
+        print("❌ Tu programa se detuvo con un error:", type(error).__name__, "-", error)
+        return
+    obtenidas = [l.rstrip() for l in salida.getvalue().splitlines() if l.strip()]
+    correctas, primer_error = 0, None
+    for i, esperada in enumerate(esperadas):
+        obtenida = obtenidas[i] if i < len(obtenidas) else ""
+        if _normalizar(obtenida) == _normalizar(esperada):
+            correctas += 1
+        elif primer_error is None:
+            primer_error = (i + 1, esperada, obtenida)
+    print("Líneas correctas:", correctas, "de", len(esperadas))
+    if primer_error is None and len(obtenidas) == len(esperadas):
+        print("✅ ¡Perfecto! Tu programa imprime exactamente lo que se pedía.")
+        return
+    if len(obtenidas) > len(esperadas):
+        print("⚠️ Tu programa imprimió", len(obtenidas) - len(esperadas), "línea(s) de más.")
+    if primer_error:
+        numero, esperada, obtenida = primer_error
+        print("❌ La primera diferencia está en la línea", numero)
+        print("   Se esperaba:", esperada)
+        print("   Tu programa dio:", obtenida if obtenida else "(nada)")
+'''
+
+
+def _funcion_verificador(nombre, marca, esperadas, aviso_input=None):
+    lineas = [f"def {nombre}():"]
+    if aviso_input:
+        lineas.append(f'    print("{aviso_input}")')
+    lineas.append(f"    esperadas = {esperadas!r}")
+    lineas.append(f'    _revisar("{marca}", esperadas)')
+    return "\n".join(lineas)
+
+
+def marca_item(item_id):
+    return f"# Ítem {item_id}"
+
+
+def nombre_funcion_item(item_id):
+    return f"verificar_item_{item_id.replace('.', '')}"
+
+
+def marca_ejercicio(numero):
+    return f"# Ejercicio {numero}"
+
+
+def nombre_funcion_ejercicio(numero):
+    return f"verificar_ejercicio_{numero}"
+
+
+def construir_celda_verificador_config():
+    partes = [VERIFICADOR_PREAMBULO]
+    for item in SECCION_1:
+        partes.append(_funcion_verificador(
+            nombre_funcion_item(item["id"]),
+            marca_item(item["id"]),
+            item["verificador_esperadas"],
+        ))
+    for i, ej in enumerate(DESARROLLO, 1):
+        partes.append(_funcion_verificador(
+            nombre_funcion_ejercicio(i),
+            marca_ejercicio(i),
+            ej["verificador_esperadas"],
+            ej.get("verificador_aviso_input"),
+        ))
+    return "\n\n".join(partes) + "\n"
+
+
+# =====================================================================
+# EJERCITACIÓN.IPYNB (estudiantes)
+# =====================================================================
+
+def construir_ejercitacion():
     nb = new_notebook()
     cells = []
 
     cells.append(new_markdown_cell(
-        "# 📝 Simulacro — Ciclos\n\n"
+        "# 📝 Ejercitación — Ciclos\n\n"
         "**Fecha:** martes 25 de agosto, 2026\n\n"
         "📅 **Fecha:** ___________________________  \n"
         "👤 **Nombre:** ___________________________  \n"
@@ -402,8 +521,8 @@ def construir_simulacro():
         "en problemas estilo evaluación, para llegar con seguridad a la "
         "Evaluación de Ciclos del jueves.\n\n"
         "## 💡 Propósito\n\n"
-        "> Hoy simulamos las condiciones de la evaluación del jueves: mismos "
-        "tipos de problemas, mismo trabajo individual, pero sin nota. "
+        "> Hoy practicamos bajo las condiciones de la evaluación del jueves: "
+        "mismos tipos de problemas, mismo trabajo individual, pero sin nota. "
         "Practicar bajo esa presión controlada, y revisar juntos los errores "
         "al final, es lo que te permite llegar con más confianza al día real."
     ))
@@ -436,22 +555,29 @@ def construir_simulacro():
     cells.append(new_markdown_cell(
         "---\n\n## 🔥 Sección 1 — Ítems cortos\n\n"
         "Dos ítems de armar código + dos de arreglar un bug. Completa "
-        "directamente en la misma celda de código."
+        "directamente en la misma celda de código — no borres su primera "
+        "línea de comentario (`# Ítem 1A.1`, etc.), el verificador automático "
+        "la usa para encontrar tu código."
     ))
+    cells.append(new_code_cell(construir_celda_verificador_config()))
     for item in SECCION_1:
         md = f"---\n\n**Ítem {item['id']}** — {item['tipo']}\n\n{item['narrativa']}\n"
         cells.append(new_markdown_cell(md))
-        cells.append(new_code_cell(item["codigo_estudiante"].rstrip() + "\n"))
+        codigo = marca_item(item["id"]) + "\n" + item["codigo_estudiante"]
+        cells.append(new_code_cell(codigo.rstrip() + "\n"))
         md2 = item["pista"] + "\n\n"
         md2 += "📤 <em>El programa imprime:</em>\n\n" + pre(item["esperado"])
         cells.append(new_markdown_cell(md2))
+        cells.append(new_code_cell(f"{nombre_funcion_item(item['id'])}()\n"))
 
     # Sección 2
     cells.append(new_markdown_cell(
         "---\n\n## 💻 Sección 2 — Desarrollo\n\n"
         "Programas completos desde una narrativa. El Ejercicio 2 pide datos "
         "con `input()` — lee bien el tipo de dato que se espera antes de "
-        "escribir tu código."
+        "escribir tu código. Tampoco borres la primera línea de comentario "
+        "(`# Ejercicio N`) de cada celda: el verificador la necesita para "
+        "ubicar tu solución."
     ))
     for i, ej in enumerate(DESARROLLO, 1):
         md = f"---\n\n## 🎯 Ejercicio {i} — {ej['titulo']}\n\n{ej['narrativa']}\n\n"
@@ -464,6 +590,7 @@ def construir_simulacro():
             md += ej["resultado_tabla"] + "\n"
         cells.append(new_markdown_cell(md))
         cells.append(new_code_cell(f"# Ejercicio {i}\n\n\n"))
+        cells.append(new_code_cell(f"{nombre_funcion_ejercicio(i)}()\n"))
 
     # Ticket de Salida — solo el aviso, nunca las preguntas
     cells.append(new_markdown_cell(
@@ -472,7 +599,7 @@ def construir_simulacro():
         "respuesta en silencio y anótala — recién al terminar la última "
         "completamos juntos el Formulario:\n\n"
         f"[{FORM_URL}]({FORM_URL})\n\n"
-        "En \"Tema de la clase de hoy\" escribe: `simulacro ciclos`."
+        "En \"Tema de la clase de hoy\" escribe: `ejercitación ciclos`."
     ))
 
     # Cierre
@@ -544,16 +671,19 @@ def construir_solucionario():
 # =====================================================================
 
 def main():
-    nb_simulacro = construir_simulacro()
+    nb_ejercitacion = construir_ejercitacion()
     nb_solucionario = construir_solucionario()
 
-    ruta_simulacro = CARPETA / "Clase 26 - Simulacro Ciclos - Simulacro.ipynb"
+    ruta_ejercitacion = CARPETA / "Clase 26 - Simulacro Ciclos - Ejercitación.ipynb"
+    ruta_simulacro_antigua = CARPETA / "Clase 26 - Simulacro Ciclos - Simulacro.ipynb"
     ruta_solucionario = CARPETA / "Clase 26 - Simulacro Ciclos - Solucionario.ipynb"
 
-    nbformat.write(nb_simulacro, ruta_simulacro)
+    nbformat.write(nb_ejercitacion, ruta_ejercitacion)
     nbformat.write(nb_solucionario, ruta_solucionario)
+    if ruta_simulacro_antigua.exists():
+        ruta_simulacro_antigua.unlink()
 
-    print("OK", ruta_simulacro.name, len(nb_simulacro.cells), "celdas")
+    print("OK", ruta_ejercitacion.name, len(nb_ejercitacion.cells), "celdas")
     print("OK", ruta_solucionario.name, len(nb_solucionario.cells), "celdas")
 
 
