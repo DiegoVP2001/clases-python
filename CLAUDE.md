@@ -405,6 +405,8 @@ Vigente desde el **lunes 2026-08-17** (primera aplicación: Clase 23). Reemplaza
 
 Cuando Diego pida crear una evaluación individual sumativa (ver el plan de 3 evaluaciones del curso — Condicionales, Ciclos, Funciones+Strings+Listas), cada una vive en su propia carpeta `clases/clase-NN-evaluacion-tema/` y se genera con un script propio `generar_evaluacion.py` (mismo patrón script-based del resto del proyecto: fuente de verdad, nunca editar los `.ipynb` a mano — regenerar el script si hay que cambiar algo).
 
+**Simulacro previo (opcional, on-demand):** si Diego pide un repaso estilo prueba 1-3 días antes de esta evaluación, activa la skill `generar-simulacro-evaluacion` — requiere que este mismo Spec ya exista y esté aprobado, porque el simulacro se diseña ítem por ítem a partir de él (mismo concepto, operación distinta en cada uno). Referencia real: `clases/clase-26-simulacro-ciclos/` (simulacro de esta misma evaluación de Ciclos).
+
 **Tres notebooks, no dos:**
 
 1. **`Clase NN - Evaluación Tema - Evaluación.ipynb`** — para estudiantes, se rinde el día de la evaluación. Sin ninguna solución.
