@@ -41,3 +41,19 @@ Diego pidió dos cambios sobre el notebook de estudiante:
 2. **Autochequeo en cada ítem/ejercicio, excepto la Guiada.** Se reutilizó el mecanismo ya validado en `clase-21b-continue-break` (`_revisar()` + `verificar_*()`, re-ejecuta la celda de solución del estudiante buscándola por un comentario-marca en la primera línea y compara su output línea por línea). Se agregó una sola celda de configuración `🔧 Verificador automático` antes de la Sección 1, y una función/llamada por cada uno de los 6 ítems (1A.1, 1A.2, 1B.1, 1B.2, Ejercicio 1, Ejercicio 2). El Ejercicio 2 (usa `input()`) avisa al estudiante que ingrese los mismos datos del Ejemplo 1 al re-ejecutar. La Práctica Guiada quedó excluida a propósito (se resuelve en conjunto en clase, no de forma autónoma).
 
 **Implementación:** todo se hizo editando `generar_simulacro.py` (fuente de verdad) y regenerando — no se tocó ningún `.ipynb` a mano. Se verificó el mecanismo simulando el historial `In[]` de IPython fuera de Jupyter: una solución correcta del Ítem 1A.1 da "✅ ¡Perfecto!", la versión con bug sin corregir del Ítem 1B.1 detecta la primera línea que no coincide, y el Ejercicio 2 con los inputs del Ejemplo 1 también valida correcto.
+
+## 2026-08-21 — Versión impresa (antitrampa) generada y aprobada
+
+Diego pidió una versión en papel de la Ejercitación, aplicando el mismo sistema de diseño ya aprobado ese mismo día sobre la Evaluación de Ciclos (Clase 27) — ver esa Historial y la skill nueva `generar-instrumento-impreso`.
+
+**Artefacto:** `Clase 26 - Simulacro Ciclos - Ejercitación Impresa.tex/.pdf`, 6 páginas.
+
+**Diferencias de contenido respecto al patrón de la Evaluación (no de estilo):**
+- Sin tabla de puntaje (esta sesión no lleva nota) — la portada usa el espacio libre para una caja "Objetivo y propósito de la sesión" en vez de la caja de actitud.
+- Se agregó la Práctica Guiada como su propia página (narrativa + pista + resultado esperado + caja para escribir el programa acordado en clase) — en el Colab se resuelve en conjunto, en papel cada estudiante igual tiene dónde copiar el código acordado.
+- Sin verificador automático (no aplica en papel, no hay cómputo) y sin Ticket de Salida (sigue siendo del día, proyectado en la tele — independiente del papel).
+- Sin cierre de actitud (esa pregunta es exclusiva de instrumentos con nota — Evaluación/Control).
+
+**Assets reutilizados** desde `clase-27-evaluacion-ciclos/`: `logo.png` y `foto_ciclo_for_portada.png` (la imagen de la regla de indentación, genérica y no específica de esa evaluación).
+
+**Estado de publicación:** no se ha hecho commit ni push de este archivo — pendiente de decisión de Diego (ver mensaje de cierre de la sesión).
