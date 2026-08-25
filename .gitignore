@@ -23,6 +23,19 @@ clases/clase-17-ejercitacion-condicionales/Clase 15 - Ejercitación Evaluación-
 # Contienen código, puntajes y notas de estudiantes reales: notebooks de entrega,
 # codigo_extraido_*.json, puntajes_*.json, los Colabs de devolución y las décimas.
 # Regla del CLAUDE.md: nada de revision/ se sube sin autorización explícita de Diego.
-clases/**/revision/
+# El patrón cubre también variantes como "revision-consolidada/" (resúmenes que
+# combinan varias fuentes de puntajes reales) — no solo la carpeta "revision/" exacta.
+clases/**/revision*/
 clases/**/Evaluación2-Estudiantes/
 clases/**/Evaluación 2 - Estudiantes.zip
+
+# Entregas crudas de controles de estudiantes (mismo criterio que arriba: nombres
+# reales y código de estudiantes, no se sube al repo público).
+clases/**/controles_estudiantes/
+clases/**/controles/
+
+# Carpeta compartida de devoluciones personalizadas (Pruebas y Controles revisados).
+# Mismo criterio de privacidad que revision/: nombres reales, código, puntajes y
+# notas de estudiantes reales. Se comparte con los estudiantes por fuera de git
+# (Drive), nunca por el repo público.
+clases/EVALUACIONES-REVISADAS/
