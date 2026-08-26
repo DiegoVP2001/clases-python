@@ -1,0 +1,378 @@
+{
+  "class_number": "25",
+  "class_topic": "Lunes Control Funciones",
+  "folder": "clase-25-lunes-control-funciones",
+  "fecha": "2026-08-24",
+  "formato": "lunes estandar (ejercitacion + control + revision)",
+  "clases_foco": [
+    "N°24a — Funciones (def, parámetros, return)",
+    "N°24b — Funciones (uso del retorno: guardar y reutilizar)"
+  ],
+  "objetivo": "Consolidar el patrón definir → llamar → guardar el resultado de una función en una variable → reutilizarlo con `return`, sin confundirlo con lo que muestra un `print()`, antes del control individual de la segunda parte de la clase.",
+
+  "actitud": {
+    "nombre": "Confianza en el proceso",
+    "proposito_md": "Confiar en el proceso es apoyarte en un método que ya practicaste, en vez de improvisar cuando el tiempo apura. Hoy lo practicas siguiendo siempre el mismo orden al usar una función — definir, consultar los datos, evaluar guardando el resultado en una variable, y recién ahí imprimir o reutilizar ese resultado — incluso en ejercicios cortos donde tentaría saltárselo.",
+    "frase_control_md": "**En este control, confía en el proceso.** Sigue siempre el mismo orden — define, consulta los datos, evalúa guardando el resultado en una variable, e imprime — no te lo saltes aunque el ítem se vea corto o distinto a los anteriores."
+  },
+
+  "ejercitacion": {
+    "titulo": "Ejercitación — Funciones: return, guardar y reutilizar",
+    "duracion_min": 45,
+    "modalidad_nota": "No lleva nota: lo que se evalúa hoy es el Control de la segunda parte.",
+    "recordatorio_md": "💡 **Dos cosas que conviene tener frescas antes de partir:**\n\n- Solo `return` entrega el valor de vuelta a quien llama la función; un `print()` dentro de la función lo muestra en pantalla, pero no lo deja disponible para usarlo después — si tu función no tiene `return`, lo que guardes será `None`.\n- El orden **definir → consultar los datos → evaluar la función guardando su resultado en una variable → imprimir** ordena cualquier programa que use una función. No te lo saltes aunque el ejercicio sea corto.",
+
+    "guided_exercise": {
+      "slug": "ahorro-viaje-valparaiso",
+      "title": "Ahorro para el viaje de estudios a Valparaíso",
+      "statement_md": "El curso ahorra mes a mes para el viaje de estudios a Valparaíso. Cada mes se aporta un monto fijo que se suma a lo que ya tenían ahorrado, y quieren saber cuánto habrán juntado después de dos meses seguidos de aporte.\n\n**El programa debe:**\n- Definir una función que reciba el monto ya ahorrado y el aporte mensual, y devuelva el nuevo total con `return`.\n- Pedir el monto ahorrado hasta ahora y el aporte mensual.\n- Llamar la función para calcular el ahorro después del primer mes y guardarlo en una variable, mostrando ese total.\n- Volver a llamar la misma función, usando ese resultado guardado como nuevo punto de partida, para calcular el ahorro después del segundo mes y mostrarlo.",
+      "solution_py": "def total_ahorro(monto_actual, aporte_mensual):\n    return monto_actual + aporte_mensual\n\nmonto_inicial = int(input(\"¿Cuánto tienen ahorrado hasta ahora? \"))\naporte = int(input(\"¿Cuánto aportan cada mes? \"))\n\nahorro_mes1 = total_ahorro(monto_inicial, aporte)\nprint(\"Ahorro después del primer mes:\", ahorro_mes1)\n\nahorro_mes2 = total_ahorro(ahorro_mes1, aporte)\nprint(\"Ahorro después del segundo mes:\", ahorro_mes2)",
+      "por_que_este_guiado": "Hace explícito el patrón guardar→reutilizar de una forma nueva: el resultado de la primera llamada se convierte en el argumento de la segunda, en vez de sumarse con otro resultado independiente — asienta que 'reutilizar' no significa una sola forma fija de usar el valor guardado.",
+      "tests": [
+        {
+          "name": "Caso típico",
+          "stdin": ["50000", "8000"],
+          "stdout": "Ahorro después del primer mes: 58000\nAhorro después del segundo mes: 66000",
+          "hidden": false
+        },
+        {
+          "name": "Sin ahorro previo",
+          "stdin": ["0", "5000"],
+          "stdout": "Ahorro después del primer mes: 5000\nAhorro después del segundo mes: 10000",
+          "hidden": true
+        }
+      ]
+    },
+
+    "exercises": [
+      {
+        "slug": "estacionamiento-bicicletas",
+        "title": "Estacionamiento de bicicletas del liceo",
+        "hermano": "Ítem 1 del Control",
+        "concepto": "función con return, guardar en variable e imprimir (sin condicional)",
+        "statement_md": "El estacionamiento de bicicletas del liceo tiene una capacidad fija de espacios, y el encargado quiere saber rápido cuántos cupos quedan libres cada recreo, sin contar a mano.\n\n**El programa debe:**\n- Definir una función que reciba la capacidad total del estacionamiento y la cantidad de bicicletas ya estacionadas, y devuelva cuántos cupos quedan libres con `return`.\n- Pedir esos dos datos.\n- Llamar la función, guardar el resultado en una variable, y mostrar cuántos cupos quedan libres.",
+        "solution_py": "def cupos_bici_libres(capacidad_total, bicicletas_estacionadas):\n    return capacidad_total - bicicletas_estacionadas\n\ncapacidad = int(input(\"¿Cuál es la capacidad del estacionamiento? \"))\nestacionadas = int(input(\"¿Cuántas bicicletas hay estacionadas? \"))\n\ncupos_libres = cupos_bici_libres(capacidad, estacionadas)\nprint(\"Cupos libres:\", cupos_libres)",
+        "pistas": [
+          {
+            "titulo": "Resta simple",
+            "texto": "No necesitas ningún condicional acá: los cupos libres son la capacidad total menos las bicicletas ya estacionadas."
+          }
+        ],
+        "tests": [
+          {
+            "name": "Caso típico",
+            "stdin": ["30", "22"],
+            "stdout": "Cupos libres: 8",
+            "hidden": false
+          },
+          {
+            "name": "Estacionamiento lleno",
+            "stdin": ["30", "30"],
+            "stdout": "Cupos libres: 0",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "slug": "rifa-taller-teatro",
+        "title": "Rifa del taller de teatro",
+        "hermano": "Ítem 2 del Control",
+        "concepto": "guardar el resultado de una función y reutilizarlo en un cálculo posterior",
+        "statement_md": "El taller de teatro organiza una rifa para juntar fondos: venden números a un precio fijo, y al final del día quieren saber cuánto les queda de ganancia después de pagar los premios.\n\n**El programa debe:**\n- Definir una función que reciba la cantidad de números vendidos y el precio de cada número, y devuelva el ingreso total con `return`.\n- Pedir esos dos datos, llamar la función y guardar el ingreso en una variable.\n- Pedir cuánto gastaron en premios y restarle ese gasto al ingreso guardado para obtener la ganancia.\n- Mostrar la ganancia final.",
+        "solution_py": "def ingreso_rifa(numeros_vendidos, precio_numero):\n    return numeros_vendidos * precio_numero\n\nvendidos = int(input(\"¿Cuántos números se vendieron? \"))\nprecio = int(input(\"¿Cuál es el precio de cada número? \"))\ningreso = ingreso_rifa(vendidos, precio)\n\ngasto_premios = int(input(\"¿Cuánto gastaron en premios? \"))\nganancia = ingreso - gasto_premios\nprint(\"Ganancia de la rifa:\", ganancia)",
+        "pistas": [
+          {
+            "titulo": "El gasto se resta al final, fuera de la función",
+            "texto": "Primero calcula el ingreso con la función y guárdalo en una variable; el gasto en premios se pide y se resta después, no dentro de la función."
+          }
+        ],
+        "tests": [
+          {
+            "name": "Caso típico",
+            "stdin": ["50", "1000", "20000"],
+            "stdout": "Ganancia de la rifa: 30000",
+            "hidden": false
+          },
+          {
+            "name": "Otros montos",
+            "stdin": ["30", "500", "10000"],
+            "stdout": "Ganancia de la rifa: 5000",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "slug": "muestra-cortometrajes",
+        "title": "Muestra de cortometrajes del taller audiovisual",
+        "hermano": "Ítem 3 del Control",
+        "concepto": "función con if/elif/else que retorna un descuento, combinado con un total calculado aparte",
+        "statement_md": "El taller de audiovisual vende entradas para su muestra de cortometrajes, y ofrece un descuento total según la cantidad de entradas que compra un mismo grupo: mientras más entradas, mayor el descuento.\n\n**El programa debe:**\n- Definir una función que reciba la cantidad de entradas compradas y devuelva el descuento que corresponde con `return`: \\$4.000 de descuento si compran 8 o más entradas, \\$1.500 si compran entre 4 y 7, y sin descuento si compran menos de 4.\n- Pedir la cantidad de entradas y el precio de cada una, y calcular aparte el total bruto (cantidad por precio).\n- Llamar la función, guardar el descuento, y restárselo al total bruto para obtener el total final.\n- Mostrar el total final a pagar.",
+        "solution_py": "def descuento_por_entradas(entradas_compradas):\n    if entradas_compradas >= 8:\n        return 4000\n    elif entradas_compradas >= 4:\n        return 1500\n    return 0\n\nentradas = int(input(\"¿Cuántas entradas compra el grupo? \"))\nprecio_unitario = int(input(\"¿Cuál es el precio de cada entrada? \"))\ntotal_bruto = entradas * precio_unitario\n\ndescuento = descuento_por_entradas(entradas)\ntotal_final = total_bruto - descuento\nprint(\"Total a pagar:\", total_final)",
+        "pistas": [
+          {
+            "titulo": "Dos cálculos por separado",
+            "texto": "El total bruto (entradas por precio) se calcula aparte, fuera de la función; la función solo te entrega el descuento, que restas al final."
+          },
+          {
+            "titulo": "Los tramos son \"o más\"",
+            "texto": "Usa `>=` para los límites de 8 y 4 entradas, no `>`."
+          }
+        ],
+        "tests": [
+          {
+            "name": "Tramo alto",
+            "stdin": ["8", "1000"],
+            "stdout": "Total a pagar: 4000",
+            "hidden": false
+          },
+          {
+            "name": "Sin descuento",
+            "stdin": ["3", "1000"],
+            "stdout": "Total a pagar: 3000",
+            "hidden": true
+          },
+          {
+            "name": "Tramo medio, borde exacto",
+            "stdin": ["4", "1000"],
+            "stdout": "Total a pagar: 2500",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  },
+
+  "control": {
+    "titulo": "Control — Funciones: return, guardar y reutilizar",
+    "duracion_min": 20,
+    "puntaje_total": 100,
+    "exigencia": 0.5,
+    "modalidad_md": "**Trabajo individual y con nota.** Escribe tu programa en la celda de cada ítem y entrega este notebook por Classroom antes de que termine la clase. No se pide que uses nombres de variable en particular: se revisa lo que tu programa hace, no cómo lo escribiste.",
+    "cierre_actitud": {
+      "pregunta_familia": 2,
+      "pregunta_md": "Cuenta un momento en que aplicaste confianza en el proceso durante este control. ¿Qué habría pasado con tu resultado si no lo hacías justo ahí?"
+    },
+    "items": [
+      {
+        "id": "1",
+        "title": "Piscina municipal de Isla de Maipo en verano",
+        "concepto": "función con return, guardar en variable e imprimir",
+        "pts": 25,
+        "statement_md": "La piscina municipal de Isla de Maipo tiene un aforo máximo fijado por seguridad, y el guardavidas quiere saber al instante cuántos cupos quedan disponibles cada vez que entra o sale gente, sin tener que calcularlo a mano.\n\n**El programa debe:**\n- Definir una función que reciba el aforo máximo y la cantidad de personas que están dentro, y devuelva cuántos cupos quedan disponibles con `return`.\n- Pedir esos dos datos.\n- Llamar la función, guardar el resultado en una variable, y mostrar cuántos cupos quedan disponibles.",
+        "que_evalua": "Definir una función simple con `return`, guardarla en una variable y usar ese valor guardado para imprimir — sin caer en llamar la función directo dentro del `print()` ni en usar `print()` en vez de `return` dentro de la función.",
+        "solution_py": "def cupos_disponibles(aforo_maximo, personas_dentro):\n    return aforo_maximo - personas_dentro\n\naforo = int(input(\"¿Cuál es el aforo máximo de la piscina? \"))\npersonas = int(input(\"¿Cuántas personas hay dentro ahora? \"))\n\ncupos = cupos_disponibles(aforo, personas)\nprint(\"Cupos disponibles:\", cupos)",
+        "pistas": [
+          {
+            "titulo": "Resta simple, sin condicional",
+            "texto": "Los cupos disponibles son el aforo máximo menos las personas que están dentro ahora."
+          }
+        ],
+        "tests": [
+          {
+            "name": "Caso típico",
+            "stdin": ["60", "45"],
+            "stdout": "Cupos disponibles: 15",
+            "hidden": false
+          },
+          {
+            "name": "Piscina llena",
+            "stdin": ["60", "60"],
+            "stdout": "Cupos disponibles: 0",
+            "hidden": true
+          },
+          {
+            "name": "Otros montos",
+            "stdin": ["40", "5"],
+            "stdout": "Cupos disponibles: 35",
+            "hidden": true
+          }
+        ],
+        "componentes": [
+          {
+            "nombre": "Definición de la función con return",
+            "pts": 8,
+            "completo": "función definida con `def`, dos parámetros, `return aforo_maximo - personas_dentro`",
+            "parcial": "5 — usa `print()` en vez de `return` dentro de la función (el resultado guardado afuera sería `None`)",
+            "cero": "no define función, o la resta está invertida/incorrecta"
+          },
+          {
+            "nombre": "Lectura y conversión de los dos datos",
+            "pts": 5,
+            "completo": "ambos `input()` convertidos a número",
+            "parcial": "3 — los pide pero sin convertir a número",
+            "cero": "valores fijos escritos a mano"
+          },
+          {
+            "nombre": "Llamado y guardado en variable",
+            "pts": 7,
+            "completo": "llama la función con los dos argumentos y guarda el resultado en una variable antes de usarlo",
+            "parcial": "4 — llama la función directo dentro del `print()`, sin guardarla en una variable",
+            "cero": "no llama la función, o llama una función distinta"
+          },
+          {
+            "nombre": "Salida con el valor guardado",
+            "pts": 5,
+            "completo": "imprime el valor guardado, con etiqueta clara",
+            "parcial": "3 — imprime sin etiqueta o con etiqueta ambigua",
+            "cero": "no imprime, o imprime un valor fijo"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "title": "Bingo solidario del Centro de Padres",
+        "concepto": "guardar el resultado de una función y reutilizarlo en un cálculo posterior",
+        "pts": 30,
+        "statement_md": "El Centro de Padres organiza un bingo solidario: venden cartones a un precio fijo, y al cerrar la jornada quieren saber cuánto les quedó de ganancia después de pagar el arriendo del salón.\n\n**El programa debe:**\n- Definir una función que reciba la cantidad de cartones vendidos y el precio de cada cartón, y devuelva el ingreso total con `return`.\n- Pedir esos dos datos, llamar la función y guardar el ingreso en una variable.\n- Pedir cuánto costó el arriendo del salón y restárselo al ingreso guardado para obtener la ganancia.\n- Mostrar la ganancia final.",
+        "que_evalua": "Guardar el resultado de una función en una variable y reutilizarlo en un cálculo posterior (no solo imprimirlo directo) — el punto de quiebre central de la clase de uso del retorno.",
+        "solution_py": "def ingreso_bingo(cartones_vendidos, precio_carton):\n    return cartones_vendidos * precio_carton\n\ncartones = int(input(\"¿Cuántos cartones se vendieron? \"))\nprecio_carton = int(input(\"¿Cuál es el precio de cada cartón? \"))\ningreso = ingreso_bingo(cartones, precio_carton)\n\narriendo = int(input(\"¿Cuánto costó el arriendo del salón? \"))\nganancia = ingreso - arriendo\nprint(\"Ganancia del bingo:\", ganancia)",
+        "pistas": [
+          {
+            "titulo": "Guarda el ingreso antes de restar el arriendo",
+            "texto": "Primero calcula y guarda el ingreso total (cartones por precio) en una variable; el arriendo se pide y se resta después, no dentro de la función."
+          }
+        ],
+        "tests": [
+          {
+            "name": "Caso típico",
+            "stdin": ["80", "500", "15000"],
+            "stdout": "Ganancia del bingo: 25000",
+            "hidden": false
+          },
+          {
+            "name": "Otros montos",
+            "stdin": ["40", "1000", "10000"],
+            "stdout": "Ganancia del bingo: 30000",
+            "hidden": true
+          },
+          {
+            "name": "Ganancia exactamente cero",
+            "stdin": ["20", "500", "10000"],
+            "stdout": "Ganancia del bingo: 0",
+            "hidden": true
+          }
+        ],
+        "componentes": [
+          {
+            "nombre": "Definición de la función con return",
+            "pts": 7,
+            "completo": "función definida con dos parámetros, `return cartones_vendidos * precio_carton`",
+            "parcial": "4 — usa `print()` en vez de `return` (el ingreso guardado sería `None` y la resta posterior falla)",
+            "cero": "no define función, o multiplica mal"
+          },
+          {
+            "nombre": "Lectura y conversión de los datos de venta",
+            "pts": 5,
+            "completo": "ambos `input()` de cartones y precio convertidos a número",
+            "parcial": "3 — sin convertir",
+            "cero": "valores fijos"
+          },
+          {
+            "nombre": "Llamado y guardado del ingreso",
+            "pts": 6,
+            "completo": "llama la función y guarda el resultado en una variable antes de usarlo",
+            "parcial": "3 — llama la función directo dentro de la resta sin guardarla antes (funciona pero no evidencia el paso de guardar)",
+            "cero": "no llama la función"
+          },
+          {
+            "nombre": "Lectura del arriendo y reutilización del ingreso guardado",
+            "pts": 8,
+            "completo": "pide el arriendo y lo resta al ingreso guardado (la variable, no un nuevo llamado)",
+            "parcial": "5 — vuelve a llamar la función para 'recalcular' en vez de reutilizar la variable ya guardada, aunque el resultado final sea correcto",
+            "cero": "no resta el arriendo, o resta al revés"
+          },
+          {
+            "nombre": "Salida con la ganancia final",
+            "pts": 4,
+            "completo": "imprime la ganancia guardada, con etiqueta clara",
+            "parcial": "2 — etiqueta ambigua",
+            "cero": "no imprime, o imprime el ingreso bruto en vez de la ganancia"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "title": "Pedido de arcilla para el taller de cerámica",
+        "concepto": "función con if/elif/else que retorna un descuento, combinado con un total calculado aparte",
+        "pts": 45,
+        "statement_md": "El taller de cerámica compra arcilla por kilo para todo el semestre, y el proveedor ofrece un descuento total según la cantidad de kilos que pidan de una sola vez: mientras más kilos, mayor el descuento.\n\n**El programa debe:**\n- Definir una función que reciba la cantidad de kilos pedidos y devuelva el descuento que corresponde con `return`: \\$5.000 de descuento si piden 20 kilos o más, \\$2.000 si piden entre 10 y 19, y sin descuento si piden menos de 10.\n- Pedir la cantidad de kilos y el precio de cada kilo, y calcular aparte el total bruto (kilos por precio).\n- Llamar la función, guardar el descuento, y restárselo al total bruto para obtener el total final.\n- Mostrar el total final a pagar.",
+        "que_evalua": "Combinar una función con retorno condicional (3 tramos) con un cálculo aparte (total bruto), reutilizando el valor guardado de la función en una resta posterior — el ítem de cierre, que junta el patrón de guardar/reutilizar de 24b con el retorno condicional de 24a.",
+        "solution_py": "def descuento_por_kilos(kilos_pedidos):\n    if kilos_pedidos >= 20:\n        return 5000\n    elif kilos_pedidos >= 10:\n        return 2000\n    return 0\n\nkilos = int(input(\"¿Cuántos kilos de arcilla piden? \"))\nprecio_kilo = int(input(\"¿Cuál es el precio por kilo? \"))\ntotal_bruto = kilos * precio_kilo\n\ndescuento = descuento_por_kilos(kilos)\ntotal_final = total_bruto - descuento\nprint(\"Total a pagar:\", total_final)",
+        "pistas": [
+          {
+            "titulo": "El total bruto no depende de la función",
+            "texto": "Calcula kilos por precio por fuera de la función; la función solo decide el descuento según los kilos."
+          },
+          {
+            "titulo": "Los tramos son \"o más\"",
+            "texto": "Usa `>=` para los límites de 20 y 10 kilos, no `>`."
+          }
+        ],
+        "tests": [
+          {
+            "name": "Tramo alto",
+            "stdin": ["20", "2000"],
+            "stdout": "Total a pagar: 35000",
+            "hidden": false
+          },
+          {
+            "name": "Sin descuento, justo bajo el borde",
+            "stdin": ["9", "2000"],
+            "stdout": "Total a pagar: 18000",
+            "hidden": true
+          },
+          {
+            "name": "Tramo medio, borde exacto",
+            "stdin": ["10", "1500"],
+            "stdout": "Total a pagar: 13000",
+            "hidden": true
+          }
+        ],
+        "componentes": [
+          {
+            "nombre": "Cálculo del total bruto (aparte de la función)",
+            "pts": 7,
+            "completo": "multiplica kilos por precio por fuera de la función",
+            "parcial": "4 — lo calcula dentro de la función en vez de aparte, pero el resultado final es correcto",
+            "cero": "no calcula el total bruto, o lo calcula mal"
+          },
+          {
+            "nombre": "Lectura y conversión de los datos",
+            "pts": 5,
+            "completo": "ambos `input()` convertidos a número",
+            "parcial": "3 — sin convertir",
+            "cero": "valores fijos"
+          },
+          {
+            "nombre": "Función con retorno condicional (3 tramos)",
+            "pts": 12,
+            "completo": "`if/elif/else` (o equivalente) que devuelve 5000 / 2000 / 0 según el tramo correcto, con los límites en el lugar correcto (≥20, ≥10, resto)",
+            "parcial": "8 — límites desplazados en 1 (usa `>` en vez de `>=`) · 5 — lógica de tramos correcta pero usa `print()` en vez de `return`",
+            "cero": "no depende de los kilos, o siempre devuelve el mismo valor"
+          },
+          {
+            "nombre": "Guardado del descuento antes de restarlo",
+            "pts": 8,
+            "completo": "guarda el resultado de la función en una variable antes de usarlo en la resta",
+            "parcial": "5 — llama la función directo dentro de la resta sin guardarla antes",
+            "cero": "no llama la función"
+          },
+          {
+            "nombre": "Resta del descuento al total bruto",
+            "pts": 8,
+            "completo": "resta el descuento guardado al total bruto",
+            "parcial": "4 — suma en vez de restar, o resta al revés",
+            "cero": "no combina ambos valores"
+          },
+          {
+            "nombre": "Salida con el total final",
+            "pts": 5,
+            "completo": "imprime el total final con etiqueta clara",
+            "parcial": "3 — etiqueta ambigua",
+            "cero": "no imprime, o imprime el total bruto sin descuento"
+          }
+        ]
+      }
+    ]
+  }
+}
