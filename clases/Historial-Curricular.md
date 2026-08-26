@@ -40,18 +40,19 @@
 | **27** | **🎯 Evaluación individual — Ciclos** (for, range, for anidado, while, break/continue) | `clase-27-evaluacion-ciclos` | N/A — evaluación sumativa individual | Spec + Evaluación + Solucionario Docente + Solucionario Estudiantes generados y verificados — no pusheado, se rinde el 27-ago | **2026-08-27** | OA1, OA3 |
 | **28** | **Strings — indexing y slicing** (acotada a acceso por índice + rebanadas — ver Prompt.md) | `clase-28-strings` | N°21, N°22 — Cadenas de texto + índices de cadenas (recorte, ver nota de renumeración 2026-08-26) | Colab de clase aprobado (ejercicios/PPT pendientes) | **2026-08-31** | OA2, OA3 |
 | **29** | **Strings — recorriendo texto con for** (recorrido directo, con índice, combinado con slicing — clase nueva) | `clase-29-strings-recorrido` | N°22 — Índices de cadenas de texto (recorrido, separado de N°28) | Spec aprobada | **2026-09-01** | OA2, OA3 |
-| **30** | **Strings — métodos y f-strings** | `clase-30-strings-avanzado` | N°23, N°24 — Métodos de cadenas + formateo f-strings | Planificada | **2026-09-03** | OA2, OA3 |
-| **31** | **🔁⚡ Lunes estándar — Control Strings** (ejercitación en parejas sorteadas + control individual con nota) | `clase-31-lunes-control-strings` | N/A — consolidación (clases foco: N°28, N°29, N°30 — las 3 clases de Strings de la semana) | Planificada | **2026-09-07** | OA2, OA3 |
-| **32** | **Listas — creación y acceso** | `clase-32-listas` | N°25, N°26 — Listas + índices de listas | Planificada | **2026-09-08** | OA1, OA2, OA3 |
-| **33** | **Listas — iteración y métodos** | `clase-33-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | sep 2026 | OA1, OA3 |
-| **34** | **Listas + funciones — integración** | `clase-34-integracion` | N/A — clase de integración | Planificada | sep 2026 | OA1, OA3 |
-| **34.5** | **🎯 Evaluación individual — Funciones + Strings + Listas** | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | 2026-10-01 | OA1, OA2, OA3 |
-| **35** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
-| **36** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
-| **37** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
-| **38** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
-| **39** | **Proyecto OA5 — Git + Vercel** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
-| **40** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | 2026-10-27 | OA4, OA5, OA6 |
+| **30** | **Strings — métodos para modificar y separar texto** (recorte de la ficha N°23 — excluye búsqueda, ver nota de renumeración 2026-08-26) | `clase-30-strings-metodos` | N°23 — Métodos de cadenas de texto (parcial: `upper()`/`lower()`/`title()`/`strip()`/`replace()`/`split()` + operadores `+`/`*`) | Diseño en curso — actitud (Orden) y contexto (Los Mellis) acordados, falta aprobar objetivo/estructura | **2026-09-03** | OA2, OA3 |
+| **31** | **🔁⚡ Lunes estándar — Control Strings** (ejercitación en parejas sorteadas + control individual con nota) | `clase-31-lunes-control-strings` | N/A — consolidación (clases foco: N°28, N°29 y N°30 — no incluye N°32, que se dicta después) | Planificada | **2026-09-07** | OA2, OA3 |
+| **32** | **Strings — búsqueda de texto** (`in`, `find()` — separada de N°30, ver nota de renumeración 2026-08-26) | `clase-32-strings-busqueda` | N°23 — Métodos de cadenas de texto (parcial: búsqueda) | Planificada | **2026-09-08** | OA2, OA3 |
+| **33** | **Listas — creación y acceso** | `clase-33-listas` | N°25, N°26 — Listas + índices de listas | Planificada | **2026-09-10** | OA1, OA2, OA3 |
+| **34** | **Listas — iteración y métodos** | `clase-34-listas-metodos` | N°27, N°28 — Iteración de listas + métodos (append, pop, index) | Planificada | sep 2026 | OA1, OA3 |
+| **35** | **Listas + funciones — integración** | `clase-35-integracion` | N/A — clase de integración | Planificada | sep 2026 | OA1, OA3 |
+| **35.5** | **🎯 Evaluación individual — Funciones + Strings + Listas** | *(pendiente de generar)* | N/A — evaluación sumativa individual | Planificada | 2026-10-01 | OA1, OA2, OA3 |
+| **36** | **Proyecto OA4 — análisis de datos (sesión 1)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
+| **37** | **Proyecto OA4 — análisis de datos (sesión 2)** | `proyecto-analisis-datos` | N/A — proyecto | Planificada | oct 2026 | OA1, OA3, OA4 |
+| **38** | **Proyecto OA5 — prompting con IA** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **39** | **Proyecto OA5 — HTML generado, revisión y ajuste** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **40** | **Proyecto OA5 — Git + Vercel** | `proyecto-app-ia` | N/A — proyecto | Planificada | oct 2026 | OA1, OA5, OA6 |
+| **41** | **Proyecto OA5 — presentación final de apps** | `proyecto-app-ia` | N/A — proyecto | Planificada | 2026-10-27 | OA4, OA5, OA6 |
 
 ## Próxima clase disponible
 
@@ -70,10 +71,13 @@
 | Jueves | 2026-08-27 | N° 27 — 🎯 Evaluación individual — Ciclos (carpeta `clase-27-evaluacion-ciclos`) — Spec + Evaluación + Solucionario Docente + Solucionario Estudiantes generados y verificados (12/12 soluciones), sin push hasta rendida |
 | **Lunes** | **2026-08-31** | **N° 28 — Strings: indexing y slicing** (`clase-28-strings`). Ocupa el día que antes tenía la revisión formativa de la Evaluación de Ciclos — **esa revisión se corre a otro día, aún sin fecha (pendiente, Diego la define al terminar de revisar el calendario)**. Colab de clase aprobado 2026-08-26 (escenario: patente/Registro Civil), falta Ejercicios/PPT principal |
 | Martes | 2026-09-01 | N° 29 — Strings: recorriendo texto con for (`clase-29-strings-recorrido`, clase nueva). Spec aprobada 2026-08-26 (escenario: continuación de patente/estacionamiento de la Clase 28), falta generar Colab/Ejercicios/PPT |
-| Jueves | 2026-09-03 | N° 30 — Strings: métodos y f-strings (`clase-30-strings-avanzado`, renombrada desde `clase-29-strings-avanzado`) |
-| **Lunes** | **2026-09-07** | **N° 31 — 🔁⚡ Lunes estándar: Control Strings.** Clases foco: N°28, N°29 y N°30 (las 3 clases de Strings de la semana) |
-| Martes | 2026-09-08 | N° 32 — Listas: creación y acceso (`clase-32-listas`) |
+| Jueves | 2026-09-03 | N° 30 — Strings: métodos para modificar y separar texto (`clase-30-strings-metodos`, recortada 2026-08-26 — ya no incluye búsqueda ni f-strings, ver nota de renumeración). Actitud (Orden) y contexto (Los Mellis, escenario único de toda la clase) ya acordados, falta aprobar objetivo/estructura de 5 pasos |
+| **Lunes** | **2026-09-07** | **N° 31 — 🔁⚡ Lunes estándar: Control Strings.** Clases foco: N°28, N°29 y N°30 (ya no incluye N°32, que se dicta después) |
+| Martes | 2026-09-08 | N° 32 — Strings: búsqueda de texto, `in`/`find()` (`clase-32-strings-busqueda`, clase nueva 2026-08-26 — antes este día tenía Listas, corrida al jueves 10-sep) |
+| Jueves | 2026-09-10 | N° 33 — Listas: creación y acceso (`clase-33-listas`, corrida desde el martes 08-sep — ese día quedaba libre) |
 
+> **Renumeración 2026-08-26 (segunda pasada — se divide N°30 en dos, f-strings queda pendiente sin número):** en la misma sesión de diseño de la Clase 30 (originalmente "métodos y f-strings"), Diego decidió que modificar/separar texto y buscar texto son habilidades distintas y merecen sesiones separadas. La Clase N°30 se recorta a solo los métodos que modifican/separan texto (`upper()`, `lower()`, `title()`, `strip()`, `replace()`, `split()`, operadores `+`/`*`), y la búsqueda (`in`, `find()`) se traslada a una clase nueva, **N°32 — Strings: búsqueda de texto** (`clase-32-strings-busqueda`), dictada después del lunes estándar N°31 (que por lo tanto solo cubre N°28, N°29 y N°30, no N°32). El formateo con f-strings (Picuino N°24) se sacó por completo del currículo cercano: es una forma de escritura distinta que Diego prefiere ver en una sesión separada más adelante, **sin fecha ni número asignado todavía** (mismo tratamiento que quedó "valores por omisión" tras el rediseño de Clase 24b). Todo lo que antes ocupaba N°32 en adelante corrió **+1**: Listas 32→**33** y 33→**34**, Integración 34→**35**, Evaluación Funciones+Strings+Listas 34.5→**35.5**, Proyecto OA4 35-36→**36-37**, Proyecto OA5 37-40→**38-41**. Carpeta `clase-30-strings-avanzado` renombrada a `clase-30-strings-metodos`; carpeta `clase-32-listas` renombrada a `clase-33-listas` (fecha corrida de martes 08-sep a jueves 10-sep, que había quedado libre). Ver los `Prompt.md` de `clase-30-strings-metodos` y `clase-32-strings-busqueda` para el detalle completo.
+>
 > **Renumeración 2026-08-26 (se inserta una clase nueva de Strings + su lunes estándar, y el bloque completo se corre al 31-ago):** en la sesión de diseño de la Clase 28 se decidió sacar el recorrido de cadenas con `for` (y las actividades de Picuino N°22 que quedaban sin usar: deletrea con/sin índices, impresión progresiva, ventana móvil) a su propia clase, para no diluir el foco de N°28 en índice/rebanada. Se insertó **N°29 — Strings: recorriendo texto con for** (nueva, `clase-29-strings-recorrido`) entre indexing/slicing y métodos/f-strings, corriendo +1 todo lo que venía después: métodos/f-strings 29→**30**, Listas 30→**32** y 31→**33**, Integración 32→**34**, Evaluación F+S+L 32.5→**34.5**, Proyecto OA4 33-34→**35-36**, Proyecto OA5 35-38→**37-40**. Además se decidió juntar el control de las 3 clases de Strings en un solo lunes estándar nuevo, **N°31 — 🔁⚡ Lunes estándar: Control Strings** (`clase-31-lunes-control-strings`), insertado entre N°30 y Listas — de ahí el segundo salto (Listas pasa de 30 a 32, no a 31). De paso, el bloque de Strings completo se adelantó una semana en el calendario: N°28 pasa de martes 01-sep a **lunes 31-ago**, ocupando el día que tenía la revisión formativa de la Evaluación de Ciclos (esa revisión queda pendiente de reagendar, sin fecha todavía). Carpeta `clase-29-strings-avanzado` renombrada a `clase-30-strings-avanzado`. Ver los `Prompt.md` de `clase-28-strings`, `clase-29-strings-recorrido` y `clase-30-strings-avanzado` para el detalle completo de qué contenido quedó en cada clase.
 
 > **Rediseño 2026-08-19 — Clase 24b cambia de contenido (deja de ser Picuino N°20):** tras dictar Clase 24a, Diego diagnosticó que los estudiantes no habían consolidado el modelo mental base de funciones (definir vs. llamar, parámetro vs. argumento, `return` vs. `print`, usar el valor devuelto) — se trababan desde el Ejercicio 1 de la Independiente. Se decidió sacar valores por omisión (Picuino N°20) de la Clase 24b y usar esa sesión para reforzar `def`+parámetros+`return` (patrón "guardar en variable antes de usar" + caso `None`). Valores por omisión queda **postergado sin fecha fija**, a diseñar como clase nueva más adelante cuando el patrón de funciones esté consolidado — no ocupa ningún N° real todavía. Carpeta renombrada de `clase-24b-funciones-valores-omision` a `clase-24b-funciones-uso-retorno`; los artefactos ya generados del diseño anterior (Colab, Solucionario, Ticket de Salida) se eliminaron y se regeneran desde el nuevo Spec. Ver `Clase 24b - Funciones - Uso del Retorno - Historial.md` para el detalle completo del diagnóstico y las iteraciones de diseño.
@@ -98,7 +102,7 @@
 
 > La clase 15 (`clase-15-diagnostico`) es una evaluación externa de medio semestre para Enseña Chile, ya generada (docx estudiante + solucionario). Es **meramente diagnóstica — no suma nota**. No sigue el flujo de 5 pasos de `disenar-clase` — no requiere spec ni Colab/PPT propios.
 
-> **Evaluaciones individuales sumativas acordadas (2026-07-13):** tres en total, una por bloque de contenidos — Condicionales (N°19, post-17/18, rendida 2026-07-28), Ciclos (N°22.5, post-22), y Funciones+Strings+Listas (N°29.5, post-29, aprovechando que esa clase ya integra listas+funciones). Fechas fijadas en el Plan de Cierre: Ciclos el 2026-08-27, F+S+L el 2026-10-01. Ninguna de las dos tiene notebook generado todavía.
+> **Evaluaciones individuales sumativas acordadas (2026-07-13, números actualizados por las renumeraciones posteriores):** tres en total, una por bloque de contenidos — Condicionales (N°19, post-17/18, rendida 2026-07-28), Ciclos (N°27, post-22, rendida 2026-08-27), y Funciones+Strings+Listas (N°35.5, post-35, aprovechando que esa clase ya integra listas+funciones). Fecha fijada en el Plan de Cierre para F+S+L: 2026-10-01. Sin notebook generado todavía.
 
 ## Bloques temáticos del año
 
@@ -111,11 +115,11 @@
 | Iteración | 16, 20–23 | Bucles for y while (incluye la ayudantía de refuerzo N°21 y el lunes estándar N°23) | OA1, OA3 |
 | Abstracción | 24a–25 | Funciones (def, parámetros, return) + lunes estándar Control Funciones | OA1, OA3 |
 | Repaso + evaluación Ciclos | 26–27 | Simulacro + Evaluación individual Ciclos | OA1, OA3 |
-| Datos textuales | 28–31 | Strings (indexing/slicing, recorrido con for, métodos/f-strings) + lunes estándar Control Strings | OA2, OA3 |
-| Datos colección | 32–34 | Listas (creación/acceso, iteración/métodos, integración con funciones) | OA1, OA2, OA3 |
-| Evaluación integradora | 34.5 | Evaluación individual Funciones + Strings + Listas | OA1, OA2, OA3 |
-| Proyecto análisis | 35–36 | Análisis estadístico con Python | OA1, OA3, **OA4** |
-| Proyecto app | 37–40 | App móvil con IA + Git | OA1, **OA4, OA5, OA6** |
+| Datos textuales | 28–32 | Strings (indexing/slicing, recorrido con for, métodos para modificar/separar + su lunes estándar de control, búsqueda de texto in/find) — f-strings queda pendiente sin clase asignada | OA2, OA3 |
+| Datos colección | 33–35 | Listas (creación/acceso, iteración/métodos, integración con funciones) | OA1, OA2, OA3 |
+| Evaluación integradora | 35.5 | Evaluación individual Funciones + Strings + Listas | OA1, OA2, OA3 |
+| Proyecto análisis | 36–37 | Análisis estadístico con Python | OA1, OA3, **OA4** |
+| Proyecto app | 38–41 | App móvil con IA + Git | OA1, **OA4, OA5, OA6** |
 
 ## Ayudantías realizadas (registro histórico, previo a 2026-07-28)
 

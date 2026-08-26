@@ -69,8 +69,8 @@ Total mínimo de contenido nuevo + evaluaciones + proyectos: **15 sesiones** (Fu
 
 Revisando la columna OAs de `Historial-Curricular.md`, todas las clases dictadas hasta ahora citan **OA1, OA2 o OA3** (más transversales OAd/OAa). Los que nunca han aparecido son:
 
-- **OA4** — Aplicaciones y análisis mediante procesadores de análisis estadístico → vive en el Proyecto de análisis de datos (N°35–36).
-- **OA5** — Apps para dispositivos móviles → vive en el Proyecto app con IA (N°37–40). (OA6, uso responsable de TIC, viaja como transversal dentro de ese mismo proyecto — por ejemplo, una conversación breve sobre uso responsable de IA al generar código.)
+- **OA4** — Aplicaciones y análisis mediante procesadores de análisis estadístico → vive en el Proyecto de análisis de datos (N°36–37).
+- **OA5** — Apps para dispositivos móviles → vive en el Proyecto app con IA (N°38–41). (OA6, uso responsable de TIC, viaja como transversal dentro de ese mismo proyecto — por ejemplo, una conversación breve sobre uso responsable de IA al generar código.)
 
 Es decir: **los dos OAs pendientes ya tenían proyecto asignado — el problema no es que falte diseñarlos, es que el calendario que los alojaba (nov-dic) ya no existe para 4to medio.** Hay que recomprimirlos en las semanas SM41–SM44 (6 de octubre al 29 de octubre), con ambos cursos todavía juntos.
 
@@ -152,25 +152,25 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 |---|---|---|---|
 | 31-ago | Lun | 🆕 | **N°28 — Strings: indexing y slicing** (acotada a acceso por índice + rebanadas — ver `clase-28-strings/Prompt.md`). Ocupa el día que tenía la revisión formativa de la Evaluación de Ciclos — **esa revisión se corre a otro día, aún sin fecha (pendiente)** |
 | 01-sep | Mar | 🆕 | N°29 — Strings: recorriendo texto con for (clase nueva — recorrido directo, con índice, combinado con slicing; ver `clase-29-strings-recorrido/Prompt.md`) |
-| 03-sep | Jue | 🆕 | N°30 — Strings: métodos y f-strings |
+| 03-sep | Jue | 🆕 | N°30 — Strings: métodos para modificar y separar texto (recortada 2026-08-26 — ya no incluye búsqueda ni f-strings, ver `clase-30-strings-metodos/Prompt.md`) |
 
 ### SM37 — Strings aplicado → Listas
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
-| 07-sep | Lun | 🔁⚡ | **N°31 — Lunes estándar** — ejercitación + control + revisión sobre las 3 clases de Strings de la semana (N°28, N°29, N°30) |
-| 08-sep | Mar | 🆕 | N°32 — Listas (creación y acceso) — adelantada desde el 10-sep |
-| 10-sep | Jue | ⚠️ *(por definir)* | Queda libre tras el ajuste del 2026-08-26. Candidato natural: N°33 — Listas (iteración y métodos), pero no está confirmado — pendiente de retomar en otra sesión |
+| 07-sep | Lun | 🔁⚡ | **N°31 — Lunes estándar** — ejercitación + control + revisión sobre las 3 clases de Strings de la semana (N°28, N°29, N°30 — no incluye N°32, que se dicta después) |
+| 08-sep | Mar | 🆕 | N°32 — Strings: búsqueda de texto (`in`, `find()` — clase nueva 2026-08-26, separada de N°30, ver `clase-32-strings-busqueda/Prompt.md`). Antes este día tenía Listas, corrida al 10-sep |
+| 10-sep | Jue | 🆕 | N°33 — Listas: creación y acceso (`clase-33-listas`, corrida desde el 08-sep) |
 
 ### SM38 — semana corta, pre-Fiestas Patrias
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
-| 14-sep | Lun | ⚠️ *(por definir)* | Pendiente de re-planificar tras el ajuste del 2026-08-26 — originalmente lunes estándar sobre Listas creación/acceso, pero esa clase ya se movió al 08-sep |
-| 15-sep | Mar | ⚠️ *(por definir)* | Pendiente — originalmente N°33 (numeración vieja: N°31), Listas iteración y métodos |
-| 17-sep | Jue ⚠️ | ⚠️ *(por definir)* | Pendiente — originalmente N°34 (numeración vieja: N°32), Listas + funciones integración. Sigue siendo el día incierto de la semana, independiente de este ajuste |
+| 14-sep | Lun | ⚠️ *(por definir)* | Pendiente de re-planificar tras el ajuste del 2026-08-26 — originalmente lunes estándar sobre Listas creación/acceso, pero esa clase ya se movió al 10-sep |
+| 15-sep | Mar | ⚠️ *(por definir)* | Pendiente — Listas: iteración y métodos, ahora **N°34** (numeración anterior de hoy: N°33; antes de eso, N°31) |
+| 17-sep | Jue ⚠️ | ⚠️ *(por definir)* | Pendiente — Listas + funciones integración, ahora **N°35** (numeración anterior de hoy: N°34; antes de eso, N°32). Sigue siendo el día incierto de la semana, independiente de este ajuste |
 
-> **Pendiente 2026-08-26:** el 10-sep en adelante (resto de SM37 + todo SM38) no se re-planificó en esta sesión — solo se resolvió hasta el 08-sep (N°32, Listas creación/acceso). Retomar antes de diseñar N°33 en adelante, considerando que el ajuste ya consumió el margen que existía antes del feriado de Fiestas Patrias (21-27 sep) y que la Evaluación F+S+L (N°34.5) sigue fija el 01-oct.
+> **Pendiente 2026-08-26 (actualizado, segunda pasada del mismo día):** el 08-sep y el 10-sep ya quedaron resueltos en esta segunda pasada (N°32 búsqueda de texto, N°33 Listas creación/acceso — ver `Historial-Curricular.md`, nota "Renumeración 2026-08-26 (segunda pasada)"). Lo que sigue sin re-planificar es **14-sep en adelante** (resto de SM38): Listas iteración/métodos (N°34) y Listas+funciones integración (N°35) no tienen fecha confirmada. Retomar antes de diseñar N°34 en adelante, considerando que el margen antes del feriado de Fiestas Patrias (21-27 sep) sigue igual de ajustado y que la Evaluación F+S+L (ahora **N°35.5**) sigue fija el 01-oct.
 
 ### SM39 — 🚫 feriado completo (21–27 sep) — sin clases
 
@@ -179,18 +179,18 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 28-sep | Lun | 🎮 | Kahoot de reactivación (no punitivo) — Strings + Listas, para detectar qué se olvidó en 2 semanas sin clases |
-| 29-sep | Mar | 🆕 / 📘 | **Si N°34 no se dictó el 17-sep:** dictarlo aquí. **Si ya se dictó:** clase de aplicación — Listas + funciones integrada, problemas combinados como repaso final |
-| 01-oct | Jue | 🎯 | **Evaluación individual — Funciones + Strings + Listas (N°34.5)** |
+| 29-sep | Mar | 🆕 / 📘 | **Si N°35 no se dictó el 17-sep:** dictarlo aquí. **Si ya se dictó:** clase de aplicación — Listas + funciones integrada, problemas combinados como repaso final |
+| 01-oct | Jue | 🎯 | **Evaluación individual — Funciones + Strings + Listas (N°35.5)** |
 
-> Este es el punto donde el plan absorbe la incertidumbre del jueves 17-sep sin generar atraso en cascada ni tocar ningún lunes: pase lo que pase esa semana, la evaluación N°34.5 se mantiene fija el 1 de octubre. **Números actualizados 2026-08-26 para calzar con la renumeración de esa fecha en `Historial-Curricular.md`** — el contenido exacto de SM38/SM40 (qué va en 10-sep, 14-sep, 15-sep, 17-sep) sigue pendiente de re-planificar (ver nota arriba en SM37/SM38); solo se corrigieron las etiquetas N° para que no queden inconsistentes con la tabla maestra.
+> Este es el punto donde el plan absorbe la incertidumbre del jueves 17-sep sin generar atraso en cascada ni tocar ningún lunes: pase lo que pase esa semana, la evaluación N°35.5 se mantiene fija el 1 de octubre. **Números actualizados 2026-08-26 para calzar con la renumeración de esa fecha en `Historial-Curricular.md`** (dos pasadas el mismo día — ver esa nota) — el contenido exacto de SM38/SM40 (qué va en 14-sep, 15-sep, 17-sep) sigue pendiente de re-planificar (ver nota arriba en SM38); solo se corrigieron las etiquetas N° para que no queden inconsistentes con la tabla maestra.
 
 ### SM41 — arranca Proyecto OA4
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 05-oct | Lun | — | Revisión formativa de la Evaluación F+S+L |
-| 06-oct | Mar | 🚧 | N°35 — Proyecto OA4 sesión 1: **cada grupo elige su fuente de datos** — encuesta propia al curso o dataset externo real (datos.gob.cl, INE, Kaggle) —, primera exploración con `pandas` |
-| 08-oct | Jue | 🚧 | N°36 — Proyecto OA4 sesión 2: análisis completo con `pandas` + gráfico con `matplotlib` (reemplaza la idea de gráfico ASCII) + mini-presentación de hallazgos en parejas |
+| 06-oct | Mar | 🚧 | N°36 — Proyecto OA4 sesión 1: **cada grupo elige su fuente de datos** — encuesta propia al curso o dataset externo real (datos.gob.cl, INE, Kaggle) —, primera exploración con `pandas` |
+| 08-oct | Jue | 🚧 | N°37 — Proyecto OA4 sesión 2: análisis completo con `pandas` + gráfico con `matplotlib` (reemplaza la idea de gráfico ASCII) + mini-presentación de hallazgos en parejas |
 
 > **Decisión 2026-08-19 (reemplaza la pregunta abierta que tenía este documento):** OA4 usa **pandas + matplotlib** como librerías nuevas — pandas encaja literal con "procesadores de análisis estadístico" (OA4) para leer/filtrar/agrupar los datos, matplotlib para visualizarlos con un gráfico real. Dato: propio (encuesta) o externo, **a elección de cada grupo** — mismo motor de análisis para ambos casos.
 >
@@ -201,15 +201,15 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 12-oct | Lun | 🚫 | **Feriado — Encuentro de Dos Mundos.** Sin clase. Se pierde sin afectar el resto del calendario (OA5 no dependía de este día). |
-| 13-oct | Mar | 🚧 | N°37 — Proyecto OA5 sesión 1: prompting con IA, definir la app |
-| 15-oct | Jue | 🚧 | N°38 — Proyecto OA5 sesión 2: HTML generado, revisión y ajuste |
+| 13-oct | Mar | 🚧 | N°38 — Proyecto OA5 sesión 1: prompting con IA, definir la app |
+| 15-oct | Jue | 🚧 | N°39 — Proyecto OA5 sesión 2: HTML generado, revisión y ajuste |
 
 ### SM43 — reflexión, construir y publicar
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 19-oct | Lun | 💬 | **Sesión de IA responsable e impacto** — casi sin computador, discusión + lápiz y papel: sesgos de los modelos, alucinaciones (actividad "detective de alucinaciones" con respuestas reales de un chatbot), impacto ambiental/energético, impacto laboral, privacidad de lo que se le entrega a un chatbot. Reemplaza el "tiempo de estudio guiado" que tenía este día — decisión 2026-08-19, se hace justo antes de que el curso profundice en construir con IA. Le da cuerpo real al OA6 transversal, que antes solo era una mención de paso. |
-| 20-oct | Mar | 🚧 | N°39 — Proyecto OA5 sesión 3: Git + **Vercel** (reemplaza GitHub Pages), publicar la app — mismo flujo de commit/push, el deploy queda automático en Vercel en cada push |
+| 20-oct | Mar | 🚧 | N°40 — Proyecto OA5 sesión 3: Git + **Vercel** (reemplaza GitHub Pages), publicar la app — mismo flujo de commit/push, el deploy queda automático en Vercel en cada push |
 | 22-oct | Jue | 🚧 | Buffer técnico — soporte de publicación (Vercel suele dar menos problemas que GitHub Pages, pero se mantiene como red de seguridad) o adelantar preparación de la presentación si todo fluyó bien |
 
 ### SM44 — última semana con 4to medio
@@ -217,7 +217,7 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 26-oct | Lun | — | Ensayo — últimos ajustes de las presentaciones |
-| 27-oct | Mar | 🚧🎉 | **N°40 — Presentación final de apps** (showcase — considerar invitar a los terceros, idea 7) |
+| 27-oct | Mar | 🚧🎉 | **N°41 — Presentación final de apps** (showcase — considerar invitar a los terceros, idea 7) |
 | 29-oct | Jue | — | **Última clase de 4to medio.** Cierre: retrospectiva breve, Kahoot "todo lo que aprendimos", despedida |
 
 ## 6. Calendario propuesto — noviembre, solo 3ro medio
@@ -237,7 +237,7 @@ Con 4to fuera, el curso queda más chico. El contenido natural para este tramo e
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 02-nov | Lun | 📘🎮 | Encuadre "ahora somos solo terceros" + Kahoot repaso de Listas (transición suave a la primera semana sin 4to) |
-| 03-nov | Mar | 🆕 | *(N° real a definir — sigue a N°40)* Búsqueda de datos: búsqueda lineal |
+| 03-nov | Mar | 🆕 | *(N° real a definir — sigue a N°41)* Búsqueda de datos: búsqueda lineal |
 | 05-nov | Jue | 🆕 | Búsqueda binaria |
 | 09-nov | Lun | 🔁⚡ | **Lunes estándar** — ejercitación + control + revisión sobre búsqueda lineal y binaria (comparar eficiencia: cuántas comparaciones hace cada una) |
 | 10-nov | Mar | 🆕 | Desplazamiento de datos (intercambio, desplazar izquierda/derecha) |
