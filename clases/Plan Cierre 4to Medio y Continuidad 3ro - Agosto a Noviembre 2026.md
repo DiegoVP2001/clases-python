@@ -1,6 +1,6 @@
 # Plan — Cierre de 4to medio y continuidad de 3ro: agosto a noviembre 2026
 
-> **Documento de planificación estratégica, escrito y aprobado por Diego el 2026-08-11, en varias rondas: primero tras confirmar que el 12-oct es feriado y que en noviembre (con diciembre incierto) sigue dictando clases, solo que exclusivamente a terceros medio; después para mover la Evaluación de Ciclos al 27-ago y fijar la plantilla de "lunes estándar" (ejercitación + control + revisión) con su mecanismo de control detallado en la sección 4; cerrado con el ajuste final del lunes 24-ago. **Revisado el 2026-08-12** al diseñar el primer lunes estándar: se cerraron las decisiones pendientes del mecanismo de control (nota, puntaje, rúbrica parcelada, reclamos) y la numeración corrió +1 desde N°23 (ver la nota de renumeración en la sección 2). Aprobado — es la referencia vigente del tramo agosto-noviembre 2026. Consultar siempre junto con `Historial-Curricular.md` al planificar o diseñar cualquier clase de este tramo (ver puntero agregado ahí).** A diferencia de `Plan Semana 2026-08-10 - Cierre de Ciclos.md` (que cerraba 3 sesiones puntuales y ya se ejecutó), este documento cubre dos tramos distintos: **agosto-octubre** (3ro y 4to medio juntos, como hasta ahora) y **noviembre** (solo 3ro medio, curso más chico). No reemplaza `Historial-Curricular.md` como fuente de verdad — cuando cada clase se diseñe con `disenar-clase` y su spec se apruebe, esa fila del Historial manda. Este documento es el mapa panorámico que ordena en qué día va cada cosa y por qué.
+> **Documento de planificación estratégica, escrito y aprobado por Diego el 2026-08-11, en varias rondas: primero tras confirmar que el 12-oct es feriado y que en noviembre (con diciembre incierto) sigue dictando clases, solo que exclusivamente a terceros medio; después para mover la Evaluación de Ciclos al 27-ago y fijar la plantilla de "lunes estándar" (ejercitación + control + revisión) con su mecanismo de control detallado en la sección 4; cerrado con el ajuste final del lunes 24-ago. **Revisado el 2026-08-12** al diseñar el primer lunes estándar: se cerraron las decisiones pendientes del mecanismo de control (nota, puntaje, rúbrica parcelada, reclamos) y la numeración corrió +1 desde N°23 (ver la nota de renumeración en la sección 2). **Revisado el 2026-08-20:** el calendario día a día de la sección 5 (SM36 a SM40) había quedado con números stale de antes de las rondas de renumeración del 2026-08-19 (N°25-N°29.5 en vez de N°28-N°32.5) — se corrigieron para que coincidan con `Historial-Curricular.md`. De paso se detectó que el lunes 31-ago repetía un lunes estándar sobre Funciones idéntico al de N°25 (24-ago), sin nada nuevo que ejercitar porque Strings recién arranca el 1-sep — se cambió por revisión formativa de la Evaluación de Ciclos (mismo criterio que ya usaba el 05-oct para la Evaluación F+S+L). **Revisado el 2026-08-26** (sesión de diseño de la Clase 28): se insertó una clase nueva de Strings — recorrido de cadenas con `for`, N°29 — entre indexing/slicing y métodos/f-strings, más su propio lunes estándar de control, N°31 (ver la nota de renumeración 2026-08-26 en `Historial-Curricular.md` para el detalle completo). El bloque de Strings se adelantó al **31-ago**, ocupando el día que tenía la revisión formativa de la Evaluación de Ciclos — **esa revisión queda pendiente de reagendar, sin fecha todavía**. SM36 y SM37 (sección 5) ya reflejan este ajuste hasta el 08-sep (N°32, Listas creación/acceso); **de ahí en adelante (10-sep, y todo SM38) queda marcado como pendiente de re-planificar** — no se resolvió en esta revisión. Aprobado hasta donde llega — es la referencia vigente del tramo agosto-noviembre 2026, con ese tramo final pendiente. Consultar siempre junto con `Historial-Curricular.md` al planificar o diseñar cualquier clase de este tramo (ver puntero agregado ahí).** A diferencia de `Plan Semana 2026-08-10 - Cierre de Ciclos.md` (que cerraba 3 sesiones puntuales y ya se ejecutó), este documento cubre dos tramos distintos: **agosto-octubre** (3ro y 4to medio juntos, como hasta ahora) y **noviembre** (solo 3ro medio, curso más chico). No reemplaza `Historial-Curricular.md` como fuente de verdad — cuando cada clase se diseñe con `disenar-clase` y su spec se apruebe, esa fila del Historial manda. Este documento es el mapa panorámico que ordena en qué día va cada cosa y por qué.
 
 ## 0. Por qué existe este documento
 
@@ -69,8 +69,8 @@ Total mínimo de contenido nuevo + evaluaciones + proyectos: **15 sesiones** (Fu
 
 Revisando la columna OAs de `Historial-Curricular.md`, todas las clases dictadas hasta ahora citan **OA1, OA2 o OA3** (más transversales OAd/OAa). Los que nunca han aparecido son:
 
-- **OA4** — Aplicaciones y análisis mediante procesadores de análisis estadístico → vive en el Proyecto de análisis de datos (N°33–34).
-- **OA5** — Apps para dispositivos móviles → vive en el Proyecto app con IA (N°35–38). (OA6, uso responsable de TIC, viaja como transversal dentro de ese mismo proyecto — por ejemplo, una conversación breve sobre uso responsable de IA al generar código.)
+- **OA4** — Aplicaciones y análisis mediante procesadores de análisis estadístico → vive en el Proyecto de análisis de datos (N°35–36).
+- **OA5** — Apps para dispositivos móviles → vive en el Proyecto app con IA (N°37–40). (OA6, uso responsable de TIC, viaja como transversal dentro de ese mismo proyecto — por ejemplo, una conversación breve sobre uso responsable de IA al generar código.)
 
 Es decir: **los dos OAs pendientes ya tenían proyecto asignado — el problema no es que falte diseñarlos, es que el calendario que los alojaba (nov-dic) ya no existe para 4to medio.** Hay que recomprimirlos en las semanas SM41–SM44 (6 de octubre al 29 de octubre), con ambos cursos todavía juntos.
 
@@ -108,7 +108,8 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 
 | Lunes | Formato |
 |---|---|
-| 17-ago, 24-ago, 31-ago, 07-sep, 14-sep, 09-nov, 16-nov | 🔁⚡ **Lunes estándar** (plantilla de 3 fases) |
+| 17-ago, 24-ago, 07-sep, 14-sep, 09-nov, 16-nov | 🔁⚡ **Lunes estándar** (plantilla de 3 fases) |
+| 31-ago | Especial — revisión formativa de la Evaluación de Ciclos (mismo criterio que 05-oct; evita un segundo control sobre Funciones inmediatamente después del examen, ver nota 2026-08-20) |
 | 28-sep | Especial — Kahoot de reactivación post-feriado |
 | 05-oct | Especial — revisión formativa de la Evaluación F+S+L |
 | 19-oct | Especial — tiempo de estudio guiado del proyecto |
@@ -149,25 +150,27 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
-| 31-ago | Lun | 🔁⚡ | **Lunes estándar** — ejercitación + control + revisión sobre Funciones (partes 1 y 2) |
-| 01-sep | Mar | 🆕 | N°25 — Strings (indexing, slicing) |
-| 03-sep | Jue | 🆕 | N°26 — Strings (métodos, f-strings) |
+| 31-ago | Lun | 🆕 | **N°28 — Strings: indexing y slicing** (acotada a acceso por índice + rebanadas — ver `clase-28-strings/Prompt.md`). Ocupa el día que tenía la revisión formativa de la Evaluación de Ciclos — **esa revisión se corre a otro día, aún sin fecha (pendiente)** |
+| 01-sep | Mar | 🆕 | N°29 — Strings: recorriendo texto con for (clase nueva — recorrido directo, con índice, combinado con slicing; ver `clase-29-strings-recorrido/Prompt.md`) |
+| 03-sep | Jue | 🆕 | N°30 — Strings: métodos y f-strings |
 
 ### SM37 — Strings aplicado → Listas
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
-| 07-sep | Lun | 🔁⚡ | **Lunes estándar** — ejercitación + control + revisión sobre Strings completo (indexing+slicing+métodos+f-strings) |
-| 08-sep | Mar | 📘 | Clase de aplicación — Strings, problemas combinados más exigentes (ej. validar textos, formatear reportes) |
-| 10-sep | Jue | 🆕 | N°27 — Listas (creación y acceso) |
+| 07-sep | Lun | 🔁⚡ | **N°31 — Lunes estándar** — ejercitación + control + revisión sobre las 3 clases de Strings de la semana (N°28, N°29, N°30) |
+| 08-sep | Mar | 🆕 | N°32 — Listas (creación y acceso) — adelantada desde el 10-sep |
+| 10-sep | Jue | ⚠️ *(por definir)* | Queda libre tras el ajuste del 2026-08-26. Candidato natural: N°33 — Listas (iteración y métodos), pero no está confirmado — pendiente de retomar en otra sesión |
 
 ### SM38 — semana corta, pre-Fiestas Patrias
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
-| 14-sep | Lun | 🔁⚡ | **Lunes estándar** — ejercitación + control + revisión sobre Listas (creación y acceso, recién vista) |
-| 15-sep | Mar | 🆕 | N°28 — Listas (iteración y métodos) — se prioriza el día confirmado |
-| 17-sep | Jue ⚠️ | 🆕 *(si se dicta)* | N°29 — Listas + funciones integración. **Si no se dicta, se recupera el martes 29-sep** (ver SM40 — nunca un lunes, para no romper la regla) |
+| 14-sep | Lun | ⚠️ *(por definir)* | Pendiente de re-planificar tras el ajuste del 2026-08-26 — originalmente lunes estándar sobre Listas creación/acceso, pero esa clase ya se movió al 08-sep |
+| 15-sep | Mar | ⚠️ *(por definir)* | Pendiente — originalmente N°33 (numeración vieja: N°31), Listas iteración y métodos |
+| 17-sep | Jue ⚠️ | ⚠️ *(por definir)* | Pendiente — originalmente N°34 (numeración vieja: N°32), Listas + funciones integración. Sigue siendo el día incierto de la semana, independiente de este ajuste |
+
+> **Pendiente 2026-08-26:** el 10-sep en adelante (resto de SM37 + todo SM38) no se re-planificó en esta sesión — solo se resolvió hasta el 08-sep (N°32, Listas creación/acceso). Retomar antes de diseñar N°33 en adelante, considerando que el ajuste ya consumió el margen que existía antes del feriado de Fiestas Patrias (21-27 sep) y que la Evaluación F+S+L (N°34.5) sigue fija el 01-oct.
 
 ### SM39 — 🚫 feriado completo (21–27 sep) — sin clases
 
@@ -176,18 +179,18 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 28-sep | Lun | 🎮 | Kahoot de reactivación (no punitivo) — Strings + Listas, para detectar qué se olvidó en 2 semanas sin clases |
-| 29-sep | Mar | 🆕 / 📘 | **Si N°29 no se dictó el 17-sep:** dictarlo aquí. **Si ya se dictó:** clase de aplicación — Listas + funciones integrada, problemas combinados como repaso final |
-| 01-oct | Jue | 🎯 | **Evaluación individual — Funciones + Strings + Listas (N°29.5)** |
+| 29-sep | Mar | 🆕 / 📘 | **Si N°34 no se dictó el 17-sep:** dictarlo aquí. **Si ya se dictó:** clase de aplicación — Listas + funciones integrada, problemas combinados como repaso final |
+| 01-oct | Jue | 🎯 | **Evaluación individual — Funciones + Strings + Listas (N°34.5)** |
 
-> Este es el punto donde el plan absorbe la incertidumbre del jueves 17-sep sin generar atraso en cascada ni tocar ningún lunes: pase lo que pase esa semana, la evaluación N°29.5 se mantiene fija el 1 de octubre.
+> Este es el punto donde el plan absorbe la incertidumbre del jueves 17-sep sin generar atraso en cascada ni tocar ningún lunes: pase lo que pase esa semana, la evaluación N°34.5 se mantiene fija el 1 de octubre. **Números actualizados 2026-08-26 para calzar con la renumeración de esa fecha en `Historial-Curricular.md`** — el contenido exacto de SM38/SM40 (qué va en 10-sep, 14-sep, 15-sep, 17-sep) sigue pendiente de re-planificar (ver nota arriba en SM37/SM38); solo se corrigieron las etiquetas N° para que no queden inconsistentes con la tabla maestra.
 
 ### SM41 — arranca Proyecto OA4
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 05-oct | Lun | — | Revisión formativa de la Evaluación F+S+L |
-| 06-oct | Mar | 🚧 | N°33 — Proyecto OA4 sesión 1: **cada grupo elige su fuente de datos** — encuesta propia al curso o dataset externo real (datos.gob.cl, INE, Kaggle) —, primera exploración con `pandas` |
-| 08-oct | Jue | 🚧 | N°34 — Proyecto OA4 sesión 2: análisis completo con `pandas` + gráfico con `matplotlib` (reemplaza la idea de gráfico ASCII) + mini-presentación de hallazgos en parejas |
+| 06-oct | Mar | 🚧 | N°35 — Proyecto OA4 sesión 1: **cada grupo elige su fuente de datos** — encuesta propia al curso o dataset externo real (datos.gob.cl, INE, Kaggle) —, primera exploración con `pandas` |
+| 08-oct | Jue | 🚧 | N°36 — Proyecto OA4 sesión 2: análisis completo con `pandas` + gráfico con `matplotlib` (reemplaza la idea de gráfico ASCII) + mini-presentación de hallazgos en parejas |
 
 > **Decisión 2026-08-19 (reemplaza la pregunta abierta que tenía este documento):** OA4 usa **pandas + matplotlib** como librerías nuevas — pandas encaja literal con "procesadores de análisis estadístico" (OA4) para leer/filtrar/agrupar los datos, matplotlib para visualizarlos con un gráfico real. Dato: propio (encuesta) o externo, **a elección de cada grupo** — mismo motor de análisis para ambos casos.
 >
@@ -198,15 +201,15 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 12-oct | Lun | 🚫 | **Feriado — Encuentro de Dos Mundos.** Sin clase. Se pierde sin afectar el resto del calendario (OA5 no dependía de este día). |
-| 13-oct | Mar | 🚧 | N°35 — Proyecto OA5 sesión 1: prompting con IA, definir la app |
-| 15-oct | Jue | 🚧 | N°36 — Proyecto OA5 sesión 2: HTML generado, revisión y ajuste |
+| 13-oct | Mar | 🚧 | N°37 — Proyecto OA5 sesión 1: prompting con IA, definir la app |
+| 15-oct | Jue | 🚧 | N°38 — Proyecto OA5 sesión 2: HTML generado, revisión y ajuste |
 
 ### SM43 — reflexión, construir y publicar
 
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 19-oct | Lun | 💬 | **Sesión de IA responsable e impacto** — casi sin computador, discusión + lápiz y papel: sesgos de los modelos, alucinaciones (actividad "detective de alucinaciones" con respuestas reales de un chatbot), impacto ambiental/energético, impacto laboral, privacidad de lo que se le entrega a un chatbot. Reemplaza el "tiempo de estudio guiado" que tenía este día — decisión 2026-08-19, se hace justo antes de que el curso profundice en construir con IA. Le da cuerpo real al OA6 transversal, que antes solo era una mención de paso. |
-| 20-oct | Mar | 🚧 | N°37 — Proyecto OA5 sesión 3: Git + **Vercel** (reemplaza GitHub Pages), publicar la app — mismo flujo de commit/push, el deploy queda automático en Vercel en cada push |
+| 20-oct | Mar | 🚧 | N°39 — Proyecto OA5 sesión 3: Git + **Vercel** (reemplaza GitHub Pages), publicar la app — mismo flujo de commit/push, el deploy queda automático en Vercel en cada push |
 | 22-oct | Jue | 🚧 | Buffer técnico — soporte de publicación (Vercel suele dar menos problemas que GitHub Pages, pero se mantiene como red de seguridad) o adelantar preparación de la presentación si todo fluyó bien |
 
 ### SM44 — última semana con 4to medio
@@ -214,7 +217,7 @@ La plantilla aplica a los lunes de consolidación regular de un tema recién ens
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 26-oct | Lun | — | Ensayo — últimos ajustes de las presentaciones |
-| 27-oct | Mar | 🚧🎉 | **N°38 — Presentación final de apps** (showcase — considerar invitar a los terceros, idea 7) |
+| 27-oct | Mar | 🚧🎉 | **N°40 — Presentación final de apps** (showcase — considerar invitar a los terceros, idea 7) |
 | 29-oct | Jue | — | **Última clase de 4to medio.** Cierre: retrospectiva breve, Kahoot "todo lo que aprendimos", despedida |
 
 ## 6. Calendario propuesto — noviembre, solo 3ro medio
@@ -234,7 +237,7 @@ Con 4to fuera, el curso queda más chico. El contenido natural para este tramo e
 | Fecha | Día | Tipo | Qué se hace |
 |---|---|---|---|
 | 02-nov | Lun | 📘🎮 | Encuadre "ahora somos solo terceros" + Kahoot repaso de Listas (transición suave a la primera semana sin 4to) |
-| 03-nov | Mar | 🆕 | *(N° real a definir — sigue a N°38)* Búsqueda de datos: búsqueda lineal |
+| 03-nov | Mar | 🆕 | *(N° real a definir — sigue a N°40)* Búsqueda de datos: búsqueda lineal |
 | 05-nov | Jue | 🆕 | Búsqueda binaria |
 | 09-nov | Lun | 🔁⚡ | **Lunes estándar** — ejercitación + control + revisión sobre búsqueda lineal y binaria (comparar eficiencia: cuántas comparaciones hace cada una) |
 | 10-nov | Mar | 🆕 | Desplazamiento de datos (intercambio, desplazar izquierda/derecha) |
