@@ -136,7 +136,81 @@ Precio: 4500
 
 **Celda de configuración:**
 ```python
-[preámbulo reutilizable del "Verificador por salida" — copiar tal cual desde "Autochequeo" en generar-colab-clase/SKILL.md]
+#@title 🔧 Verificador automático — ejecuta esta celda antes de empezar (no la edites)
+
+import io, re, contextlib, unicodedata
+from IPython import get_ipython
+
+def _fuente_solucion(marca):
+    for fuente in reversed(get_ipython().user_ns.get("In", [])):
+        if fuente.strip().startswith(marca):
+            return fuente
+    return None
+
+def _normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto.lower())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", texto).strip()
+
+def _revisar(marca, esperadas):
+    fuente = _fuente_solucion(marca)
+    if fuente is None:
+        print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
+        print("   su primera línea:", marca)
+        return
+    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+        print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
+        return
+    salida = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(salida):
+            exec(compile(fuente, "<tu solución>", "exec"), {"__name__": "__main__"})
+    except Exception as error:
+        print("❌ Tu programa se detuvo con un error:", type(error).__name__, "-", error)
+        return
+    obtenidas = [l.rstrip() for l in salida.getvalue().splitlines() if l.strip()]
+    correctas, primer_error = 0, None
+    for i, esperada in enumerate(esperadas):
+        obtenida = obtenidas[i] if i < len(obtenidas) else ""
+        if _normalizar(obtenida) == _normalizar(esperada):
+            correctas += 1
+        elif primer_error is None:
+            primer_error = (i + 1, esperada, obtenida)
+    print("Líneas correctas:", correctas, "de", len(esperadas))
+    if primer_error is None and len(obtenidas) == len(esperadas):
+        print("✅ ¡Perfecto! Tu programa imprime exactamente lo que se pedía.")
+        return
+    if len(obtenidas) > len(esperadas):
+        print("⚠️ Tu programa imprimió", len(obtenidas) - len(esperadas), "línea(s) de más.")
+    if primer_error:
+        numero, esperada, obtenida = primer_error
+        print("❌ La primera diferencia está en la línea", numero)
+        print("   Se esperaba:", esperada)
+        print("   Tu programa dio:", obtenida if obtenida else "(nada)")
+
+def verificar_ejercicio_0a():
+    esperadas = ["Despedida: Gracias por tu compra", "Separador: ---"]
+    _revisar("# Tu solución — Ejercicio 0a", esperadas)
+
+def verificar_ejercicio_0b():
+    esperadas = ["Producto: Papas Fritas", "Precio: 3400"]
+    _revisar("# Tu solución — Ejercicio 0b", esperadas)
+
+def verificar_ejercicio_1():
+    esperadas = ["Pedido listo: Papas Fritas"]
+    _revisar("# Tu solución — Ejercicio 1", esperadas)
+
+def verificar_ejercicio_2():
+    esperadas = ["Pedido corregido: chorrillana especial"]
+    _revisar("# Tu solución — Ejercicio 2", esperadas)
+
+def verificar_ejercicio_3():
+    esperadas = ["Producto: Bebida Cola", "Precio: 1500"]
+    _revisar("# Tu solución — Ejercicio 3", esperadas)
+
+def verificar_ejercicio_4():
+    esperadas = ["Papas Fritas - $3400"]
+    _revisar("# Tu solución — Ejercicio 4", esperadas)
 ```
 
 **Ejercicio 0a — Práctica directa: operadores de texto**
@@ -153,6 +227,11 @@ Despedida: Gracias por tu compra
 Separador: ---
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_0a()
+```
+
 - Solución:
   ```python
   saludo = "Gracias" + " " + "por tu compra"
@@ -160,11 +239,6 @@ Separador: ---
   print("Despedida:", saludo)
   print("Separador:", separador)
   ```
-
-**Celda de verificación:**
-```python
-verificar_ejercicio_0a()
-```
 
 **Ejercicio 0b — Práctica directa: `split()` con asignación múltiple**
 Aplica el patrón base:
@@ -180,6 +254,11 @@ Producto: Papas Fritas
 Precio: 3400
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_0b()
+```
+
 - Solución:
   ```python
   linea = "Papas Fritas,3400"
@@ -187,11 +266,6 @@ Precio: 3400
   print("Producto:", producto)
   print("Precio:", precio)
   ```
-
-**Celda de verificación:**
-```python
-verificar_ejercicio_0b()
-```
 
 **Ejercicio 1 — Pedido con espacios y minúsculas**
 Otro pedido llegó a Los Mellis con espacios de sobra y todo en minúscula. Antes de sumarlo a la boleta del día hay que dejarlo prolijo: sin espacios de más y con el nombre en el mismo formato que usan las demás boletas.
@@ -212,6 +286,11 @@ Puedes aplicar los métodos uno después del otro, guardando el resultado de cad
 Pedido listo: Papas Fritas
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_1()
+```
+
 - Solución:
   ```python
   pedido = "  papas fritas  "
@@ -219,11 +298,6 @@ Pedido listo: Papas Fritas
   pedido_formateado = pedido_sin_espacios.title()
   print("Pedido listo:", pedido_formateado)
   ```
-
-**Celda de verificación:**
-```python
-verificar_ejercicio_1()
-```
 
 **Ejercicio 2 — Corregir un error de tipeo**
 Un cliente escribió mal el nombre de un producto en su pedido. Antes de imprimir la boleta, Los Mellis necesitan corregir ese error para que quede como en su carta oficial.
@@ -243,17 +317,17 @@ El error está en una sola palabra dentro del texto; `replace()` busca exactamen
 Pedido corregido: chorrillana especial
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_2()
+```
+
 - Solución:
   ```python
   pedido = "chorrillana especiall"
   pedido_corregido = pedido.replace("especiall", "especial")
   print("Pedido corregido:", pedido_corregido)
   ```
-
-**Celda de verificación:**
-```python
-verificar_ejercicio_2()
-```
 
 **Ejercicio 3 — Separar y formatear un pedido completo**
 Los Mellis reciben pedidos completos en una sola línea de WhatsApp, con el producto y el precio juntos separados por una coma. Para armar la boleta necesitan separar ambas partes, y además el nombre del producto tiene que quedar con el formato prolijo de siempre.
@@ -275,6 +349,11 @@ Producto: Bebida Cola
 Precio: 1500
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_3()
+```
+
 - Solución:
   ```python
   linea_pedido = "bebida cola,1500"
@@ -283,11 +362,6 @@ Precio: 1500
   print("Producto:", producto_formateado)
   print("Precio:", precio_texto)
   ```
-
-**Celda de verificación:**
-```python
-verificar_ejercicio_3()
-```
 
 **Ejercicio 4 — Desafío: armar la línea completa de la boleta**
 Los Mellis quieren ir un paso más allá: además de limpiar el pedido, arman la línea final que se imprime en la boleta, uniendo el nombre ya formateado con el precio y el símbolo \$. El pedido llegó con espacios de sobra y un error de tipeo en el nombre del producto.
@@ -306,6 +380,11 @@ Los Mellis quieren ir un paso más allá: además de limpiar el pedido, arman la
 Papas Fritas - $3400
 ```
 
+**Celda de verificación:**
+```python
+verificar_ejercicio_4()
+```
+
 - Solución:
   ```python
   pedido_crudo = "  papas ARROLLADAS,3400"
@@ -316,11 +395,6 @@ Papas Fritas - $3400
   linea_boleta = producto_formateado + " - $" + precio_texto
   print(linea_boleta)
   ```
-
-**Celda de verificación:**
-```python
-verificar_ejercicio_4()
-```
 
 ### 5. Ticket de Salida (6 min)
 
