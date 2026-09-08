@@ -61,6 +61,11 @@ En Los Mellis, algunos clientes agregan una nota extra al pedido cuando tienen a
   print("¿Tiene alerta?", tiene_alerta)
   ```
 - Idea clave: `in` dice si un texto está dentro de otro, sin decir dónde.
+- Instrucción: Revisa con `in` si la nota contiene "maní" y muestra el resultado con una etiqueta.
+- Punto de partida:
+  ```python
+  nota_pedido = "sin maní por favor"
+  ```
 - Resumen tabla: `"palabra" in texto`
 
 **Concepto 2: Normalizar con `.lower()` antes de comparar**
@@ -72,6 +77,11 @@ En Los Mellis, algunos clientes agregan una nota extra al pedido cuando tienen a
   print("¿Tiene alerta?", tiene_alerta)
   ```
 - Idea clave: antes de buscar, siempre pasar el texto a minúscula con `.lower()`.
+- Instrucción: Pasa la nota a minúscula con `.lower()` antes de buscar "maní", y muestra el resultado con una etiqueta.
+- Punto de partida:
+  ```python
+  nota_pedido = "SIN MANÍ POR FAVOR"
+  ```
 - Resumen tabla: `"palabra" in texto.lower()`
 
 **Concepto 3: El método `find()`**
@@ -83,6 +93,11 @@ En Los Mellis, algunos clientes agregan una nota extra al pedido cuando tienen a
   print("Posición de la alerta:", posicion)
   ```
 - Idea clave: `find()` dice en qué posición empieza el texto buscado, o `-1` si no está.
+- Instrucción: Usa `find()` para obtener en qué posición empieza "maní" y muéstrala con una etiqueta.
+- Punto de partida:
+  ```python
+  nota_pedido = "sin maní por favor"
+  ```
 - Resumen tabla: `texto.find("palabra")`
 
 **Errores típicos:**
