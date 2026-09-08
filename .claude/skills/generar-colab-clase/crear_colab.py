@@ -49,6 +49,7 @@ def parsear_spec(ruta_spec: Path) -> dict:
         "contexto": {},
         "objetivo": None,
         "proposito": None,
+        "para_que_sirve": None,
         "haz_ahora": None,
         "icn": {"conceptos": [], "ejemplos": [], "errores": []},
         "guiada": {"situacion": None, "variables": None, "pasos": [], "resultado": None},
@@ -103,6 +104,18 @@ def parsear_spec(ruta_spec: Path) -> dict:
             proposito_raw = proposito_raw[:next_h2.start()]
         spec["proposito"] = "\n".join(
             l.lstrip("> ").rstrip() for l in proposito_raw.split("\n")
+        ).strip()
+
+    # ¿Para qué sirve? (default desde Clase 33 — ver regla 24 del CLAUDE.md raíz)
+    # Ausente en specs anteriores a Clase 33: extraer_seccion devuelve None y el resto
+    # del bloque simplemente no se agrega (retrocompatible, no es un error).
+    pqs_raw = extraer_seccion(contenido, "## ¿Para qué sirve?", "## Estructura de la clase", limpiar=True)
+    if pqs_raw:
+        next_h2 = re.search(r"\n## ", pqs_raw)
+        if next_h2:
+            pqs_raw = pqs_raw[:next_h2.start()]
+        spec["para_que_sirve"] = "\n".join(
+            l.lstrip("> ").rstrip() for l in pqs_raw.split("\n")
         ).strip()
 
     # Haz Ahora (strip marcador de tiempo como "(10 min)" y extrae respuestas esperadas)
@@ -202,7 +215,12 @@ def parsear_icn(texto: str) -> dict:
 
     if re.search(r"\*\*(?:Concepto\s+\d+|Comparación):", texto):
         # Formato enriquecido: split por Concepto, Demostración o Comparación, manteniendo orden
-        patron = r"(\*\*(?:Concepto\s+\d+|Demostración|Comparación):\s*[^*\n]+\*\*)"
+        # (?:(?!\*\*)[^\n])+? en vez de [^*\n]+: un título que menciona el operador `*`
+        # (ej. "Operadores `+` y `*` en strings") tiene un asterisco literal, que con
+        # [^*\n]+ cortaba el match antes del cierre real "**" y el concepto se perdía
+        # entero del notebook (detectado en Clase 30). El nuevo patrón solo corta en
+        # una secuencia real "**", no en cualquier "*" suelto.
+        patron = r"(\*\*(?:Concepto\s+\d+|Demostración|Comparación):\s*(?:(?!\*\*)[^\n])+?\*\*)"
         partes = re.split(patron, texto)
 
         for i in range(1, len(partes), 2):
@@ -210,11 +228,23 @@ def parsear_icn(texto: str) -> dict:
             content = partes[i + 1] if i + 1 < len(partes) else ""
 
             if re.match(r"\*\*Concepto\s+\d+:", header):
-                m_titulo = re.search(r"\*\*Concepto\s+\d+:\s*([^*\n]+)\*\*", header)
+                m_titulo = re.search(r"\*\*Concepto\s+\d+:\s*((?:(?!\*\*)[^\n])+?)\*\*", header)
                 titulo = m_titulo.group(1).strip() if m_titulo else header
-                concepto = {"tipo": "concepto", "titulo": titulo, "definicion": None, "ejemplo": None, "idea_clave": None}
+                concepto = {
+                    "tipo": "concepto", "titulo": titulo, "definicion": None,
+                    "ejemplo": None, "idea_clave": None, "resumen_tabla": None,
+                    "instruccion": None, "punto_partida": None,
+                }
 
-                m_def = re.search(r"- Definición:\s*(.+?)(?=- Ejemplo:|- Idea clave:|\Z)", content, re.DOTALL)
+                # Lookahead compartido con todos los nombres de campo del bloque —
+                # así agregar un campo nuevo (ej. "- Instrucción:") no requiere tocar
+                # los regex de los campos que van antes de él en el bloque.
+                CAMPOS = (
+                    r"- Definición:|- Ejemplo:|- Idea clave:|- Instrucción:"
+                    r"|- Punto de partida:|- Resumen tabla:"
+                )
+
+                m_def = re.search(rf"- Definición:\s*(.+?)(?={CAMPOS}|\Z)", content, re.DOTALL)
                 if m_def:
                     concepto["definicion"] = m_def.group(1).strip()
 
@@ -227,15 +257,35 @@ def parsear_icn(texto: str) -> dict:
                 # (?=\n\*\*|\Z) y no (?=\*\*|\Z): con este último, una idea clave que
                 # usa negrita inline se cortaba en la primera palabra en negrita
                 # (mismo bug que ya estaba corregido en el cierre estructurado).
-                m_ik = re.search(r"- Idea clave:\s*(.+?)(?=\n\*\*|\Z)", content, re.DOTALL)
+                m_ik = re.search(rf"- Idea clave:\s*(.+?)(?=\n(?:{CAMPOS})|\n\*\*|\Z)", content, re.DOTALL)
                 if m_ik:
                     concepto["idea_clave"] = m_ik.group(1).strip()
+
+                # Campos opcionales (piloto Clase 33, 2026-09-08 — código mínimo en el
+                # ICN: la celda del estudiante trae solo el "Punto de partida" y una
+                # "Instrucción" de una línea le pide escribir la sintaxis nueva; el
+                # "Ejemplo" completo sigue existiendo para el Solucionario y el PPT).
+                m_instr = re.search(rf"- Instrucción:\s*(.+?)(?=\n(?:{CAMPOS})|\n\*\*|\Z)", content, re.DOTALL)
+                if m_instr:
+                    concepto["instruccion"] = m_instr.group(1).strip()
+
+                m_pp = re.search(r"- Punto de partida:\s*\n\s*```python\n(.*?)```", content, re.DOTALL)
+                if m_pp:
+                    concepto["punto_partida"] = textwrap.dedent(m_pp.group(1)).strip()
+
+                # Campo opcional (default desde 2026-09-02, piloto Clase 29): fila
+                # de la tabla-resumen que cierra el ICN antes de "Errores típicos"
+                # ("qué debe quedar claro en tu cuaderno"). Si 2+ conceptos la
+                # traen, generar_colab arma la tabla sola — ver generar_resumen_icn_markdown.
+                m_rt = re.search(rf"- Resumen tabla:\s*(.+?)(?=\n\*\*|\Z)", content, re.DOTALL)
+                if m_rt:
+                    concepto["resumen_tabla"] = m_rt.group(1).strip()
 
                 icn["items"].append(concepto)
                 icn["conceptos"].append(concepto)
 
             elif "Demostración" in header:
-                m_titulo = re.search(r"\*\*Demostración:\s*([^*\n]+)\*\*", header)
+                m_titulo = re.search(r"\*\*Demostración:\s*((?:(?!\*\*)[^\n])+?)\*\*", header)
                 titulo = m_titulo.group(1).strip() if m_titulo else header
                 demo = {"tipo": "demo", "titulo": titulo, "subtitulo": None, "filas": []}
 
@@ -258,7 +308,7 @@ def parsear_icn(texto: str) -> dict:
                 # Tabla lado a lado (ej: comparar dos sintaxis relacionadas, como for y range()).
                 # El contenido es la tabla HTML (u otro markdown) tal cual, más un ejemplo
                 # ejecutable opcional con el mismo formato "- Ejemplo:" que un concepto.
-                m_titulo = re.search(r"\*\*Comparación:\s*([^*\n]+)\*\*", header)
+                m_titulo = re.search(r"\*\*Comparación:\s*((?:(?!\*\*)[^\n])+?)\*\*", header)
                 titulo = m_titulo.group(1).strip() if m_titulo else header
                 comparacion = {"tipo": "comparacion", "titulo": titulo, "contenido": None, "ejemplo": None}
 
@@ -436,7 +486,7 @@ def parsear_independiente_estructura(texto: str) -> tuple:
     patron_ruta = r"(?m)^####\s+(Ruta\s+[^\n]+)$"
     if not re.search(patron_ruta, texto):
         ejercicios = parsear_independiente(texto)
-        primer_ejercicio = re.search(r"\*\*Ejercicio\s+\d+\s*[—\-–]", texto)
+        primer_ejercicio = re.search(r"\*\*Ejercicio\s+\d+[a-z]?\s*[—\-–]", texto)
         intro = texto[:primer_ejercicio.start()].strip() if primer_ejercicio else texto.strip()
         return intro, [], ejercicios
 
@@ -447,7 +497,7 @@ def parsear_independiente_estructura(texto: str) -> tuple:
     for i in range(1, len(partes), 2):
         titulo = partes[i].strip()
         cuerpo = partes[i + 1] if i + 1 < len(partes) else ""
-        primer_ejercicio = re.search(r"\*\*Ejercicio\s+\d+\s*[—\-–]", cuerpo)
+        primer_ejercicio = re.search(r"\*\*Ejercicio\s+\d+[a-z]?\s*[—\-–]", cuerpo)
         cabecera = cuerpo[:primer_ejercicio.start()].strip() if primer_ejercicio else cuerpo.strip()
         ejercicios = parsear_independiente(cuerpo)
         for ejercicio in ejercicios:
@@ -460,7 +510,7 @@ def parsear_independiente_estructura(texto: str) -> tuple:
 def parsear_independiente(texto: str) -> list:
     """Parsea los ejercicios de Práctica Independiente. Soporta Parte A/B."""
     ejercicios = []
-    bloques = re.split(r"\*\*Ejercicio\s+(\d+)\s*[—\-–]\s*([^*]+)\*\*", texto)
+    bloques = re.split(r"\*\*Ejercicio\s+(\d+[a-z]?)\s*[—\-–]\s*([^*]+)\*\*", texto)
     for i in range(1, len(bloques), 3):
         if i + 2 >= len(bloques):
             break
@@ -783,8 +833,14 @@ def construir_notebook(spec: dict, carpeta_spec: Path) -> nbformat.NotebookNode:
         for item in spec["icn"]["items"]:
             if item["tipo"] == "concepto":
                 nb.cells.append(new_markdown_cell(generar_concepto_markdown(item)))
-                if item.get("ejemplo"):
-                    nb.cells.append(new_code_cell(item["ejemplo"]))
+                # Piloto Clase 33: si el concepto trae "Punto de partida", la celda
+                # del estudiante queda con ese código incompleto en vez del ejemplo
+                # completo — el estudiante escribe encima la sintaxis nueva que pide
+                # la instrucción. El ejemplo completo sigue existiendo para el
+                # Solucionario (ver generar_secciones_solucionario_clase) y el PPT.
+                codigo_celda = item.get("punto_partida") or item.get("ejemplo")
+                if codigo_celda:
+                    nb.cells.append(new_code_cell(codigo_celda))
             elif item["tipo"] == "demo":
                 nb.cells.append(new_markdown_cell(generar_demo_markdown(item)))
                 nb.cells.append(new_code_cell(generar_demo_codigo(item)))
@@ -796,6 +852,15 @@ def construir_notebook(spec: dict, carpeta_spec: Path) -> nbformat.NotebookNode:
         # Formato antiguo: ejemplos sueltos
         for ejemplo in spec["icn"]["ejemplos"]:
             nb.cells.append(new_code_cell(ejemplo))
+    # Tabla-resumen de cierre del ICN (default desde 2026-09-02, piloto Clase 29):
+    # solo si 2+ conceptos traen "Resumen tabla" — con 1 solo no aporta sobre la
+    # Idea clave que ya tiene ese concepto.
+    conceptos_resumen = [
+        c for c in spec["icn"]["conceptos"]
+        if isinstance(c, dict) and c.get("resumen_tabla")
+    ]
+    if len(conceptos_resumen) >= 2:
+        nb.cells.append(new_markdown_cell(generar_resumen_icn_markdown(conceptos_resumen)))
     # Tabla de errores como markdown
     if spec["icn"]["errores"]:
         nb.cells.append(new_markdown_cell(
@@ -876,6 +941,9 @@ def generar_objetivo_proposito(spec: dict) -> str:
     if spec.get("proposito"):
         bloque += "## 💡 Propósito\n\n"
         bloque += f"> {spec['proposito']}\n\n"
+    if spec.get("para_que_sirve"):
+        bloque += "## 🔎 ¿Para qué sirve?\n\n"
+        bloque += f"> {spec['para_que_sirve']}\n\n"
     if contenidos_previos or contenidos_nuevos:
         bloque += "---\n\n"
         if contenidos_previos:
@@ -942,7 +1010,16 @@ def generar_celdas_haz_ahora(spec: dict) -> list:
 def generar_seccion_icn_intro(spec: dict) -> str:
     bloque = "---\n\n## 2️⃣ Introducción al Contenido Nuevo\n\n"
     if spec["icn"]["conceptos"] and isinstance(spec["icn"]["conceptos"][0], dict):
-        bloque += "Estudia cada concepto, ejecuta los ejemplos y observa el resultado:\n"
+        # Piloto Clase 33 (2026-09-08): si todos los conceptos traen "Punto de
+        # partida", la bajada avisa que hay que escribir código, no solo ejecutarlo.
+        conceptos = spec["icn"]["conceptos"]
+        con_punto_partida = [c for c in conceptos if isinstance(c, dict) and c.get("punto_partida")]
+        if con_punto_partida and len(con_punto_partida) == len(conceptos):
+            bloque += "Estudia cada concepto y escribe tú el código que falta en cada celda, siguiendo la instrucción:\n"
+        elif con_punto_partida:
+            bloque += "Estudia cada concepto, ejecuta los ejemplos y completa los que te piden escribir:\n"
+        else:
+            bloque += "Estudia cada concepto, ejecuta los ejemplos y observa el resultado:\n"
     else:
         if spec["icn"]["conceptos"]:
             bloque += "### Conceptos clave de hoy\n\n"
@@ -959,8 +1036,34 @@ def generar_concepto_markdown(concepto: dict) -> str:
     if concepto["definicion"]:
         bloque += concepto["definicion"] + "\n\n"
     if concepto["idea_clave"]:
-        bloque += f"**Idea clave:** _{concepto['idea_clave']}_\n"
+        # Blockquote markdown puro (sin HTML/color) — decisión 2026-08-21, ver
+        # clases/_pruebas-diseno/. Responde a "¿qué anoto profe?": va destacada
+        # entre la descripción y el ejemplo de código, no como bullet plano.
+        bloque += f"> **Idea clave:** {concepto['idea_clave']}\n"
+    if concepto.get("instruccion"):
+        # Piloto Clase 33 (2026-09-08): cuando el concepto trae "Punto de
+        # partida", la celda de código queda incompleta a propósito — esta
+        # línea es la consigna de una sola frase que le dice al estudiante
+        # qué sintaxis nueva tiene que escribir él mismo.
+        bloque += f"\n✍️ **Escríbelo tú:** {concepto['instruccion']}\n"
     return bloque
+
+
+def generar_resumen_icn_markdown(conceptos: list) -> str:
+    """Tabla de cierre del ICN, antes de 'Errores típicos' (default desde 2026-09-02,
+    piloto Clase 29). Condensa cada concepto en una fila Concepto/Ejemplo — responde
+    a "¿qué debe quedar claro en tu cuaderno?", distinto de las Idea clave sueltas
+    que van una por concepto: esta es la vista comparativa de todas juntas.
+    """
+    filas = "\n".join(
+        f"| {c['titulo']} | {c['resumen_tabla']} |" for c in conceptos
+    )
+    return (
+        "### 📌 Entonces, ¿qué debe quedar claro en tu cuaderno?\n\n"
+        "| Concepto | Ejemplo |\n"
+        "|---|---|\n"
+        f"{filas}"
+    )
 
 
 def generar_comparacion_markdown(item: dict) -> str:
@@ -1213,10 +1316,22 @@ def generar_seccion_cierre(spec: dict) -> str:
     return bloque
 
 
+def _conceptos_icn_con_punto_partida(spec: dict) -> list:
+    """Conceptos del ICN cuya celda de estudiante quedó incompleta (piloto Clase 33,
+    2026-09-08) — el código completo (campo "ejemplo") va solo al Solucionario."""
+    return [
+        c for c in spec["icn"]["conceptos"]
+        if isinstance(c, dict) and c.get("punto_partida") and c.get("ejemplo")
+    ]
+
+
 def hay_soluciones_de_clase(spec: dict) -> bool:
     """True si hay algún contenido de solución de Clase.ipynb para el Solucionario
-    (respuestas de Haz Ahora, solución de la Guiada, o soluciones de Independiente)."""
+    (respuestas de Haz Ahora, código completo del ICN, solución de la Guiada,
+    o soluciones de Independiente)."""
     if spec.get("respuestas_haz_ahora"):
+        return True
+    if _conceptos_icn_con_punto_partida(spec):
         return True
     if spec["guiada"].get("solucion"):
         return True
@@ -1237,6 +1352,21 @@ def generar_secciones_solucionario_clase(spec: dict) -> str:
     if spec.get("respuestas_haz_ahora"):
         bloque += "## 1️⃣ Haz Ahora — Respuestas\n\n"
         bloque += spec["respuestas_haz_ahora"] + "\n\n---\n\n"
+
+    conceptos_incompletos = _conceptos_icn_con_punto_partida(spec)
+    if conceptos_incompletos:
+        # Piloto Clase 33 (2026-09-08): el código completo de los conceptos con
+        # celda incompleta en Clase.ipynb vive acá, no en el notebook de estudiante.
+        bloque += "## 2️⃣ Introducción al Contenido Nuevo — código completo\n\n"
+        bloque += (
+            "En Clase.ipynb, estos conceptos traen la celda incompleta a propósito "
+            "(el estudiante escribe la sintaxis nueva siguiendo la instrucción). "
+            "Acá va el código completo de referencia.\n\n"
+        )
+        for concepto in conceptos_incompletos:
+            bloque += f"### {concepto['titulo']}\n\n"
+            bloque += f"```python\n{concepto['ejemplo']}\n```\n\n"
+        bloque += "---\n\n"
 
     if spec["guiada"].get("solucion"):
         bloque += "## 3️⃣ Práctica Guiada — Solución\n\n"
