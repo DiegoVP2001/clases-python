@@ -36,3 +36,32 @@
 **Pendiente:**
 - Publicación: la Ejercitación puede subirse al repo apenas esté aprobada. `Control.ipynb` y ambos Solucionarios **no se pushean hasta después de aplicado el control** (martes 15-sep, una vez corregido) — repo público, mismo criterio que todos los controles anteriores.
 - Bookkeeping de la renumeración 2026-09-11 (carpeta de Listas renombrada a N°35, `Historial-Curricular.md` y `Plan Cierre...md` actualizados) — ver detalle en `Prompt.md`.
+
+## 2026-09-11 (más tarde) — Rediseño tras revisión de Diego
+
+Feedback textual de Diego sobre la versión recién generada: *"defineles de antemano las variables con el texto que deban trabajar [en Control y Ejercitación] para así solo enfocarse en lo que deben hacer con los textos. además en el control simplificaría el asunto a un solo texto de verificación y además no usaría ';' sino ',' que trabajamos en clases. por último las siento bastante largas cada pregunta para el control rápido, prefiero que sea bien focadas"*. Además pidió que el resultado esperado quede explícito por caso, sin dejar nada a interpretación.
+
+**Decisiones tomadas (vía `AskUserQuestion`):**
+- **Un texto por ítem** en el Control (no un único texto compartido por los 3).
+- **Ítem 2** repensado: en vez de 2 comentarios largos con roles simétricos, pasa a **1 comentario principal + 1 comentario brevísimo** (`"Todo joya, gracias"`), solo de ejemplo para forzar el caso "no está". Esto **reemplaza** la decisión "textos fijos por ítem: mixto" de la sesión anterior — este mismo día se probó y se descartó.
+- **Ejercitación:** el Ejercicio 3 baja a 1 solo texto (espejo del nuevo Ítem 3); el **Ejercicio 2 mantiene los 2 comentarios completos** (ahí se sigue entrenando el contraste True/False que el Control ya no mide con la misma amplitud).
+- Se fija como **default para los próximos lunes estándar** (actualizado en el `CLAUDE.md` raíz del proyecto, sección "Workflow: lunes estándar"): variables predefinidas, un texto por ítem, resultado esperado explícito y segmentado por caso.
+
+**Cambios de contenido:**
+- **Ítem 1 (30 pts):** sin cambios de fondo, solo `setup_py` con `etiqueta = "  ana soto,delivery  "` y enunciado ajustado para referenciar la variable en vez de decir "ya guardada".
+- **Ítem 2 (30 pts):** `comentario_1` (sin cambios) + `comentario_2` nuevo, brevísimo. Resultado esperado segmentado por comentario (`secciones`). Rúbrica ajustada solo en el componente de salida.
+- **Ítem 3 (40 pts):** de **2 pedidos separados por `;`** a **1 solo pedido separado por `,`** (`pedido = "  chorrillana especiall,SIN cebolla por favor  "`). De 7 a 5 bullets. Rúbrica rediseñada: los componentes con parcial "correcto en uno pero no en el otro" desaparecen (ya no hay 2 pedidos); nuevos componentes 6+8+8+8+10=40.
+- **Ejercicio 3** de la Ejercitación: mismo criterio que el Ítem 3 (1 registro, coma).
+- Todos los enunciados (guiado + 5 ejercicios + 3 ítems) pierden el bullet "Guardar X en una variable" (ya no aplica) y el "con etiqueta clara" (el bloque de resultado esperado es el contrato).
+
+**Cambios al generador (`generar_control.py`):**
+- `code_cell_solucion(marca, setup_py)`: nueva celda de solución con marcador + variables predefinidas + centinela `# ── Escribe tu programa desde aquí ──`.
+- `_revisar()` (dentro de `VERIFICADOR_BASE`): el chequeo de "celda vacía" ahora mira el contenido después del centinela, no después de la primera línea — probado con una simulación completa (solución correcta ✅, celda vacía ⬜).
+- `bloque_ejemplo()`: encabezado explícito "Tu programa debe imprimir exactamente estas líneas"; soporta `secciones` (lista de `{"caso", "n_lineas"}`) para partir el mismo `stdout` en sub-bloques por texto trabajado, sin duplicarlo.
+- `validar_setup()`: nueva validación — cada `setup_py` debe aparecer tal cual dentro de `solution_py`, o no se escribe ningún notebook.
+
+**Verificado:**
+- `--check`: 9/9 soluciones OK, `setup_py` consistente con `solution_py` en las 9 piezas, puntajes cuadrados (30+30+40=100).
+- Los 4 notebooks regenerados. Confirmado a ojo: ninguna celda de datos contiene `;`, ninguna celda menciona modalidad de trabajo, el Solucionario Estudiantes sigue sin rúbrica de puntos.
+- Simulación del verificador de la Ejercitación con una celda resuelta y una vacía: ambos casos funcionan como se espera.
+- **Sigue pendiente aplicar el control** — no se pushea `Control.ipynb` ni los Solucionarios hasta después del martes 15-sep.

@@ -371,6 +371,36 @@ Estas reglas aplican a TODAS las clases y no se negocian sin instrucción explí
      ej: ✅ "> **Idea clave:** `input()` siempre devuelve texto (`str`), nunca un número"  ❌ una Idea clave de 3+ líneas, o que repite la definición completa -->
 22. **Idea clave del ICN: responde "¿qué anoto profe en el cuaderno?", no un resumen genérico (default desde 2026-08-21).** Cada concepto del ICN incluye una Idea clave de ~1 línea, redactada en modo casi dictado — la frase exacta que el estudiante copiaría. `generar-colab-clase` la renderiza sola como blockquote (`> **Idea clave:** ...`) entre la descripción y el ejemplo de código; nunca hay que escribir el blockquote a mano en el spec. Formato exacto del campo en el spec y mecánica de renderizado, en `disenar-clase/SKILL.md`.
 
+<!-- why: piloto en Clase 29 (2026-09-02) — Diego pidió, antes de la tabla de
+     errores comunes, un resumen de concepto+ejemplo en tablita para que el
+     foco quede en "esto es lo que debe quedar claro en sus cuadernos". Probó
+     el resultado en el notebook y confirmó dejarlo default para toda clase
+     futura.
+     evita: una tabla con 1 solo concepto (no aporta sobre la Idea clave que
+     ya tiene ese concepto — regla 22), o confundirla con la tabla de errores
+     que va justo después
+     ej: ✅ tabla `Concepto | Ejemplo` con `for caracter in patente:` /
+         `for i in range(len(patente)): patente[i]` / `patente[i:i+ancho]`
+         para los 3 conceptos de recorrido de Clase 29
+         ❌ agregarla cuando el ICN tiene un solo concepto -->
+23. **Tabla-resumen de cierre del ICN, antes de "Errores típicos a evitar" (default desde 2026-09-02, piloto Clase 29).** Cuando el ICN tiene 2 o más conceptos, cierra con una tabla `Concepto | Ejemplo` que condensa cada concepto en una fila — la vista comparativa de "entonces, ¿qué debe quedar claro en tu cuaderno?", distinta de la Idea clave individual de la regla 22 (una frase por concepto, en su propio bloque). La columna Ejemplo es la sintaxis mínima entre backticks, no una explicación. `generar-colab-clase` la arma sola a partir del campo `- Resumen tabla:` que cada concepto trae en el spec — nunca se escribe la tabla a mano en el spec ni en el Colab. Formato exacto del campo y mecánica de renderizado, en `disenar-clase/SKILL.md` y `generar-colab-clase/SKILL.md`.
+
+<!-- why: al diseñar la Clase 33 (búsqueda de texto, in/find()), Diego notó que
+     el Propósito ancla la actitud pero nunca dice dónde se usa el contenido
+     técnico en el mundo real — propuso una sección corta aparte para eso y,
+     tras ver el ejemplo aplicado a esa clase, pidió dejarla como default
+     inmediato, no como piloto a confirmar después (a diferencia del propósito
+     "compañía real" de Clase 30, que sigue sin generalizarse)
+     evita: que el spec se quede solo con la actitud (Propósito) sin nunca
+     mostrar una aplicación real y concreta del contenido técnico del día; y
+     evita que esta sección se vuelva un ejemplo genérico ("la programación
+     sirve para todo") en vez de algo ligado a lo que se practica hoy
+     ej: ✅ Clase 33 — "Este mismo patrón... es el que usan los buscadores
+         (Ctrl+F)... y los filtros de spam" (ligado a in/find())
+         ❌ una frase genérica sin ejemplo concreto, o un ejemplo que no se
+         conecta con lo que se practica en el Haz Ahora/Guiada/Independiente -->
+24. **Sección "¿Para qué sirve?" después del Propósito, siempre (default desde 2026-09-05, Clase 33).** Bloque corto de **máximo 2 frases**, con ejemplos reales y concretos de dónde se usa el **contenido técnico** de la clase (no la actitud, que ya cubre el Propósito), ligados a lo que efectivamente se practica ese día (Haz Ahora/Guiada/Independiente) — nunca una generalización vacía tipo "esto sirve para programar mejor". `disenar-clase` lo propone junto con objetivo/propósito en el mismo gate de aprobación; `generar-colab-clase` y `generar-ppt-clase` lo renderizan como callout breve justo después del Propósito, antes del Haz Ahora.
+
 ## Cierre de actitud en Control y Evaluación — banco de preguntas
 
 Vigente desde el **2026-08-13**. Todo `Control.ipynb` (lunes estándar) y toda `Evaluación.ipynb` (evaluación sumativa) cierra con una pregunta individual, escrita, sin nota, que ancla la actitud de esa clase/unidad (la misma que ya se elige y registra como "Actitud elegida" en el Spec — ver regla 9) al desempeño real en esa instancia. No es la posta ni el slide de Cierre del PPT: es su versión individual y asincrónica, pensada para el formato silencioso de Control/Evaluación.
@@ -433,6 +463,44 @@ Vigente desde el **lunes 2026-08-17** (primera aplicación: Clase 23). Reemplaza
 | `... - Historial.md` | interno | Registro de iteraciones y feedback |
 
 **Estructura fija del Control:** 3 ítems, todos de programación (nada de alternativas ni preguntas de concepto). Ítem 1 y 2 aplican un concepto cada uno; **el Ítem 3 mezcla de forma simple `while` con `continue` o `break` — uno de los dos, no ambos**, y esa lógica se generaliza: el ítem de cierre combina el concepto principal de la semana con uno solo de los secundarios. Cada ítem trae etiqueta explícita de qué evalúa, un ejemplo válido de referencia visible, y casos de prueba con `hidden: true/false`. Además, **antes de generar `Control.ipynb`, preguntar a Diego qué pregunta del banco de "Cierre de actitud en Control y Evaluación" quiere usar** para la actitud definida en el Spec de esa clase, y agregarla en `Control.ipynb` justo después del último ítem, **antes** del checklist final "✅ Antes de entregar" (default desde Clase 23, 2026-08-13: la reflexión de actitud va primero, y el checklist de entrega queda como la última celda del notebook) — sin nota, no va en el Solucionario.
+
+<!-- why: Control 34 (Strings Métodos y Búsqueda) obligaba a tipear a mano strings largos
+     con espacios exactos ("  ana soto,delivery  ") antes de poder resolver el ítem —
+     Diego pidió (2026-09-11) que las variables ya vinieran definidas para enfocar el
+     tiempo del control en la lógica, no en transcribir texto sin errores
+     evita: perder minutos de un control cronometrado en un error de tipeo que no mide
+     nada del contenido de la clase
+     ej: ✅ celda con `etiqueta = "  ana soto,delivery  "` ya escrita, más abajo un
+         centinela `# ── Escribe tu programa desde aquí ──` donde empieza el código
+         del estudiante
+         ❌ celda vacía con solo `# Tu solución del Ítem 1` y el string solo visible
+         en el enunciado, para que el estudiante lo copie -->
+**Los textos con los que trabaja cada ítem/ejercicio vienen predefinidos en la celda de código, tanto en el Control como en la Ejercitación — nunca los tipea el estudiante (default desde 2026-09-11, Control 34).** La celda mantiene el marcador de siempre como primera línea (lo usa el verificador de la Ejercitación para encontrar la celda) y agrega, debajo de las variables, un centinela `# ── Escribe tu programa desde aquí ──` que marca dónde empieza el código del estudiante — el verificador revisa que haya contenido después del centinela, no después de la primera línea.
+
+<!-- why: el Ítem 3 original del Control 34 pedía el mismo programa dos veces (dos
+     pedidos, "chorrillana...;completo...") con separador `;`, que el curso nunca
+     trabajó (Clase 32 usa `split(",")`) — 7 bullets sobre 2 textos para un control de
+     25 minutos. Diego pidió acotarlo: "el control simplificaría el asunto a un solo
+     texto de verificación (...) no usaría ';' sino ',' (...) las siento bastante
+     largas cada pregunta para el control rápido, prefiero que sea bien focadas"
+     evita: ítems que miden lo mismo dos veces en vez de medir dos cosas distintas, y
+     separadores que no corresponden a lo enseñado en clases
+     ej: ✅ un ítem con 1 texto y máximo 5 bullets, separador `,` cuando el ítem separa
+         campos con `split()`
+         ❌ un ítem con 2 textos casi idénticos (mismo patrón, otro valor) solo para
+         "dar más ejemplos", o un separador que el curso no vio -->
+**Cada ítem del Control trabaja un solo texto y una sola idea, máximo 5 bullets (default desde 2026-09-11, Control 34).** Cuando separar campos, usa siempre `,` — es el separador que se trabaja en la Clase 32 (`split()` con asignación múltiple); nunca `;` u otro que el curso no haya visto. Si un caso borde exige un segundo texto (ej. medir el desenlace "la palabra no está" de `find()`), ese segundo texto es deliberadamente **brevísimo** (3-5 palabras) y sirve solo de contraste — no repite la misma complejidad del texto principal.
+
+<!-- why: los enunciados decían "imprimir con etiqueta clara", una frase ambigua para
+     un estudiante frente a una rúbrica que sí revisa la salida línea por línea —
+     Diego pidió (2026-09-11) que el resultado esperado quedara explícito "para no
+     dejar nada a la interpretación de los estudiantes"
+     evita: que un estudiante pierda puntaje por una diferencia de formato que el
+     enunciado nunca especificó, o que dude qué formato exacto se espera
+     ej: ✅ bloque "Tu programa debe imprimir exactamente estas líneas:" con el `<pre>`
+         literal, partido por caso cuando el ítem trabaja más de un texto
+         ❌ "imprime el resultado con etiqueta clara" sin mostrar las líneas exactas -->
+**El resultado esperado se muestra siempre literal, nunca como sugerencia (default desde 2026-09-11, Control 34).** El bloque de ejemplo abre con "Tu programa debe imprimir exactamente estas líneas" y muestra el `<pre>` completo; cuando el ítem trabaja más de un texto, se segmenta por caso (un sub-bloque por texto, con su propio encabezado) en vez de mostrarse de corrido. Los enunciados dejan de decir "con etiqueta clara" o equivalentes — el bloque de resultado esperado es el contrato, no una sugerencia.
 
 **Rúbrica parcelada, calibrada como la Evaluación 2 (Clase 19).** El Control se puntúa sobre **100 pts** repartidos entre los 3 ítems, y cada ítem se divide en 3-5 **componentes independientes** (lectura y conversión del dato, condición del ciclo, actualización de la variable de control, ubicación del corte, mensajes por caso…), cada uno con su propio presupuesto de puntos y sus 3 niveles ✅ completo / ⚠️ parcial / ❌ cero. Un componente fallado nunca arrastra a los demás, y el mismo error nunca se descuenta dos veces. El `Control Solucionario.ipynb` embebe el bloque de criterios dirigido al agente que corrige, reutilizando el de `clase-19-evaluacion-condicionales/version-dia/generar_evaluacion.py` (incluidos los criterios permanentes: se califica el comportamiento y no la forma, no se evalúa eficiencia ni elegancia, verificar ejecutando y no leyendo el output pegado).
 

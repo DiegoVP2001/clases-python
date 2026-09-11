@@ -57,6 +57,35 @@ def code_cell(text: str = "") -> dict:
     }
 
 
+# Centinela que separa las variables predefinidas del código que escribe el
+# estudiante. Debe coincidir exactamente con el que usa `_revisar()` dentro de
+# VERIFICADOR_BASE más abajo — ese texto vive embebido como string porque se
+# copia tal cual al notebook, no puede referenciar esta constante en tiempo
+# de ejecución del generador.
+SENTINEL = "# ── Escribe tu programa desde aquí ──"
+
+
+def code_cell_solucion(marca: str, setup_py: str | None) -> dict:
+    """Celda de solución del estudiante: marcador + variables predefinidas (si
+    el ítem/ejercicio trae `setup_py`) + centinela.
+
+    El marcador (`marca`) siempre queda como primera línea — es lo que usa el
+    verificador de la Ejercitación (`_fuente_solucion`) para encontrar la
+    celda. Desde el 2026-09-11, el texto con el que trabaja el estudiante
+    viene predefinido en la celda (ver CLAUDE.md "Workflow: lunes estándar")
+    — nunca lo tipea a mano.
+    """
+    if not setup_py:
+        return code_cell(marca)
+    texto = (
+        f"{marca}\n"
+        "# ── Texto con el que debes trabajar (no lo modifiques) ──\n"
+        f"{setup_py}\n\n"
+        f"{SENTINEL}"
+    )
+    return code_cell(texto)
+
+
 def notebook(cells: list, colab_name: str) -> dict:
     return {
         "nbformat": 4,
@@ -83,12 +112,22 @@ def bloque_pistas(pistas: list) -> str:
 
 
 def bloque_ejemplo(test: dict) -> str:
-    """Formato visual de caso de prueba: mismo lenguaje que las evaluaciones.
+    """Formato visual de caso de prueba: encabezado explícito + salida literal.
 
     Si el caso no trae `stdin` (este Control no usa input(), valores fijos
-    escritos en el enunciado), se omite el bloque "El usuario ingresa" en vez
+    predefinidos en la celda), se omite el bloque "El usuario ingresa" en vez
     de mostrarlo vacío — ajuste sobre el Control 31, donde ese <pre></pre>
     vacío quedó visible en el instrumento aplicado.
+
+    El encabezado ("Tu programa debe imprimir exactamente estas líneas") es
+    el contrato — los enunciados ya no dicen "con etiqueta clara" ni dejan
+    nada a interpretación (default desde 2026-09-11, ver CLAUDE.md "Workflow:
+    lunes estándar").
+
+    Si el test trae `secciones` (lista de `{"caso", "n_lineas"}`), el mismo
+    `stdout` se parte en sub-bloques —uno por texto trabajado— en vez de
+    mostrarse de corrido. Se valida que la suma de `n_lineas` cuadre con el
+    número real de líneas del `stdout`, para que nunca queden desincronizados.
     """
     bloque_entrada = ""
     if test["stdin"]:
@@ -97,11 +136,27 @@ def bloque_ejemplo(test: dict) -> str:
             "<p>📥 <em>El usuario ingresa:</em></p>\n"
             f"<pre>{entradas}</pre>\n"
         )
-    return (
-        f"{bloque_entrada}"
-        "<p>📤 <em>El programa imprime:</em></p>\n"
-        f"<pre>{test['stdout']}</pre>"
-    )
+
+    encabezado = "<p>📤 <strong>Tu programa debe imprimir exactamente estas líneas:</strong></p>\n"
+
+    secciones = test.get("secciones")
+    if not secciones:
+        return f"{bloque_entrada}{encabezado}<pre>{test['stdout']}</pre>"
+
+    lineas = test["stdout"].split("\n")
+    total = sum(s["n_lineas"] for s in secciones)
+    if total != len(lineas):
+        raise ValueError(
+            f"'secciones' de {test['name']!r} suman {total} líneas, "
+            f"pero el stdout tiene {len(lineas)}"
+        )
+    cursor = 0
+    partes = []
+    for seccion in secciones:
+        trozo = "\n".join(lineas[cursor:cursor + seccion["n_lineas"]])
+        partes.append(f"<p><strong>{seccion['caso']}</strong></p>\n<pre>{trozo}</pre>")
+        cursor += seccion["n_lineas"]
+    return f"{bloque_entrada}{encabezado}" + "\n".join(partes)
 
 
 # ── Verificador automático (autochequeo) ──────────────────────────────────────
@@ -133,7 +188,10 @@ def _revisar(marca, esperadas):
         print("⬜ No encuentro tu solución. Ejecuta la celda de arriba sin borrar")
         print("   su primera línea:", marca)
         return
-    if not [l for l in fuente.splitlines()[1:] if l.strip()]:
+    lineas = fuente.splitlines()
+    centinela = "# ── Escribe tu programa desde aquí ──"
+    cuerpo = lineas[lineas.index(centinela) + 1:] if centinela in lineas else lineas[1:]
+    if not [l for l in cuerpo if l.strip()]:
         print("⬜ Tu celda de solución todavía está vacía. Escribe tu programa y ejecútala.")
         return
     salida = io.StringIO()
@@ -199,7 +257,7 @@ def build_ejercitacion(data: dict) -> dict:
         md_cell(ej["recordatorio_md"]),
         md_cell("---\n\n## 🤝 Ejercicio guiado — lo resolvemos juntos"),
         md_cell(f"### {ej['guided_exercise']['title']}\n\n{ej['guided_exercise']['statement_md']}"),
-        code_cell("# Tu programa"),
+        code_cell_solucion("# Tu programa", ej["guided_exercise"].get("setup_py")),
         md_cell(
             "---\n\n## 🎯 Serie de ejercicios\n\n"
             "Escribe cada programa en su celda, sin borrar la primera línea "
@@ -221,9 +279,9 @@ def build_ejercitacion(data: dict) -> dict:
             f"### Ejercicio {ex['id']} — {ex['title']}\n\n"
             f"{ex['statement_md']}\n\n"
             f"{bloque_pistas(ex.get('pistas', []))}"
-            f"**Resultado esperado:**\n\n{bloque_ejemplo(visible)}"
+            f"{bloque_ejemplo(visible)}"
         ))
-        cells.append(code_cell(f"# Tu solución — Ejercicio {ex['id']}"))
+        cells.append(code_cell_solucion(f"# Tu solución — Ejercicio {ex['id']}", ex.get("setup_py")))
         cells.append(code_cell(f"verificar_ejercicio_{ex['id']}()"))
 
     # Sección final de soluciones colapsadas (excepción a la Restricción 5 del CLAUDE.md,
@@ -278,9 +336,9 @@ def build_control(data: dict) -> dict:
             f"---\n\n## Ítem {item['id']} — {item['title']} ({item['pts']} pts)\n\n"
             f"{item['statement_md']}\n\n"
             f"{bloque_pistas(item.get('pistas', []))}"
-            f"**Ejemplo válido:**\n\n{bloque_ejemplo(visible)}"
+            f"{bloque_ejemplo(visible)}"
         ))
-        cells.append(code_cell(f"# Tu solución del Ítem {item['id']}"))
+        cells.append(code_cell_solucion(f"# Tu solución del Ítem {item['id']}", item.get("setup_py")))
 
     desafio = ctrl.get("desafio")
     if desafio:
@@ -290,9 +348,9 @@ def build_control(data: dict) -> dict:
             f"{desafio['bonus_md']}\n\n"
             f"{desafio['statement_md']}\n\n"
             f"{bloque_pistas(desafio.get('pistas', []))}"
-            f"**Ejemplo válido:**\n\n{bloque_ejemplo(visible)}"
+            f"{bloque_ejemplo(visible)}"
         ))
-        cells.append(code_cell("# Tu solución del Desafío"))
+        cells.append(code_cell_solucion("# Tu solución del Desafío", desafio.get("setup_py")))
 
     cierre = ctrl.get("cierre_actitud")
     if not cierre:
@@ -565,6 +623,33 @@ def validar_puntajes(data: dict) -> bool:
     return ok
 
 
+# ── Validación de setup_py ────────────────────────────────────────────────────
+
+def validar_setup(data: dict) -> bool:
+    """Cada `setup_py` debe reproducirse tal cual dentro de `solution_py` — si
+    el texto de un dato cambia, hay que cambiarlo en los dos lugares o esta
+    validación falla y no se escribe ningún notebook (mismo criterio que
+    `validar_puntajes`).
+    """
+    piezas = [("Guiado", data["ejercitacion"]["guided_exercise"])]
+    piezas += [(f"Ejercitación {e['id']}", e) for e in data["ejercitacion"]["exercises"]]
+    piezas += [(f"Control ítem {i['id']}", i) for i in data["control"]["items"]]
+    if data["control"].get("desafio"):
+        piezas.append(("Control desafío", data["control"]["desafio"]))
+
+    ok = True
+    for etiqueta, pieza in piezas:
+        setup = pieza.get("setup_py")
+        if not setup:
+            continue
+        if setup not in pieza["solution_py"]:
+            print(f"  FALLA  {etiqueta}: 'setup_py' no aparece tal cual dentro de 'solution_py'")
+            ok = False
+        else:
+            print(f"  OK     {etiqueta}: 'setup_py' consistente con 'solution_py'")
+    return ok
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="solo verificar, no escribir notebooks")
@@ -575,10 +660,12 @@ def main() -> int:
 
     print("Verificando puntajes de la rúbrica...")
     puntajes_ok = validar_puntajes(data)
+    print("\nVerificando que 'setup_py' esté contenido en 'solution_py'...")
+    setup_ok = validar_setup(data)
     print("\nVerificando soluciones contra sus casos de prueba...")
     soluciones_ok = verificar(data)
 
-    if not (puntajes_ok and soluciones_ok):
+    if not (puntajes_ok and setup_ok and soluciones_ok):
         print("\n❌ Hay fallas. No se escribió ningún notebook.")
         return 1
 
