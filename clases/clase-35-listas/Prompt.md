@@ -15,6 +15,24 @@
 
 Ver `Historial-Curricular.md` para el detalle completo de cada renumeración.
 
+## Decisión 2026-09-23 — alineación con el Proyecto Cierre Octubre
+
+Cerrada en `clases/clases-octubre/Proyecto Cierre Octubre - Plan y Pendientes.md` sección 6. `guaguas` (nombres inscritos en Chile 1920-2021, Registro Civil) es el hilo conductor de contenido de **N°35, N°36 y las mini-clases del 1 y 5-oct** — excepción explícita y autorizada por Diego a la restricción permanente 3 del `CLAUDE.md` raíz (contextos variados), solo para este bloque.
+
+- **La sesión abre con un lanzamiento de 15-20 min** del proyecto (presentación del menú de 5 áreas / 9 bases, ver catastro §4) antes de entrar al contenido de N°35 — no ocupa una sesión aparte de las 14 que quedan.
+- **Eje del ICN de N°35:** una fila de un CSV de `guaguas`, en texto, se convierte en lista con `split(",")`; luego se accede por índice y slicing. Puente explícito con Clase 32 (donde se vio `split()`).
+  ```python
+  fila = "2021,Agustina,F,1234"
+  datos = fila.split(",")
+  print("Nombre:", datos[1])
+  >> Nombre: Agustina
+  print("Año y nombre:", datos[0:2])
+  >> Año y nombre: ['2021', 'Agustina']
+  ```
+- **Objetivo propuesto para N°36 (Listas — iteración y métodos, aún sin carpeta/spec):** columnas de `guaguas` como listas paralelas (nombres / cantidad), recorridas con `for` para contar, sumar/promediar, encontrar el máximo y filtrar construyendo una lista nueva con `append` — el mismo `groupby` que pandas hará en una línea el 1-oct.
+- **1-oct y 5-oct (pandas):** misma base `guaguas`, mismo CSV — 1-oct abre/mira, 5-oct filtra/agrupa/grafica. La transición Listas→pandas queda literal, no solo temática.
+- ⚠️ pandas no entra en la Evaluación del 8-oct — avisarlo explícito para no generar ansiedad.
+
 ## Foco de contenido (de la ficha Picuino N°25 y N°26)
 
 - Listas como conjunto ordenado entre corchetes, elementos de tipos mixtos, listas anidadas, listas escritas en varias líneas; concatenar con `+`, repetir con `*`; `in`/`not in` para pertenencia.
