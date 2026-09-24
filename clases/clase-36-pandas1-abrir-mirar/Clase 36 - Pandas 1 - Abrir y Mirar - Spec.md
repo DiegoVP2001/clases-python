@@ -63,7 +63,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   tabla.head()
   ```
 - Idea clave: `pd.read_csv("archivo.csv")` abre el archivo completo y lo guarda como tabla.
@@ -80,7 +80,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  horarios = pd.read_csv("horario_buses_isla.csv", sep=";")
+  horarios = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clase-36-pandas1-abrir-mirar/horario_buses_isla.csv", sep=";")
   horarios.head()
   ```
 - Idea clave: si todo cae en una columna, falta `sep=";"`; si aparecen símbolos raros, falta `encoding=`.
@@ -97,7 +97,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   print("Filas y columnas:", tabla.shape)
   print("Columnas:", list(tabla.columns))
   tabla.head()
@@ -108,7 +108,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   ```
 - Resumen tabla: `tabla.head()` / `tabla.shape` / `tabla.columns`
 
@@ -118,7 +118,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   columnas_relevantes = tabla[["anio", "nombre", "sexo"]]
   columnas_relevantes.head()
   ```
@@ -128,7 +128,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   ```
 - Resumen tabla: `tabla[["col1", "col2"]]`
 
@@ -138,7 +138,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   print("Vacíos en 'sexo':", tabla["sexo"].isna().sum())
 
   tabla_con_sexo = tabla[tabla["sexo"].notna()]
@@ -150,7 +150,7 @@ La periodista, sabiendo que programamos, nos pide ayuda para revisar el archivo 
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   ```
 - Resumen tabla: `tabla["col"].isna().sum()` / `tabla[tabla["col"].notna()]`
 
@@ -183,7 +183,7 @@ Filas con sexo registrado: 854489
   ```python
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   print("Filas y columnas:", tabla.shape)
 
   columnas_relevantes = tabla[["anio", "nombre", "sexo"]]
@@ -269,7 +269,7 @@ Columnas: ['anio', 'nombre', 'sexo', 'n', 'proporcion']
   # Tu solución — Ejercicio 0a
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   print("Filas y columnas:", tabla.shape)
   print("Columnas:", list(tabla.columns))
   tabla.head()
@@ -299,7 +299,7 @@ Filas con 'n' registrado: 854489
   # Tu solución — Ejercicio 0b
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   print("Vacíos en 'n':", tabla["n"].isna().sum())
 
   tabla_con_n = tabla[tabla["n"].notna()]
@@ -335,7 +335,7 @@ Forma final: (858782, 2)
   # Tu solución — Ejercicio 1
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   columnas_relevantes = tabla[["anio", "nombre"]]
   print("Forma final:", columnas_relevantes.shape)
   columnas_relevantes.head()
@@ -371,7 +371,7 @@ dtype: int64
   # Tu solución — Ejercicio 2
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   print(tabla[["sexo", "n"]].isna().sum())
   ```
 
@@ -406,7 +406,7 @@ Después de filtrar: (854489, 3)
   # Tu solución — Ejercicio 3
   import pandas as pd
 
-  tabla = pd.read_csv("bbdd_guaguas.csv")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv")
   columnas_relevantes = tabla[["anio", "nombre", "sexo"]]
   print("Antes de filtrar:", columnas_relevantes.shape)
 
@@ -441,7 +441,7 @@ Filas con asistencia registrada: 4
   # Tu solución — Ejercicio 4
   import pandas as pd
 
-  tabla = pd.read_csv("inscripciones_taller.csv", sep=";")
+  tabla = pd.read_csv("https://raw.githubusercontent.com/DiegoVP2001/clases-python/master/clases/clase-36-pandas1-abrir-mirar/inscripciones_taller.csv", sep=";")
   print("Forma:", tabla.shape)
   print("Columnas:", list(tabla.columns))
   print("Vacíos en 'asistencia':", tabla["asistencia"].isna().sum())
@@ -518,7 +518,8 @@ print(tabla["sexo"].isna().sum())
 
 ## Decisiones de diseño relevantes
 
-- **Dataset real:** se reutiliza `clases/clases-octubre/entregas-ideales/datos/guaguas_maquillada.csv` (858.782 filas × 5 columnas; 4.293 vacíos en `sexo` y en `n`), pero renombrado en el código a `bbdd_guaguas.csv` — misma convención de nombre que fijó N°35 para el dataset ("bases de datos reales se nombran `bbdd_...`"), en vez del nombre literal `guaguas_maquillada.csv` que traía la vista previa aprobada. El archivo real (~23 MB) no se commitea a esta carpeta por tamaño — pendiente definir el mecanismo de distribución exacto (descarga aparte + subida manual a la sesión de Colab, o algo similar) en `generar-colab-clase`.
+- **Dataset real:** se reutiliza `clases/clases-octubre/entregas-ideales/datos/guaguas_maquillada.csv` (858.782 filas × 5 columnas; 4.293 vacíos en `sexo` y en `n`), copiado a `clases/clases-octubre/datos-compartidos/bbdd_guaguas.csv` (misma convención de nombre que fijó N°35). **Distribución resuelta (2026-09-24):** todo `pd.read_csv(...)` de esta clase (`bbdd_guaguas.csv`, `horario_buses_isla.csv`, `inscripciones_taller.csv`) apunta a la URL raw de GitHub del archivo ya pusheado, en vez de un nombre de archivo suelto — así cada estudiante lo lee directo en su sesión de Colab sin subir nada a mano ni montar Google Drive. `bbdd_guaguas.csv` queda en una carpeta compartida (`clases-octubre/datos-compartidos/`, no en la carpeta de esta clase) porque N°37-N°40 reutilizan el mismo archivo — evita 5 copias de 23 MB. Ver `clases-octubre/datos-compartidos/README.md`.
+- **Celda de preparación (`!pip install pandas`) — agregada a pedido explícito de Diego (2026-09-24).** pandas ya viene preinstalado en el entorno estándar de Colab, así que no es estrictamente necesaria, pero Diego la quiere como respaldo antes de la primera celda de código de la clase. Se insertó manualmente en `Clase.ipynb` (no es un campo que el generador de `generar-colab-clase` parsee desde el spec todavía) — si se regenera el notebook desde este spec, hay que volver a insertarla a mano justo después de la celda de intro y antes del Haz Ahora.
 - **Tabla markdown de vista previa (Concepto 1) — nuevo default para esta clase, a pedido de Diego (2026-09-24):** cualquier clase que abra un archivo/base de datos real por primera vez incluye, en el concepto donde se presenta esa apertura, una tabla markdown chica (3-4 filas reales + `...`) mostrando cómo se ve la tabla ya abierta — para que los estudiantes se la imaginen antes de ejecutar el código. Se registra también como default en `disenar-clase/SKILL.md`.
 - **Dos archivos chicos de apoyo, creados junto a esta spec:** `horario_buses_isla.csv` (Concepto 2, `sep=";"`) e `inscripciones_taller.csv` (Ejercicio 4, mismo síntoma sin avisar). Ninguno usa el contexto `guaguas` a propósito — son la excepción puntual dentro de la excepción, porque necesitan un archivo realmente mal separado, y `guaguas` no lo está.
 - **`sep=`/`encoding=` como concepto propio (Concepto 2), no solo mención al pasar:** aunque `guaguas` no los necesita, el resto de las 9 bases del proyecto sí (ver `Catastro de Bases y Banco de Preguntas...md` §1: DEMRE y SIMCE requieren `sep=";"`; SIMCE y Matrícula requieren `encoding="latin-1"`) — se enseña ahora para que cada equipo lo reconozca en octubre.
