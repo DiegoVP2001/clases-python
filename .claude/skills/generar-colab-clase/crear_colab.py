@@ -277,7 +277,7 @@ def parsear_icn(texto: str) -> dict:
                 # de la tabla-resumen que cierra el ICN antes de "Errores típicos"
                 # ("qué debe quedar claro en tu cuaderno"). Si 2+ conceptos la
                 # traen, generar_colab arma la tabla sola — ver generar_resumen_icn_markdown.
-                m_rt = re.search(rf"- Resumen tabla:\s*(.+?)(?=\n\*\*|\Z)", content, re.DOTALL)
+                m_rt = re.search(rf"- Resumen tabla:\s*(.+?)(?=\n\*\*|\n- |\Z)", content, re.DOTALL)
                 if m_rt:
                     concepto["resumen_tabla"] = m_rt.group(1).strip()
 
