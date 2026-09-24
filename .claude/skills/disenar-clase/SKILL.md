@@ -33,7 +33,7 @@ Luego, asegúrate de tener:
 
 1. **Clase Picuino de referencia** (1 a 33). Consulta la skill `referencia-curriculo` para ver foco, conceptos y actividades de esa clase. Recuerda que el número real (de `Historial-Curricular.md`) y el número Picuino de referencia son cosas distintas — regístralos por separado.
 2. **Contenidos previos.** Usa `Historial-Curricular.md` para confirmar exactamente qué se ha visto hasta ahora (no asumas "1 a N-1" mecánicamente). Si hay ambigüedad, confirma brevemente con Diego.
-3. **Contexto temático preferido** (opcional). Si Diego no indica, propón 2-3 contextos posibles usando `referencia-intereses-estudiantes`. Si Diego pide contexto de Isla de Maipo o algo local/cotidiano de la comuna, consulta `referencia-isla-de-maipo` para extraer escenarios auténticos (transporte, fiestas, viñas, río, comercio, etc.).
+3. **Contexto temático preferido** (opcional). Si Diego no indica, propón 2-3 contextos posibles usando `referencia-intereses-estudiantes`. Si Diego pide contexto de Isla de Maipo o algo local/cotidiano de la comuna, consulta `referencia-isla-de-maipo` para extraer escenarios auténticos (transporte, fiestas, viñas, río, comercio, etc.). Si Diego pide un "negocio ancla" real para que toda la narrativa (Haz Ahora + Guiada + Independiente) siga un solo caso de negocio — principio en testeo desde 2026-08-26, primer caso: Los Mellis en Clase 30 — consulta `referencia-empresas-isla-de-maipo`.
 4. **Foco específico.** Si la clase Picuino cubre varios subconceptos, pregunta cuál priorizar. Por ejemplo, la clase 9 (if-else) podría enfocarse en condicionales simples o ya incluir lógica compuesta.
 
 **Defaults** (ver `CLAUDE.md`): no preguntes duración, plataforma, modalidad ni evidencia. Asume 80 min, Google Colab, individual, entrega por Classroom.
@@ -83,7 +83,25 @@ Ejemplo del formato vigente (2 frases, corto): "El orden es organizar el trabajo
 
 > **Formato anterior (superado por el default corto, usado hasta Clase 19):** 3 frases — definición de la actitud, proyección **en plural** más allá del liceo ("Esa habilidad nos sirve en cualquier proceso real que..."), y conexión con la clase de hoy. Ofrécelo solo si Diego pide explícitamente un propósito más desarrollado que proyecte la actitud a situaciones de la vida real fuera de la programación — no es el default. Specs anteriores a 2026-07-28 (ej. `clase-13-if-anidadas`, `clase-16-for-range`) usan este formato de 3 frases o el aún más antiguo en singular — no son la referencia vigente.
 
-Presenta objetivo + propósito y espera aprobación o ajuste antes de avanzar.
+> **Piloto — propósito con compañía real + impacto (pendiente de generalizar, decidido 2026-08-27, primer caso: Clase 30 — `clase-30-strings-metodos`).** Extiende el formato corto (sigue en 2 frases) fusionando en la frase 1 la conexión con resolver problemas reales/tener impacto, y cerrando la frase 2 con una compañía real de Isla de Maipo (sin detallar el problema puntual, porque el cuaderno trae varios):
+> 1. Frase que define la actitud **+ su valor para resolver problemas reales o tener impacto** ("...la misma lógica que resuelve problemas reales en cualquier proceso que se repite.")
+> 2. "Hoy lo trabajamos aplicando [contenido] a unos problemas que le surgieron a [Compañía real]." (variantes: "...resolviendo unos problemas que tuvo [Compañía]", "...aplicado a unos problemas reales de [Compañía]", "...ayudando a [Compañía] con unos problemas que le surgieron")
+>
+> Ejemplo: "El orden es organizar el trabajo en pasos claros, uno dentro de otro, sin mezclarlos — la misma lógica que resuelve problemas reales en cualquier proceso que se repite. Hoy lo trabajamos aplicando ciclos `for` anidados a unos problemas que le surgieron a la Panadería San Ignacio."
+>
+> **Requisito clave: la compañía nombrada aquí debe ser la MISMA que ancla los problemas de la clase** (Haz Ahora + Guiada + Independiente) — esto activa `referencia-empresas-isla-de-maipo` como paso previo obligatorio (elegir negocio real antes de proponer objetivo+propósito), no solo la frase de cierre suelta. En este piloto, `referencia-empresas-isla-de-maipo` sigue formalmente "opcional en testeo", pero para Clase 30 se usa igual, exclusivamente para validar este formato de propósito.
+>
+> **No generalices este formato a otras clases todavía.** Úsalo solo en `clase-30-strings-metodos`. Al cerrar esa clase — cuando `Clase.ipynb`, `Solucionario.ipynb` y el Ticket de Salida (PPT + JSON de respuestas) ya estén generados y aprobados — pregúntale explícitamente a Diego si le gustó este formato de propósito lo suficiente como para dejarlo por default en todas las clases (lo que implicaría además promover `referencia-empresas-isla-de-maipo` de "opcional en testeo" a default, eligiendo negocio real antes del Paso 3 en toda clase). Registra su respuesta actualizando este bloque y, si aprueba, el `CLAUDE.md` raíz de este proyecto.
+
+**"¿Para qué sirve?" — sección obligatoria después del propósito (default desde 2026-09-05, Clase 33 — ver regla 24 del `CLAUDE.md` raíz).** Distinta del Propósito: el Propósito ancla la *actitud*, esta sección ancla el *contenido técnico* a una aplicación real. Redáctala junto con el objetivo/propósito, en el mismo turno de propuesta:
+
+- **Máximo 2 frases.** Sin enumeraciones, sin varios ejemplos encadenados.
+- Ejemplos reales y concretos de dónde se usa el contenido técnico de hoy (no de "la programación en general"), y en lo posible ligados a lo que efectivamente se va a practicar en el Haz Ahora/Guiada/Independiente de esta misma clase.
+- Nunca una frase vacía tipo "esto te sirve para programar mejor" — si no encuentras un ejemplo real y específico, prefiere acortar a una sola frase antes que rellenar con generalidades.
+
+Ejemplo (Clase 33, `in`/`find()`): "Este mismo patrón —revisar si un texto contiene una palabra y en qué posición— es el que usan los buscadores (`Ctrl+F`) para encontrarte una palabra en un documento, y los filtros de spam o de contenido para detectar palabras prohibidas en un mensaje."
+
+Presenta objetivo + propósito + ¿Para qué sirve? y espera aprobación o ajuste antes de avanzar.
 
 ### Paso 4 — Proponer estructura de 5 pasos
 
@@ -129,6 +147,12 @@ Trabajo individual, alineado con la guiada pero NO copia literal. Formato "revis
 Los enunciados NO incluyen nombres de variables, operadores ni comandos — solo descripción en lenguaje natural de qué calcular. Los ejemplos de input/output usan lenguaje natural ("si alguien ingresa un saldo de \$80.000..."), nunca nombres de variables. Los outputs esperados tienen etiquetas descriptivas. Recuerda escapar el signo peso como `\$` — ver CLAUDE.md restricción 21.
 **Presupuesto de palabras (default desde Clase 20 v2, 2026-08-05):** narrativa + bullets apunta a 60-90 palabras por ejercicio (sin contar el resultado esperado), para que los tres obligatorios alcancen a resolverse en el tiempo de la sección — ver CLAUDE.md regla 15/16. El autochequeo (ver abajo) no necesita instrumentación en los bullets: usa el "Verificador por salida" (`generar-colab-clase/SKILL.md`), que revisa lo que el programa imprime, no nombres de variable.
 Cantidad de ejercicios: **3 obligatorios (2 directos + 1 contextualizado) + 1 desafío opcional (fijo — no preguntar la cantidad; default desde Clase 24, 2026-08-12 — ver CLAUDE.md regla 16)**. Los obligatorios usan el mismo formato canónico y la misma exigencia de narrativa — ninguno se presenta como bonus ni con narrativa más breve. El desafío (Ejercicio 4) es para quien termine antes los tres obligatorios: mismo formato canónico, con algo más de margen de narrativa que el presupuesto de arriba.
+
+**Ejercicios "0" de práctica directa — antes del Ejercicio 1, default desde 2026-08-21 (ver CLAUDE.md regla 16).** 1-2 ejercicios `Ejercicio 0a` / `Ejercicio 0b`, decisión tuya según cuántos matices distintos tiene el contenido de la clase (2 cuando hay dos patrones claramente separables que ameritan drill aparte, ej. `return` vs `print()` y reutilizar un resultado guardado; 1 cuando hay un solo patrón central). Se proponen en el chat junto con el resto de la Independiente, para que Diego los vea antes de aprobar. Mismo mecanismo de generación que el resto (`**El programa debe:**` + `**Celda de verificación:**`), pero:
+- Sin narrativa: el contexto que antecede a `**El programa debe:**` queda vacío o con una sola frase de transición ("Aplica el patrón base:"), nunca una historia de 3-4 líneas.
+- Sin pistas `<details>` — son máximamente explícitos por diseño, no hay nada que insinuar.
+- Consigna técnica explícita en los bullets, nombrando el constructo sin disfraz (ej. "Define una función llamada `calcular_total` que reciba dos números y devuelva su suma con `return`.") — es la única excepción a la regla 8 de no nombrar operadores/constructos, porque el propósito de estos ejercicios es justamente aplicar la definición pelada.
+
 Contextos: [variados entre los ejercicios]
 Criterio de logro: [qué evidencia el aprendizaje]
 
@@ -182,6 +206,10 @@ Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/Clase 
 
 [Propósito aprobado, dirigido a estudiantes]
 
+## ¿Para qué sirve?
+
+[Máximo 2 frases, ejemplos reales del contenido técnico de hoy ligados a la práctica de la clase — ver "¿Para qué sirve?" en el Paso 3 arriba y regla 24 del CLAUDE.md raíz]
+
 ## Estructura de la clase
 
 ### 1. Haz Ahora (N min)
@@ -202,9 +230,16 @@ Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/Clase 
 - Definición: [Una o dos frases que expliquen qué es y cómo funciona, lenguaje de 4to medio]
 - Ejemplo:
   ```python
-  [código mínimo que muestra el concepto en acción, 2-4 líneas]
+  [código mínimo, AUTOCONTENIDO (define sus propias variables, sin depender
+  de un concepto anterior), que muestra el concepto en acción, 2-4 líneas]
   ```
-- Idea clave: [Frase corta que el estudiante debe recordar, lo más importante de este concepto]
+- Idea clave: [Frase corta que responde "¿qué anoto profe en el cuaderno?", ~1 línea]
+- Instrucción: [Una frase imperativa, nombrando la sintaxis nueva a escribir — ver convención "Escríbelo tú" más abajo]
+- Punto de partida:
+  ```python
+  [solo el código previo a la sintaxis nueva del concepto — variables ya definidas, sin la línea que el estudiante debe escribir]
+  ```
+- Resumen tabla: [línea de código o sintaxis mínima que representa el concepto en la tabla-resumen del cierre del ICN — ver convención más abajo]
 
 **Concepto 2: [nombre breve]**
 - Definición: ...
@@ -213,6 +248,12 @@ Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/Clase 
   ...
   ```
 - Idea clave: ...
+- Instrucción: ...
+- Punto de partida:
+  ```python
+  ...
+  ```
+- Resumen tabla: ...
 
 **Concepto 3: [nombre breve]**
 - Definición: ...
@@ -221,11 +262,73 @@ Cuando Diego apruebe la estructura, crea el archivo `clases/clase-NN-tema/Clase 
   ...
   ```
 - Idea clave: ...
+- Instrucción: ...
+- Punto de partida:
+  ```python
+  ...
+  ```
+- Resumen tabla: ...
 
 [Puedes incluir tantos conceptos como necesite la clase — típicamente 3 a 5, pero
 no hay tope. Cada concepto generará un slide propio en el PPT con su definición,
 ejemplo de código e idea clave. Si necesitas 6 conceptos para enseñar bien el
 tema, agrega 6 conceptos.]
+
+**Convención de "Idea clave" (default desde 2026-08-21):** no es un resumen
+genérico del concepto — responde directo a la pregunta que hace el estudiante
+en clase, "¿qué anoto profe en el cuaderno?". Redáctala en modo casi dictado,
+máximo ~1 línea (con margen para algo más o menos). Escribe solo el texto plano
+después de "- Idea clave:" — `generar-colab-clase` la renderiza sola como
+blockquote destacado (`> **Idea clave:** ...`) en el Colab, ubicada entre la
+descripción y el ejemplo de código de ese concepto; no hace falta escribir el
+blockquote a mano en el spec.
+
+**Convención "Escríbelo tú" — `Instrucción` + `Punto de partida` (default
+desde 2026-09-24, ver regla 25 del CLAUDE.md raíz; origen: piloto de Clase 33,
+2026-09-08).** Cada concepto del ICN trae ambos campos siempre, salvo que Diego
+pida explícitamente el formato antiguo para una clase puntual. `Instrucción`
+es una frase imperativa de una línea que nombra la sintaxis nueva que el
+estudiante debe escribir él mismo (única excepción a la regla 8 de no nombrar
+el constructo en enunciados — acá el propósito es justo que la nombre).
+`Punto de partida` es un bloque ` ```python ` con solo el código que ya existía
+antes de esa sintaxis nueva (variables ya definidas de este mismo concepto o
+heredadas del anterior) — nunca la línea que resuelve la instrucción. El
+`Ejemplo` completo sigue siendo obligatorio y debe ser **autocontenido**
+(define sus propias variables sin depender de que se haya ejecutado el
+concepto anterior): alimenta el Solucionario (sección "ICN — código completo")
+y el PPT, que no cambian de comportamiento. `generar-colab-clase` arma solo,
+a partir de `Instrucción`, la línea `✍️ **Escríbelo tú:** ...` debajo de la
+Idea clave, y usa `Punto de partida` (no el `Ejemplo`) en la celda de código
+del estudiante.
+
+**Convención de "Resumen tabla" (default desde 2026-09-02, piloto Clase 29 —
+ver regla 23 del CLAUDE.md raíz):** una línea de código o sintaxis mínima
+(entre backticks) que representa el concepto en una tabla comparativa que
+cierra el ICN, justo antes de "Errores típicos a evitar". A diferencia de la
+Idea clave (una frase por concepto, en su propio bloque), esta tabla junta
+todos los conceptos en una sola vista de un vistazo — el "entonces, ¿qué debe
+quedar claro en tu cuaderno?" — así que el contenido debe ser el patrón de
+sintaxis puro, no una explicación (ej. `for i in range(len(texto)): texto[i]`,
+no "recorre con índice"). Rellénala siempre que el ICN tenga 2 o más conceptos
+del tipo `**Concepto N:**` (con 1 solo no aporta sobre la Idea clave que ya
+tiene ese concepto): `generar-colab-clase` arma la tabla sola apenas detecta
+2+ conceptos con este campo — no hace falta escribir la tabla a mano en el
+spec ni en el Colab.
+
+**Convención de "vista previa en tabla" al abrir un archivo real (default
+desde 2026-09-24, piloto Clase 36 — Pandas 1).** Aplica solo a clases que
+abren un archivo o base de datos real por primera vez (todo el bloque pandas
+del proyecto de octubre, y a futuro cualquier clase nueva que introduzca una
+fuente de datos que el curso no haya visto). En el concepto que presenta esa
+apertura (normalmente el primero de la clase), agrega dentro de la misma
+`Definición` — antes del bloque `Ejemplo`, en su propio párrafo — una tabla
+markdown chica (3-4 filas con datos reales, más una fila final `...` si la
+base es grande) mostrando cómo se ve la tabla ya abierta, para que el
+estudiante se la imagine antes de ejecutar el código. Una sola vez por clase,
+en el concepto donde mejor encaje — no hace falta repetirla en cada concepto
+siguiente. No es un campo nuevo del template (`generar-colab-clase` no lo
+parsea aparte): se escribe como texto markdown dentro de `Definición` mismo,
+que ya se renderiza tal cual en el Colab y el PPT.
 
 **Errores típicos:**
 | Error | Qué ocurre | Cómo corregirlo |
@@ -274,6 +377,33 @@ Ejemplos:
 ```python
 [preámbulo reutilizable del "Verificador por salida" — copiarlo tal cual desde "Autochequeo" en generar-colab-clase/SKILL.md, sin modificar]
 ```
+
+[Opcional — 1-2 ejercicios "0" de práctica directa, antes del Ejercicio 1 (ver Paso 4 arriba y CLAUDE.md regla 16). Mismo mecanismo `**El programa debe:**` + `**Celda de verificación:**`, sin narrativa ni pistas:]
+
+**Ejercicio 0a — Práctica directa: [subtítulo]**
+[Contexto vacío o una frase de transición corta, nunca narrativa de 3-4 líneas]
+
+**El programa debe:**
+- [consigna técnica explícita, nombrando el constructo — ej. "Definir una función llamada `nombre_funcion` que reciba... y devuelva... con `return`."]
+- [paso de llamar/guardar/imprimir]
+
+**Resultado esperado:**
+```
+[output esperado]
+```
+
+- Solución:
+  ```python
+  [código de referencia]
+  ```
+
+**Celda de verificación:**
+```python
+verificar_ejercicio_0a()
+```
+
+**Ejercicio 0b — Práctica directa: [subtítulo]** *(si se decidió agregar un segundo)*
+[Mismo formato que 0a, drilleando el segundo matiz del contenido]
 
 **Ejercicio 1 — [contexto]**
 [Narrativa 3-4 líneas, formato revisión rápida — nunca "la pareja"/"ustedes" como sujeto de la narrativa ni ninguna otra referencia a la modalidad de trabajo: Diego decide y anuncia la modalidad en vivo, en clase, no el notebook]
