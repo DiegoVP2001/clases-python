@@ -7,7 +7,7 @@
 ## Contexto
 
 - **Curso:** 4to medio
-- **Duración:** 80 min totales, de los cuales ~56 min corresponden a los 5 pasos (los primeros 15-20 min los ocupa la Presentación de proyecto, ver sección propia más abajo)
+- **Duración:** 80 min totales, de los cuales ~54 min corresponden a los 5 pasos (los primeros 15-20 min los ocupa la Presentación de proyecto, ver sección propia arriba de la Estructura)
 - **Modalidad:** individual
 - **Plataforma:** Google Colab
 - **Entrega:** Google Classroom
@@ -29,19 +29,51 @@ Así lee un programa una base de datos real: separa cada fila por comas y toma l
 
 ## Presentación de proyecto (antes del Haz Ahora, no descuenta tiempo de los 5 pasos)
 
-**Duración:** 15-20 min, al inicio de la sesión.
+**Duración:** 15-20 min, al inicio de la sesión. Se inserta como primera celda de `Clase.ipynb` (celda no estándar de la plantilla, específica de esta clase) — es el torpedo que Diego proyecta/lee para presentar el proyecto, y que además queda de referencia para los estudiantes en su propio notebook. Guion completo y fuente de cada dato en `clases/clases-octubre/Catastro de Bases y Banco de Preguntas - Proyecto Octubre.md` §4 y `clases/clases-octubre/Proyecto Cierre Octubre - Plan y Pendientes.md` §1. No se incluye en el PPT de esta clase (`Presentación.pptx` es contenido de aula regular); este material es aparte.
 
-Espacio para:
-1. El pitch del menú de 9 bases — guion completo en `clases/clases-octubre/Catastro de Bases y Banco de Preguntas - Proyecto Octubre.md` §4 (noticia del LUN + las 5 áreas temáticas + apertura del formulario de elección de base, que cierra el martes 29-sep a las 23:59).
-2. Mención breve de que el 13-oct se presentan las rúbricas completas de evaluación del proyecto (`clases-octubre/instrumentos-proyecto/Lanzamiento del Proyecto - 13 Octubre.html`) — no se detalla hoy, solo se anuncia.
+**Voz:** plural colectivo ("vamos a...", "nos interesa..."), nunca en tercera persona sobre Diego.
 
-No se incluye en el PPT de esta clase (`Presentación.pptx` es contenido de aula regular); el material del pitch es aparte.
+**Contenido de la celda:**
+
+- 📰 **De dónde partimos** — con una pregunta simple (cuánto ganan los ingenieros) se armó una noticia de circulación nacional. Eso es a dónde puede llegar una investigación con datos: el titular es el horizonte, no el punto de partida. No necesitamos tener la pregunta final hoy. Debajo de este texto va incrustada la foto de la nota real (`clases/clase-35-listas/foto_lun.png`, LUN 21-sep-2026) como attachment del notebook (no como archivo aparte que haya que subir a Colab).
+- 🎯 **Qué vamos a hacer** — responder una pregunta real usando datos: conseguirlos, procesarlos con Python, construir la evidencia que sostiene una conclusión, y defenderla ante el curso (y ante dirección) y frente al propio código.
+- 🗂️ **El menú — 9 bases en 5 áreas** (tabla: Área | Base | Qué contiene | Una pregunta para partir):
+
+  | Área | Base | Qué contiene | Una pregunta para partir |
+  |---|---|---|---|
+  | Mi futuro | SIES — Empleabilidad e ingresos | Empleabilidad e ingreso por carrera e institución | ¿Cuál es la carrera con mayor empleabilidad al primer año dentro de mi área? |
+  | Mi futuro | DEMRE — Admisión 2026 | Puntajes de corte y vacantes por carrera | ¿Qué puntaje necesitó el último seleccionado de la carrera que quiero? |
+  | Mi colegio | SIMCE 2° medio 2025 (por establecimiento o por comuna) | Resultados de la prueba SIMCE por colegio/comuna | ¿Cómo le fue a mi liceo en Lectura y en Matemática? |
+  | Mi colegio | Matrícula por establecimiento 2025 | Cantidad de estudiantes por colegio, comuna y dependencia | ¿Cuántos estudiantes tiene mi liceo? |
+  | Mi colegio | Subvenciones a establecimientos 2025 | Montos que reciben los colegios, mes a mes | ¿Cuánta subvención recibió mi liceo durante 2025? |
+  | Seguridad vial | CONASET — Siniestros de tránsito 2020-2025 | Siniestros de tránsito a nivel nacional | ¿Cuántos siniestros hubo en mi comuna el último año? |
+  | Bolsillo | ODEPA — Precios al consumidor | Precios de alimentos en ferias y supermercados | ¿Cuánto costó el kilo de papas a lo largo de 2025? |
+  | Salud | Estadísticas Hospitalarias 2024 | Camas y ocupación por hospital | ¿Qué porcentaje de ocupación tuvo el hospital más cercano? |
+
+- 🧭 **Cómo elegimos la base** — por interés genuino, no por la que parece más fácil. Podemos elegir la que nos interese explorar; la pregunta final no se afina hoy, se trabaja recién desde el 13-oct con los datos reales en la mano. Más de un equipo puede elegir la misma base, con preguntas distintas. Las bases de "Mi colegio" nos dejan mirar nuestro propio liceo — es válido y es potente, pero exige cuidar bien qué *no* podemos concluir con lo que tenemos.
+- 👥 **Equipos** (tabla: Modalidad | Cómo se forma):
+
+  | Modalidad | Cómo se forma |
+  |---|---|
+  | Individual | A elección, si preferimos trabajar solos |
+  | Pareja (máximo 2) | A elección, con quien queramos |
+
+  Un solo envío del formulario por equipo.
+- 📅 **Fechas clave** (tabla: Fecha | Qué pasa):
+
+  | Fecha | Qué pasa |
+  |---|---|
+  | Martes 29-sep, 23:59 | Cierra el formulario de elección de área y base |
+  | 13-oct | Se presentan las rúbricas completas y arrancamos a trabajar con los datos reales |
+  | 27 y 29-oct | Showcase — presentamos ante el curso y dirección |
+
+- 🔗 Link del formulario: `https://forms.gle/5MfPKGk5pTjiNKC3A`
 
 ## Estructura de la clase
 
 ### 1. Haz Ahora (4 min)
 
-Diego trae una noticia real: cada año el Registro Civil registra, fila por fila, todos los nombres inscritos en Chile — la base se llama `bbdd_guaguas.csv`. Una periodista está armando una nota sobre 2021 y les muestra una fila tal cual aparece en la base, separada por comas: `2021,Mateo,M,3267`. Ella, sabiendo que ustedes programan, les pide ayuda para sacar datos exactos de filas como esta — pero antes quiere que tengan clara la lógica de contarlas:
+Hoy trabajamos con una noticia real: cada año el Registro Civil registra, fila por fila, todos los nombres inscritos en Chile — la base se llama `bbdd_guaguas.csv`. Una periodista está armando una nota sobre 2021 y nos muestra una fila tal cual aparece en la base, separada por comas: `2021,Mateo,M,3267`. Sabiendo que programamos, nos pide ayuda para sacar datos exactos de filas como esta — pero antes quiere que tengamos clara la lógica de contarlas:
 
 1. Contando desde el principio, ¿en qué posición de la fila aparece el nombre?
 2. ¿Cuál es el dato que ocupa la última posición de la fila?
@@ -52,10 +84,36 @@ Diego trae una noticia real: cada año el Registro Civil registra, fila por fila
 2. 3267
 3. 2021 y Mateo
 
-### 2. Introducción al Contenido Nuevo (15 min)
+### 2. Introducción al Contenido Nuevo (17 min)
 
-**Concepto 1: De fila de texto a lista con `split(",")`**
-- Definición: Una fila de `bbdd_guaguas.csv` llega como un solo texto separado por comas. El método `.split(",")` corta ese texto en cada coma y arma una lista con cada dato por separado.
+**Concepto 1: ¿Qué es un CSV?**
+- Definición: En un Excel vemos la información como una tabla: cada columna es un tipo de dato y cada fila es un registro. Un CSV guarda esa misma tabla como texto plano: una línea por fila, y una coma separa cada columna. Así se ve `bbdd_guaguas.csv` si lo abriéramos como tabla:
+
+| año | nombre | sexo | cantidad |
+|---|---|---|---|
+| 2021 | Mateo | M | 3267 |
+| 2021 | Emma | F | 2352 |
+| ... | ... | ... | ... |
+
+Esa misma fila de Mateo, guardada como CSV, es un solo texto: `2021,Mateo,M,3267`.
+- Ejemplo:
+  ```python
+  fila = "2021,Mateo,M,3267"
+  print("La fila tal como llega del CSV:", fila)
+  ```
+  ```
+  >> La fila tal como llega del CSV: 2021,Mateo,M,3267
+  ```
+- Idea clave: Un CSV es una tabla guardada como texto — cada línea es una fila y cada coma separa una columna.
+- Instrucción: Guarda en una variable la fila de Mateo tal como aparece en `bbdd_guaguas.csv` (un solo texto, separado por comas) e imprímela con una etiqueta.
+- Punto de partida:
+  ```python
+  # La fila de Mateo tal como está en bbdd_guaguas.csv
+  ```
+- Resumen tabla: `fila = "2021,Mateo,M,3267"`
+
+**Concepto 2: De fila de texto a lista con `split(",")`**
+- Definición: Una fila de `bbdd_guaguas.csv` llega como un solo texto separado por comas. El método `.split(",")` corta ese texto en cada coma y arma una lista con cada dato por separado. (Al pasar, sin ser concepto propio: una lista también se puede escribir directo entre corchetes, como `nombres = ["Mateo", "Emma"]`, y `len(datos)` cuenta cuántos elementos tiene.)
 - Ejemplo:
   ```python
   fila = "2021,Mateo,M,3267"
@@ -66,13 +124,19 @@ Diego trae una noticia real: cada año el Registro Civil registra, fila por fila
   >> La fila como lista: ['2021', 'Mateo', 'M', '3267']
   ```
 - Idea clave: `variable.split(",")` corta un texto en cada coma y arma una lista.
+- Instrucción: Convierte la fila en una lista con `split(",")` y muestra el resultado con una etiqueta.
+- Punto de partida:
+  ```python
+  fila = "2021,Mateo,M,3267"
+  ```
 - Resumen tabla: `datos = fila.split(",")`
-- **Nota (mostrada al pasar, no es concepto propio):** una lista también se puede escribir directo entre corchetes (`nombres = ["Mateo", "Emma"]`), y `len(datos)` cuenta cuántos elementos tiene.
 
-**Concepto 2: Acceso por índice, incluidos los negativos**
+**Concepto 3: Acceso por índice, incluidos los negativos**
 - Definición: Cada dato de la lista tiene una posición, llamada índice. Python empieza a contar desde 0, así que el primer dato es `datos[0]`. Los índices negativos cuentan desde el final: `datos[-1]` es el último dato.
 - Ejemplo:
   ```python
+  fila = "2021,Mateo,M,3267"
+  datos = fila.split(",")
   print("Año:", datos[0])
   print("Último dato (cantidad):", datos[-1])
   ```
@@ -81,24 +145,40 @@ Diego trae una noticia real: cada año el Registro Civil registra, fila por fila
   >> Último dato (cantidad): 3267
   ```
 - Idea clave: El índice empieza en 0; `datos[-1]` es el último dato sin saber cuántos hay.
+- Instrucción: Muestra el año con índice positivo y la cantidad con índice negativo, cada uno con su etiqueta.
+- Punto de partida:
+  ```python
+  fila = "2021,Mateo,M,3267"
+  datos = fila.split(",")
+  ```
 - Resumen tabla: `datos[0]`, `datos[-1]`
 
-**Concepto 3: Slicing**
+**Concepto 4: Slicing**
 - Definición: El slicing `lista[inicio:fin]` saca un tramo de la lista, desde `inicio` hasta justo antes de `fin` (el final queda excluido).
 - Ejemplo:
   ```python
+  fila = "2021,Mateo,M,3267"
+  datos = fila.split(",")
   print("Año y nombre:", datos[0:2])
   ```
   ```
   >> Año y nombre: ['2021', 'Mateo']
   ```
 - Idea clave: `lista[inicio:fin]` incluye `inicio` pero excluye `fin`.
+- Instrucción: Muestra juntos el año y el nombre usando slicing.
+- Punto de partida:
+  ```python
+  fila = "2021,Mateo,M,3267"
+  datos = fila.split(",")
+  ```
 - Resumen tabla: `datos[0:2]`
 
-**Concepto 4: Convertir un dato antes de operar (`int()`)**
+**Concepto 5: Convertir un dato antes de operar (`int()`)**
 - Definición: Todo lo que sale de `.split(",")` es texto (`str`), incluso si parece un número. Para operar matemáticamente con un dato hay que convertirlo primero con `int()`.
 - Ejemplo:
   ```python
+  fila = "2021,Mateo,M,3267"
+  datos = fila.split(",")
   print("El doble sin convertir:", datos[3] * 2)
   cantidad = int(datos[3])
   print("El doble convertido:", cantidad * 2)
@@ -108,6 +188,12 @@ Diego trae una noticia real: cada año el Registro Civil registra, fila por fila
   >> El doble convertido: 6534
   ```
 - Idea clave: Un dato que viene de `split()` siempre es texto — conviértelo con `int()` antes de operar.
+- Instrucción: Muestra el doble de la cantidad sin convertir, luego conviértela con `int()` y muestra el doble otra vez, para comparar.
+- Punto de partida:
+  ```python
+  fila = "2021,Mateo,M,3267"
+  datos = fila.split(",")
+  ```
 - Resumen tabla: `int(datos[3])`
 
 **Errores típicos:**
@@ -120,7 +206,7 @@ Diego trae una noticia real: cada año el Registro Civil registra, fila por fila
 
 ### 3. Práctica Guiada (12 min)
 
-La periodista te pasa ahora la fila del nombre más popular de 2021: `"2021,Emma,F,2352"`. Quiere una nota con el nombre, cuántas inscripciones habría si se repitieran dos años seguidos, y un resumen rápido con el año y el nombre juntos.
+La periodista nos pasa ahora la fila del nombre más popular de 2021: `"2021,Emma,F,2352"`. Quiere una nota con el nombre, cuántas inscripciones habría si se repitieran dos años seguidos, y un resumen rápido con el año y el nombre juntos.
 
 **El programa debe:**
 - Guardar la fila como texto y convertirla en lista con `split(",")`.
@@ -234,7 +320,7 @@ verificar_ejercicio_0a()
 ```
 
 **Ejercicio 1 — El registro más antiguo**
-La periodista quiere comparar el presente con el pasado: te pasa la fila más antigua de la base, del año 1920: `"1920,Aaron,M,1"`. Necesita el nombre y el sexo registrado, usando la posición de cada uno, para contarte que ese año casi no había variedad de nombres.
+La periodista quiere comparar el presente con el pasado: nos pasa la fila más antigua de la base, del año 1920: `"1920,Aaron,M,1"`. Necesita el nombre y el sexo registrado, usando la posición de cada uno, para contarnos que ese año casi no había variedad de nombres.
 
 **El programa debe:**
 - Guardar la fila como texto y convertirla en lista con `split(",")`.
@@ -270,7 +356,7 @@ verificar_ejercicio_1()
 ```
 
 **Ejercicio 2 — Dos años iguales**
-Ahora te pasa la fila de Julieta, otro nombre popular de 2021: `"2021,Julieta,F,1723"`. Quiere en una sola nota el año y el nombre juntos, y además cuántas inscripciones tendría si se sumaran dos años iguales seguidos.
+Ahora nos pasa la fila de Julieta, otro nombre popular de 2021: `"2021,Julieta,F,1723"`. Quiere en una sola nota el año y el nombre juntos, y además cuántas inscripciones tendría si se sumaran dos años iguales seguidos.
 
 **El programa debe:**
 - Guardar la fila como texto y convertirla en lista.
@@ -307,7 +393,7 @@ verificar_ejercicio_2()
 ```
 
 **Ejercicio 3 — ¿Son la misma persona?** *(contextualizado)*
-La periodista encontró algo raro en un apunte viejo: dos filas de la base que se ven casi iguales pero no lo son. `"2021,Emilia,F,2044"` y `"2021,Emiliano,M,1357"` — quiere confirmar, dato por dato, que son registros distintos antes de publicar la nota, y necesita el nombre de cada una y la diferencia entre ambas cantidades.
+La periodista encontró algo raro en un apunte viejo: dos filas de la base que se ven casi iguales pero no lo son. `"2021,Emilia,F,2044"` y `"2021,Emiliano,M,1357"` — quiere confirmar con nosotros, dato por dato, que son registros distintos antes de publicar la nota, y necesita el nombre de cada una y la diferencia entre ambas cantidades.
 
 **El programa debe:**
 - Guardar ambas filas como texto y convertir cada una en lista con `split(",")`.
@@ -461,3 +547,4 @@ print(datos[3] * 2)  # <- esta línea
 - **Fuente de los datos de ejemplo:** todas las filas usadas (Mateo, Emma, Sofía, Aaron, Julieta, Emilia, Emiliano) son reales, extraídas de `clases-octubre/bbdd-descargadas/otros/RegistroCivil_nombres-inscritos-chile_1920-2021_guaguas.csv`, recortadas a 4 columnas (año, nombre, sexo, cantidad) sin la columna `proporcion`.
 - **Actitud "Atención al detalle"** elegida por Diego entre 4 opciones (Precisión, Orden, Curiosidad, Rigor propuestas primero; Atención al detalle, Método, Honestidad con los datos, Asombro/Exploración propuestas en una segunda ronda).
 - **Ejercicio 3 vs. Guiada:** ambos manejan `int()` + slicing/índice, pero el Ejercicio 3 sube el nivel al trabajar con dos filas paralelas en vez de una sola — fija el techo de dificultad, como exige la regla 20 del CLAUDE.md raíz.
+- **Corrección 2026-09-24 — ICN pasa a "Escríbelo tú" + concepto de CSV + voz colectiva (Diego detectó que el Colab aprobado no siguió el formato piloteado en Clase 33):** el ICN sube de 4 a 5 conceptos (se agrega "¿Qué es un CSV?" al inicio, con tabla comparativa Excel/CSV usando las columnas del Haz Ahora), y los 5 traen `- Instrucción:` + `- Punto de partida:` para que el generador arme la celda incompleta (patrón "Idea clave → ✍️ Escríbelo tú" de Clase 33) en vez del ejemplo completo — ver regla 25 nueva del CLAUDE.md raíz, que deja este formato como default. Tiempo del ICN sube de 15 a 17 min (Independiente baja de 17 a 15 min, la suma de los 5 pasos se mantiene en ~54 min). También se reescribió el Haz Ahora, la Guiada y los ejercicios en voz colectiva ("nos pide", "nos pasa" en vez de "les pide"/"te pasa"), y nunca se nombra a Diego en tercera persona.
