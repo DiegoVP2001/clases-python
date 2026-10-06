@@ -17,16 +17,28 @@ No requiere autenticación ni montar Google Drive — funciona igual de rápido 
 | `01_sies_empleabilidad/Buscador_Empleabilidad_ingresos_2025_2026_SIES.csv` | menú de 9 bases, #1 | |
 | `02_demre_admision/ADM2026_INDICADORES_POR_CARRERA_PROMEDIO_OBLIGATORIAS_20260116.csv` | menú de 9 bases, #2 | `sep=";"`, UTF-8 |
 | `03_simce_2m/simce2m2025_rbd_final.csv` | menú de 9 bases, #3 | `sep=";"`, `encoding="latin-1"` |
-| `03_simce_2m/simce2m2025_comuna_final.csv` | menú de 9 bases, #4 | versión liviana por comuna |
-| `05_mineduc_matricula/20251029_Resumen_Matricula_EE_Oficial_2025_20250430.csv` | menú de 9 bases, #5 | `sep=","`, `encoding="latin-1"` |
+| `03_simce_2m/simce2m2025_comuna_final.csv` | menú de 9 bases, #4 | versión liviana por comuna. `sep=";"`, `encoding="latin-1"` (verificado 2026-10-06; antes sin parámetros) |
+| `05_mineduc_matricula/20251029_Resumen_Matricula_EE_Oficial_2025_20250430.csv` | menú de 9 bases, #5 | UTF-8, coma — **sin parámetros**. Corregido 2026-10-06: con `latin-1` los nombres salen con caracteres rotos (`CAMIÃ‘A`) |
+| `07_conaset/CONASET_siniestros-transito-RM_2020-2025.csv` | menú de 9 bases, #7 | recorte a la Región Metropolitana (123.343 de 436.521 filas, 36 columnas, 45,5 MB), generado con `tools/datos_octubre/recortar_conaset_rm.py`. UTF-8, coma — sin parámetros |
 | `06_subvenciones/20260421_Detalle Subvenciones 2025_20240520.csv` | menú de 9 bases, #6 | UTF-8, coma |
 | `08_odepa/ODEPA_precios-consumidor_2025.csv` | menú de 9 bases, #8a | `encoding="utf-8-sig"` |
 | `08_odepa/ODEPA_precios-mayoristas-fruta-hortaliza_2025.csv` | menú de 9 bases, #8b | `encoding="utf-8-sig"` |
 | `08_odepa/ODEPA-CIREN_catastro-fruticola_2025.csv` | menú de 9 bases, #8c | `encoding="utf-8-sig"` |
 | `09_salud/Estadísticas Hospitalarias Año 2024.csv` | menú de 9 bases, #9 | `pd.read_csv(f, header=2)` |
 
-## Pendiente
+## CONASET (resuelto 2026-10-06)
 
-**`07_conaset` (CONASET — Siniestros de tránsito 2020-2025) no está acá.** El original pesa ~143 MB — supera el límite duro de GitHub (100 MB), no se puede subir tal cual. El propio `Catastro de Bases y Banco de Preguntas - Proyecto Octubre.md` ya anotaba "recorte a RM obligatorio antes de entregar" para esta base — falta que Diego confirme el criterio exacto (qué comunas cuentan como RM, qué ~12 columnas conservar) antes de generar y subir la versión recortada.
+El original (~149 MB) supera el límite duro de GitHub (100 MB), así que acá va **solo la Región Metropolitana** (`REGION == "Metropolitana de Santiago"`), con **todas las columnas** — decisión de Diego, para que cada equipo elija qué columnas usar. El original completo sigue en `bbdd-seleccionadas/raw/07_conaset/`. Ojo: `FECHA` viene como milisegundos desde 1970; para trabajar por fechas conviene usar `AÑO`, `Mes` y `Dia_semana`.
+
+## Parámetros de apertura verificados (2026-10-06)
+
+Solo DEMRE, SIMCE y Hospitalarias necesitan algo extra; el resto abre sin parámetros.
+
+| Base | Cómo abrirla |
+|---|---|
+| CONASET RM, SIES, Matrícula, Subvenciones, ODEPA | `pd.read_csv(link)` |
+| DEMRE | `sep=";"` |
+| SIMCE (establecimiento y comuna) | `sep=";", encoding="latin-1"` |
+| Estadísticas Hospitalarias | `header=2` |
 
 Las versiones `.xlsx`/`.pdf` de diccionarios y glosarios (Libro de Códigos DEMRE, Glosas SIMCE, Diccionario/Glosario de Subvenciones, etc.) no se copiaron acá — solo los `.csv` de datos. Si algún equipo necesita el diccionario de su base, se comparte aparte.
