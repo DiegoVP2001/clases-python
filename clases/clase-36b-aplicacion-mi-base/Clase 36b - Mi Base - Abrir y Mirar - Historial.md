@@ -1,5 +1,11 @@
 # Historial — Clase 36b (Mi base: abrir y mirar)
 
+## 2026-10-06 — Solucionario y encabezado vacío para estudiantes
+
+- **Cuaderno de estudiantes:** la celda donde escriben el encabezado queda **vacía**. La instrucción de arriba solo nombra qué herramienta va en cada línea.
+- **Nuevo `Clase 36b - Mi Base - Abrir y Mirar - Solucionario.ipynb`** (solo profesor), generado desde el mismo `generar_cuaderno.py` y ejecutado contra la URL real para dejar los resultados guardados. Trae: tabla de qué se revisa en cada parte (Proceso), el **encabezado terminado** (renderizado y con su texto fuente línea por línea, con marcadores *Estudiante 1/2*), y los Pasos 1-5 + bitácora resueltos con **CONASET RM** como base de ejemplo, con su link.
+- Dato real usado en el ejemplo: `Ruta` trae solo un espacio en 118.077 de 123.343 filas; pandas no lo cuenta como vacío (anzuelo para la clase 37).
+
 ## 2026-10-06 — Ajustes tras revisar el cuaderno
 
 - **Markdown:** la mini-lección pasa de una tabla suelta a **escribir en conjunto el encabezado del proyecto** (nombre, base de datos, integrantes, por qué esa base), con una herramienta de markdown por línea: título, negrita, lista, cita y línea separadora; código en línea y cursiva quedan como extras para las respuestas. La celda-plantilla trae todo el esqueleto para completar. Se amplía a ~10 min en el guion.

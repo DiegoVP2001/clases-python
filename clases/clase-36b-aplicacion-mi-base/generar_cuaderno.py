@@ -272,25 +272,10 @@ Y dos herramientas más para tus respuestas de hoy:
 md("""
 ### 🧑‍💻 Escribamos el encabezado juntos
 
-Haz doble clic en la celda de abajo y vamos línea por línea, reemplazando los `...` con lo tuyo (agrega o borra viñetas de integrantes según haga falta). Cuando termines, `Shift + Enter` para ver cómo quedó.
+La celda de abajo está vacía a propósito: escribe en ella tu encabezado, línea por línea, siguiendo al profe y la tabla de herramientas de arriba (título → nombre del proyecto, negrita → base de datos, lista → integrantes, cita → por qué esa base, línea → cierre). Cuando termines, `Shift + Enter` para ver cómo quedó.
 """)
 
-md("""
-# Proyecto: ...
-
-**Base de datos:** ...
-
-**Integrantes:**
-
-- ...
-- ...
-
-**¿Por qué esta base?**
-
-> ...
-
----
-""")
+cells.append(new_markdown_cell(""))
 
 # ───────────────────────── Trabajo en tu base ─────────────────────────
 md("""
@@ -413,3 +398,177 @@ nb.metadata["language_info"] = {"name": "python"}
 nbformat.validate(nb)
 nbformat.write(nb, SALIDA)
 print("Generado:", SALIDA.name, "—", len(cells), "celdas")
+
+
+# ═════════════════════════ Solucionario (solo profesor) ═════════════════════════
+SALIDA_SOL = CARPETA / "Clase 36b - Mi Base - Abrir y Mirar - Solucionario.ipynb"
+LINK_EJEMPLO = link("07_conaset/CONASET_siniestros-transito-RM_2020-2025.csv")
+
+sol = []
+
+
+def sol_md(texto):
+    sol.append(new_markdown_cell(texto.strip("\n")))
+
+
+def sol_code(texto):
+    sol.append(new_code_cell(texto))
+
+
+sol_md("""
+# 🔒 Solucionario — Clase 36b: Mi base, abrir y mirar
+
+**Uso:** documento para el profesor. Muestra **a qué debería llegar cada estudiante al término de la clase**, usando como ejemplo una sola base: **Siniestros de tránsito (CONASET, Región Metropolitana)**. Cada equipo trabaja con la suya, así que sus respuestas serán distintas; lo que se mantiene es la estructura. Los nombres del encabezado son marcadores (*Estudiante 1*, *Estudiante 2*).
+
+---
+
+## ¿Qué se revisa en cada parte? (Proceso, 15%)
+
+| Parte | Una respuesta suficiente... |
+|---|---|
+| Encabezado | usa las 5 herramientas (título, negrita, lista, cita, línea) y dice qué base, quiénes y por qué |
+| Paso 1 | abre su base, e **identifica el síntoma y el parámetro** si no abrió a la primera |
+| Paso 2 | da las dimensiones correctas y dice **qué representa una fila** con sus palabras |
+| Paso 3 | elige 3 a 6 columnas **justificadas por su interés** y nombra una columna que le faltó |
+| Paso 4 | informa los vacíos de **sus** columnas y evalúa si afectan lo que quiere averiguar |
+| Paso 5 | formula una pregunta **abierta** (borrador) y las columnas que necesitaría |
+| Bitácora | completa las dos líneas, con algo concreto de hoy |
+""")
+
+# ── Encabezado ──
+sol_md("""
+---
+
+## ✍️ Markdown en vivo — el encabezado terminado
+
+Así debería quedar la celda que escriben juntos, una vez que se ejecuta con `Shift + Enter`:
+""")
+
+ENCABEZADO = """# Proyecto: Los siniestros de tránsito en la Región Metropolitana
+
+**Base de datos:** Siniestros de tránsito 2020-2025 (CONASET), recorte de la Región Metropolitana
+
+**Integrantes:**
+
+- Estudiante 1
+- Estudiante 2
+
+**¿Por qué esta base?**
+
+> Me interesa entender cuáles son las causas de los siniestros y cuándo ocurren más, porque a diario me muevo por la calle y *saber qué los provoca* ayuda a prevenirlos.
+
+---"""
+sol.append(new_markdown_cell(ENCABEZADO))
+
+sol_md(f"""
+**Cómo se escribe** (el texto que va en la celda, línea por línea):
+
+```
+{ENCABEZADO}
+```
+
+| Línea | Herramienta | Lo que se escribe |
+|---|---|---|
+| Nombre del proyecto | título | `# ` al comienzo |
+| Base de datos | negrita | `**...**` alrededor de la etiqueta |
+| Integrantes | lista | `- ` al comienzo de cada línea (con una línea en blanco antes) |
+| Por qué esta base | cita | `> ` al comienzo |
+| Cierre | línea | `---` |
+| *saber qué los provoca* | cursiva | `*...*` |
+""")
+
+# ── Pasos ──
+sol_md(f"""
+---
+
+## 🔍 Trabajo en tu base — resuelto con CONASET
+
+Link usado como ejemplo:
+
+`{LINK_EJEMPLO}`
+""")
+
+sol_md("### Paso 1 · Abre tu base")
+sol_code(f"""import pandas as pd
+
+tabla = pd.read_csv("{LINK_EJEMPLO}")
+tabla.head()""")
+sol_md("""
+#### 📝 Respuesta — Paso 1
+
+- **¿Abrió bien a la primera?** Sí, con solo el link.
+- **Si no abrió bien: ¿qué síntoma viste y qué parámetro lo arregló?** No hizo falta ningún parámetro.
+- **Algo que te llamó la atención al ver las primeras filas:** hay columnas de ubicación (`Calle_Uno`, `Calle_Dos`, `Ruta`) mezcladas con columnas de lo que pasó (`TIPO_SINIE`, `CAUSA_NUEV`). *No es solo una tabla de causas.*
+""")
+
+sol_md("### Paso 2 · Dimensiones y columnas")
+sol_code("""print("Filas y columnas:", tabla.shape)
+print("Columnas:", list(tabla.columns))""")
+sol_md("""
+#### 📝 Respuesta — Paso 2
+
+- **Mi base tiene 123.343 filas y 36 columnas.**
+- **Cada fila representa:** un siniestro de tránsito ocurrido en la Región Metropolitana entre 2020 y 2025.
+- **Las columnas que más me llaman la atención son** `CAUSA_NUEV` y `TIPO_SINIE`, y creo que significan la causa del siniestro (agrupada) y qué tipo de choque fue. También `FALLECIDOS`, el número de personas fallecidas.
+""")
+
+sol_md("### Paso 3 · Elige las columnas que importan")
+sol_code("""columnas_relevantes = tabla[["Mes", "CAUSA_NUEV", "TIPO_SINIE", "COMUNA", "FALLECIDOS"]]
+columnas_relevantes.head()""")
+sol_md("""
+#### 📝 Respuesta — Paso 3
+
+- **Columnas elegidas y por qué:** `Mes` (para ver cuándo ocurren), `CAUSA_NUEV` y `TIPO_SINIE` (para ver qué los provoca y de qué tipo son), `COMUNA` (para ver dónde) y `FALLECIDOS` (para medir qué tan graves son).
+- **Una columna que me habría gustado que existiera y no está:** el número de vehículos involucrados en cada siniestro.
+- **¿Qué tan bien responde esta base a lo que me interesaba?** Por completo: trae causas, meses y fallecidos.
+""")
+
+sol_md("### Paso 4 · Cuenta los vacíos")
+sol_code("""columnas_relevantes.isna().sum()""")
+sol_md("""
+#### 📝 Respuesta — Paso 4
+
+- **Columna con más vacíos y cuántos tiene:** ninguna de las que elegí tiene vacíos: las cinco dan 0.
+- **¿Pueden afectar lo que quieres averiguar? ¿Por qué?** No, porque todas tienen dato en todas las filas.
+- **Algo raro que notaste en los datos:** en `head()` vi que `Ruta` se ve vacía en casi todas las filas, pero pandas no la cuenta como vacía. Probablemente guarda un espacio en vez de dejar la celda sin dato. *Esto lo vemos la próxima clase.*
+""")
+
+sol_md("""
+### Paso 5 · ¿Qué pregunta quieres responder?
+
+#### 📝 Respuesta — Paso 5
+
+- **Pregunta (borrador):** ¿Qué causa de siniestro provoca más fallecidos en la Región Metropolitana, aunque no sea la más frecuente?
+- **Columnas que necesitaría para responderla:** `CAUSA_NUEV` y `FALLECIDOS`.
+""")
+
+sol_md("""
+---
+
+## 📒 Bitácora
+
+**Sesión 06-oct — Mi base: abrir y mirar**
+- Qué avanzamos hoy: abrimos la base de siniestros de tránsito, vimos que tiene 123.343 filas y 36 columnas, elegimos 5 columnas y escribimos una primera pregunta.
+- Qué pensamos hacer la próxima clase: revisar los vacíos "escondidos" (como los espacios en `Ruta`) y dejar las columnas listas para trabajar.
+""")
+
+for i, celda in enumerate(sol, start=1):
+    celda["id"] = f"s{i:02d}"
+
+nb_sol = new_notebook(cells=sol)
+nb_sol.metadata["colab"] = {"provenance": []}
+nb_sol.metadata["kernelspec"] = {"display_name": "Python 3", "language": "python", "name": "python3"}
+nb_sol.metadata["language_info"] = {"name": "python"}
+
+# Se ejecuta contra la URL real para dejar los resultados guardados en el Solucionario.
+try:
+    from nbclient import NotebookClient
+
+    NotebookClient(nb_sol, timeout=300, kernel_name="python3").execute()
+    print("Solucionario ejecutado contra la URL real")
+except Exception as error:  # noqa: BLE001
+    print("⚠️ No se pudo ejecutar el Solucionario (queda sin resultados):", type(error).__name__, str(error)[:200])
+
+nbformat.validate(nb_sol)
+nbformat.write(nb_sol, SALIDA_SOL)
+print("Generado:", SALIDA_SOL.name, "—", len(sol), "celdas")
