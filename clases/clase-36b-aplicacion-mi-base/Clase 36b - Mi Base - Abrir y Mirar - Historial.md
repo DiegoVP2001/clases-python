@@ -1,5 +1,10 @@
 # Historial — Clase 36b (Mi base: abrir y mirar)
 
+## 2026-10-06 — Links en una celda de código comentada
+
+- La tabla de links (que dentro de markdown era incómoda de copiar) se reemplaza por **una celda de código con todo comentado**: número, nombre de la base y su link entre comillas, listo para pegar en `pd.read_csv(...)`. Ejecutarla no hace nada.
+- Verificado: la celda no contiene líneas que no sean comentario, no quedó ningún link suelto en el markdown, y los 9 links cargan en vivo desde GitHub con las formas esperadas.
+
 ## 2026-10-06 — Solucionario y encabezado vacío para estudiantes
 
 - **Cuaderno de estudiantes:** la celda donde escriben el encabezado queda **vacía**. La instrucción de arriba solo nombra qué herramienta va en cada línea.

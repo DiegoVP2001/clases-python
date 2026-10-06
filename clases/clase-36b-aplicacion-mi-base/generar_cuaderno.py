@@ -116,21 +116,24 @@ md(f"""
 """)
 
 # ───────────────────────── Links ─────────────────────────
-filas_links = "\n".join(
-    f"| {n} | {nombre}{(' ' + aviso) if aviso else ''} | `{link(ruta)}` |"
-    for n, nombre, ruta, aviso in BASES
-)
-md(f"""
+lineas_links = []
+for n, nombre, ruta, aviso in BASES:
+    lineas_links.append(f"# {n} · {nombre}{(' ' + aviso) if aviso else ''}")
+    lineas_links.append(f'# "{link(ruta)}"')
+    lineas_links.append("")
+celda_links = "\n".join(lineas_links).rstrip()
+
+md("""
 ---
 
 ## 🔗 Links de las bases
 
-Copia el link de **tu** base y pégalo entre comillas dentro de `pd.read_csv(...)`.
+Copia el link de **tu** base —con sus comillas— y pégalo dentro de `pd.read_csv(...)`. Están en la celda de abajo, comentados, así que ejecutarla no hace nada.
+""")
 
-| # | Base | Link |
-|---|---|---|
-{filas_links}
+code(celda_links)
 
+md("""
 Si tu base no abre bien a la primera, mira qué ves y qué le falta:
 
 | Qué ves | Qué falta | Se arregla con |
