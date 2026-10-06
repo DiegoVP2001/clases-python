@@ -1,5 +1,12 @@
 # Historial — Clase 36b (Mi base: abrir y mirar)
 
+## 2026-10-06 — Ajustes tras revisar el cuaderno
+
+- **Markdown:** la mini-lección pasa de una tabla suelta a **escribir en conjunto el encabezado del proyecto** (nombre, base de datos, integrantes, por qué esa base), con una herramienta de markdown por línea: título, negrita, lista, cita y línea separadora; código en línea y cursiva quedan como extras para las respuestas. La celda-plantilla trae todo el esqueleto para completar. Se amplía a ~10 min en el guion.
+- **Pistas siempre visibles:** se eliminan todos los `<details>`. Razón: dentro de una celda de markdown, un doble clic para abrir la pista entra al modo edición y muestra el código fuente. Ahora hay una tabla "qué ves → qué falta → se arregla con" y una sección visible por parámetro (`sep=`, `encoding=`, `header=`), más archivos pesados y la tabla "cómo se abre cada base". La pista del Paso 4 es una cita visible.
+- **Sin "guardar una copia":** se quita la sección y el paso de la entrega, porque Classroom entrega una copia a cada estudiante. La entrega queda en ejecutar todo, revisar las celdas 📝 y presionar **Entregar**.
+- Verificación repetida: ejecución limpia con celdas vacías y Pasos 1-4 rellenados en CONASET RM, Hospitalarias y SIMCE.
+
 ## 2026-10-06 — Diseño y generación
 
 **Por qué existe.** Diego perdió clases y va a perder más, así que cambió el patrón del bloque pandas: *por cada clase de contenido, la siguiente es de aplicación* — cada equipo usa lo recién visto sobre la base que eligió para el proyecto. Esta es la primera (aplica N°36). Los números de N°37-N°40 y su calendario no se tocaron: siguen pendientes de reprogramación (Calendario v2 sin aprobar).

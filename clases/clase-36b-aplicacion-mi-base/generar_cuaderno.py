@@ -74,16 +74,6 @@ Aplicar lo que aprendimos en la Clase 36 (abrir y mirar con pandas) a la base de
 **Cómo funciona este cuaderno:** lee, escribe el código en las celdas vacías y responde en las celdas 📝 **con tus palabras** — esas respuestas cuentan para tu nota de proceso.
 """)
 
-md("""
-## 💾 Antes de empezar: guarda tu propia copia
-
-Este cuaderno es de solo lectura: **lo que escribas aquí no se guarda en ningún lado**. Haz esto ahora:
-
-1. Menú **Archivo → Guardar una copia en Drive**.
-2. Se abre una pestaña nueva con tu copia: **trabaja siempre en esa**, no en esta.
-3. Cámbiale el nombre (clic sobre el título, arriba a la izquierda) a `Mi base - ` seguido de los apellidos de quienes lo escriben.
-""")
-
 # ───────────────────────── Rúbrica ─────────────────────────
 md("""
 ---
@@ -141,54 +131,41 @@ Copia el link de **tu** base y pégalo entre comillas dentro de `pd.read_csv(...
 |---|---|---|
 {filas_links}
 
-Si tu base no abre bien a la primera, mira qué síntoma tiene y abre la pista que corresponde:
+Si tu base no abre bien a la primera, mira qué ves y qué le falta:
+
+| Qué ves | Qué falta | Se arregla con |
+|---|---|---|
+| Todo en una sola columna (`tabla.shape` da `(filas, 1)`), o un `ParserError` | el separador | `sep=";"` |
+| `UnicodeDecodeError`, o tildes raras (`Ã³`, `�`) | el encoding | `encoding="latin-1"` |
+| Columnas llamadas `Unnamed: 0`, `Unnamed: 1`... y un título en las primeras filas | la fila donde están los nombres | `header=2` |
 """)
 
 md("""
-<details>
-<summary>💡 Pista 1 — todo quedó en una sola columna (<code>sep=</code>)</summary>
+### 💡 `sep=` — todo quedó en una sola columna
 
-<br>
-
-Un CSV es texto con valores separados por un carácter. Lo normal es la coma, pero algunos archivos usan punto y coma (`;`). Si pandas espera comas y el archivo trae `;`, **no separa nada**: ves una sola columna enorme con los nombres pegados (`ANYO_PROCESO;CODIGO_CARRERA;...`), o un error como `ParserError: Expected 1 fields in line 6, saw 2`. Con `tabla.shape` lo confirmas: dice `(filas, 1)`.
-
-Arreglo: decirle a pandas cuál es el separador.
+Un CSV es texto con valores separados por un carácter. Lo normal es la coma, pero algunos archivos usan punto y coma (`;`). Si pandas espera comas y el archivo trae `;`, **no separa nada**: ves una columna enorme con los nombres pegados (`ANYO_PROCESO;CODIGO_CARRERA;...`) o un error como `ParserError: Expected 1 fields in line 6, saw 2`.
 
 ```python
 tabla = pd.read_csv("link", sep=";")
 ```
-
-</details>
 """)
 
 md("""
-<details>
-<summary>💡 Pista 2 — error al leer o letras raras (<code>encoding=</code>)</summary>
+### 💡 `encoding=` — error al leer o letras raras
 
-<br>
-
-Un archivo guarda las letras con una "tabla de códigos" llamada *encoding*. pandas asume `utf-8`. Si el archivo se guardó con otra, aparece un error como `UnicodeDecodeError: 'utf-8' codec can't decode byte...`, o las tildes salen mal (`Ã³` en vez de `ó`, o `�`).
-
-Arreglo: indicar el encoding. El más común en archivos antiguos es `latin-1`.
+Un archivo guarda las letras con una "tabla de códigos" llamada *encoding*. pandas asume `utf-8`. Si el archivo se guardó con otra, aparece un `UnicodeDecodeError: 'utf-8' codec can't decode byte...` o las tildes salen mal (`Ã³` en vez de `ó`). El más común en archivos antiguos es `latin-1`.
 
 ```python
 tabla = pd.read_csv("link", encoding="latin-1")
 ```
 
 ⚠️ No lo pongas "por si acaso": si el archivo **ya era** `utf-8` y le pones `latin-1`, ahí sí las letras salen rotas.
-
-</details>
 """)
 
 md("""
-<details>
-<summary>💡 Pista 3 — columnas llamadas <code>Unnamed</code> y títulos arriba (<code>header=</code>)</summary>
+### 💡 `header=` — columnas `Unnamed` y títulos arriba
 
-<br>
-
-pandas supone que la **primera fila** del archivo trae los nombres de las columnas. Algunos archivos traen antes uno o más renglones de título o filas vacías. Síntoma: las columnas se llaman `Unnamed: 0`, `Unnamed: 1`... y las primeras filas de `tabla.head()` son un título o están vacías.
-
-`header=2` significa: *"los nombres de las columnas están en la fila 2 del archivo, contando desde 0"* (la tercera línea).
+pandas supone que la **primera fila** del archivo trae los nombres de las columnas. Algunos archivos traen antes un título o filas vacías. `header=2` significa: *"los nombres de las columnas están en la fila 2 del archivo, contando desde 0"* (la tercera línea).
 
 ```python
 tabla = pd.read_csv("link", header=2)
@@ -197,26 +174,18 @@ tabla = pd.read_csv("link", header=2)
 Cómo averiguar el número: mira `tabla.head()` sin `header` y busca la fila donde aparecen los nombres reales de las columnas. El número que pandas muestra a la izquierda de esa fila **más 1** es tu `header`. Pruébalo y revisa con `tabla.head()`.
 
 *Este parámetro no lo vimos en la Clase 36: es nuevo y solo lo necesitas si tu base lo pide.*
-
-</details>
 """)
 
 md("""
-<details>
-<summary>💡 Pista 4 — mi base es pesada y demora</summary>
-
-<br>
+### ⏳ Si tu base es pesada
 
 Las bases de 30 a 60 MB tardan unos segundos en descargarse. Ábrela **una sola vez**: la variable `tabla` queda guardada en memoria. Para probar cosas distintas usa otras celdas que partan de `tabla`, sin volver a ejecutar la celda del `read_csv`.
-
-</details>
 """)
 
 md("""
-<details>
-<summary>🆘 Última opción — ya probé todo y no abre</summary>
+### 🆘 Cómo se abre cada base
 
-<br>
+Si ya probaste todo y no abre, esta es la tabla completa:
 
 | Base | Cómo abrirla |
 |---|---|
@@ -224,8 +193,6 @@ md("""
 | Puntajes de corte (DEMRE) | `pd.read_csv("link", sep=";")` |
 | SIMCE (por establecimiento y por comuna) | `pd.read_csv("link", sep=";", encoding="latin-1")` |
 | Estadísticas hospitalarias | `pd.read_csv("link", header=2)` |
-
-</details>
 """)
 
 # ───────────────────────── Preparación ─────────────────────────
@@ -268,40 +235,61 @@ Esto es todo lo que vimos. Tenlo a mano mientras trabajas en tu base.
 | Escribir el nombre de una columna a ojo (mayúsculas, tildes, espacios, símbolos como `°`) | `KeyError` | Copiar el nombre exacto desde `list(tabla.columns)` |
 """)
 
-# ───────────────────────── Markdown exprés ─────────────────────────
+# ───────────────────────── Markdown: encabezado en vivo ─────────────────────────
 md("""
 ---
 
-## ✍️ Markdown exprés
+## ✍️ Markdown: escribamos juntos el encabezado de tu proyecto
 
-Además de código, tus respuestas van en **celdas de texto** (markdown). Se aprenden en 2 minutos:
+Además de código, tus respuestas van en **celdas de texto** (markdown). Lo vamos a aprender armando **entre todos** el encabezado de tu proyecto: el nombre, la base de datos, los integrantes y por qué la elegiste. Cada línea usa una herramienta distinta: el profe escribe en pantalla y tú escribes lo tuyo a la vez.
 
-- **Crear una celda de texto:** botón **+ Texto** (arriba a la izquierda).
+**Lo básico de una celda de texto:**
+
+- **Crear una:** botón **+ Texto** (arriba a la izquierda).
 - **Escribir:** doble clic sobre la celda.
 - **Ver el resultado:** `Shift + Enter`. Para volver a editar, doble clic de nuevo.
 
+### 🧰 Las herramientas, una por línea del encabezado
+
+| Paso | Quiero... | Herramienta | Escribo | Se ve así |
+|---|---|---|---|---|
+| 1 | Poner el nombre del proyecto | **título** | `# Proyecto: Mi nombre` | un texto grande, como el título de este cuaderno |
+| 2 | Decir qué base uso | **negrita** | `**Base de datos:** CONASET` | **Base de datos:** CONASET |
+| 3 | Listar a los integrantes | **lista** | `- Nombre Apellido` (una línea por persona) | una lista con viñetas |
+| 4 | Explicar por qué elegí esa base | **cita** | `> Esta base me interesa porque...` | un párrafo con una barra al costado |
+| 5 | Separar el encabezado del resto | **línea** | `---` | una línea horizontal |
+
+Y dos herramientas más para tus respuestas de hoy:
+
 | Quiero... | Escribo | Se ve así |
 |---|---|---|
-| Un título | `## Mi título` | un texto grande, como los títulos de este cuaderno |
-| Negrita | `**importante**` | **importante** |
-| Una lista | `- primer punto` (una línea por punto) | una lista con viñetas |
-| Mostrar código o un nombre de columna | `` `nombre_columna` `` | `nombre_columna` |
+| Nombrar una columna o un comando | `` `nombre_columna` `` | `nombre_columna` |
+| Dar énfasis suave | `*esto es clave*` | *esto es clave* |
 
 💡 Para separar párrafos, deja **una línea en blanco** entre ellos. Y si escribes un signo peso, ponle una barra antes (`\\$5.000`); si no, la celda se desordena.
-
-### 🧑‍💻 Tu turno
-
-Haz doble clic en la celda de abajo y reemplaza los `...` con tus datos:
 """)
 
 md("""
-# Proyecto de ...
+### 🧑‍💻 Escribamos el encabezado juntos
 
-**Base:** ...
+Haz doble clic en la celda de abajo y vamos línea por línea, reemplazando los `...` con lo tuyo (agrega o borra viñetas de integrantes según haga falta). Cuando termines, `Shift + Enter` para ver cómo quedó.
+""")
 
-**Lo que interesa averiguar:** ...
+md("""
+# Proyecto: ...
+
+**Base de datos:** ...
+
+**Integrantes:**
 
 - ...
+- ...
+
+**¿Por qué esta base?**
+
+> ...
+
+---
 """)
 
 # ───────────────────────── Trabajo en tu base ─────────────────────────
@@ -365,14 +353,7 @@ md("""
 
 Cuenta cuántos vacíos tiene cada una de tus `columnas_relevantes`.
 
-<details>
-<summary>💡 Pista — vacíos que pandas no cuenta</summary>
-
-<br>
-
-`.isna()` solo cuenta como vacío lo que está **realmente** vacío. Si en las filas ves marcas como `s/i`, `-`, `*` o celdas que parecen vacías pero traen un espacio, pandas **no** las cuenta. No las arregles hoy: anótalas en tu respuesta y las resolvemos la próxima clase.
-
-</details>
+> 💡 **Pista — vacíos que pandas no cuenta:** `.isna()` solo cuenta como vacío lo que está **realmente** vacío. Si en las filas ves marcas como `s/i`, `-`, `*` o celdas que parecen vacías pero traen un espacio, pandas **no** las cuenta. No las arregles hoy: anótalas en tu respuesta y las resolvemos la próxima clase.
 """)
 code("# Paso 4 — Tu código\n")
 md("""
@@ -416,8 +397,8 @@ md("""
 Antes de irte:
 
 1. Ejecuta todo de arriba hacia abajo: menú **Entorno de ejecución → Ejecutar todo**. Revisa que no quede ningún error en rojo.
-2. En Google Classroom abre la tarea de hoy → **Añadir o crear → Google Drive** → elige tu copia → **Entregar**.
-3. Si no encuentras tu copia en Drive: **Archivo → Descargar → Descargar .ipynb** y adjunta ese archivo.
+2. Revisa que todas las celdas 📝 y la bitácora tengan tu respuesta.
+3. En la tarea de Google Classroom de hoy, presiona **Entregar**.
 """)
 
 # ───────────────────────── Armado ─────────────────────────
