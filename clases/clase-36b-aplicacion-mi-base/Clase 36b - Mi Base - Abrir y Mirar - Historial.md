@@ -1,5 +1,14 @@
 # Historial — Clase 36b (Mi base: abrir y mirar)
 
+## 2026-10-06 — Diccionario de columnas de las 9 bases (.tex/.pdf)
+
+- Nuevo `Clase 36b - Mi Base - Diccionario de Columnas.tex/.pdf` (19 páginas, material de apoyo para estudiantes; no es parte del cuaderno). Explica **todas** las columnas de las 9 bases (13+18+42+24+71+45+36+15+20 = 284), incluso las obvias: tabla *Columna | Qué significa | Ejemplo de valor* (valor real de la base), más cajas de códigos, de cómo leer los nombres (SIMCE, Matrícula, DEMRE) y de "Ojo con esta base".
+- **Índice clicable** en la portada (nombre de la base → su sección, con número de página), enlace "Volver al índice" en cada sección y marcadores en el panel lateral del PDF.
+- Fuentes: diccionarios oficiales de DEMRE, SIMCE, Matrícula y Subvenciones. SIES, CONASET, ODEPA y Hospitalarias no traen diccionario: significados deducidos de nombres y datos reales; lo no confirmado dice "probablemente" (`FID`, `ID`, `Atropello`...) o "no está claro" (`Siniestro`, valores de `Ubicación`). Las definiciones de las 11 `Glosa` de Hospitalarias son las habituales de estadística hospitalaria, no vienen en la base.
+- Verificado: cobertura 9/9 contra `list(tabla.columns)` de cada CSV, sin columnas faltantes ni sobrantes y en el mismo orden. Datos de las afirmaciones revisados contra los archivos completos (no solo muestras).
+- Detalle útil detectado: en SIES el nombre `Retención 1er año` lleva un espacio duro (no se puede tipear; hay que copiarlo de `list(tabla.columns)`).
+- Pendiente: sin commit ni push (no es un gate del flujo).
+
 ## 2026-10-06 — Links en una celda de código comentada
 
 - La tabla de links (que dentro de markdown era incómoda de copiar) se reemplaza por **una celda de código con todo comentado**: número, nombre de la base y su link entre comillas, listo para pegar en `pd.read_csv(...)`. Ejecutarla no hace nada.
@@ -51,3 +60,23 @@
 **Pendiente**
 - El cuaderno dice "avísale al profe" para quien no está inscrito porque el link del Form no está en el repo.
 - Sin Ejercicios, PPT ni Ticket de Salida: no corresponde a una clase de aplicación.
+
+---
+
+## 2026-10-07 — Alineación con las bases v2 (decisión de Diego)
+
+**Qué cambió y por qué.** Diego decidió que todo el curso trabaje con las bases preparadas de `clases-octubre/datos-compartidos-v2/` desde 36b, para que links, diccionarios y clases siguientes queden alineados (solo 3 estudiantes habían empezado con el cuaderno viejo). Las v2 se abren con `pd.read_csv(link)`, sin `sep`, `encoding` ni `header`. La clase se dicta el **jueves 08-oct**.
+
+**Cuaderno (`generar_cuaderno.py`, regenerado)**
+- `RAW` apunta a `datos-compartidos-v2/`; `BASES` con los archivos y pesos v2. En el ítem 9, dos archivos: `09a` mensual y `09b` anual. El ítem 8 dice "Región Metropolitana".
+- Se retiró la lección de parámetros (tabla de síntomas, pistas `sep=`/`encoding=`/`header=` y tabla "Cómo se abre cada base"); queda un aviso corto: la base ya viene preparada. En el repaso se mantiene la fila `sep`/`encoding` como referencia para otras fuentes y se quitó `header=2`.
+- Paso 1: la celda 📝 ahora pregunta lo primero que notas y si hay columnas que parecen número pero están escritas raro (coma, punto de miles, `s/i`), sin arreglarlas: prepara el anzuelo de N°37. Paso 4: se quitó el caso del espacio y se agregó que los números con coma o punto de miles tampoco son vacíos.
+- Fechas: bitácora "Sesión 08-oct"; la pregunta se afina el 19-oct (37b); lo anotado se resuelve el martes 13 (N°37), según el Calendario v3.
+
+**Solucionario (regenerado y ejecutado contra la URL real)**: CONASET v2, 123.343 × 37, con `Mes_num`; el Paso 4 ahora incluye `Ruta` con sus 118.077 vacíos reales; nota al docente con el anzuelo de N°37 por base (SIES, DEMRE, SIMCE, Subvenciones, ODEPA, Hospitalarias).
+
+**Diccionario de Columnas v2 (`.tex` + `.pdf`)**: portada y tamaños nuevos; "sin parámetros" en todas las secciones; ejemplos de valor copiados literalmente de cada CSV; columnas nuevas (`Ingreso_punto_medio`, `MARGEN_P25_MENOS_ULTIMO`, `Mes_num`); Subvenciones sin `RUT_SOSTENEDOR`; ODEPA solo RM con nota sobre `08b`/`08c`; Hospitalarias en dos secciones (9a y 9b). Cobertura verificada contra `list(tabla.columns)` y `shape` de cada CSV (10 de 10), compila sin errores ni cajas desbordadas.
+
+**Verificación**: los 12 links v2 abren en vivo sin parámetros y con la forma esperada; Pasos 1-4 simulados con SIES, DEMRE, CONASET y Hospitalarias mensual sin errores; cuaderno de estudiante sin `$` sin escapar, sin `<details>`, sin outputs ni soluciones, sin mención de la modalidad de trabajo.
+
+**Respaldo** de la versión anterior (cuaderno, Solucionario, Diccionario `.tex`/`.pdf` y generador): `_v1-bases-viejas/` (no se sube a git).

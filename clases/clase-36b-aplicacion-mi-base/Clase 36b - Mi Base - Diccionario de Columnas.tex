@@ -1,0 +1,715 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[10.5pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, left=2.2cm, right=2.2cm, top=2.6cm, bottom=2.2cm, headheight=14.5pt}
+\usepackage{fontspec}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[most]{tcolorbox}
+\usepackage{xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}
+
+\definecolor{azuloscuro}{HTML}{1F4E79}
+\definecolor{azulclaro}{HTML}{DCE9F5}
+\definecolor{rojoalerta}{HTML}{B3261E}
+\definecolor{verdealerta}{HTML}{2E7D32}
+\definecolor{gristabla}{HTML}{EEF2F6}
+
+\newtcolorbox{formulabox}[1][]{enhanced, colback=white, colframe=azuloscuro, coltitle=white, fonttitle=\bfseries\small,
+  title={#1}, boxrule=0.8pt, arc=2pt, left=6pt, right=6pt, top=3pt, bottom=3pt, breakable}
+\newtcolorbox{alertabox}[1][]{enhanced, colback=white, colframe=rojoalerta, coltitle=white, fonttitle=\bfseries\small,
+  title={#1}, boxrule=0.8pt, arc=2pt, left=6pt, right=6pt, top=3pt, bottom=3pt, breakable}
+\newtcolorbox{estrategiabox}[1][]{enhanced, colback=white, colframe=verdealerta, coltitle=white, fonttitle=\bfseries\small,
+  title={#1}, boxrule=0.8pt, arc=2pt, left=6pt, right=6pt, top=3pt, bottom=3pt, breakable}
+
+\titleformat{\section}{\Large\bfseries\color{azuloscuro}}{}{0pt}{}[\vspace{-4pt}\textcolor{azuloscuro}{\rule{\linewidth}{0.8pt}}]
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Clase 36b --- Diccionario de columnas}
+\fancyhead[R]{\small 4.º medio --- Proyecto de cierre}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\LTpre}{4pt}
+\setlength{\LTpost}{4pt}
+\newcommand{\hdr}[1]{\textbf{\color{white}#1}}
+
+\begin{document}
+
+
+\begin{center}
+\IfFileExists{logo.png}{\includegraphics[height=1.6cm]{logo.png}\\[6pt]}{}
+{\Huge\bfseries\color{azuloscuro} Diccionario de columnas\par}
+\vspace{4pt}
+{\large Las 9 bases de datos del proyecto de cierre (versiones preparadas)\par}
+\vspace{2pt}
+{\small Clase 36b --- Mi base: abrir y mirar\par}
+\end{center}
+
+\vspace{4pt}
+Muchas columnas tienen nombres difíciles de entender: siglas, palabras cortadas, números que representan categorías. Este diccionario explica \textbf{todas las columnas de todas las bases}, incluso las que parecen obvias, con palabras simples.
+
+\begin{estrategiabox}[Cómo usar este diccionario]
+\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item Busca la sección de \textbf{tu base} (están numeradas igual que en el menú del cuaderno).
+\item Ejecuta \texttt{list(tabla.columns)} y ubica el nombre \textbf{exacto} de la columna: mayúsculas, tildes y guiones bajos cuentan.
+\item Lee en la tabla \textbf{qué significa} y mira el \textbf{valor de ejemplo}, que es un dato real de la base.
+\item Revisa las cajas rojas \textbf{Ojo}: avisan de detalles que pueden confundirte cuando uses esa base.
+\end{enumerate}
+\end{estrategiabox}
+
+\hypertarget{indice}{}\phantomsection\pdfbookmark[1]{Índice}{bmindice}
+\begin{formulabox}[Índice --- toca el nombre de tu base para ir directo a ella]
+\begin{tabularx}{\linewidth}{@{}r X r r r@{}}
+\textbf{N.º} & \textbf{Base} & \textbf{Filas} & \textbf{Col.} & \textbf{Pág.} \\
+1 & \hyperlink{base1}{\textcolor{azuloscuro}{\underline{Empleabilidad e ingresos por carrera (SIES)}}} & 1.690 & 14 & \pageref{base1} \\
+2 & \hyperlink{base2}{\textcolor{azuloscuro}{\underline{Puntajes de corte por carrera - Admisión 2026 (DEMRE)}}} & 2.150 & 19 & \pageref{base2} \\
+3 & \hyperlink{base3}{\textcolor{azuloscuro}{\underline{SIMCE 2° medio 2025, por establecimiento}}} & 3.002 & 42 & \pageref{base3} \\
+4 & \hyperlink{base4}{\textcolor{azuloscuro}{\underline{SIMCE 2° medio 2025, por comuna}}} & 346 & 24 & \pageref{base4} \\
+5 & \hyperlink{base5}{\textcolor{azuloscuro}{\underline{Matrícula de estudiantes por establecimiento 2025 (Mineduc)}}} & 16.768 & 71 & \pageref{base5} \\
+6 & \hyperlink{base6}{\textcolor{azuloscuro}{\underline{Subvenciones a establecimientos 2025}}} & 123.361 & 44 & \pageref{base6} \\
+7 & \hyperlink{base7}{\textcolor{azuloscuro}{\underline{Siniestros de tránsito 2020-2025 (CONASET), Región Metropolitana}}} & 123.343 & 37 & \pageref{base7} \\
+8 & \hyperlink{base8}{\textcolor{azuloscuro}{\underline{Precios de alimentos al consumidor 2025 (ODEPA), Región Metropolitana}}} & 67.453 & 15 & \pageref{base8} \\
+9a & \hyperlink{base9a}{\textcolor{azuloscuro}{\underline{Estadísticas hospitalarias 2024 (mensual)}}} & 13.668 & 21 & \pageref{base9a} \\
+9b & \hyperlink{base9b}{\textcolor{azuloscuro}{\underline{Estadísticas hospitalarias 2024 (anual)}}} & 1.139 & 17 & \pageref{base9b} \\
+\end{tabularx}
+\end{formulabox}
+
+\begin{alertabox}[Importante]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Son las \textbf{versiones preparadas} de las bases: todas se abren con \texttt{pd.read\_\allowbreak{}csv(link)}, sin \texttt{sep}, \texttt{encoding} ni \texttt{header}.
+\item Los significados de SIMCE, DEMRE, Matrícula y Subvenciones vienen de los \textbf{diccionarios oficiales} de cada institución.
+\item SIES, CONASET, ODEPA y Hospitalarias \textbf{no traen diccionario}: ahí los significados se deducen de los nombres y de los datos. Lo que no es seguro dice \emph{probablemente}.
+\item Las cifras de \emph{filas} y \emph{columnas} son las de las bases ya cargadas en \texttt{pandas}.
+\item Que una base abra bien no significa que esté lista: algunas columnas con números vienen escritas como \textbf{texto} (coma decimal, punto de miles o \texttt{s/\allowbreak{}i}). Cada sección lo avisa en su caja roja.
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base1}\hypertarget{base1}{}
+\pdfbookmark[1]{1. Empleabilidad e ingresos por carrera (SIES)}{bm1}
+\section*{1. Empleabilidad e ingresos por carrera (SIES)}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & una carrera de una institución de educación superior \\\textbf{Tamaño:} & 1.690 filas y 14 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros) \\\textbf{Fuente:} & Portal mifuturo.cl (Subsecretaría de Educación Superior). No trae diccionario: los significados se deducen de los nombres y los valores. \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{Código} & Número que identifica a la institución de educación superior. & \texttt{701} \\
+\rowcolor{gristabla}\texttt{Tipo de institución} & Si es Universidad, Instituto Profesional o Centro de Formación Técnica (CFT). & \texttt{Centros de Formación Técnica} \\
+\texttt{Nombre de institución} & Nombre de la universidad, instituto o CFT. & \texttt{CFT MANPOWER} \\
+\rowcolor{gristabla}\texttt{Acreditación institución (al 31 de octubre 2025)} & Años de acreditación que tiene la institución (de 3 a 7). \texttt{No} significa que no está acreditada. & \texttt{3 años} \\
+\texttt{Área} & Área del conocimiento de la carrera (Salud, Educación, Tecnología, etc.). & \texttt{Administración y Comercio} \\
+\rowcolor{gristabla}\texttt{Nombre carrera genérica} & Nombre general de la carrera, que agrupa carreras parecidas aunque el título se llame distinto. & \texttt{Secretariado Bilingüe} \\
+\texttt{Nombre carrera (del título)} & Nombre exacto del título que entrega la institución. & \texttt{Asistente Ejecutivo Bilingüe o Asi…} \\
+\rowcolor{gristabla}\texttt{\% titulados con continuidad de estudios} & Qué proporción de las personas tituladas siguió estudiando otra carrera o programa. Va de 0 a 1. & \texttt{0.0887573964497041} \\
+\texttt{Retención 1er año} & Qué proporción de quienes entraron a la carrera seguía en ella al año siguiente. Va de 0 a 1, con \textbf{punto} decimal. Trae \texttt{s/\allowbreak{}i} en 279 filas, por eso pandas la lee como texto. & \texttt{0.6528925619834711} \\
+\rowcolor{gristabla}\texttt{Duración Real (semestres)} & Cantidad de semestres que en promedio se demoran realmente en titularse (suele ser más que la duración oficial). Trae \texttt{s/\allowbreak{}i} en 394 filas, por eso pandas la lee como texto. & \texttt{7.235294117647057} \\
+\texttt{Empleabilidad 1er año} & Qué proporción de los titulados tenía trabajo al primer año después de titularse. Va de 0 a 1. & \texttt{0.71875} \\
+\rowcolor{gristabla}\texttt{Empleabilidad 2° año} & Lo mismo, pero al segundo año después de titularse. Va de 0 a 1. & \texttt{0.7050359712230215} \\
+\texttt{Ingreso Promedio al 4° año} & Tramo de ingreso (en pesos, mensual) que ganan en promedio al cuarto año de titulados. Es \textbf{texto} con un rango, no un número. \texttt{s/\allowbreak{}i} en 555 filas. & \texttt{De \$1 millón a \$1 millón 100 mil} \\
+\rowcolor{gristabla}\texttt{Ingreso\_\allowbreak{}punto\_\allowbreak{}medio} & Punto medio del rango de \texttt{Ingreso Promedio al 4° año}, en pesos, ya como número. Vacío cuando el rango era \texttt{s/\allowbreak{}i}. \emph{Sobre \$3 millones 500 mil} usa 3.500.000. & \texttt{1050000} \\
+\end{xltabular}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Los porcentajes vienen como \textbf{decimales con punto}: \texttt{0.72} quiere decir 72 por ciento.
+\item \texttt{s/\allowbreak{}i} significa sin información y pandas \textbf{no} lo cuenta como vacío. Aparece en \texttt{Retención 1er año} (279 filas), \texttt{Duración Real (semestres)} (394) e \texttt{Ingreso Promedio al 4° año} (555). Por eso las dos primeras columnas, aunque parecen números, se leen como texto.
+\item \texttt{Ingreso Promedio al 4° año} es un rango escrito en texto. Para trabajar con números está \texttt{Ingreso\_\allowbreak{}punto\_\allowbreak{}medio}.
+\item En \texttt{Tipo de institución} aparece escrito \texttt{Insitutos Profesionales} (error de tipeo de la fuente).
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base2}\hypertarget{base2}{}
+\pdfbookmark[1]{2. Puntajes de corte por carrera - Admisión 2026 (DEMRE)}{bm2}
+\section*{2. Puntajes de corte por carrera - Admisión 2026 (DEMRE)}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & una carrera de una universidad \\\textbf{Tamaño:} & 2.150 filas y 19 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros) \\\textbf{Fuente:} & DEMRE, Libro de Códigos ADM2026 (diccionario oficial). \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{ANYO\_\allowbreak{}PROCESO} & Año del proceso de admisión. Es 2026 en todas las filas. & \texttt{2026} \\
+\rowcolor{gristabla}\texttt{CODIGO\_\allowbreak{}CARRERA} & Código único de la carrera. & \texttt{11001} \\
+\texttt{NOMBRE\_\allowbreak{}CARRERA} & Nombre de la carrera. & \texttt{ARQUITECTURA} \\
+\rowcolor{gristabla}\texttt{NOMBRE\_\allowbreak{}UNIVERSIDAD} & Nombre de la universidad. & \texttt{UNIVERSIDAD DE CHILE} \\
+\texttt{AREA\_\allowbreak{}CONOCIMIENTO\_\allowbreak{}SIES} & Área del conocimiento de la carrera, según la clasificación del SIES (Arte y Arquitectura, Salud, Derecho, etc.). & \texttt{ARTE Y ARQUITECTURA} \\
+\rowcolor{gristabla}\texttt{VACANTES\_\allowbreak{}REG} & Cupos (vacantes) que ofrece la carrera por la vía regular. & \texttt{210} \\
+\texttt{NUM\_\allowbreak{}SELEC\_\allowbreak{}REG} & Cuántas personas fueron seleccionadas por la vía regular. & \texttt{242} \\
+\rowcolor{gristabla}\texttt{COMPLETA\_\allowbreak{}VACANTES\_\allowbreak{}REG} & Indica si la carrera llenó sus cupos: \texttt{1} si \texttt{NUM\_\allowbreak{}SELEC\_\allowbreak{}REG} es mayor o igual a \texttt{VACANTES\_\allowbreak{}REG}, \texttt{0} si no. & \texttt{1} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}ULTIMO\_\allowbreak{}SELEC} & Promedio de las pruebas obligatorias (Competencia Lectora y Matemática M1) de la \textbf{última} persona seleccionada. Es lo más parecido a un puntaje de corte. & \texttt{670} \\
+\rowcolor{gristabla}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}SD} & Desviación estándar de esos promedios: qué tan dispersos o parejos son los seleccionados. & \texttt{50,73} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}MIN} & El promedio más bajo entre los seleccionados. & \texttt{670} \\
+\rowcolor{gristabla}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P10} & Percentil 10: el 10 por ciento de los seleccionados tiene un promedio igual o menor a este. & \texttt{746,5} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P25} & Percentil 25: el 25 por ciento de los seleccionados tiene un promedio igual o menor a este. & \texttt{770,75} \\
+\rowcolor{gristabla}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}PROM} & Promedio de los promedios de todos los seleccionados. & \texttt{807,13} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}MED} & Mediana (percentil 50): la mitad de los seleccionados está por debajo y la otra mitad por encima. & \texttt{802,75} \\
+\rowcolor{gristabla}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P75} & Percentil 75: el 75 por ciento de los seleccionados tiene un promedio igual o menor a este. & \texttt{841,75} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P90} & Percentil 90: el 90 por ciento de los seleccionados tiene un promedio igual o menor a este. & \texttt{875,25} \\
+\rowcolor{gristabla}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}MAX} & El promedio más alto entre los seleccionados. & \texttt{969} \\
+\texttt{MARGEN\_\allowbreak{}P25\_\allowbreak{}MENOS\_\allowbreak{}ULTIMO} & Qué tan por encima del último seleccionado está el percentil 25: \texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P25} menos \texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}ULTIMO\_\allowbreak{}SELEC}. Ya viene calculada, como número. Vacía en las 3 carreras sin seleccionados. & \texttt{100.75} \\
+\end{xltabular}
+
+\begin{estrategiabox}[Cómo leer los nombres que empiezan con PROM\_OBLIGATORIAS]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Todos hablan de \textbf{un mismo dato}: el promedio de las pruebas obligatorias (CLEC y M1) de las personas que quedaron seleccionadas por la vía regular.
+\item Lo que cambia es la \textbf{estadística} del final: \texttt{MIN} (mínimo), \texttt{P10}, \texttt{P25}, \texttt{MED} (mediana), \texttt{P75}, \texttt{P90}, \texttt{MAX} (máximo), \texttt{PROM} (promedio) y \texttt{SD} (desviación estándar).
+\item \texttt{CLEC} es la prueba de Competencia Lectora y \texttt{M1} la de Matemática 1.
+\end{itemize}
+\end{estrategiabox}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Estos promedios son de los \textbf{seleccionados}, no de todos los postulantes.
+\item Hay carreras que no completan sus vacantes (\texttt{COMPLETA\_\allowbreak{}VACANTES\_\allowbreak{}REG} en 0): ahí el ``último seleccionado'' es el último que postuló, no un puntaje de corte exigente.
+\item Las 10 columnas \texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}*} se escriben con \textbf{coma decimal} (\texttt{807,13}): aunque parecen números, pandas las lee como texto. \texttt{MARGEN\_\allowbreak{}P25\_\allowbreak{}MENOS\_\allowbreak{}ULTIMO} sí es numérica.
+\item Hay 3 carreras sin seleccionados: sus promedios quedan vacíos.
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base3}\hypertarget{base3}{}
+\pdfbookmark[1]{3. SIMCE 2° medio 2025, por establecimiento}{bm3}
+\section*{3. SIMCE 2° medio 2025, por establecimiento}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & un establecimiento educacional \\\textbf{Tamaño:} & 3.002 filas y 42 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros) \\\textbf{Fuente:} & Agencia de la Calidad de la Educación, glosas Simce 2° medio 2025 (diccionario oficial). \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{rbd} & Rol Base de Datos: número único que identifica al establecimiento. & \texttt{7826} \\
+\rowcolor{gristabla}\texttt{dvrbd} & Dígito verificador del RBD (como el dígito después del guion en un RUT). & \texttt{3} \\
+\texttt{nom\_\allowbreak{}rbd} & Nombre del establecimiento. & \texttt{COLEGIO SAN MIGUEL} \\
+\rowcolor{gristabla}\texttt{cod\_\allowbreak{}reg\_\allowbreak{}rbd} & Código de la región del establecimiento. & \texttt{10} \\
+\texttt{nom\_\allowbreak{}reg\_\allowbreak{}rbd} & Nombre de la región del establecimiento. & \texttt{DE LOS LAGOS} \\
+\rowcolor{gristabla}\texttt{cod\_\allowbreak{}pro\_\allowbreak{}rbd} & Código de la provincia del establecimiento. & \texttt{101} \\
+\texttt{nom\_\allowbreak{}pro\_\allowbreak{}rbd} & Nombre del departamento provincial del establecimiento. & \texttt{LLANQUIHUE} \\
+\rowcolor{gristabla}\texttt{cod\_\allowbreak{}com\_\allowbreak{}rbd} & Código de la comuna del establecimiento. & \texttt{10102} \\
+\texttt{nom\_\allowbreak{}com\_\allowbreak{}rbd} & Nombre de la comuna del establecimiento. & \texttt{CALBUCO} \\
+\rowcolor{gristabla}\texttt{cod\_\allowbreak{}deprov\_\allowbreak{}rbd} & Código del Departamento Provincial de Educación (Deprov) al que pertenece. & \texttt{101} \\
+\texttt{nom\_\allowbreak{}deprov\_\allowbreak{}rbd} & Nombre del Departamento Provincial de Educación (Deprov). & \texttt{Llanquihue} \\
+\rowcolor{gristabla}\texttt{cod\_\allowbreak{}depe1} & Dependencia del establecimiento, con 6 categorías (ver tabla de códigos). & \texttt{3} \\
+\texttt{cod\_\allowbreak{}depe2} & Dependencia del establecimiento, agrupada en 4 categorías (ver tabla de códigos). & \texttt{2} \\
+\rowcolor{gristabla}\texttt{cod\_\allowbreak{}grupo} & Grupo socioeconómico (GSE) del establecimiento, de 1 (bajo) a 5 (alto). & \texttt{3} \\
+\texttt{cod\_\allowbreak{}rural\_\allowbreak{}rbd} & Si el establecimiento es urbano (\texttt{1}) o rural (\texttt{2}). & \texttt{1} \\
+\rowcolor{gristabla}\texttt{nalu\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Número de estudiantes que rindió Lectura. & \texttt{104} \\
+\texttt{nalu\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Número de estudiantes que rindió Matemática. & \texttt{100} \\
+\rowcolor{gristabla}\texttt{prom\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Puntaje promedio del establecimiento en Lectura. & \texttt{237} \\
+\texttt{prom\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Puntaje promedio del establecimiento en Matemática. & \texttt{249} \\
+\rowcolor{gristabla}\texttt{dif\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Diferencia del puntaje de Lectura respecto de la evaluación anterior. Negativa si bajó. & \texttt{-2} \\
+\texttt{dif\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Diferencia del puntaje de Matemática respecto de la evaluación anterior. Negativa si bajó. & \texttt{9} \\
+\rowcolor{gristabla}\texttt{difgru\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Diferencia del puntaje de Lectura con el promedio de establecimientos del mismo grupo socioeconómico. & \texttt{-19} \\
+\texttt{difgru\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Diferencia del puntaje de Matemática con el promedio de establecimientos del mismo grupo socioeconómico. & \texttt{-18} \\
+\rowcolor{gristabla}\texttt{sigdif\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Si la diferencia con la evaluación anterior en Lectura es significativa (\texttt{1}, \texttt{0} o \texttt{-1}, ver códigos). & \texttt{0} \\
+\texttt{sigdif\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Si la diferencia con la evaluación anterior en Matemática es significativa (\texttt{1}, \texttt{0} o \texttt{-1}). & \texttt{0} \\
+\rowcolor{gristabla}\texttt{siggru\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Si la diferencia con el mismo grupo socioeconómico en Lectura es significativa (\texttt{1}, \texttt{0} o \texttt{-1}). & \texttt{-1} \\
+\texttt{siggru\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Si la diferencia con el mismo grupo socioeconómico en Matemática es significativa (\texttt{1}, \texttt{0} o \texttt{-1}). & \texttt{-1} \\
+\rowcolor{gristabla}\texttt{marca\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Razón por la que \textbf{no} se muestra el puntaje promedio de Lectura (ver códigos de marca). Vacío si el puntaje sí se muestra. & \texttt{2} \\
+\texttt{marca\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Razón por la que \textbf{no} se muestra el puntaje promedio de Matemática. Vacío si sí se muestra. & \texttt{2} \\
+\rowcolor{gristabla}\texttt{marcadif\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Razón por la que no se muestran las diferencias de Lectura (ver códigos de marca). Vacío si sí se muestran. & \texttt{1} \\
+\texttt{marcadif\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Razón por la que no se muestran las diferencias de Matemática. Vacío si sí se muestran. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Porcentaje de estudiantes con nivel \textbf{insuficiente} en Lectura. & \texttt{53,8} \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Porcentaje de estudiantes con nivel \textbf{elemental} en Lectura. & \texttt{33,7} \\
+\rowcolor{gristabla}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}lect2m\_\allowbreak{}rbd} & Porcentaje de estudiantes con nivel \textbf{adecuado} en Lectura. & \texttt{12,5} \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Porcentaje de estudiantes con nivel \textbf{insuficiente} en Matemática. & \texttt{59} \\
+\rowcolor{gristabla}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Porcentaje de estudiantes con nivel \textbf{elemental} en Matemática. & \texttt{29} \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}mate2m\_\allowbreak{}rbd} & Porcentaje de estudiantes con nivel \textbf{adecuado} en Matemática. & \texttt{12} \\
+\rowcolor{gristabla}\texttt{noaplica} & Si el establecimiento quedó fuera de la aplicación y por qué (\texttt{0} = rindió Simce; ver códigos). & \texttt{0} \\
+\texttt{codigo\_\allowbreak{}bbdd} & Código interno de la versión de la base de datos. & \texttt{v22025} \\
+\rowcolor{gristabla}\texttt{fecha\_\allowbreak{}bbdd} & Fecha en que se construyó la base, escrita como año, mes y día pegados (\texttt{20260622}). & \texttt{20260622} \\
+\texttt{grado} & Curso que rindió la prueba (\texttt{2m} = segundo medio). & \texttt{2m} \\
+\rowcolor{gristabla}\texttt{agno} & Año de la evaluación. & \texttt{2025} \\
+\end{xltabular}
+
+\begin{formulabox}[Tablas de códigos (oficiales)]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{cod\_\allowbreak{}depe1}: 1 Municipal Corporación, 2 Municipal DAEM, 3 Particular subvencionado, 4 Particular pagado, 5 Corporación de administración delegada, 6 Servicio Local de Educación.
+\item \texttt{cod\_\allowbreak{}depe2}: 1 Municipal, 2 Particular subvencionado, 3 Particular pagado, 4 Servicio Local de Educación.
+\item \texttt{cod\_\allowbreak{}grupo} (GSE): 1 Bajo, 2 Medio bajo, 3 Medio, 4 Medio alto, 5 Alto.
+\item \texttt{cod\_\allowbreak{}rural\_\allowbreak{}rbd}: 1 Urbano, 2 Rural.
+\item \texttt{sigdif\_\allowbreak{}} y \texttt{siggru\_\allowbreak{}}: 1 diferencia positiva y significativa, 0 diferencia no significativa, -1 diferencia negativa y significativa.
+\item \texttt{marca\_\allowbreak{}...}: 1 muy pocos estudiantes evaluados (6 o menos), 2 o 3 resultados no representativos por causas ajenas, 4 la prueba extendida no permite evaluar esta asignatura. \texttt{marcadif\_\allowbreak{}...}: 1 no hay resultados comparables, 2 pocos estudiantes o falta información por género.
+\item \texttt{noaplica}: 0 rindió Simce; 1 a 7 son motivos por los que no se aplicó (todos ausentes, solo estudiantes integrados, renuncia a responder, paro, pérdida de material, etc.).
+\end{itemize}
+\end{formulabox}
+
+\begin{estrategiabox}[Cómo leer los nombres de las columnas SIMCE]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Se arman por piezas: \textbf{qué mide} + \textbf{materia} + \textbf{curso} + \textbf{nivel}. Ejemplo: \texttt{prom\_\allowbreak{}mate2m\_\allowbreak{}rbd} se lee \texttt{prom} (promedio) + \texttt{mate} (matemática) + \texttt{2m} (segundo medio) + \texttt{rbd} (por establecimiento).
+\item Qué mide: \texttt{prom} = puntaje promedio, \texttt{dif} = diferencia con la evaluación anterior, \texttt{difgru} = diferencia con el mismo grupo socioeconómico, \texttt{sigdif}/\texttt{siggru} = si esa diferencia es significativa, \texttt{marca} = por qué falta un dato, \texttt{nalu} = número de alumnos, \texttt{palu\_\allowbreak{}eda} = porcentaje de alumnos por nivel de aprendizaje.
+\item Niveles de aprendizaje (\texttt{palu\_\allowbreak{}eda\_\allowbreak{}...}): \texttt{ins} = insuficiente, \texttt{ele} = elemental, \texttt{ade} = adecuado.
+\item Materia: \texttt{lect} = Lectura, \texttt{mate} = Matemática. Final: \texttt{rbd} = por establecimiento, \texttt{com} = por comuna.
+\end{itemize}
+\end{estrategiabox}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Muchos establecimientos tienen vacíos en puntajes y diferencias: se explican con las columnas \texttt{marca\_\allowbreak{}...} y \texttt{marcadif\_\allowbreak{}...}.
+\item Los códigos \texttt{cod\_\allowbreak{}depe1}, \texttt{cod\_\allowbreak{}depe2} y \texttt{cod\_\allowbreak{}grupo} son \textbf{números que representan categorías}: no tiene sentido promediarlos.
+\item Los 6 \texttt{palu\_\allowbreak{}eda\_\allowbreak{}*} se escriben con \textbf{coma decimal} (\texttt{53,8}) y pandas los lee como texto. Los puntajes promedio (\texttt{prom\_\allowbreak{}*}) ya son números.
+\item Aquí rural se escribe \texttt{1} = urbano y \texttt{2} = rural; en la base de Matrícula es \texttt{0} = urbano y \texttt{1} = rural.
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base4}\hypertarget{base4}{}
+\pdfbookmark[1]{4. SIMCE 2° medio 2025, por comuna}{bm4}
+\section*{4. SIMCE 2° medio 2025, por comuna}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & una comuna \\\textbf{Tamaño:} & 346 filas y 24 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros) \\\textbf{Fuente:} & Agencia de la Calidad de la Educación, glosas Simce 2° medio 2025 (diccionario oficial). \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{cod\_\allowbreak{}reg} & Código de la región. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{nom\_\allowbreak{}reg} & Nombre de la región. & \texttt{Región de Tarapacá} \\
+\texttt{cod\_\allowbreak{}pro} & Código de la provincia. & \texttt{11} \\
+\rowcolor{gristabla}\texttt{nom\_\allowbreak{}pro} & Nombre de la provincia. & \texttt{Iquique} \\
+\texttt{cod\_\allowbreak{}com} & Código de la comuna. & \texttt{1101} \\
+\rowcolor{gristabla}\texttt{nom\_\allowbreak{}com} & Nombre de la comuna. & \texttt{Iquique} \\
+\texttt{cod\_\allowbreak{}deprov} & Código del Departamento Provincial de Educación (Deprov). & \texttt{11} \\
+\rowcolor{gristabla}\texttt{nom\_\allowbreak{}deprov} & Nombre del Departamento Provincial de Educación (Deprov). & \texttt{Iquique} \\
+\texttt{prom\_\allowbreak{}lect2m\_\allowbreak{}com} & Puntaje promedio de la comuna en Lectura. & \texttt{248} \\
+\rowcolor{gristabla}\texttt{prom\_\allowbreak{}mate2m\_\allowbreak{}com} & Puntaje promedio de la comuna en Matemática. & \texttt{254} \\
+\texttt{dif\_\allowbreak{}lect2m\_\allowbreak{}com} & Diferencia del puntaje de Lectura respecto de la evaluación anterior. Negativa si bajó. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{dif\_\allowbreak{}mate2m\_\allowbreak{}com} & Diferencia del puntaje de Matemática respecto de la evaluación anterior. & \texttt{1} \\
+\texttt{sigdif\_\allowbreak{}lect2m\_\allowbreak{}com} & Si la diferencia en Lectura es significativa (\texttt{1}, \texttt{0} o \texttt{-1}). & \texttt{0} \\
+\rowcolor{gristabla}\texttt{sigdif\_\allowbreak{}mate2m\_\allowbreak{}com} & Si la diferencia en Matemática es significativa (\texttt{1}, \texttt{0} o \texttt{-1}). & \texttt{0} \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}lect2m\_\allowbreak{}com} & Porcentaje de estudiantes con nivel \textbf{insuficiente} en Lectura. & \texttt{50,6} \\
+\rowcolor{gristabla}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}lect2m\_\allowbreak{}com} & Porcentaje de estudiantes con nivel \textbf{elemental} en Lectura. & \texttt{29,8} \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}lect2m\_\allowbreak{}com} & Porcentaje de estudiantes con nivel \textbf{adecuado} en Lectura. & \texttt{19,6} \\
+\rowcolor{gristabla}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}mate2m\_\allowbreak{}com} & Porcentaje de estudiantes con nivel \textbf{insuficiente} en Matemática. & \texttt{53,4} \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}mate2m\_\allowbreak{}com} & Porcentaje de estudiantes con nivel \textbf{elemental} en Matemática. & \texttt{29,7} \\
+\rowcolor{gristabla}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}mate2m\_\allowbreak{}com} & Porcentaje de estudiantes con nivel \textbf{adecuado} en Matemática. & \texttt{16,8} \\
+\texttt{codigo\_\allowbreak{}bbdd} & Código interno de la versión de la base de datos. & \texttt{v22025} \\
+\rowcolor{gristabla}\texttt{fecha\_\allowbreak{}bbdd} & Fecha en que se construyó la base (año, mes y día pegados). & \texttt{20260622} \\
+\texttt{grado} & Curso que rindió la prueba (\texttt{2m} = segundo medio). & \texttt{2m} \\
+\rowcolor{gristabla}\texttt{agno} & Año de la evaluación. & \texttt{2025} \\
+\end{xltabular}
+
+\begin{formulabox}[Códigos de significancia (oficiales)]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{sigdif\_\allowbreak{}...}: 1 diferencia positiva y significativa, 0 diferencia no significativa, -1 diferencia negativa y significativa.
+\end{itemize}
+\end{formulabox}
+
+\begin{estrategiabox}[Cómo leer los nombres (igual que la base SIMCE por establecimiento)]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{prom} = promedio, \texttt{dif} = diferencia con la evaluación anterior, \texttt{sigdif} = si esa diferencia es significativa, \texttt{palu\_\allowbreak{}eda} = porcentaje de estudiantes por nivel de aprendizaje (\texttt{ins} insuficiente, \texttt{ele} elemental, \texttt{ade} adecuado).
+\item \texttt{lect} = Lectura, \texttt{mate} = Matemática, \texttt{2m} = segundo medio y \texttt{com} = por comuna.
+\end{itemize}
+\end{estrategiabox}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Es la versión \textbf{resumida}: una fila por comuna, sin datos de cada establecimiento. No trae grupo socioeconómico ni dependencia.
+\item Una comuna con pocos estudiantes puede tener un promedio poco representativo.
+\item Los 6 \texttt{palu\_\allowbreak{}eda\_\allowbreak{}*} se escriben con \textbf{coma decimal} (\texttt{50,6}) y pandas los lee como texto. Los puntajes promedio ya son números.
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base5}\hypertarget{base5}{}
+\pdfbookmark[1]{5. Matrícula de estudiantes por establecimiento 2025 (Mineduc)}{bm5}
+\section*{5. Matrícula de estudiantes por establecimiento 2025 (Mineduc)}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & un establecimiento educacional \\\textbf{Tamaño:} & 16.768 filas y 71 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros) \\\textbf{Fuente:} & Mineduc, Esquema de registro Resumen de Matrícula Oficial 2025 (diccionario oficial). Datos al 30 de abril de 2025. \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{AGNO} & Año de la matrícula (2025). & \texttt{2025} \\
+\rowcolor{gristabla}\texttt{RBD} & Rol Base de Datos: número único del establecimiento. & \texttt{1} \\
+\texttt{DGV\_\allowbreak{}RBD} & Dígito verificador del RBD. & \texttt{9} \\
+\rowcolor{gristabla}\texttt{NOM\_\allowbreak{}RBD} & Nombre del establecimiento. & \texttt{LICEO POLITECNICO ARICA} \\
+\texttt{COD\_\allowbreak{}DEPE} & Dependencia con 6 categorías (ver códigos). & \texttt{6} \\
+\rowcolor{gristabla}\texttt{COD\_\allowbreak{}DEPE2} & Dependencia agrupada en 5 categorías (ver códigos). & \texttt{5} \\
+\texttt{RURAL\_\allowbreak{}RBD} & Si el establecimiento es urbano (\texttt{0}) o rural (\texttt{1}). & \texttt{0} \\
+\rowcolor{gristabla}\texttt{COD\_\allowbreak{}REG\_\allowbreak{}RBD} & Código de la región del establecimiento. & \texttt{15} \\
+\texttt{NOM\_\allowbreak{}REG\_\allowbreak{}RBD\_\allowbreak{}A} & Nombre \textbf{abreviado} de la región (\texttt{AYP}, \texttt{TPCA}, \texttt{ANTOF}...). & \texttt{AYP} \\
+\rowcolor{gristabla}\texttt{COD\_\allowbreak{}PRO\_\allowbreak{}RBD} & Código de la provincia. & \texttt{151} \\
+\texttt{COD\_\allowbreak{}COM\_\allowbreak{}RBD} & Código oficial de la comuna (el de SUBDERE). & \texttt{15101} \\
+\rowcolor{gristabla}\texttt{NOM\_\allowbreak{}COM\_\allowbreak{}RBD} & Nombre de la comuna. & \texttt{ARICA} \\
+\texttt{COD\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & Código del Departamento Provincial de Educación al que pertenece. & \texttt{151} \\
+\rowcolor{gristabla}\texttt{NOM\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & Nombre del Departamento Provincial de Educación. & \texttt{ARICA} \\
+\texttt{ESTADO\_\allowbreak{}ESTAB} & Estado del establecimiento: 1 funcionando, 2 en receso, 3 cerrado, 4 autorizado sin matrícula. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}1} & Matrícula de estudiantes \textbf{sin información de género} en Educación Parvularia. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}1} & Hombres matriculados en Educación Parvularia. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}1} & Mujeres matriculadas en Educación Parvularia. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}1} & Matrícula \textbf{total} en Educación Parvularia. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}2} & Matrícula de estudiantes \textbf{sin información de género} en Enseñanza Básica niños y jóvenes. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}2} & Hombres matriculados en Enseñanza Básica niños y jóvenes. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}2} & Mujeres matriculadas en Enseñanza Básica niños y jóvenes. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}2} & Matrícula \textbf{total} en Enseñanza Básica niños y jóvenes. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}3} & Hombres matriculados en Enseñanza Básica adultos. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}3} & Mujeres matriculadas en Enseñanza Básica adultos. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}3} & Matrícula \textbf{total} en Enseñanza Básica adultos. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}4} & Matrícula de estudiantes \textbf{sin información de género} en Educación Especial. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}4} & Hombres matriculados en Educación Especial. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}4} & Mujeres matriculadas en Educación Especial. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}4} & Matrícula \textbf{total} en Educación Especial. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}5} & Matrícula de estudiantes \textbf{sin información de género} en Enseñanza Media H-C niños y jóvenes. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}5} & Hombres matriculados en Enseñanza Media H-C niños y jóvenes. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}5} & Mujeres matriculadas en Enseñanza Media H-C niños y jóvenes. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}5} & Matrícula \textbf{total} en Enseñanza Media H-C niños y jóvenes. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}6} & Matrícula de estudiantes \textbf{sin información de género} en Enseñanza Media H-C adultos. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}6} & Hombres matriculados en Enseñanza Media H-C adultos. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}6} & Mujeres matriculadas en Enseñanza Media H-C adultos. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}6} & Matrícula \textbf{total} en Enseñanza Media H-C adultos. & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}7} & Hombres matriculados en Enseñanza Media T-P niños y jóvenes. & \texttt{548} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}7} & Mujeres matriculadas en Enseñanza Media T-P niños y jóvenes. & \texttt{314} \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}7} & Matrícula \textbf{total} en Enseñanza Media T-P niños y jóvenes. & \texttt{862} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}8} & Hombres matriculados en Enseñanza Media T-P adultos. & \texttt{130} \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}8} & Mujeres matriculadas en Enseñanza Media T-P adultos. & \texttt{94} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}8} & Matrícula \textbf{total} en Enseñanza Media T-P adultos. & \texttt{224} \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}TOT} & Total de hombres matriculados en el establecimiento. & \texttt{678} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}TOT} & Total de mujeres matriculadas en el establecimiento. & \texttt{408} \\
+\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}TOT} & Total de estudiantes sin información de género. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}TOTAL} & Matrícula \textbf{total} del establecimiento (todos los niveles). & \texttt{1086} \\
+\texttt{MAT\_\allowbreak{}CHI} & Total de estudiantes chilenos. & \texttt{781} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}EXT} & Total de estudiantes extranjeros. & \texttt{303} \\
+\texttt{MAT\_\allowbreak{}NAC} & Total de estudiantes nacionalizados. & \texttt{2} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}NO\_\allowbreak{}ETNIA} & Total de estudiantes que no pertenecen a ninguna etnia. & \texttt{779} \\
+\texttt{MAT\_\allowbreak{}ETNIA} & Total de estudiantes que pertenecen a alguna etnia. & \texttt{307} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}INT} & Estudiantes integrados sin información de sexo (ver nota sobre integrados). & \texttt{0} \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}INT} & Hombres integrados. & \texttt{53} \\
+\rowcolor{gristabla}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}INT} & Mujeres integradas. & \texttt{21} \\
+\texttt{MAT\_\allowbreak{}INT\_\allowbreak{}TOTAL} & Total de estudiantes integrados. & \texttt{74} \\
+\rowcolor{gristabla}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}01} & Número de \textbf{cursos simples} en Educación Parvularia. & \texttt{0} \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}02} & Número de \textbf{cursos simples} en Enseñanza Básica niños y jóvenes. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}03} & Número de \textbf{cursos simples} en Enseñanza Básica adultos. & \texttt{0} \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}04} & Número de \textbf{cursos simples} en Educación Especial. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}05} & Número de \textbf{cursos simples} en Enseñanza Media H-C niños y jóvenes. & \texttt{0} \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}06} & Número de \textbf{cursos simples} en Enseñanza Media H-C adultos. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}07} & Número de \textbf{cursos simples} en Enseñanza Media T-P niños y jóvenes. & \texttt{29} \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}08} & Número de \textbf{cursos simples} en Enseñanza Media T-P adultos. & \texttt{14} \\
+\rowcolor{gristabla}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}TOT} & Total de cursos simples del establecimiento. & \texttt{43} \\
+\texttt{CUR\_\allowbreak{}COMB\_\allowbreak{}01} & Número de \textbf{cursos combinados} en Educación Parvularia. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{CUR\_\allowbreak{}COMB\_\allowbreak{}02} & Número de \textbf{cursos combinados} en Enseñanza Básica niños y jóvenes. & \texttt{0} \\
+\texttt{CUR\_\allowbreak{}COMB\_\allowbreak{}TOT} & Total de cursos combinados del establecimiento. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{SLEP} & Número del Servicio Local de Educación Pública (SLEP) del que depende. Vacío si no depende de uno. & \texttt{5} \\
+\texttt{NOMBRE\_\allowbreak{}SLEP} & Nombre del Servicio Local de Educación Pública. Vacío si no depende de uno. & \texttt{CHINCHORRO} \\
+\end{xltabular}
+
+\begin{formulabox}[Tablas de códigos (oficiales)]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{COD\_\allowbreak{}DEPE}: 1 Corporación Municipal, 2 Municipal DAEM, 3 Particular subvencionado, 4 Particular pagado, 5 Corporación de administración delegada, 6 Servicio Local de Educación.
+\item \texttt{COD\_\allowbreak{}DEPE2}: 1 Municipal, 2 Particular subvencionado, 3 Particular pagado, 4 Corporación de administración delegada, 5 Servicio Local de Educación.
+\item \texttt{RURAL\_\allowbreak{}RBD}: 0 Urbano, 1 Rural.
+\item \texttt{ESTADO\_\allowbreak{}ESTAB}: 1 Funcionando, 2 En receso, 3 Cerrado, 4 Autorizado sin matrícula.
+\end{itemize}
+\end{formulabox}
+
+\begin{estrategiabox}[Cómo leer los nombres MAT y CUR]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{MAT\_\allowbreak{}} = matrícula y \texttt{CUR\_\allowbreak{}} = cursos. Después viene \textbf{quién}: \texttt{HOM} hombres, \texttt{MUJ} mujeres, \texttt{SI} sin información de género, \texttt{ENS} total del nivel, \texttt{TOT} total del establecimiento.
+\item El número final es el \textbf{nivel de enseñanza}: 1 Parvularia, 2 Básica niños y jóvenes, 3 Básica adultos, 4 Especial, 5 Media H-C niños y jóvenes, 6 Media H-C adultos, 7 Media T-P niños y jóvenes, 8 Media T-P adultos.
+\item \texttt{H-C} es Humanístico-Científica y \texttt{T-P} es Técnico-Profesional. Ejemplo: \texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}5} = mujeres matriculadas en Media H-C de niños y jóvenes.
+\item Curso \textbf{simple}: un solo nivel por sala. Curso \textbf{combinado}: varios grados juntos en la misma sala (típico de escuelas rurales pequeñas).
+\end{itemize}
+\end{estrategiabox}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Un estudiante \textbf{integrado} es una persona con necesidades educativas especiales que estudia en un curso regular (programa de integración). Sus cifras ya están \textbf{dentro} de la matrícula total: no se suman aparte.
+\item La base incluye establecimientos cerrados, en receso y sin matrícula (\texttt{ESTADO\_\allowbreak{}ESTAB} distinto de 1); para ver solo los que funcionan se filtra por ese código.
+\item Un 0 puede significar que ese nivel \textbf{no existe} en el establecimiento, no que haya cero estudiantes.
+\item Vacíos reales: \texttt{SLEP} y \texttt{NOMBRE\_\allowbreak{}SLEP} (10.281, los que no dependen de un SLEP) y \texttt{NOM\_\allowbreak{}RBD} (30 establecimientos sin nombre).
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base6}\hypertarget{base6}{}
+\pdfbookmark[1]{6. Subvenciones a establecimientos 2025}{bm6}
+\section*{6. Subvenciones a establecimientos 2025}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & un establecimiento en un mes de pago \\\textbf{Tamaño:} & 123.361 filas y 44 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros; pesa unos 29 MB) \\\textbf{Fuente:} & Mineduc, Subvenciones\_Diccionario (oficial) y deducciones propias donde el diccionario no cubre una columna. \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{AGNO} & Año del pago (2025). & \texttt{2025} \\
+\rowcolor{gristabla}\texttt{RBD} & Rol Base de Datos: número único del establecimiento. & \texttt{1} \\
+\texttt{NOMBRERBD} & Nombre del establecimiento. & \texttt{LICEO POLITECNICO ARICA} \\
+\rowcolor{gristabla}\texttt{NOM\_\allowbreak{}SOSTENEDOR} & Nombre del sostenedor (municipio, servicio local, corporación, fundación...). & \texttt{SERVICIO LOCAL DE EDUCACIÓN PÚBLIC…} \\
+\texttt{COD\_\allowbreak{}REG\_\allowbreak{}RBD} & Código de la región del establecimiento. & \texttt{15} \\
+\rowcolor{gristabla}\texttt{NOM\_\allowbreak{}REG\_\allowbreak{}RBD\_\allowbreak{}A} & Nombre abreviado de la región. & \texttt{AYP} \\
+\texttt{COD\_\allowbreak{}PRO\_\allowbreak{}RBD} & Código de la provincia. & \texttt{151} \\
+\rowcolor{gristabla}\texttt{COD\_\allowbreak{}COM\_\allowbreak{}RBD} & Código de la comuna. & \texttt{15101} \\
+\texttt{NOM\_\allowbreak{}COM\_\allowbreak{}RBD} & Nombre de la comuna. & \texttt{ARICA} \\
+\rowcolor{gristabla}\texttt{COD\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & Código del Departamento Provincial de Educación. & \texttt{151} \\
+\texttt{NOM\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & Nombre del Departamento Provincial de Educación. & \texttt{ARICA} \\
+\rowcolor{gristabla}\texttt{COD\_\allowbreak{}DEPE} & Dependencia del establecimiento (mismos códigos que en Matrícula). & \texttt{6} \\
+\texttt{COD\_\allowbreak{}DEPE2} & Dependencia agrupada (mismos códigos que en Matrícula). & \texttt{5} \\
+\rowcolor{gristabla}\texttt{RURAL\_\allowbreak{}RBD} & Si es urbano (\texttt{0}) o rural (\texttt{1}). & \texttt{0} \\
+\texttt{MES} & Mes del pago, de 1 (enero) a 12 (diciembre). & \texttt{1} \\
+\rowcolor{gristabla}\texttt{MATRICULA} & Matrícula informada por el establecimiento ese mes. & \texttt{897} \\
+\texttt{ESCOLARIDAD} & Monto de la subvención escolar (pesos). & \texttt{89367880} \\
+\rowcolor{gristabla}\texttt{ESCOLARIDAD\_\allowbreak{}PIE} & Parte de la subvención escolar que corresponde al Programa de Integración Escolar (PIE). Ya está incluida en \texttt{ESCOLARIDAD}; solo se informa como referencia. & \texttt{6988263} \\
+\texttt{INTERNADO} & Monto del pago por internado. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{PORC\_\allowbreak{}ZONA} & Porcentaje de asignación de zona (aumento por ubicación geográfica). & \texttt{40} \\
+\texttt{MONTO\_\allowbreak{}ASIG\_\allowbreak{}ZONA} & Monto del incremento de zona. & \texttt{35.747.153} \\
+\rowcolor{gristabla}\texttt{DESCUENTO\_\allowbreak{}FICOM} & Descuento por Financiamiento Compartido (FICOM). & \texttt{0} \\
+\texttt{APORTE\_\allowbreak{}ESTADO\_\allowbreak{}FICOM} & Aporte del Estado al Financiamiento Compartido. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{RURALIDAD} & Monto de la subvención de ruralidad. & \texttt{0} \\
+\texttt{PISO\_\allowbreak{}RURAL} & Monto del piso rural (mínimo garantizado para establecimientos rurales). & \texttt{0} \\
+\rowcolor{gristabla}\texttt{DISCREPANCIA} & Monto descontado por discrepancias (diferencias entre lo informado y lo verificado). & \texttt{0} \\
+\texttt{DONACIONAPLICADA} & Monto de donación aplicada. En toda esta base vale 0. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{REINTEGROS} & Monto de reintegros (devoluciones). & \texttt{0} \\
+\texttt{RETENCIONES} & Monto de retenciones. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MULTAS} & Monto de multas. & \texttt{0} \\
+\texttt{DESEMPEÑO\_\allowbreak{}DIFICIL} & Monto de la subvención por desempeño difícil. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{DESEMPEÑO\_\allowbreak{}DIFICIL\_\allowbreak{}NODOC} & Subvención por desempeño difícil para asistentes de la educación (no docentes), creada por la Ley de Reajuste de 2016. & \texttt{0} \\
+\texttt{SUBV\_\allowbreak{}ADICIONAL\_\allowbreak{}ESPECIAL} & Monto de la subvención adicional especial. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{SUBV\_\allowbreak{}ASISTENTES\_\allowbreak{}EDUCACION} & Monto de la subvención para asistentes de la educación. & \texttt{1.012.524} \\
+\texttt{PROFESOR\_\allowbreak{}ENCARGADO} & Monto de la subvención para profesor encargado (escuelas pequeñas). & \texttt{0} \\
+\rowcolor{gristabla}\texttt{RELIQUIDACION} & Monto de reliquidación (ajuste de pagos anteriores). Puede ser positivo o negativo. & \texttt{0} \\
+\texttt{APOR\_\allowbreak{}GRATUIDAD} & Aporte por gratuidad (Ley de Inclusión de 2015). & \texttt{10.691.136} \\
+\rowcolor{gristabla}\texttt{SUB\_\allowbreak{}NORMAL} & Monto líquido a pago de la subvención normal. & \texttt{136.818.693} \\
+\texttt{SEP\_\allowbreak{}PRIO} & Monto de la Subvención Escolar Preferencial (SEP) por estudiantes \textbf{prioritarios} (probablemente). & \texttt{23.257.878} \\
+\rowcolor{gristabla}\texttt{SEP\_\allowbreak{}PREF} & Monto de la SEP por estudiantes \textbf{preferentes} (Ley de Inclusión de 2015). & \texttt{1.033.984} \\
+\texttt{MANTENIMIENTO} & Monto de la subvención de mantenimiento. & \texttt{15.812.236} \\
+\rowcolor{gristabla}\texttt{SNED} & Monto de la subvención SNED (Sistema Nacional de Evaluación de Desempeño). & \texttt{0} \\
+\texttt{PRORETENCION} & Monto de la subvención de proretención (por mantener estudiantes en el sistema). & \texttt{0} \\
+\rowcolor{gristabla}\texttt{REFORZAMIENTO} & Monto de la subvención de reforzamiento educativo. & \texttt{0} \\
+\end{xltabular}
+
+\begin{formulabox}[Siglas que aparecen]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \textbf{SEP}: Subvención Escolar Preferencial, un aporte extra por estudiantes de familias vulnerables.
+\item \textbf{PIE}: Programa de Integración Escolar.  \textbf{FICOM}: Financiamiento Compartido.
+\item \textbf{SNED}: Sistema Nacional de Evaluación de Desempeño de los establecimientos.
+\item \textbf{Sostenedor}: persona o institución que administra el establecimiento.
+\end{itemize}
+\end{formulabox}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Todos los montos están en \textbf{pesos chilenos}, sin signo \texttt{\$}. Pero \textbf{23 columnas de monto se escriben con punto de miles} (\texttt{253.447.695}) y pandas las lee como texto: \texttt{MONTO\_\allowbreak{}ASIG\_\allowbreak{}ZONA}, \texttt{SUB\_\allowbreak{}NORMAL}, \texttt{SEP\_\allowbreak{}PRIO}, \texttt{SNED}, entre otras. \texttt{ESCOLARIDAD}, \texttt{ESCOLARIDAD\_\allowbreak{}PIE}, \texttt{INTERNADO} y \texttt{DONACIONAPLICADA} ya son números.
+\item Cada establecimiento aparece \textbf{hasta 12 veces} (una por mes): para el total del año hay que sumar los meses.
+\item Un \texttt{0} en una subvención casi siempre quiere decir que ese establecimiento \textbf{no recibe} esa subvención.
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base7}\hypertarget{base7}{}
+\pdfbookmark[1]{7. Siniestros de tránsito 2020-2025 (CONASET), Región Metropolitana}{bm7}
+\section*{7. Siniestros de tránsito 2020-2025 (CONASET), Región Metropolitana}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & un siniestro de tránsito \\\textbf{Tamaño:} & 123.343 filas y 37 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros; pesa unos 44 MB) \\\textbf{Fuente:} & CONASET. No trae diccionario: los significados se deducen de los nombres y valores. Lo no confirmado se marca "probablemente". \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{FID} & Número correlativo de la fila dentro del archivo original (probablemente). & \texttt{6} \\
+\rowcolor{gristabla}\texttt{ID} & Número que identifica al siniestro (probablemente). & \texttt{4578} \\
+\texttt{AÑO} & Año en que ocurrió el siniestro (2020 a 2025). & \texttt{2025} \\
+\rowcolor{gristabla}\texttt{FECHA} & Fecha del siniestro, guardada como \textbf{milisegundos desde 1970} (no se lee como fecha normal). & \texttt{1736467200000} \\
+\texttt{Dia\_\allowbreak{}semana} & Día de la semana (Lunes, Martes, etc.). & \texttt{Viernes} \\
+\rowcolor{gristabla}\texttt{Mes} & Mes en que ocurrió, escrito con su nombre (Enero, Febrero...). & \texttt{Enero} \\
+\texttt{Mes\_\allowbreak{}num} & Número del mes: 1 es Enero y 12 es Diciembre. Sirve para ordenar por mes, porque \texttt{Mes} es texto. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{Hora} & Hora aproximada del siniestro (hora:minuto:segundo). & \texttt{15:30:00} \\
+\texttt{Hora\_\allowbreak{}aprox} & Hora redondeada, de 0 a 23. & \texttt{15} \\
+\rowcolor{gristabla}\texttt{REGION} & Región (aquí siempre Metropolitana de Santiago). & \texttt{Metropolitana de Santiago} \\
+\texttt{PROVINCIA} & Provincia donde ocurrió. & \texttt{Santiago} \\
+\rowcolor{gristabla}\texttt{COMUNA} & Comuna donde ocurrió. & \texttt{Quinta Normal} \\
+\texttt{TIPO\_\allowbreak{}SINIE} & Tipo de siniestro \textbf{detallado} (colisión lateral, por alcance, atropello, volcadura...). & \texttt{COLISION LATERAL} \\
+\rowcolor{gristabla}\texttt{TIPO\_\allowbreak{}\_\allowbreak{}CONA} & Tipo de siniestro \textbf{agrupado} en pocas categorías (colisión, choque, atropello, volcadura, caída...). Ojo: lleva dos guiones bajos. & \texttt{COLISION} \\
+\texttt{ZONA} & Si ocurrió en zona urbana o rural. & \texttt{URBANA} \\
+\rowcolor{gristabla}\texttt{CAUSA\_\allowbreak{}SINI} & Causa del siniestro, \textbf{detallada} (82 causas distintas). & \texttt{CONDUCCION NO ATENTO CONDICIONES T…} \\
+\texttt{CAUSA\_\allowbreak{}NUEV} & Causa del siniestro \textbf{agrupada} en 16 categorías (distracción del conductor, alcohol, velocidad imprudente...). & \texttt{DISTRACCION DEL CONDUCTOR} \\
+\rowcolor{gristabla}\texttt{UBICACION} & Dónde ocurrió dentro de la vía (cruce con semáforo, tramo recto, curva...). A veces se repite con \texttt{;} cuando hay más de un vehículo. & \texttt{CRUCE CON SEMAFORO FUNCIONANDO; CR…} \\
+\texttt{Calle\_\allowbreak{}Uno} & Calle principal del lugar del siniestro. Vacía en 5.941 filas. & \texttt{PRESIDENTE BALMACEDA} \\
+\rowcolor{gristabla}\texttt{Calle\_\allowbreak{}Dos} & Calle con la que se cruza (si fue en una esquina). Vacía en 35.367 filas. & \texttt{ESPERANZA} \\
+\texttt{Número} & Número de la dirección o kilómetro de la ruta, con decimales. \texttt{0} si no hay dato. & \texttt{0.0} \\
+\rowcolor{gristabla}\texttt{Ruta} & Nombre de la ruta si ocurrió en una carretera. Vacía de verdad en 118.077 filas. & \texttt{G-16} \\
+\texttt{Ubicación} & Columna con tilde, distinta de \texttt{UBICACION}. En casi todas las filas es \texttt{0} (118.153 de 123.343); en el resto trae un número cuyo significado no está claro. & \texttt{0.0} \\
+\rowcolor{gristabla}\texttt{Dirección} & Dirección armada con las calles y la comuna. & \texttt{ESPERANZA \& PRESIDENTE BALMACEDA, …} \\
+\texttt{FALLECIDOS} & Número de personas fallecidas en el siniestro. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{TOTAL\_\allowbreak{}LESI} & Total de personas lesionadas (la suma de graves, menos graves y leves). & \texttt{0} \\
+\texttt{GRAVES} & Lesionados de gravedad. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{MENOS\_\allowbreak{}GRAV} & Lesionados de menor gravedad. & \texttt{0} \\
+\texttt{LEVES} & Lesionados leves. & \texttt{0} \\
+\rowcolor{gristabla}\texttt{Siniestro} & Marca \texttt{Si} o \texttt{No}. Casi todos son \texttt{No}; no está claro qué significa. & \texttt{No} \\
+\texttt{Latitud} & Latitud del lugar (coordenada geográfica). & \texttt{-33.42659699} \\
+\rowcolor{gristabla}\texttt{longitud} & Longitud del lugar (coordenada geográfica). Ojo: va con minúscula. & \texttt{-70.67706675} \\
+\texttt{Zonas\_\allowbreak{}urb\_\allowbreak{}} & Si ocurrió en zona urbana (\texttt{Urbano}) o en una carretera (\texttt{Rutas}). & \texttt{Urbano} \\
+\rowcolor{gristabla}\texttt{Atropello} & \texttt{1} si el siniestro fue un atropello, \texttt{0} si no (coincide con \texttt{TIPO\_\allowbreak{}\_\allowbreak{}CONA} igual a \texttt{ATROPELLO}). & \texttt{0} \\
+\texttt{Bicicleta} & \texttt{1} si involucró una bicicleta, \texttt{0} si no (probablemente). & \texttt{0} \\
+\rowcolor{gristabla}\texttt{Motociclet} & \texttt{1} si involucró una motocicleta, \texttt{0} si no (probablemente). El nombre está cortado. & \texttt{0} \\
+\texttt{AM} & Área metropolitana (aquí siempre \texttt{Gran Santiago}). & \texttt{Gran Santiago} \\
+\end{xltabular}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{FECHA} está en milisegundos desde 1970: para trabajar por fechas conviene usar \texttt{AÑO}, \texttt{Mes} (nombre) y \texttt{Mes\_\allowbreak{}num} (número 1 a 12).
+\item \texttt{Ruta}, \texttt{Calle\_\allowbreak{}Uno} y \texttt{Calle\_\allowbreak{}Dos} tienen \textbf{vacíos de verdad} (118.077, 5.941 y 35.367 filas) y pandas sí los cuenta. \texttt{Ruta} solo se llena cuando el siniestro ocurrió en una carretera.
+\item Varias columnas se parecen (\texttt{TIPO\_\allowbreak{}SINIE} y \texttt{TIPO\_\allowbreak{}\_\allowbreak{}CONA}, \texttt{CAUSA\_\allowbreak{}SINI} y \texttt{CAUSA\_\allowbreak{}NUEV}): una es la versión detallada y otra la agrupada.
+\item Esta base no trae números escritos como texto: los números ya vienen como números.
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base8}\hypertarget{base8}{}
+\pdfbookmark[1]{8. Precios de alimentos al consumidor 2025 (ODEPA), Región Metropolitana}{bm8}
+\section*{8. Precios de alimentos al consumidor 2025 (ODEPA), Región Metropolitana}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & el precio de un producto, en un tipo de punto de venta y una semana (solo Región Metropolitana) \\\textbf{Tamaño:} & 67.453 filas y 15 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros; pesa unos 10 MB) \\\textbf{Fuente:} & ODEPA. No trae diccionario: los significados se deducen de los nombres y valores. \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{Anio} & Año del registro (2025). Está escrito sin ñ. & \texttt{2025} \\
+\rowcolor{gristabla}\texttt{Mes} & Mes del año, de 1 a 12. & \texttt{1} \\
+\texttt{Semana} & Número de la semana dentro del año. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{Fecha inicio} & Primer día de la semana de monitoreo (año-mes-día). & \texttt{2024-12-30} \\
+\texttt{Fecha termino} & Último día de la semana de monitoreo. & \texttt{2025-01-03} \\
+\rowcolor{gristabla}\texttt{ID region} & Número de la región donde se tomó el precio (aquí siempre 13, Región Metropolitana). & \texttt{13} \\
+\texttt{Region} & Nombre de la región (aquí siempre Región Metropolitana de Santiago). & \texttt{Región Metropolitana de Santiago} \\
+\rowcolor{gristabla}\texttt{Sector} & Ciudad o zona de la región donde se tomó el precio. & \texttt{Centro} \\
+\texttt{Tipo de punto monitoreo} & Tipo de lugar donde se vendió: supermercado, feria libre, carnicería, panadería, mercado, etc. & \texttt{Carnicería} \\
+\rowcolor{gristabla}\texttt{Grupo} & Familia del producto (frutas, hortalizas, carne bovina, lácteos, pan...). & \texttt{Carne bovina} \\
+\texttt{Producto} & Nombre del producto (257 productos distintos). & \texttt{Abastero} \\
+\rowcolor{gristabla}\texttt{Unidad} & Unidad en que se expresa el precio (\texttt{\$/\allowbreak{}kilo}, \texttt{\$/\allowbreak{}unidad}, \texttt{\$/\allowbreak{}litro}...). Hay que mirarla antes de comparar precios. & \texttt{\$/\allowbreak{}kilo} \\
+\texttt{Precio minimo} & Precio más bajo observado de ese producto, lugar y semana, en pesos. Ya es un número entero. & \texttt{8998} \\
+\rowcolor{gristabla}\texttt{Precio maximo} & Precio más alto observado, en pesos. Ya es un número entero. & \texttt{10999} \\
+\texttt{Precio promedio} & Precio promedio observado, en pesos. Viene como \textbf{texto} con coma decimal (\texttt{9998,500000}). & \texttt{9998,500000} \\
+\end{xltabular}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{Precio promedio} es \textbf{texto} con coma decimal (\texttt{9998,500000}), no un número: hay que convertirlo antes de calcular. \texttt{Precio minimo} y \texttt{Precio maximo} sí son números.
+\item Los precios están en distintas \textbf{unidades} (\texttt{\$/\allowbreak{}kilo}, \texttt{\$/\allowbreak{}unidad}, \texttt{\$/\allowbreak{}bandeja 12 unidades}...): no se pueden comparar sin mirar \texttt{Unidad}.
+\item En los nombres de columna \textbf{no hay tildes} (\texttt{Anio}, \texttt{Region}, \texttt{minimo}).
+\item Esta versión trae \textbf{solo la Región Metropolitana}.
+\end{itemize}
+\end{alertabox}
+\vspace{4pt}
+{\small \emph{Nota:} ODEPA tiene además \texttt{08b} (precios mayoristas) y \texttt{08c} (catastro frutícola), que \textbf{no} están en el menú de este proyecto.}
+
+
+\newpage
+\phantomsection\label{base9a}\hypertarget{base9a}{}
+\pdfbookmark[1]{9a. Estadísticas hospitalarias 2024 --- mensual}{bm9a}
+\section*{9a. Estadísticas hospitalarias 2024 --- mensual}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & un establecimiento, en un nivel de cuidado, en un mes \\\textbf{Tamaño:} & 13.668 filas y 21 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros) \\\textbf{Fuente:} & Ministerio de Salud (DEIS), estadísticas hospitalarias 2024. No trae diccionario en la base: las definiciones de cada indicador son las habituales en estadística hospitalaria. \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{Cod\_\allowbreak{}SS} & Código del Servicio de Salud al que pertenece el establecimiento. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{Servicio\_\allowbreak{}Salud} & Nombre del Servicio de Salud (Arica y Parinacota, Tarapacá, ...). Hay 29 distintos. & \texttt{Arica y Parinacota} \\
+\texttt{Cod\_\allowbreak{}Estab} & Código del establecimiento (hospital). & \texttt{101100} \\
+\rowcolor{gristabla}\texttt{Establecimiento} & Nombre del hospital. Hay 193 distintos. & \texttt{Hospital Regional Dr. Juan Noé Cre…} \\
+\texttt{Cod\_\allowbreak{}Nivel} & Código del nivel de cuidado. & \texttt{401} \\
+\rowcolor{gristabla}\texttt{Nivel\_\allowbreak{}Cuidado} & Tipo de unidad del hospital (adulto, pediátrica, neonatología...). Hay 28 distintos. & \texttt{Área Médica Adulto Cuidados Básico…} \\
+\texttt{Mes} & Mes al que corresponde la fila, escrito con su nombre (Enero, Febrero...). & \texttt{Enero} \\
+\rowcolor{gristabla}\texttt{Mes\_\allowbreak{}num} & Número del mes: 1 es Enero y 12 es Diciembre. & \texttt{1} \\
+\texttt{Dias\_\allowbreak{}mes} & Cantidad de días que tuvo ese mes. 2024 fue bisiesto: Febrero tiene 29. & \texttt{31} \\
+\rowcolor{gristabla}\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & Suma de las camas que estuvieron disponibles cada día del período. & \texttt{465} \\
+\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Ocupados} & Suma de las camas ocupadas cada día del período. & \texttt{445} \\
+\rowcolor{gristabla}\texttt{Dias\_\allowbreak{}de\_\allowbreak{}Estada} & Total de días que estuvieron hospitalizados los pacientes que salieron del hospital. & \texttt{511} \\
+\texttt{Egresos\_\allowbreak{}Fallecidos} & Pacientes que salieron porque fallecieron. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{Indice\_\allowbreak{}Ocupacional} & Porcentaje de camas ocupadas sobre las disponibles. Va con \textbf{coma} decimal (texto). & \texttt{95,7} \\
+\texttt{Indice\_\allowbreak{}de\_\allowbreak{}Rotacion} & Cuántos pacientes pasan en promedio por una misma cama en el período. Va con \textbf{coma} decimal (texto). & \texttt{7,6} \\
+\rowcolor{gristabla}\texttt{Letalidad} & Porcentaje de los egresos que fueron fallecimientos. Va con \textbf{coma} decimal (texto). & \texttt{0,88} \\
+\texttt{Numero\_\allowbreak{}de\_\allowbreak{}Egresos} & Pacientes que salieron del hospital (alta, fallecimiento o traslado). & \texttt{97} \\
+\rowcolor{gristabla}\texttt{Promedio\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & Promedio de camas disponibles en el período. Va con \textbf{coma} decimal (texto). & \texttt{15} \\
+\texttt{Promedio\_\allowbreak{}Dias\_\allowbreak{}de\_\allowbreak{}Estada} & Días que dura en promedio una hospitalización. Va con \textbf{coma} decimal (texto). & \texttt{4,48} \\
+\rowcolor{gristabla}\texttt{Traslados} & Pacientes trasladados a otro establecimiento. & \texttt{17} \\
+\texttt{Egresos\_\allowbreak{}por\_\allowbreak{}dia} & Egresos del mes divididos por los días del mes (\texttt{Numero\_\allowbreak{}de\_\allowbreak{}Egresos} dividido por \texttt{Dias\_\allowbreak{}mes}). Ya viene calculada, como número con punto decimal. & \texttt{3.129} \\
+\end{xltabular}
+
+\begin{formulabox}[Qué significa cada indicador (definición habitual)]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item \texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Disponibles}: suma de las camas que estuvieron disponibles cada día.
+\item \texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Ocupados}: suma de las camas ocupadas cada día.
+\item \texttt{Dias\_\allowbreak{}de\_\allowbreak{}Estada}: total de días que estuvieron hospitalizados los pacientes que salieron del hospital.
+\item \texttt{Promedio\_\allowbreak{}Cama\_\allowbreak{}Disponibles}: promedio de camas disponibles en el período.
+\item \texttt{Numero\_\allowbreak{}de\_\allowbreak{}Egresos}: pacientes que salieron del hospital (alta, fallecimiento o traslado).
+\item \texttt{Egresos\_\allowbreak{}Fallecidos}: pacientes que salieron porque fallecieron.
+\item \texttt{Indice\_\allowbreak{}Ocupacional}: porcentaje de camas ocupadas sobre las disponibles.
+\item \texttt{Promedio\_\allowbreak{}Dias\_\allowbreak{}de\_\allowbreak{}Estada}: días que dura en promedio una hospitalización.
+\item \texttt{Indice\_\allowbreak{}de\_\allowbreak{}Rotacion}: cuántos pacientes pasan en promedio por una misma cama en el período.
+\item \texttt{Letalidad}: porcentaje de los egresos que fueron fallecimientos.
+\item \texttt{Traslados}: pacientes trasladados a otro establecimiento.
+\end{itemize}
+\end{formulabox}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Los 5 indicadores con decimales (\texttt{Indice\_\allowbreak{}Ocupacional}, \texttt{Indice\_\allowbreak{}de\_\allowbreak{}Rotacion}, \texttt{Letalidad}, \texttt{Promedio\_\allowbreak{}Cama\_\allowbreak{}Disponibles} y \texttt{Promedio\_\allowbreak{}Dias\_\allowbreak{}de\_\allowbreak{}Estada}) se escriben con \textbf{coma decimal} (\texttt{95,7}) y pandas los lee como texto. Los conteos ya son números, y \texttt{Egresos\_\allowbreak{}por\_\allowbreak{}dia} también.
+\item Ya no hay filas de total (``Datos País'', ``Datos Servicio Salud'') ni columna \texttt{Glosa}: cada indicador es una columna y cada fila es un establecimiento, en un nivel de cuidado, en un mes. Nada se cuenta doble.
+\item Un mismo establecimiento aparece en varios niveles de cuidado y en 12 meses. Para el total del año hay que sumar los meses (o usar la tabla anual, 9b); los índices, en cambio, \textbf{no se suman}.
+\item Hay dos archivos: este (\texttt{09a}, mes a mes) y el anual (\texttt{09b}, ver más abajo). Elige uno según si quieres ver la evolución por mes o comparar hospitales.
+\end{itemize}
+\end{alertabox}
+
+\newpage
+\phantomsection\label{base9b}\hypertarget{base9b}{}
+\pdfbookmark[1]{9b. Estadísticas hospitalarias 2024 --- anual}{bm9b}
+\section*{9b. Estadísticas hospitalarias 2024 --- anual}
+\vspace{-6pt}\hfill{\small\hyperlink{indice}{\textcolor{azuloscuro}{\underline{Volver al índice}}}}\par\vspace{2pt}
+\begin{tabularx}{\linewidth}{@{}l X@{}}\textbf{Cada fila es:} & un establecimiento, en un nivel de cuidado, con el acumulado del año \\\textbf{Tamaño:} & 1.139 filas y 17 columnas \\\textbf{Cómo abrirla:} & \texttt{pd.read\_\allowbreak{}csv(link)} (sin parámetros) \\\textbf{Fuente:} & Ministerio de Salud (DEIS), estadísticas hospitalarias 2024. No trae diccionario en la base: las definiciones de cada indicador son las habituales en estadística hospitalaria. \\\end{tabularx}
+\vspace{6pt}
+\begin{xltabular}{\linewidth}{@{}p{4.5cm} >{\raggedright\arraybackslash}X p{3.4cm}@{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{Qué significa} & \hdr{Ejemplo de valor} \\
+\endhead
+\texttt{Cod\_\allowbreak{}SS} & Código del Servicio de Salud al que pertenece el establecimiento. & \texttt{1} \\
+\rowcolor{gristabla}\texttt{Servicio\_\allowbreak{}Salud} & Nombre del Servicio de Salud (Arica y Parinacota, Tarapacá, ...). Hay 29 distintos. & \texttt{Arica y Parinacota} \\
+\texttt{Cod\_\allowbreak{}Estab} & Código del establecimiento (hospital). & \texttt{101100} \\
+\rowcolor{gristabla}\texttt{Establecimiento} & Nombre del hospital. Hay 193 distintos. & \texttt{Hospital Regional Dr. Juan Noé Cre…} \\
+\texttt{Cod\_\allowbreak{}Nivel} & Código del nivel de cuidado. & \texttt{401} \\
+\rowcolor{gristabla}\texttt{Nivel\_\allowbreak{}Cuidado} & Tipo de unidad del hospital (adulto, pediátrica, neonatología...). Hay 28 distintos. & \texttt{Área Médica Adulto Cuidados Básico…} \\
+\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & Suma de las camas que estuvieron disponibles cada día del período. & \texttt{5368} \\
+\rowcolor{gristabla}\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Ocupados} & Suma de las camas ocupadas cada día del período. & \texttt{2019} \\
+\texttt{Dias\_\allowbreak{}de\_\allowbreak{}Estada} & Total de días que estuvieron hospitalizados los pacientes que salieron del hospital. & \texttt{2644} \\
+\rowcolor{gristabla}\texttt{Egresos\_\allowbreak{}Fallecidos} & Pacientes que salieron porque fallecieron. & \texttt{3} \\
+\texttt{Indice\_\allowbreak{}Ocupacional} & Porcentaje de camas ocupadas sobre las disponibles. Va con \textbf{coma} decimal (texto). & \texttt{37,61} \\
+\rowcolor{gristabla}\texttt{Indice\_\allowbreak{}de\_\allowbreak{}Rotacion} & Cuántos pacientes pasan en promedio por una misma cama en el período. Va con \textbf{coma} decimal (texto). & \texttt{48,41} \\
+\texttt{Letalidad} & Porcentaje de los egresos que fueron fallecimientos. Va con \textbf{coma} decimal (texto). & \texttt{0,42} \\
+\rowcolor{gristabla}\texttt{Numero\_\allowbreak{}de\_\allowbreak{}Egresos} & Pacientes que salieron del hospital (alta, fallecimiento o traslado). & \texttt{600} \\
+\texttt{Promedio\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & Promedio de camas disponibles en el período. Va con \textbf{coma} decimal (texto). & \texttt{14,67} \\
+\rowcolor{gristabla}\texttt{Promedio\_\allowbreak{}Dias\_\allowbreak{}de\_\allowbreak{}Estada} & Días que dura en promedio una hospitalización. Va con \textbf{coma} decimal (texto). & \texttt{3,72} \\
+\texttt{Traslados} & Pacientes trasladados a otro establecimiento. & \texttt{110} \\
+\end{xltabular}
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.1em,itemsep=2pt,topsep=2pt]
+\item Es la misma información que \texttt{09a}, pero con el \textbf{año completo} en cada fila: no hay meses. Las definiciones de los indicadores son las de la sección 9a.
+\item Los 5 indicadores con decimales también se escriben con \textbf{coma decimal} y pandas los lee como texto; los conteos ya son números.
+\item Los índices (ocupacional, rotación, letalidad) son el valor del año completo, no una suma de los meses.
+\end{itemize}
+\end{alertabox}
+
+
+\end{document}
