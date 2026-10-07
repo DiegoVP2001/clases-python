@@ -1,6 +1,6 @@
 # Datos compartidos v2 — bases para N°37 en adelante (Calendario v3)
 
-Versión de las bases del menú preparada para las clases N°37, 37b, 38 y 38b. **La Clase 36b usa los links de `../datos-compartidos/` (versión 1), que no se tocó** — si un estudiante ya tiene esos links, siguen funcionando.
+Versión de las bases del menú preparada para las clases N°37, 37b, 38 y 38b. **Desde el 2026-10-07 la Clase 36b también usa estas bases** (el cuaderno, el Solucionario y el Diccionario de Columnas se alinearon con v2). La carpeta `../datos-compartidos/` (versión 1) no se tocó y queda sin uso: si un estudiante tiene esos links, siguen funcionando.
 
 Todas se abren igual, **sin parámetros** (UTF-8, coma, encabezado en la primera fila):
 
@@ -43,7 +43,7 @@ La columna **Receta** es la línea de texto que va antes de `pd.to_numeric(..., 
 - **El maquillaje solo cambia el formato de escritura, nunca un valor.** Está verificado: la receta recupera exactamente los números originales.
 - **Matrícula quedó sin problema de tipo a propósito.** Con punto de miles en celdas sueltas (`1.110`) pandas lee el decimal `1.11` sin avisar, y en una base real que se presenta ante dirección eso es peligroso. (En `guaguas`, la trampa existe y se resuelve con `dtype`, que es el Concepto 1 de N°37.)
 - `Ingreso_punto_medio` usa el punto medio de cada rango; `Sobre $3 millones 500 mil` usa 3.500.000 (un solo extremo) y `s/i` queda vacío.
-- `Diccionario de Columnas.pdf` (36b) **no calza** con SIES (columna nueva y renombrada), DEMRE y CONASET (columna nueva), Subvenciones (sin `RUT_SOSTENEDOR`) ni Hospitalarias (reestructurada).
+- `Diccionario de Columnas.pdf` (36b) se rehízo para v2 el 2026-10-07: columnas, tamaños y ejemplos de valor salen de estos mismos CSV y se verificaron uno a uno.
 - ODEPA quedó recortada a la RM (las 3 tablas). SIMCE no tiene las glosas de `cod_depe1`/`cod_grupo` traducidas.
 
 ## Cómo se regenera y verifica
