@@ -1,0 +1,546 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[10pt]{article}
+\usepackage[a4paper,landscape,left=1.5cm,right=1.5cm,top=2.1cm,bottom=1.6cm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[most]{tcolorbox}
+\usepackage{xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{ragged2e}
+
+\definecolor{azuloscuro}{HTML}{1F4E79}
+\definecolor{azulclaro}{HTML}{DCE9F5}
+\definecolor{rojoalerta}{HTML}{B3261E}
+\definecolor{gris}{HTML}{777777}
+
+\newtcolorbox{alertabox}[1][]{enhanced, colback=white, colframe=rojoalerta, coltitle=white, fonttitle=\bfseries\small,
+  title={#1}, boxrule=0.8pt, arc=2pt, left=6pt, right=6pt, top=3pt, bottom=3pt, breakable}
+\newtcolorbox{guiabox}[1][]{enhanced, colback=white, colframe=azuloscuro, coltitle=white, fonttitle=\bfseries\small,
+  title={#1}, boxrule=0.8pt, arc=2pt, left=6pt, right=6pt, top=3pt, bottom=3pt, breakable}
+
+\titleformat{\section}{\Large\bfseries\color{azuloscuro}}{}{0pt}{}[\vspace{-4pt}\textcolor{azuloscuro}{\rule{\linewidth}{0.8pt}}]
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Clase 37b --- Muestra de las bases}
+\fancyhead[R]{\small 4.º medio --- Proyecto de cierre}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{4pt}
+\setlength{\LTpost}{4pt}
+\newcommand{\hdr}[1]{\textbf{\color{white}#1}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\begin{document}
+\sloppy
+
+\begin{center}
+{\Huge\bfseries\color{azuloscuro} Muestra de las bases\par}
+\vspace{4pt}
+{\large Las bases del proyecto de cierre, tal como vienen escritas en el archivo\par}
+\vspace{2pt}
+{\small Clase 37b --- Mi tabla lista y mi pregunta\par}
+\end{center}
+
+\vspace{4pt}
+Cada base del menú tiene su propia página (o más): \textbf{todas sus columnas} y \textbf{6 filas reales}, elegidas para que veas los formatos que hay en ella. Cada fila de la muestra es una columna del PDF (\textit{fila 1} a \textit{fila 6}); cada fila de este PDF es una columna de tu base.
+
+\begin{guiabox}[Qué mirar en cada columna que parezca un número]
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item \texttt{607,5} $\to$ la \textbf{coma} es el decimal.
+\item \texttt{0.65} $\to$ el \textbf{punto} es el decimal.
+\item \texttt{2.908} $\to$ el punto \textbf{separa miles}, si el valor tiene sentido como cantidad grande.
+\item \texttt{s/i} o \textit{(vacío)} $\to$ dato que falta.
+\end{itemize}
+\end{guiabox}
+
+\begin{alertabox}[Ojo]
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item Los valores están copiados \textbf{tal cual} del archivo CSV: nada está redondeado ni cambiado.
+\item Algunas columnas ya son números para Python aunque aquí se vean con punto (por ejemplo \texttt{MARGEN\_P25\_MENOS\_ULTIMO} en DEMRE y \texttt{Egresos\_por\_dia} en Hospitalarias mensual): llevan una nota al final de su página.
+\item En tu cuaderno compararás lo que ves aquí con lo que muestra \texttt{.dtype} en Python.
+\end{itemize}
+\end{alertabox}
+
+\vspace{4pt}
+\begin{guiabox}[Índice]
+\begin{tabular}{@{}r l@{}}
+1 & \hyperlink{base1}{\textcolor{azuloscuro}{\underline{Empleabilidad e ingresos por carrera (SIES)}}} \\
+2 & \hyperlink{base2}{\textcolor{azuloscuro}{\underline{Puntajes de corte por carrera — Admisión 2026 (DEMRE)}}} \\
+3 & \hyperlink{base3}{\textcolor{azuloscuro}{\underline{SIMCE 2° medio 2025, por establecimiento}}} \\
+4 & \hyperlink{base4}{\textcolor{azuloscuro}{\underline{SIMCE 2° medio 2025, por comuna}}} \\
+5 & \hyperlink{base5}{\textcolor{azuloscuro}{\underline{Matrícula de estudiantes por establecimiento 2025 (Mineduc)}}} \\
+6 & \hyperlink{base6}{\textcolor{azuloscuro}{\underline{Subvenciones a establecimientos 2025}}} \\
+7 & \hyperlink{base7}{\textcolor{azuloscuro}{\underline{Siniestros de tránsito 2020-{}2025 (CONASET), Región Metropolitana}}} \\
+8 & \hyperlink{base8}{\textcolor{azuloscuro}{\underline{Precios de alimentos al consumidor 2025 (ODEPA), Región Metropolitana}}} \\
+9a & \hyperlink{base9a}{\textcolor{azuloscuro}{\underline{Estadísticas hospitalarias 2024 — mensual}}} \\
+9b & \hyperlink{base9b}{\textcolor{azuloscuro}{\underline{Estadísticas hospitalarias 2024 — anual}}} \\
+\end{tabular}
+\end{guiabox}
+
+\clearpage
+\hypertarget{base1}{}\phantomsection\pdfbookmark[1]{Base 1}{bm1}
+\section{1 · Empleabilidad e ingresos por carrera (SIES)}
+\small Archivo \texttt{01\_sies.csv} · 1.690 filas × 14 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{Código} & 176 & 87 & 76 & 50 & 94 & 93 \\
+\texttt{Tipo de institución} & Insitutos Profesionales & Universidades & Universidades & Universidades & Universidades & Universidades \\
+\rowcolor{azulclaro}\texttt{Nombre de institución} & IP DEL VALLE CENTRAL & UNIVERSIDAD DE CONCEPCION & UNIVERSIDAD DE LA FRONTERA & UNIVERSIDAD BERNARDO O\textquotesingle{}HIGGINS & UNIVERSIDAD CATOLICA DE TEMUCO & UNIVERSIDAD CATOLICA DE LA SANTISIMA CONCEPCION \\
+\texttt{Acreditación institución (al 31 de octubre 2025)} & No & 7 años & 5 años & 5 años & 5 años & 5 años \\
+\rowcolor{azulclaro}\texttt{Área} & Ciencias Sociales & Ciencias Sociales & Salud & Salud & Educación & Ciencias Sociales \\
+\texttt{Nombre carrera genérica} & Técnico en Servicio Social & Geografía & Medicina & Obstetricia y Puericultura & Pedagogía en Educación Diferencial & Trabajo Social \\
+\rowcolor{azulclaro}\texttt{Nombre carrera (del título)} & Técnico de Nivel Superior en Trabajo Social & Geografía & Medicina & Obstetricia y Puericultura & Pedagogía en Educación Diferencial & Trabajo Social \\
+\texttt{\% titulados con continuidad de estudios} & 0.6366843\allowbreak{}0335097 & 0.1162790\allowbreak{}697674418 & 0.1316872\allowbreak{}427983539 & 0.0050890\allowbreak{}58524173 & 0.0148148\allowbreak{}148148148 & 0.0177777\allowbreak{}777777777 \\
+\rowcolor{azulclaro}\texttt{Retención 1er año} & s/i & 0.8076923\allowbreak{}076923077 & 0.9846153\allowbreak{}846153847 & 1 & 0.875 & 0.8414634\allowbreak{}146341463 \\
+\texttt{Duración Real (semestres)} & s/i & 15.147058\allowbreak{}823529402 & 15 & 11.568093\allowbreak{}385214 & 10.425 & 11.054545\allowbreak{}4545455 \\
+\rowcolor{azulclaro}\texttt{Empleabilidad 1er año} & 0.6875 & 0.7076923\allowbreak{}076923077 & 0.9090909\allowbreak{}090909092 & 0.4968152\allowbreak{}866242038 & 0.9140625 & 0.4340659\allowbreak{}340659341 \\
+\texttt{Empleabilidad 2° año} & 0.7323943\allowbreak{}661971831 & 0.7794117\allowbreak{}647058824 & 0.8562091\allowbreak{}503267973 & 0.7570093\allowbreak{}457943925 & 0.9407114\allowbreak{}624505928 & 0.6216216\allowbreak{}216216216 \\
+\rowcolor{azulclaro}\texttt{Ingreso Promedio al 4° año} & De \$900 mil a \$1 millón & s/i & Sobre \$3 millones 500 mil & s/i & De \$1 millón 200 mil a \$1 millón 300 mil & De \$900 mil a \$1 millón \\
+\texttt{Ingreso\_\allowbreak{}punto\_\allowbreak{}medio} & 950000 & \textit{\color{gris}(vacío)} & 3500000 & \textit{\color{gris}(vacío)} & 1250000 & 950000 \\
+\end{xltabular}
+\normalsize
+
+\clearpage
+\hypertarget{base2}{}\phantomsection\pdfbookmark[1]{Base 2}{bm2}
+\section{2 · Puntajes de corte por carrera — Admisión 2026 (DEMRE)}
+\small Archivo \texttt{02\_demre.csv} · 2.150 filas × 19 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{ANYO\_\allowbreak{}PROCESO} & 2026 & 2026 & 2026 & 2026 & 2026 & 2026 \\
+\texttt{CODIGO\_\allowbreak{}CARRERA} & 21054 & 35019 & 35085 & 43037 & 49215 & 52020 \\
+\rowcolor{azulclaro}\texttt{NOMBRE\_\allowbreak{}CARRERA} & INGENIERIA EN ALIMENTOS & PEDAGOGIA EN INGLES & INGENIERÍA MATEMÁTICA & MARKETING Y PUBLICIDAD & PEDAGOGÍA EN EDUCACIÓN FÍSICA & DANZA \\
+\texttt{NOMBRE\_\allowbreak{}UNIVERSIDAD} & UNIVERSIDAD TECNOLOGICA METROPOLITANA & UNIVERSIDAD CATOLICA DEL MAULE & UNIVERSIDAD CATOLICA DEL MAULE & UNIVERSIDAD DE LOS ANDES & UNIVERSIDAD AUTONOMA DE CHILE & UNIVERSIDAD ACADEMIA DE HUMANISMO CRISTIANO \\
+\rowcolor{azulclaro}\texttt{AREA\_\allowbreak{}CONOCIMIENTO\_\allowbreak{}SIES} & TECNOLOGÍA & EDUCACIÓN & CIENCIAS BÁSICAS & ADMINISTRACIÓN Y COMERCIO & EDUCACIÓN & ARTE Y ARQUITECTURA \\
+\texttt{VACANTES\_\allowbreak{}REG} & 20 & 85 & 25 & 40 & 45 & 40 \\
+\rowcolor{azulclaro}\texttt{NUM\_\allowbreak{}SELEC\_\allowbreak{}REG} & 1 & 95 & 22 & 40 & 65 & 0 \\
+\texttt{COMPLETA\_\allowbreak{}VACANTES\_\allowbreak{}REG} & 0 & 1 & 0 & 1 & 1 & 0 \\
+\rowcolor{azulclaro}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}ULTIMO\_\allowbreak{}SELEC} & 674 & 634 & 533,5 & 606 & 568 & \textit{\color{gris}(vacío)} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}SD} & \textit{\color{gris}(vacío)} & 63,11 & 112 & 64,63 & 54,98 & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}MIN} & 674 & 546,5 & 533,5 & 606 & 504 & \textit{\color{gris}(vacío)} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P10} & 674 & 566,9 & 591,5 & 662,1 & 555,9 & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P25} & 674 & 594,25 & 672,75 & 687,25 & 575,5 & \textit{\color{gris}(vacío)} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}PROM} & 674 & 645,74 & 755,64 & 733,42 & 617,42 & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}MED} & 674 & 639,5 & 768,25 & 726 & 607,5 & \textit{\color{gris}(vacío)} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P75} & 674 & 691,75 & 842,25 & 774,5 & 648,5 & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}P90} & 674 & 728,1 & 899,45 & 818,15 & 690,3 & \textit{\color{gris}(vacío)} \\
+\texttt{PROM\_\allowbreak{}OBLIGATORIAS\_\allowbreak{}MAX} & 674 & 832,5 & 939 & 870,5 & 758,5 & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{MARGEN\_\allowbreak{}P25\_\allowbreak{}MENOS\_\allowbreak{}ULTIMO} & 0.0 & -{}39.75 & 139.25 & 81.25 & 7.5 & \textit{\color{gris}(vacío)} \\
+\end{xltabular}
+\normalsize
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item \texttt{MARGEN\_\allowbreak{}P25\_\allowbreak{}MENOS\_\allowbreak{}ULTIMO}: El punto es decimal (100.75 es cien coma setenta y cinco) y en pandas es un número (float64): no hay nada que limpiar.
+\end{itemize}
+\end{alertabox}
+
+\clearpage
+\hypertarget{base3}{}\phantomsection\pdfbookmark[1]{Base 3}{bm3}
+\section{3 · SIMCE 2° medio 2025, por establecimiento}
+\small Archivo \texttt{03\_simce\_establecimiento.csv} · 3.002 filas × 42 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{rbd} & 13125 & 4664 & 9035 & 5131 & 26134 & 17793 \\
+\texttt{dvrbd} & 3 & 7 & 2 & 4 & 3 & 8 \\
+\rowcolor{azulclaro}\texttt{nom\_\allowbreak{}rbd} & SCUOLA ITALIANA GIUSSEPPE VERDI & COLEGIO SANTA EUFRASIA & COLEGIO EL CARMEN TERESIANO & LICEO HOMERO VIGUERAS & COLEGIO QUIMAY & COLEGIO CONCEPCION DE SAN CARLOS \\
+\texttt{cod\_\allowbreak{}reg\_\allowbreak{}rbd} & 3 & 8 & 13 & 8 & 13 & 16 \\
+\rowcolor{azulclaro}\texttt{nom\_\allowbreak{}reg\_\allowbreak{}rbd} & DE ATACAMA & DEL BIOBÍO & METROPOLITANA DE SANTIAGO & DEL BIOBÍO & METROPOLITANA DE SANTIAGO & DE ÑUBLE \\
+\texttt{cod\_\allowbreak{}pro\_\allowbreak{}rbd} & 31 & 81 & 131 & 82 & 131 & 163 \\
+\rowcolor{azulclaro}\texttt{nom\_\allowbreak{}pro\_\allowbreak{}rbd} & COPIAPÓ & CONCEPCIÓN & SANTIAGO & ARAUCO & SANTIAGO & PUNILLA \\
+\texttt{cod\_\allowbreak{}com\_\allowbreak{}rbd} & 3101 & 8101 & 13113 & 8203 & 13114 & 16301 \\
+\rowcolor{azulclaro}\texttt{nom\_\allowbreak{}com\_\allowbreak{}rbd} & COPIAPÓ & CONCEPCIÓN & LA REINA & CAÑETE & LAS CONDES & SAN CARLOS \\
+\texttt{cod\_\allowbreak{}deprov\_\allowbreak{}rbd} & 31 & 83 & 133 & 84 & 133 & 161 \\
+\rowcolor{azulclaro}\texttt{nom\_\allowbreak{}deprov\_\allowbreak{}rbd} & Copiapo -{} Chanaral & Concepcion & Oriente & Arauco & Oriente & Diguillín \\
+\texttt{cod\_\allowbreak{}depe1} & 4 & 3 & 4 & 2 & 4 & 3 \\
+\rowcolor{azulclaro}\texttt{cod\_\allowbreak{}depe2} & 3 & 2 & 3 & 1 & 3 & 2 \\
+\texttt{cod\_\allowbreak{}grupo} & 5 & 3 & 5 & 1 & 5 & 4 \\
+\rowcolor{azulclaro}\texttt{cod\_\allowbreak{}rural\_\allowbreak{}rbd} & 1 & 1 & 1 & 1 & 1 & 1 \\
+\texttt{nalu\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 49 & 71 & 20 & 18 & 5 & 54 \\
+\rowcolor{azulclaro}\texttt{nalu\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 49 & 72 & 20 & 19 & 5 & 52 \\
+\texttt{prom\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 308 & 249 & 273 & 230 & 233 & 306 \\
+\rowcolor{azulclaro}\texttt{prom\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 341 & 264 & 253 & 227 & 239 & 362 \\
+\texttt{dif\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 8 & 27 & 1 & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & 28 \\
+\rowcolor{azulclaro}\texttt{dif\_\allowbreak{}mate2m\_\allowbreak{}rbd} & -{}6 & 21 & -{}10 & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & 35 \\
+\texttt{difgru\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 20 & -{}7 & -{}15 & 2 & \textit{\color{gris}(vacío)} & 36 \\
+\rowcolor{azulclaro}\texttt{difgru\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 12 & -{}3 & -{}76 & -{}6 & \textit{\color{gris}(vacío)} & 73 \\
+\texttt{sigdif\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 0 & 1 & 0 & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & 1 \\
+\rowcolor{azulclaro}\texttt{sigdif\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 0 & 1 & 0 & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & 1 \\
+\texttt{siggru\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 1 & -{}1 & -{}1 & 0 & \textit{\color{gris}(vacío)} & 1 \\
+\rowcolor{azulclaro}\texttt{siggru\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 1 & 0 & -{}1 & 0 & \textit{\color{gris}(vacío)} & 1 \\
+\texttt{marca\_\allowbreak{}lect2m\_\allowbreak{}rbd} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{marca\_\allowbreak{}mate2m\_\allowbreak{}rbd} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} \\
+\texttt{marcadif\_\allowbreak{}lect2m\_\allowbreak{}rbd} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & 1 & 1 & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{marcadif\_\allowbreak{}mate2m\_\allowbreak{}rbd} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & 1 & 1 & \textit{\color{gris}(vacío)} \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 6,1 & 45,1 & 30 & 77,8 & \textit{\color{gris}(vacío)} & 7,4 \\
+\rowcolor{azulclaro}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 26,5 & 39,4 & 30 & 11,1 & \textit{\color{gris}(vacío)} & 25,9 \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}lect2m\_\allowbreak{}rbd} & 67,3 & 15,5 & 40 & 11,1 & \textit{\color{gris}(vacío)} & 66,7 \\
+\rowcolor{azulclaro}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 6,1 & 38,9 & 45 & 78,9 & \textit{\color{gris}(vacío)} & 1,9 \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 24,5 & 51,4 & 45 & 10,5 & \textit{\color{gris}(vacío)} & 25 \\
+\rowcolor{azulclaro}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}mate2m\_\allowbreak{}rbd} & 69,4 & 9,7 & 10 & 10,5 & \textit{\color{gris}(vacío)} & 73,1 \\
+\texttt{noaplica} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{codigo\_\allowbreak{}bbdd} & v22025 & v22025 & v22025 & v22025 & v22025 & v22025 \\
+\texttt{fecha\_\allowbreak{}bbdd} & 20260622 & 20260622 & 20260622 & 20260622 & 20260622 & 20260622 \\
+\rowcolor{azulclaro}\texttt{grado} & 2m & 2m & 2m & 2m & 2m & 2m \\
+\texttt{agno} & 2025 & 2025 & 2025 & 2025 & 2025 & 2025 \\
+\end{xltabular}
+\normalsize
+
+\clearpage
+\hypertarget{base4}{}\phantomsection\pdfbookmark[1]{Base 4}{bm4}
+\section{4 · SIMCE 2° medio 2025, por comuna}
+\small Archivo \texttt{04\_simce\_comuna.csv} · 346 filas × 24 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{cod\_\allowbreak{}reg} & 5 & 5 & 6 & 7 & 11 & 12 \\
+\texttt{nom\_\allowbreak{}reg} & Región de Valparaíso & Región de Valparaíso & Región del Libertador & Región del Maule & Región de Aysén del G & Región de Magallanes \\
+\rowcolor{azulclaro}\texttt{cod\_\allowbreak{}pro} & 57 & 55 & 61 & 73 & 113 & 122 \\
+\texttt{nom\_\allowbreak{}pro} & San Felipe & Quillota & Cachapoal & Curicó & Capitán Pra & Antártica C \\
+\rowcolor{azulclaro}\texttt{cod\_\allowbreak{}com} & 5704 & 5506 & 6117 & 7301 & 11303 & 12201 \\
+\texttt{nom\_\allowbreak{}com} & Panquehue & Nogales & San Vicente & Curicó & Tortel & Cabo de Hornos \\
+\rowcolor{azulclaro}\texttt{cod\_\allowbreak{}deprov} & 52 & 51 & 61 & 71 & 111 & 121 \\
+\texttt{nom\_\allowbreak{}deprov} & San Felipe -{} Los A & Quillota -{} Petorca & Cachapoal & Curico & Coyhaique & Magallanes \\
+\rowcolor{azulclaro}\texttt{prom\_\allowbreak{}lect2m\_\allowbreak{}com} & 262 & 243 & 250 & 268 & \textit{\color{gris}(vacío)} & 262 \\
+\texttt{prom\_\allowbreak{}mate2m\_\allowbreak{}com} & 298 & 242 & 259 & 283 & \textit{\color{gris}(vacío)} & 294 \\
+\rowcolor{azulclaro}\texttt{dif\_\allowbreak{}lect2m\_\allowbreak{}com} & 9 & 2 & 7 & 5 & \textit{\color{gris}(vacío)} & 6 \\
+\texttt{dif\_\allowbreak{}mate2m\_\allowbreak{}com} & 64 & 4 & 6 & 1 & \textit{\color{gris}(vacío)} & 13 \\
+\rowcolor{azulclaro}\texttt{sigdif\_\allowbreak{}lect2m\_\allowbreak{}com} & 0 & 0 & 1 & 0 & \textit{\color{gris}(vacío)} & 0 \\
+\texttt{sigdif\_\allowbreak{}mate2m\_\allowbreak{}com} & 1 & 0 & 0 & 0 & \textit{\color{gris}(vacío)} & 0 \\
+\rowcolor{azulclaro}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}lect2m\_\allowbreak{}com} & 32 & 54,9 & 47,8 & 35,4 & \textit{\color{gris}(vacío)} & 30 \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}lect2m\_\allowbreak{}com} & 46 & 27,9 & 30,9 & 33,7 & \textit{\color{gris}(vacío)} & 60 \\
+\rowcolor{azulclaro}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}lect2m\_\allowbreak{}com} & 22 & 17,3 & 21,3 & 30,9 & \textit{\color{gris}(vacío)} & 10 \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ins\_\allowbreak{}mate2m\_\allowbreak{}com} & 25,5 & 57,4 & 47,8 & 35,3 & \textit{\color{gris}(vacío)} & 30 \\
+\rowcolor{azulclaro}\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ele\_\allowbreak{}mate2m\_\allowbreak{}com} & 42,6 & 32,9 & 35,2 & 33,5 & \textit{\color{gris}(vacío)} & 25 \\
+\texttt{palu\_\allowbreak{}eda\_\allowbreak{}ade\_\allowbreak{}mate2m\_\allowbreak{}com} & 31,9 & 9,7 & 17 & 31,2 & \textit{\color{gris}(vacío)} & 45 \\
+\rowcolor{azulclaro}\texttt{codigo\_\allowbreak{}bbdd} & v22025 & v22025 & v22025 & v22025 & v22025 & v22025 \\
+\texttt{fecha\_\allowbreak{}bbdd} & 20260622 & 20260622 & 20260622 & 20260622 & 20260622 & 20260622 \\
+\rowcolor{azulclaro}\texttt{grado} & 2m & 2m & 2m & 2m & 2m & 2m \\
+\texttt{agno} & 2025 & 2025 & 2025 & 2025 & 2025 & 2025 \\
+\end{xltabular}
+\normalsize
+
+\clearpage
+\hypertarget{base5}{}\phantomsection\pdfbookmark[1]{Base 5}{bm5}
+\section{5 · Matrícula de estudiantes por establecimiento 2025 (Mineduc)}
+\small Archivo \texttt{05\_matricula.csv} · 16.768 filas × 71 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{AGNO} & 2025 & 2025 & 2025 & 2025 & 2025 & 2025 \\
+\texttt{RBD} & 1424 & 3711 & 4304 & 18237 & 25500 & 26196 \\
+\rowcolor{azulclaro}\texttt{DGV\_\allowbreak{}RBD} & 9 & 7 & 4 & 0 & 9 & 3 \\
+\texttt{NOM\_\allowbreak{}RBD} & COLEGIO MUNICIPAL IRMA SAPIAIN SAPIAIN & COLEGIO DE LA PURISIMA CONCEPCION & ESCUELA LOS LEONES & COLEGIO AMANECER SAN CARLOS & ESCUELA ESPEC.STA. TERESA DE AVILA & ESCUELA BASICA TIERRASOL MONTESSORI \\
+\rowcolor{azulclaro}\texttt{COD\_\allowbreak{}DEPE} & 2 & 3 & 2 & 3 & 3 & 4 \\
+\texttt{COD\_\allowbreak{}DEPE2} & 1 & 2 & 1 & 2 & 2 & 3 \\
+\rowcolor{azulclaro}\texttt{RURAL\_\allowbreak{}RBD} & 0 & 0 & 1 & 0 & 0 & 0 \\
+\texttt{COD\_\allowbreak{}REG\_\allowbreak{}RBD} & 5 & 16 & 8 & 8 & 13 & 13 \\
+\rowcolor{azulclaro}\texttt{NOM\_\allowbreak{}REG\_\allowbreak{}RBD\_\allowbreak{}A} & VALPO & NUBLE & BBIO & BBIO & RM & RM \\
+\texttt{COD\_\allowbreak{}PRO\_\allowbreak{}RBD} & 55 & 161 & 83 & 81 & 131 & 136 \\
+\rowcolor{azulclaro}\texttt{COD\_\allowbreak{}COM\_\allowbreak{}RBD} & 5502 & 16101 & 8303 & 8108 & 13102 & 13603 \\
+\texttt{NOM\_\allowbreak{}COM\_\allowbreak{}RBD} & CALERA & CHILLÁN & CABRERO & SAN PEDRO DE LA PAZ & CERRILLOS & ISLA DE MAIPO \\
+\rowcolor{azulclaro}\texttt{COD\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & 51 & 81 & 82 & 83 & 134 & 135 \\
+\texttt{NOM\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & QUILLOTA & ÑUBLE & BIOBÍO & CONCEPCIÓN & SANTIAGO PONIENTE & TALAGANTE \\
+\rowcolor{azulclaro}\texttt{ESTADO\_\allowbreak{}ESTAB} & 1 & 1 & 1 & 1 & 1 & 2 \\
+\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}1} & 19 & 0 & 0 & 71 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}1} & 10 & 49 & 0 & 79 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}1} & 29 & 49 & 0 & 150 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}2} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}2} & 102 & 0 & 5 & 340 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}2} & 82 & 587 & 2 & 310 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}2} & 184 & 587 & 7 & 650 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}3} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}3} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}3} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}4} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}4} & 0 & 0 & 0 & 0 & 71 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}4} & 0 & 0 & 0 & 0 & 79 & 0 \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}4} & 0 & 0 & 0 & 0 & 150 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}5} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}5} & 0 & 0 & 0 & 180 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}5} & 0 & 298 & 0 & 190 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}5} & 0 & 298 & 0 & 370 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}6} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}6} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}6} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}6} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}7} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}7} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}7} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}8} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}8} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}ENS\_\allowbreak{}8} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}TOT} & 121 & 0 & 5 & 591 & 71 & 0 \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}TOT} & 92 & 934 & 2 & 579 & 79 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}TOT} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}TOTAL} & 213 & 934 & 7 & 1170 & 150 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}CHI} & 142 & 925 & 7 & 1166 & 137 & 0 \\
+\texttt{MAT\_\allowbreak{}EXT} & 71 & 9 & 0 & 4 & 13 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}NAC} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}NO\_\allowbreak{}ETNIA} & 182 & 875 & 6 & 1060 & 128 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}ETNIA} & 31 & 59 & 1 & 110 & 22 & 0 \\
+\texttt{MAT\_\allowbreak{}SI\_\allowbreak{}INT} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}HOM\_\allowbreak{}INT} & 39 & 0 & 0 & 118 & 0 & 0 \\
+\texttt{MAT\_\allowbreak{}MUJ\_\allowbreak{}INT} & 24 & 153 & 0 & 84 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MAT\_\allowbreak{}INT\_\allowbreak{}TOTAL} & 63 & 153 & 0 & 202 & 0 & 0 \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}01} & 2 & 2 & 0 & 6 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}02} & 8 & 16 & 0 & 16 & 0 & 0 \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}03} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}04} & 0 & 0 & 0 & 0 & 10 & 0 \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}05} & 0 & 8 & 0 & 9 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}06} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}07} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}08} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{CUR\_\allowbreak{}SIM\_\allowbreak{}TOT} & 10 & 26 & 0 & 31 & 10 & 0 \\
+\rowcolor{azulclaro}\texttt{CUR\_\allowbreak{}COMB\_\allowbreak{}01} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{CUR\_\allowbreak{}COMB\_\allowbreak{}02} & 0 & 0 & 1 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{CUR\_\allowbreak{}COMB\_\allowbreak{}TOT} & 0 & 0 & 1 & 0 & 0 & 0 \\
+\texttt{SLEP} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & 18 & 21 & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{NOMBRE\_\allowbreak{}SLEP} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & ANDALIÉN COSTA & SANTA CORINA & \textit{\color{gris}(vacío)} \\
+\end{xltabular}
+\normalsize
+
+\clearpage
+\hypertarget{base6}{}\phantomsection\pdfbookmark[1]{Base 6}{bm6}
+\section{6 · Subvenciones a establecimientos 2025}
+\small Archivo \texttt{06\_subvenciones.csv} · 123.361 filas × 44 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{AGNO} & 2025 & 2025 & 2025 & 2025 & 2025 & 2025 \\
+\texttt{RBD} & 2078 & 2355 & 4258 & 6003 & 24330 & 24339 \\
+\rowcolor{azulclaro}\texttt{NOMBRERBD} & COMPLEJO EDUCACIONAL CLARA SOLOVERA & COLEGIO EL SALVADOR & ESCUELA SANTA MARÍA DE LOS ÁNGELES & ESC. PART. STA. ISABEL DE TRAFAMPULLI & FUNDACIÓN PARA EL DESARROLLO & ESC. ESP. DE TRASTORNOS DE LA COMUNICACION AL \\
+\texttt{NOM\_\allowbreak{}SOSTENEDOR} & ILUSTRE MUNICIPALIDAD DE EL QUISCO & FUNDACION EDUCACIONAL COLEGIO EL SALVADOR & CORPORACIÓN EDUCACIONAL SANTA MARÍA DE LOS ANGELES & ENTIDAD INDIVIDUAL EDUCACIONAL JUAN ALEJANDRO ACUÑA VARELA & FUNDACIÓN EDUCACIONAL EX-{}DUCERE & CORPORACION EDUCAMAG \\
+\rowcolor{azulclaro}\texttt{COD\_\allowbreak{}REG\_\allowbreak{}RBD} & 5 & 6 & 8 & 9 & 12 & 12 \\
+\texttt{NOM\_\allowbreak{}REG\_\allowbreak{}RBD\_\allowbreak{}A} & VALPO & LGBO & BBIO & ARAUC & MAG & MAG \\
+\rowcolor{azulclaro}\texttt{COD\_\allowbreak{}PRO\_\allowbreak{}RBD} & 56 & 61 & 83 & 91 & 121 & 121 \\
+\texttt{COD\_\allowbreak{}COM\_\allowbreak{}RBD} & 5604 & 6117 & 8301 & 9103 & 12101 & 12101 \\
+\rowcolor{azulclaro}\texttt{NOM\_\allowbreak{}COM\_\allowbreak{}RBD} & EL QUISCO & SAN VICENTE & LOS ÁNGELES & CUNCO & PUNTA ARENAS & PUNTA ARENAS \\
+\texttt{COD\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & 54 & 61 & 82 & 92 & 121 & 121 \\
+\rowcolor{azulclaro}\texttt{NOM\_\allowbreak{}DEPROV\_\allowbreak{}RBD} & SAN ANTONIO & CACHAPOAL & BIOBÍO & CAUTÍN NORTE & MAGALLANES & MAGALLANES \\
+\texttt{COD\_\allowbreak{}DEPE} & 2 & 3 & 3 & 3 & 3 & 3 \\
+\rowcolor{azulclaro}\texttt{COD\_\allowbreak{}DEPE2} & 1 & 2 & 2 & 2 & 2 & 2 \\
+\texttt{RURAL\_\allowbreak{}RBD} & 0 & 0 & 0 & 1 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MES} & 6 & 1 & 11 & 7 & 7 & 6 \\
+\texttt{MATRICULA} & 789 & 1140 & 348 & 3 & 224 & 177 \\
+\rowcolor{azulclaro}\texttt{ESCOLARIDAD} & 75095237 & 116299544 & 38148994 & 280564 & 16693393 & 33157986 \\
+\texttt{ESCOLARIDAD\_\allowbreak{}PIE} & 13474204 & 19760343 & 10035854 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{INTERNADO} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{PORC\_\allowbreak{}ZONA} & 0 & 0 & 15 & 15 & 70 & 70 \\
+\rowcolor{azulclaro}\texttt{MONTO\_\allowbreak{}ASIG\_\allowbreak{}ZONA} & 0 & 0 & 5.722.350 & 42.085 & 11.685.376 & 23.210.592 \\
+\texttt{DESCUENTO\_\allowbreak{}FICOM} & 0 & 1.364.448 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{APORTE\_\allowbreak{}ESTADO\_\allowbreak{}FICOM} & 0 & 1.254.436 & 0 & 0 & 0 & 0 \\
+\texttt{RURALIDAD} & 0 & 0 & 0 & 308.620 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{PISO\_\allowbreak{}RURAL} & 0 & 0 & 0 & 2.416.744 & 0 & 0 \\
+\texttt{DISCREPANCIA} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{DONACIONAPLICADA} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{REINTEGROS} & 1.798.856 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{RETENCIONES} & 0 & 0 & 0 & 0 & 7.515.725 & 0 \\
+\texttt{MULTAS} & 3.670.198 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{DESEMPEÑO\_\allowbreak{}DIFICIL} & 0 & 0 & 0 & 127.571 & 0 & 0 \\
+\texttt{DESEMPEÑO\_\allowbreak{}DIFICIL\_\allowbreak{}NODOC} & 0 & 0 & 0 & 20.295 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{SUBV\_\allowbreak{}ADICIONAL\_\allowbreak{}ESPECIAL} & 0 & 0 & 0 & 16.844 & 0 & 775.224 \\
+\texttt{SUBV\_\allowbreak{}ASISTENTES\_\allowbreak{}EDUCACION} & 677.414 & 1.079.895 & 415.033 & 5.666 & 309.749 & 416.577 \\
+\rowcolor{azulclaro}\texttt{PROFESOR\_\allowbreak{}ENCARGADO} & 0 & 0 & 0 & 73.785 & 0 & 0 \\
+\texttt{RELIQUIDACION} & 6.611.804 & 0 & 0 & 0 & 0 & 17.681.572 \\
+\rowcolor{azulclaro}\texttt{APOR\_\allowbreak{}GRATUIDAD} & 8.196.152 & 0 & 4.220.107 & 0 & 3.048.040 & 1.356.339 \\
+\texttt{SUB\_\allowbreak{}NORMAL} & 71.887.945 & 117.269.427 & 48.866.601 & 3.292.174 & 24.220.833 & 76.598.290 \\
+\rowcolor{azulclaro}\texttt{SEP\_\allowbreak{}PRIO} & 17.886.023 & 29.106.940 & 14.219.066 & 144.084 & 0 & 0 \\
+\texttt{SEP\_\allowbreak{}PREF} & 3.247.058 & 0 & 1.608.961 & 35.672 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{MANTENIMIENTO} & 0 & 19.455.748 & 0 & 0 & 0 & 0 \\
+\texttt{SNED} & 11.869.104 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{PRORETENCION} & 0 & 0 & 0 & 0 & 4.104.042 & 0 \\
+\texttt{REFORZAMIENTO} & 0 & 0 & 240.057 & 0 & 0 & 0 \\
+\end{xltabular}
+\normalsize
+
+\clearpage
+\hypertarget{base7}{}\phantomsection\pdfbookmark[1]{Base 7}{bm7}
+\section{7 · Siniestros de tránsito 2020-{}2025 (CONASET), Región Metropolitana}
+\small Archivo \texttt{07\_conaset\_rm.csv} · 123.343 filas × 37 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{FID} & 43864 & 283726 & 288585 & 311054 & 318303 & 434283 \\
+\texttt{ID} & 49186 & 1494791 & 1501946 & 1525580 & 1533160 & 1660636 \\
+\rowcolor{azulclaro}\texttt{AÑO} & 2025 & 2022 & 2022 & 2023 & 2023 & 2024 \\
+\texttt{FECHA} & 1754956800000 & 1670371200000 & 1671926400000 & 1681257600000 & 1684713600000 & 1734739200000 \\
+\rowcolor{azulclaro}\texttt{Dia\_\allowbreak{}semana} & Martes & Miércoles & Domingo & Miércoles & Lunes & Sábado \\
+\texttt{Mes} & Agosto & Diciembre & Diciembre & Abril & Mayo & Diciembre \\
+\rowcolor{azulclaro}\texttt{Mes\_\allowbreak{}num} & 8 & 12 & 12 & 4 & 5 & 12 \\
+\texttt{Hora} & 12:50:00 & 13:22:00 & 18:45:00 & 21:00:00 & 8:30:00 & 3:00:00 \\
+\rowcolor{azulclaro}\texttt{Hora\_\allowbreak{}aprox} & 12 & 13 & 18 & 21 & 8 & 3 \\
+\texttt{REGION} & Metropolitana de Santiago & Metropolitana de Santiago & Metropolitana de Santiago & Metropolitana de Santiago & Metropolitana de Santiago & Metropolitana de Santiago \\
+\rowcolor{azulclaro}\texttt{PROVINCIA} & Santiago & Santiago & Santiago & Santiago & Santiago & Talagante \\
+\texttt{COMUNA} & La Cisterna & Quilicura & Quilicura & San Miguel & Ñuñoa & Peñaflor \\
+\rowcolor{azulclaro}\texttt{TIPO\_\allowbreak{}SINIE} & CHOQUE POSTERIOR & COLISION POR ALCANCE & COLISION & COLISION LATERAL & COLISION POR ALCANCE & CHOQUE \\
+\texttt{TIPO\_\allowbreak{}\_\allowbreak{}CONA} & CHOQUE & COLISION & COLISION & COLISION & COLISION & CHOQUE \\
+\rowcolor{azulclaro}\texttt{ZONA} & URBANA & URBANA & URBANA & URBANA & URBANA & URBANA \\
+\texttt{CAUSA\_\allowbreak{}SINI} & CONDUCCION SIN MANTENER DISTANCIA RAZONABLE NI PRUDENTE & CONDUCCION NO ATENTO CONDICIONES TRANSITO MOMENTO & CAUSAS NO DETERMINADAS & ADELANTAMIENTO SIN EL ESPACIO O TIEMPO SUFICIENTE & CONDUCCION SIN MANTENER DISTANCIA RAZONABLE NI PRUDENTE & CONDUCCION EN ESTADO DE EBRIEDAD \\
+\rowcolor{azulclaro}\texttt{CAUSA\_\allowbreak{}NUEV} & IMPRUDENCIA DEL CONDUCTOR & DISTRACCION DEL CONDUCTOR & CAUSAS NO DETERMINADAS & IMPRUDENCIA DEL CONDUCTOR & IMPRUDENCIA DEL CONDUCTOR & ALCOHOL EN CONDUCTOR \\
+\texttt{UBICACION} & TRAMO DE VIA RECTA & CRUCE CON SEMAFORO FUNCIONANDO & OTROS NO CONSIDERADOS & TRAMO DE VIA RECTA & CRUCE CON SEÑAL PARE & TRAMO DE VIA RECTA \\
+\rowcolor{azulclaro}\texttt{Calle\_\allowbreak{}Uno} & AMERICO VESPUCIO & PDTE EDUARDO FREI MONTALVA & AMERICO VESPUCIO & GRAN AVDA JOSE MIGUEL CARRERA & RODRIGO DE ARAYA & PENAFLOR \\
+\texttt{Calle\_\allowbreak{}Dos} & \textit{\color{gris}(vacío)} & LO MARCOLETA & LO ECHEVERS & LO OVALLE & LOS 3 ANTONIOS & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{Número} & 200.0 & 0.0 & 0.0 & 0.0 & 0.0 & 500.0 \\
+\texttt{Ruta} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} & \textit{\color{gris}(vacío)} \\
+\rowcolor{azulclaro}\texttt{Ubicación} & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+\texttt{Dirección} & AMERICO VESPUCIO 200, La Cisterna & LO MARCOLETA \& PDTE EDUARDO FREI MONTALVA, Quilicura & AMERICO VESPUCIO \& LO ECHEVERS, Quilicura & GRAN AVDA JOSE MIGUEL CARRERA \& LO OVALLE, San Miguel & LOS 3 ANTONIOS \& RODRIGO DE ARAYA, Ñuñoa & PENAFLOR 500, Peñaflor \\
+\rowcolor{azulclaro}\texttt{FALLECIDOS} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{TOTAL\_\allowbreak{}LESI} & 2 & 0 & 0 & 0 & 1 & 0 \\
+\rowcolor{azulclaro}\texttt{GRAVES} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{MENOS\_\allowbreak{}GRAV} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{LEVES} & 2 & 0 & 0 & 0 & 1 & 0 \\
+\texttt{Siniestro} & No & No & No & No & No & No \\
+\rowcolor{azulclaro}\texttt{Latitud} & -{}33.53673901 & -{}33.356988 & -{}33.37604637 & -{}33.514674 & -{}33.473971 & -{}33.6145892 \\
+\texttt{longitud} & -{}70.66713845 & -{}70.704866 & -{}70.74825562 & -{}70.658196 & -{}70.604281 & -{}70.9062337 \\
+\rowcolor{azulclaro}\texttt{Zonas\_\allowbreak{}urb\_\allowbreak{}} & Rutas & Urbano & Rutas & Urbano & Urbano & Urbano \\
+\texttt{Atropello} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{azulclaro}\texttt{Bicicleta} & 0 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{Motociclet} & 0 & 0 & 0 & 0 & 1 & 0 \\
+\rowcolor{azulclaro}\texttt{AM} & Gran Santiago & Gran Santiago & Gran Santiago & Gran Santiago & Gran Santiago & Gran Santiago \\
+\end{xltabular}
+\normalsize
+
+\clearpage
+\hypertarget{base8}{}\phantomsection\pdfbookmark[1]{Base 8}{bm8}
+\section{8 · Precios de alimentos al consumidor 2025 (ODEPA), Región Metropolitana}
+\small Archivo \texttt{08a\_odepa\_consumidor.csv} · 67.453 filas × 15 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{Anio} & 2025 & 2025 & 2025 & 2025 & 2025 & 2025 \\
+\texttt{Mes} & 1 & 2 & 3 & 6 & 8 & 12 \\
+\rowcolor{azulclaro}\texttt{Semana} & 3 & 9 & 13 & 25 & 35 & 49 \\
+\texttt{Fecha inicio} & 2025-{}01-{}13 & 2025-{}02-{}24 & 2025-{}03-{}24 & 2025-{}06-{}16 & 2025-{}08-{}25 & 2025-{}12-{}01 \\
+\rowcolor{azulclaro}\texttt{Fecha termino} & 2025-{}01-{}17 & 2025-{}02-{}28 & 2025-{}03-{}28 & 2025-{}06-{}20 & 2025-{}08-{}29 & 2025-{}12-{}05 \\
+\texttt{ID region} & 13 & 13 & 13 & 13 & 13 & 13 \\
+\rowcolor{azulclaro}\texttt{Region} & Región Metropolitana de Santiago & Región Metropolitana de Santiago & Región Metropolitana de Santiago & Región Metropolitana de Santiago & Región Metropolitana de Santiago & Región Metropolitana de Santiago \\
+\texttt{Sector} & Poniente & Sur & Centro & Oriente & Sur & Sur \\
+\rowcolor{azulclaro}\texttt{Tipo de punto monitoreo} & Carnicería & Panadería & Feria libre & Carnicería & Supermercado & Feria libre \\
+\texttt{Grupo} & Carne de Cerdo -{} Ave -{} Cordero & Pan & Hortalizas & Carne de Cerdo -{} Ave -{} Cordero & Carne bovina & Frutas \\
+\rowcolor{azulclaro}\texttt{Producto} & Chuleta (centro) & Hallulla integral & Tomate|Se\allowbreak{}miduro|Se\allowbreak{}gunda & Cerdo Pulpa c/hueso & Asiento & Naranja|Lane Late|Segunda \\
+\texttt{Unidad} & \$/kilo & \$/kilo & \$/kilo & \$/kilo & \$/kilo & \$/kilo \\
+\rowcolor{azulclaro}\texttt{Precio minimo} & 5398 & 1898 & 900 & 4299 & 10990 & 750 \\
+\texttt{Precio maximo} & 5398 & 2800 & 900 & 4299 & 14290 & 800 \\
+\rowcolor{azulclaro}\texttt{Precio promedio} & 5398,000000 & 2349,000000 & 900,000000 & 4299,000000 & 12770,000000 & 783,333333 \\
+\end{xltabular}
+\normalsize
+
+\clearpage
+\hypertarget{base9a}{}\phantomsection\pdfbookmark[1]{Base 9a}{bm9a}
+\section{9a · Estadísticas hospitalarias 2024 — mensual}
+\small Archivo \texttt{09a\_hospitalarias\_mensual.csv} · 13.668 filas × 21 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{Cod\_\allowbreak{}SS} & 5 & 10 & 17 & 17 & 26 & 2 \\
+\texttt{Servicio\_\allowbreak{}Salud} & Coquimbo & Metropolitano Occidente & Ñuble & Ñuble & Magallanes & Tarapacá \\
+\rowcolor{azulclaro}\texttt{Cod\_\allowbreak{}Estab} & 105101 & 110130 & 117102 & 117102 & 126100 & 201319 \\
+\texttt{Establecimiento} & Hospital San Pablo (Coquimbo) & Hospital Adalberto Steeger (Talagante) & Hospital de San Carlos & Hospital de San Carlos & Hospital Clínico de Magallanes Dr. Lautaro Navarro Avaria & Hospital de Alto Hospicio \\
+\rowcolor{azulclaro}\texttt{Cod\_\allowbreak{}Nivel} & 421 & 416 & 403 & 405 & 404 & 407 \\
+\texttt{Nivel\_\allowbreak{}Cuidado} & Área Psiquiatría Infanto-{}a\allowbreak{}dolescent\allowbreak{}e corta estadía & Área Obstetricia & Área Médico-{}Qu\allowbreak{}irúrgico Cuidados Básicos & Área Cuidados Intensivos Adultos & Área Médico-{}Qu\allowbreak{}irúrgico Cuidados Medios & Área Médica Pediátrica Cuidados Básicos \\
+\rowcolor{azulclaro}\texttt{Mes} & Junio & Junio & Marzo & Mayo & Abril & Enero \\
+\texttt{Mes\_\allowbreak{}num} & 6 & 6 & 3 & 5 & 4 & 1 \\
+\rowcolor{azulclaro}\texttt{Dias\_\allowbreak{}mes} & 30 & 30 & 31 & 31 & 30 & 31 \\
+\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & 0 & 420 & 466 & 186 & 866 & 0 \\
+\rowcolor{azulclaro}\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Ocupados} & 0 & 335 & 332 & 146 & 777 & 0 \\
+\texttt{Dias\_\allowbreak{}de\_\allowbreak{}Estada} & 0 & 303 & 309 & 133 & 824 & 0 \\
+\rowcolor{azulclaro}\texttt{Egresos\_\allowbreak{}Fallecidos} & 0 & 0 & 0 & 8 & 3 & 0 \\
+\texttt{Indice\_\allowbreak{}Ocupacional} & 0 & 79,76 & 71,24 & 78,49 & 89,72 & 0 \\
+\rowcolor{azulclaro}\texttt{Indice\_\allowbreak{}de\_\allowbreak{}Rotacion} & 0 & 9,71 & 9,05 & 5 & 2,98 & 0 \\
+\texttt{Letalidad} & 0 & 0 & 0 & 26,67 & 3,49 & 0 \\
+\rowcolor{azulclaro}\texttt{Numero\_\allowbreak{}de\_\allowbreak{}Egresos} & 0 & 135 & 128 & 12 & 54 & 0 \\
+\texttt{Promedio\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & 0 & 14 & 15,03 & 6 & 28,87 & 0 \\
+\rowcolor{azulclaro}\texttt{Promedio\_\allowbreak{}Dias\_\allowbreak{}de\_\allowbreak{}Estada} & 0 & 2,23 & 2,27 & 4,43 & 9,58 & 0 \\
+\texttt{Traslados} & 0 & 1 & 8 & 18 & 32 & 0 \\
+\rowcolor{azulclaro}\texttt{Egresos\_\allowbreak{}por\_\allowbreak{}dia} & 0.0 & 4.5 & 4.129 & 0.387 & 1.8 & 0.0 \\
+\end{xltabular}
+\normalsize
+
+\begin{alertabox}[Ojo con esta base]
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item \texttt{Egresos\_\allowbreak{}por\_\allowbreak{}dia}: 3.129 es tres coma ciento veintinueve egresos por día (Numero\_de\_Egresos ÷ Dias\_mes), no tres mil. En pandas es un número (float64): no hay nada que limpiar.
+\end{itemize}
+\end{alertabox}
+
+\clearpage
+\hypertarget{base9b}{}\phantomsection\pdfbookmark[1]{Base 9b}{bm9b}
+\section{9b · Estadísticas hospitalarias 2024 — anual}
+\small Archivo \texttt{09b\_hospitalarias\_anual.csv} · 1.139 filas × 17 columnas · estas son 6 filas reales del archivo.\normalsize
+
+\footnotesize
+\begin{xltabular}{\linewidth}{@{}p{4.3cm} Y Y Y Y Y Y @{}}
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endfirsthead
+\rowcolor{azuloscuro}\hdr{Columna} & \hdr{fila 1} & \hdr{fila 2} & \hdr{fila 3} & \hdr{fila 4} & \hdr{fila 5} & \hdr{fila 6} \\
+\endhead
+\rowcolor{azulclaro}\texttt{Cod\_\allowbreak{}SS} & 3 & 4 & 7 & 16 & 16 & 25 \\
+\texttt{Servicio\_\allowbreak{}Salud} & Antofagasta & Atacama & Viña del Mar Quillota & Del Maule & Del Maule & Aisén \\
+\rowcolor{azulclaro}\texttt{Cod\_\allowbreak{}Estab} & 103103 & 104100 & 107102 & 116107 & 116109 & 125100 \\
+\texttt{Establecimiento} & Hospital 21 de Mayo (Taltal) & Hospital San José del Carmen (Copiapó) & Hospital de Quilpué & Hospital de Constitución & Hospital Dr. Abel Fuentealba Lagos de San Javier & Hospital Regional (Coihaique) \\
+\rowcolor{azulclaro}\texttt{Cod\_\allowbreak{}Nivel} & 407 & 404 & 406 & 416 & 403 & 330 \\
+\texttt{Nivel\_\allowbreak{}Cuidado} & Área Médica Pediátrica Cuidados Básicos & Área Médico-{}Qu\allowbreak{}irúrgico Cuidados Medios & Área Cuidados Intermedios Adultos & Área Obstetricia & Área Médico-{}Qu\allowbreak{}irúrgico Cuidados Básicos & Area Pensionado \\
+\rowcolor{azulclaro}\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & 732 & 28763 & 4019 & 7320 & 16772 & 0 \\
+\texttt{Dias\_\allowbreak{}Cama\_\allowbreak{}Ocupados} & 114 & 28476 & 3689 & 1045 & 13495 & 0 \\
+\rowcolor{azulclaro}\texttt{Dias\_\allowbreak{}de\_\allowbreak{}Estada} & 108 & 29123 & 3755 & 810 & 13431 & 0 \\
+\texttt{Egresos\_\allowbreak{}Fallecidos} & 0 & 60 & 12 & 1 & 117 & 0 \\
+\rowcolor{azulclaro}\texttt{Indice\_\allowbreak{}Ocupacional} & 15,57 & 99 & 91,79 & 14,28 & 80,46 & 0 \\
+\texttt{Indice\_\allowbreak{}de\_\allowbreak{}Rotacion} & 37 & 79,07 & 55,37 & 16,25 & 51,46 & 0 \\
+\rowcolor{azulclaro}\texttt{Letalidad} & 0 & 0,97 & 1,97 & 0,31 & 4,96 & 0 \\
+\texttt{Numero\_\allowbreak{}de\_\allowbreak{}Egresos} & 74 & 3610 & 162 & 325 & 2299 & 0 \\
+\rowcolor{azulclaro}\texttt{Promedio\_\allowbreak{}Cama\_\allowbreak{}Disponibles} & 2 & 78,59 & 10,98 & 20 & 45,83 & 0 \\
+\texttt{Promedio\_\allowbreak{}Dias\_\allowbreak{}de\_\allowbreak{}Estada} & 1,46 & 4,69 & 6,18 & 2,49 & 5,7 & 0 \\
+\rowcolor{azulclaro}\texttt{Traslados} & 0 & 2604 & 446 & 0 & 59 & 0 \\
+\end{xltabular}
+\normalsize
+
+\end{document}
