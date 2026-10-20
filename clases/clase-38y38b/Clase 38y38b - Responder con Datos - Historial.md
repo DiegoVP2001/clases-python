@@ -66,3 +66,15 @@
 - **Rúbrica (estudiantes e interna):** la nota de prensa se evalúa como noticia estructurada; se quitó el nivel de IA «con registro». Rigen «Nada de IA» (código y todos los textos) y «Libre» (diseño de la presentación). La tabla de IA de la v4 queda como registro en la versión interna.
 
 **Texto de la noticia:** solo se citan el titular, la bajada y la fuente; el desarrollo con expertos no se reproduce en los cuadernos.
+
+## 2026-10-20 (noche, 2) — Un solo flujo de análisis, ejemplos plegados y Texto con preguntas abiertas
+
+**Pedidos de Diego:** que el Texto no pida completar frases sino responder preguntas abiertas (salvo la nota de prensa, cuya celda de respuesta le gusta); unificar las dos preguntas (la primera y la «distinta»), porque pedir dos veces lo mismo queda raro; dejar los ejemplos como ejemplos y **plegados** como las pistas; y premiar la **originalidad** de las preguntas, permitiendo hacer los análisis que quieran copiando y pegando la receta si están bien explicados.
+
+**Qué se hizo**
+- **Código:** los 12 ejemplos van en una sola celda, cada base en un `<details>`. «Mi base» queda en Paso 1 (abrir y mirar), Paso 2 (primer análisis con título `⭐ Análisis 1 · mi pregunta`) y Paso 3 (revisar). Se eliminó el Paso 4 y se agregó «➕ Más análisis (lo que más se premia)», con las reglas del juego.
+- **Texto:** pasa de 8 secciones con frases a **4 secciones con preguntas abiertas + nota de prensa**: 1 contexto, pregunta e hipótesis · 2 conoce tu base · 3 mis análisis (bloque del ⭐ principal con 4 preguntas y bloque opcional de 3, para copiar por cada análisis) · 4 conclusión · 5 nota de prensa (sin cambios de formato, con sus `___`). Se eliminó la sección «pregunta distinta». Bitácora en preguntas.
+- **Solucionario:** modelo reescrito con la estructura nueva. El Análisis 1 es el ejemplo de la galería (entregarlo tal cual vale 0 en originalidad) y el Análisis 2 (bicicletas, columna fuera de las sugeridas) es el original; las cifras salen de los datos.
+- **Rúbricas (estudiantes e interna):** «Conoce su base» = 5 mínimo + 10 originalidad, con tres niveles (10 / 5 / 0); sin tope de análisis pero cada uno con su explicación; cuenta el más original bien explicado; **análisis principal ⭐** (alimenta diapositivas 3-5, nota de prensa y Defensa); corrección acotada al principal y al más original. Mapas de «dónde se corrige» con la nueva numeración.
+
+**Pendiente de confirmar con Diego:** quién decide si una pregunta «cambia la comparación» (propuesta: el corrector, comparándola con el ejemplo de su base).

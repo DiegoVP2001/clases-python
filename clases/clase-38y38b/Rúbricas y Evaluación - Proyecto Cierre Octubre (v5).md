@@ -1,6 +1,6 @@
 # Rúbricas y Evaluación — Proyecto Cierre Octubre (v5)
 
-> **v5 — 2026-10-20 (giro plug-and-play).** Reemplaza a `clases-octubre/Rúbricas y Evaluación - Proyecto Cierre Octubre.md` (v4, 2026-10-19), que queda como registro. Cambios: **§4** «Archivo usable» pasa a **«Conoce su base»** (5 pts por el mínimo + 10 por una pregunta distinta) y se agrega el mapa de dónde se corrige cada criterio en los cuadernos de Código y de Texto; **§6** los errores de la Defensa van en los espacios de la receta y en la receta; **§7** hitos de Proceso con la 37b como **nota de progreso**; **§11** equipos y bases. Las partes no mencionadas (§1-§3, §5, §8, §9) no cambian. Lo marcado **(propuesta)** está por confirmar con Diego. Versión para estudiantes: `Clase 38y38b - Criterios de Evaluación del Proyecto.ipynb`.
+> **v5 — 2026-10-20 (giro plug-and-play).** Reemplaza a `clases-octubre/Rúbricas y Evaluación - Proyecto Cierre Octubre.md` (v4, 2026-10-19), que queda como registro. Cambios: **§4** «Archivo usable» pasa a **«Conoce su base»** (5 pts por el mínimo + 10 por la originalidad de las preguntas) y se agrega el mapa de dónde se corrige cada criterio en los cuadernos de Código y de Texto; **§6** los errores de la Defensa van en los espacios de la receta y en la receta; **§7** hitos de Proceso con la 37b como **nota de progreso**; **§11** equipos y bases. Las partes no mencionadas (§1-§3, §5, §8, §9) no cambian. Lo marcado **(propuesta)** está por confirmar con Diego. Versión para estudiantes: `Clase 38y38b - Criterios de Evaluación del Proyecto.ipynb`.
 
 > **Sesión A del orden de planificación pendiente** (`Proyecto Cierre Octubre - Plan y Pendientes.md` §7, orden 1). Cierra: pesos y rúbrica de las 4 notas, política de IA, logística de la defensa técnica, uso de auto/co/heteroevaluación, y evidencia individual vs. grupal. Sesión del 2026-09-23.
 >
@@ -87,25 +87,30 @@ Los 9 criterios del inventario abierto quedan así:
 | Componente | Pts | Dónde se corrige | Qué se evalúa |
 |---|---|---|---|
 | **Mínimo** | 5 | Texto 2 · Código Paso 1 | Explica qué es una fila de su base, cuántas filas y columnas tiene, y qué columnas usó y con qué rol (🔎 filtrar · 🧺 agrupar · 🔢 resumir). |
-| **Pregunta distinta** | 10 | Texto 6 · Código Paso 4 | Hace una **segunda pregunta**, o una pregunta con una **columna fuera de las 5 sugeridas**, y cuenta qué cambió, qué encontró (con una cifra) y en qué se diferencia de la primera. |
+| **Originalidad de las preguntas** | 10 | Texto 3 (un bloque por análisis) · Código (análisis) | Se mide la pregunta **más original que esté bien explicada**: qué la hace distinta del ejemplo de su base, qué encontró (con una cifra) y su límite. Pueden hacer todos los análisis que quieran copiando y pegando la receta; la cantidad no suma. |
 
-Niveles de **Pregunta distinta** *(propuesta)*:
-- ✅ **10 pts:** segunda pregunta que cambia la comparación (otra columna para agrupar, otro filtro, otro resumen) **o** pregunta con columna fuera de las 5 sugeridas; con cifra y con la diferencia explicada.
-- ⚠️ **5 pts:** hay segunda pregunta pero solo cambia un valor o el `N` sin explicar qué cambió o qué se encontró.
-- ❌ **0 pts:** no hay pregunta distinta, o repite la primera.
+Niveles de **Originalidad** *(propuesta)*:
+- ✅ **10 pts:** la pregunta **cambia la comparación** respecto del ejemplo de su base (otra columna para filtrar, agrupar o resumir, otro tipo de resumen) **o** usa una columna fuera de las 5 sugeridas.
+- ⚠️ **5 pts:** solo cambia un **valor** (otra comuna, otro año) o el `N`.
+- ❌ **0 pts:** es el ejemplo tal cual.
 
-Quien se queda en las 5 columnas sugeridas y hace una sola pregunta cumple el mínimo (5 pts): no se castiga, solo no se premia. **Copiar un ejemplo de la galería sin cambiarlo no cuenta como pregunta propia.**
+**Reglas v5 (2026-10-20):**
+- **Sin tope de análisis:** pueden copiar y pegar la receta las veces que quieran. **Cada análisis debe tener su bloque de preguntas en el Texto (sección 3); un análisis sin explicación no suma.**
+- **Cuenta la calidad, no la cantidad:** los 10 pts se miden en la pregunta más original que esté bien explicada.
+- **Análisis principal (⭐):** cada equipo marca el suyo. De él salen las diapositivas 3 a 5, la nota de prensa y los **3 errores de la Defensa**. Los demás análisis no afectan Evidencia, Límites ni Defensa.
+- **Corrección acotada:** se corrigen el principal y el más original (pueden ser el mismo); los demás se leen sin puntaje.
+- Quien se queda en las 5 columnas sugeridas y en el ejemplo cumple el mínimo (5 pts): no se castiga, solo no se premia. **Los ejemplos de la galería van plegados** en el cuaderno de Código; entregarlos tal cual vale 0 en originalidad.
 
 ### Dónde se corrige cada criterio
 
 | Criterio | Cuaderno de Código | Cuaderno de Texto |
 |---|---|---|
-| Conoce su base | Pasos 1 y 4 | Secciones 2 y 6 |
-| Operación justificada | Paso 2 (receta) | Sección 3 |
-| Evidencia | Paso 2 (gráfico y cifras) | Sección 4 |
-| Narración completa | — | Todo, en orden (secciones 1 a 7) |
-| Límites | Paso 3 | Sección 5 |
-| Nota de prensa | — | Sección 8 |
+| Conoce su base | Paso 1 y análisis | Secciones 2 y 3 |
+| Operación justificada | Paso 2 (receta) | Sección 3 («cómo lo investigamos») |
+| Evidencia | Paso 2 (gráfico y cifras) | Sección 3 («hallazgo») |
+| Narración completa | — | Todo, en orden (secciones 1 a 4) |
+| Límites | Paso 3 | Sección 3 («límites») |
+| Nota de prensa | — | Sección 5 |
 
 **Por qué «Archivo usable» ya no está:** desde la v3 las bases llegan limpias (números ya como números, columnas derivadas ya calculadas), así que limpiar dejó de ser parte del proyecto. Quien limpió por su cuenta en la 37b queda reconocido en la nota de progreso (§7).
 
@@ -155,7 +160,7 @@ Suma: 10 + 25 + 20 + 15 + 20 + 10 = 100.
 
 **Sin código nuevo.** Solo explicar, predecir y corregir código dado.
 
-**v5 — dónde van los 3 errores:** en los **6 espacios** de la receta (columna mal escrita, `VALOR` que deja 0 filas, `RESUMEN` equivocado, `N`) o en la **receta misma** (`ascending` invertido, `head` sin `N`, filtro con `=` en vez de `==`). Los errores más probables y su consecuencia quedan como banco para el corrector *(pendiente de armar, §10)*. En la sección B se predice qué cambia al modificar un espacio (por ejemplo `VALOR = "Maipú"` por `"Providencia"`).
+**v5 — dónde van los 3 errores:** en los **6 espacios** de la receta (columna mal escrita, `VALOR` que deja 0 filas, `RESUMEN` equivocado, `N`) o en la **receta misma** (`ascending` invertido, `head` sin `N`, filtro con `=` en vez de `==`) **de su análisis principal**. Los errores más probables y su consecuencia quedan como banco para el corrector *(pendiente de armar, §10)*. En la sección B se predice qué cambia al modificar un espacio (por ejemplo `VALOR = "Maipú"` por `"Providencia"`).
 
 **Logística:**
 - Martes 27-oct, **30 min**, en clase, todos a la vez, en silencio.
@@ -246,7 +251,7 @@ Misma convención que los controles de lunes estándar: **ausente = 2.0**, con *
 ### Pendientes abiertos en v5 (2026-10-20)
 
 - **Normalizar Producto:** suma 115 pts (100 del Colab + 15 de nota de prensa). Hay que decidir si se reescala a 100 o se ajustan pesos.
-- **Niveles de «Pregunta distinta»** (§4): confirmar los tres niveles propuestos.
+- **Niveles de «Originalidad»** (§4): confirmar los tres niveles propuestos y quién decide si una pregunta «cambia la comparación» (el corrector, comparando con el ejemplo de la base).
 - **Cálculo de la nota de progreso 37b** (§7): confirmar escala, qué cuenta como «intento visible» y la mapeo a puntos de Proceso.
 - **Cómo medir «Incorporación de feedback»** (heredado de v4).
 - **Banco de errores de la Defensa** sobre la receta (§6).

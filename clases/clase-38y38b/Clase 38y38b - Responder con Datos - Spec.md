@@ -19,8 +19,8 @@ En la 37b (lun 19-oct) nadie llegó al Paso 4: de 40 cuadernos, ~20 estaban vac�
 
 | Cuaderno | Qué contiene | Quién lo lleva en una pareja |
 |---|---|---|
-| 🧑‍💻 **Código** | Haz Ahora, ICN 1-5 (guaguas), Guiada (CONASET), galería de 12 ejemplos, "Mi base" (Pasos 1-4) | Uno de los dos |
-| ✍️ **Texto** | Frases para completar, una sección por diapositiva, nota de prensa, Bitácora de 3 entradas | El otro (o la misma persona, si trabaja sola) |
+| 🧑‍💻 **Código** | Haz Ahora, ICN 1-5 (guaguas), Guiada (CONASET), **12 ejemplos plegados** (uno por base, como las pistas), «Mi base» (Pasos 1-3) y «Más análisis» | Uno de los dos |
+| ✍️ **Texto** | **Preguntas abiertas** (4 secciones, con un bloque por análisis), nota de prensa estructurada como noticia y Bitácora de 3 entradas | El otro (o la misma persona, si trabaja sola) |
 
 - Cada vez que el Código dice **«✍️ Responde ahora en el cuaderno de Texto, sección N»**, se pasa al otro.
 - El Texto abre con un aviso destacado de que **al final hay una Bitácora** que se responde cada día (mar 20, jue 22, lun 26).
@@ -50,8 +50,8 @@ Salidas: filas que dejó el filtro y filas sin dato (límites) · cifras del top
 | ICN 1-4 | 22 min | Filtrar → agrupar → ordenar → graficar, cada uno con su pregunta, **Idea clave** y **✍️ Escríbelo tú**, sobre guaguas. |
 | **ICN 5 (nuevo)** | ~8 min | **Qué columna va en cada espacio** (etiqueta vs cantidad, trampas, ficha de columnas) y **cómo leer la salida**. Cierra con la tabla-resumen pregunta → espacios → tipo de columna → línea. |
 | Guiada | 8 min | La receta sobre CONASET: llenan los 6 espacios con la pregunta de las comunas con más fallecidos en 2025. |
-| Galería | referencia | Una receta ya llena por cada una de las **12 bases** (se ejecutó cada una al generar). |
-| **Mi base** | resto de la sesión y la 38b | **Paso 1** abrir la base y ficha de las 5 columnas → ✍️ Texto 1-2 · **Paso 2** llenar los espacios y correr → ✍️ Texto 3-4 · **Paso 3** mirar lo que salió → ✍️ Texto 5 · **Paso 4** una pregunta distinta → ✍️ Texto 6-8. |
+| Ejemplos | referencia | Una receta ya llena por cada una de las **12 bases**, **plegada** (`<details>`) para no alargar el cuaderno; se ejecutó cada una al generar. Son para entender: entregarlos tal cual vale 0 en originalidad. |
+| **Mi base** | resto de la sesión y la 38b | **Paso 1** abrir la base y ficha de las 5 columnas → ✍️ Texto 1-2 · **Paso 2** primer análisis (receta con los 6 espacios) · **Paso 3** revisar lo que salió → ✍️ Texto 3 · **Más análisis:** copian y pegan la receta las veces que quieran, cada uno con su bloque en el Texto; marcan con ⭐ el principal. |
 
 ## Bases: 5 columnas sugeridas, con rol
 
@@ -61,7 +61,7 @@ Cada base trae 5 columnas sugeridas (🔎 filtrar · 🧺 agrupar · 🔢 cantid
 
 La rúbrica completa, con equipos y bases, vive en esta carpeta: `Clase 38y38b - Criterios de Evaluación del Proyecto.ipynb` (para estudiantes) y `Rúbricas y Evaluación - Proyecto Cierre Octubre (v5).md` (interna, con puntajes y niveles). El cuaderno de Código solo enlaza a ella.
 
-- **«Conoce su base» (15 pts, dentro de Producto; reemplaza a «Archivo usable»):** **5 pts por cumplir el mínimo** (describir la base: qué es una fila, cuántas hay, qué columnas se usan y por qué) y **10 pts por una pregunta distinta** (una segunda pregunta, o una que use una columna fuera de las 5 sugeridas).
+- **«Conoce su base» (15 pts, dentro de Producto; reemplaza a «Archivo usable»):** **5 pts por cumplir el mínimo** (describir la base) y **10 pts por la originalidad de las preguntas**: 10 si la pregunta cambia la comparación del ejemplo de su base o usa una columna fuera de las 5 sugeridas, 5 si solo cambia un valor o el `N`, 0 si es el ejemplo tal cual. Pueden hacer todos los análisis que quieran (copiando y pegando la receta), siempre que cada uno esté explicado; cuenta el más original bien explicado, no la cantidad. Marcan un **análisis principal (⭐)** del que salen las diapositivas 3 a 5, la nota de prensa y los errores de la Defensa. Se corrigen el principal y el más original.
 - **Nota de prensa:** se escribe como una **noticia real**, con titular, bajada, entrada, desarrollo y cierre (modelo: la nota del LUN, enlazada en los cuadernos de Código y de Texto), reutilizando lo escrito en las secciones 2 a 7. **Sin IA:** ya no hay versión corregida (política: 0 IA en código y en todos los textos).
 - **Defensa técnica (mar 27):** sin cambios de formato. Los errores intervenidos van en los espacios de la receta y en la receta misma.
 - **Nota de progreso 37b:** hito de Proceso, lineal por pareja (la que más avanzó = 7,0, aunque tenga errores). Pendiente de calcular.

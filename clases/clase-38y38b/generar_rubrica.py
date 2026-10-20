@@ -93,7 +93,7 @@ Es el documento completo del equipo: los cuadernos de 🧑‍💻 **Código** y 
 
 | Criterio | ¿Qué tiene que verse? |
 |---|---|
-| **Conoce su base** | Describimos nuestra base y **exploramos más allá del mínimo** (detalle abajo). |
+| **Conoce su base** | Describimos nuestra base y nos hacemos **preguntas propias y originales** (detalle abajo). |
 | **Cada operación justificada** | Contamos nuestros pasos **en palabras** y cada uno con **por qué responde nuestra pregunta**. |
 | **Evidencia que responde la pregunta** | El gráfico o la tabla final **sostiene nuestra conclusión**, con cifras de nuestra tabla. No basta con un gráfico bonito. |
 | **Narración completa** | Se lee de principio a fin, en el orden de arriba, y cierra con una conclusión que responde la pregunta inicial. |
@@ -105,20 +105,28 @@ Es el documento completo del equipo: los cuadernos de 🧑‍💻 **Código** y 
 Son **15 puntos**, y se ganan así:
 
 - **5 puntos por cumplir el mínimo:** explicamos qué es una fila de nuestra base, cuántas filas y columnas tiene, y qué columnas usamos y para qué (filtrar, agrupar o resumir).
-- **10 puntos por hacer una pregunta distinta:** una **segunda pregunta**, o una pregunta que use una **columna fuera de las 5 sugeridas**. Hay que contar qué cambiamos, qué encontramos y en qué se diferencia de la primera.
+- **10 puntos por la originalidad de nuestras preguntas:** cuanto más propia sea la pregunta que nos hacemos y que investigamos, más puntaje.
 
-> **Explorar más allá es lo que se premia.** Quedarnos con las columnas sugeridas no se castiga: cumple el mínimo.
+| Nuestra pregunta… | Puntos |
+|---|---|
+| **Cambia la comparación** que muestra el ejemplo de la base (otra columna para filtrar, agrupar o resumir, otro tipo de resumen), o usa una **columna fuera de las 5 sugeridas** | 10 |
+| Cambia solo un **valor** (otra comuna, otro año) o el `N` | 5 |
+| Es **el ejemplo tal cual** | 0 |
+
+**Podemos hacer todos los análisis que queramos**, copiando y pegando la receta, siempre que **cada uno esté explicado** en el cuaderno de Texto: un análisis sin explicación no suma. Cuenta el **más original** que esté bien explicado; la cantidad no suma.
+
+> ⭐ **Análisis principal:** marcamos cuál es. De él salen las diapositivas 3 a 5, la nota de prensa y los errores de la Defensa técnica. Se corrigen el principal y el más original; los demás se leen, pero no tienen puntaje.
 
 ### 🗺️ ¿Dónde lo escribimos?
 
 | Criterio | En nuestros cuadernos |
 |---|---|
-| Conoce su base | Código: Pasos 1 y 4 · Texto: secciones 2 y 6 |
-| Cada operación justificada | Texto: sección 3 |
-| Evidencia | Código: Paso 2 (gráfico y cifras) · Texto: sección 4 |
+| Conoce su base | Código: Paso 1 y todos los análisis · Texto: secciones 2 y 3 |
+| Cada operación justificada | Texto: sección 3 («cómo lo investigamos») |
+| Evidencia | Código: Paso 2 (gráfico y cifras) · Texto: sección 3 («hallazgo») |
 | Narración completa | Todo el cuaderno de Texto, en orden |
-| Límites del dato | Código: Paso 3 · Texto: sección 5 |
-| Nota de prensa | Texto: sección 8 |
+| Límites del dato | Código: Paso 3 · Texto: sección 3 («límites») |
+| Nota de prensa | Texto: sección 5 |
 """)
 
 md("""
@@ -135,7 +143,7 @@ md("""
 | 5 | **Límites** | 0:45 | Una limitación **específica** de nuestra base y cómo afecta cuánto confiamos en la conclusión. |
 | 6 | **Conclusión y próximo paso** | 1:00 | Respondemos la pregunta, volvemos a la hipótesis, descartamos una explicación alternativa y proponemos un próximo paso. |
 
-Cada diapositiva sale de una sección del cuaderno de ✍️ Texto: lo que escribimos ahí es lo que presentamos.
+Las diapositivas salen del cuaderno de ✍️ Texto: la 1 de la sección 1, la 2 de la sección 2, las 3 a 5 de nuestro **análisis principal** (sección 3) y la 6 de la sección 4.
 
 **Puntaje (sobre 100):**
 
@@ -159,7 +167,7 @@ Cada diapositiva sale de una sección del cuaderno de ✍️ Texto: lo que escri
 md("""
 ## 🔍 Defensa técnica (30%)
 
-Es un cuaderno **escrito** de **30 minutos** que respondemos **en pareja** (quien trabaja solo, lo hace solo). Recibimos **una copia de nuestro propio Colab** con **3 errores puestos a propósito**, que pueden estar en los espacios de la receta (la columna, el valor del filtro, el resumen, el `N`) o en la receta misma.
+Es un cuaderno **escrito** de **30 minutos** que respondemos **en pareja** (quien trabaja solo, lo hace solo). Recibimos **una copia de nuestro propio Colab** con **3 errores puestos a propósito en nuestro análisis principal**, que pueden estar en los espacios de la receta (la columna, el valor del filtro, el resumen, el `N`) o en la receta misma.
 
 | Sección | Pts | ¿Qué hacemos? |
 |---|---|---|
@@ -227,7 +235,7 @@ md("""
 
 **Colab final — lunes 26, 23:59**
 - ☐ Entregamos los dos cuadernos (🧑‍💻 Código y ✍️ Texto), con nuestro nombre y el de nuestra pareja al inicio.
-- ☐ Describimos nuestra base y hicimos **una pregunta distinta**.
+- ☐ Describimos nuestra base, hicimos preguntas propias y marcamos con ⭐ nuestro **análisis principal**.
 - ☐ Cada operación tiene su texto de por qué.
 - ☐ Declaramos qué NO podemos concluir, con un dato real.
 - ☐ Incluimos la nota de prensa, con titular, bajada, entrada, desarrollo y cierre.

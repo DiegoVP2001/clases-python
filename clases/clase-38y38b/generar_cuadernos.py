@@ -398,8 +398,8 @@ Escribe estos datos para que podamos unir tu trabajo con el de tu pareja.
 
 | Sesión | Qué hacemos |
 |---|---|
-| **Mar 20-oct** (Clase 38) | Aprendemos la receta con un ejemplo → la usamos en un ejemplo guiado → abrimos nuestra base y corremos nuestra primera pregunta (Pasos 1 y 2). |
-| **Jue 22-oct** (Clase 38b) | Revisamos lo que salió (Paso 3), hacemos una pregunta distinta (Paso 4) y completamos el cuaderno de Texto. |
+| **Mar 20-oct** (Clase 38) | Aprendemos la receta con un ejemplo → la usamos en un ejemplo guiado → abrimos nuestra base y corremos nuestro primer análisis (Pasos 1 a 3). |
+| **Jue 22-oct** (Clase 38b) | Hacemos más análisis con preguntas propias y completamos el cuaderno de Texto. |
 | **Lun 26-oct** | Terminamos. **Entrega del Colab final: 23:59.** |
 """)
     foto_b64 = base64.b64encode(FOTO.read_bytes()).decode("ascii")
@@ -569,16 +569,15 @@ Y debajo, un gráfico de 5 barras horizontales, con Pudahuel como la más larga.
     c.md("✍️ **Llena los espacios `_____`** con la pregunta de arriba traducida (las columnas sugeridas de la base están en la tabla de más abajo) y ejecuta:")
     c.code(receta_completa(None))
 
-    # ── Galería ──
-    c.md("---\n\n## 📚 Galería de ejemplos: una receta ya llena por cada base\n\nAsí se ve la receta llena con una pregunta real de cada base. **Son para entender cómo se traduce una pregunta, no para copiarlos**: si usamos el mismo ejemplo sin cambiarlo, no cuenta como una pregunta nuestra. Los resultados se verificaron ejecutando cada ejemplo.")
-    ejemplos = {}
+    # ── Ejemplos (plegados, como las pistas) ──
+    ejemplos, plegados = {}, []
     for b in BASES:
         r = ejecutar_ejemplo(b)
         ejemplos[b["n"]] = r
         e, esp = b["ej"], r["esp"]
         lineas_esp = "\n".join(f"{k:<10} = {lit(esp[k])}" for k in ("COL_FILTRO", "VALOR", "COL_GRUPO", "COL_NUMERO", "RESUMEN", "N"))
-        c.md(f"""
-### {b['icono']} {b['n']} · {b['nombre']}
+        plegados.append(f"""<details>
+<summary>{b['icono']} {b['n']} · {b['nombre']}</summary>
 
 **Pregunta:** {e['pregunta']}
 
@@ -589,7 +588,11 @@ Y debajo, un gráfico de 5 barras horizontales, con Pudahuel como la más larga.
 **Resultado:** {r['ranking']}
 
 > 💡 {e['nota']}
-""")
+
+</details>""")
+    c.md("---\n\n## 📚 Ejemplos: ábrelos solo si los necesitas\n\n"
+         "Cada base tiene un ejemplo con la receta ya llena y su resultado (se verificaron ejecutándolos). Están **plegados**, como las pistas: abre solo el de tu base para ver cómo se traduce una pregunta. "
+         "**Son para entender, no para copiar:** entregar el ejemplo tal cual no cuenta como pregunta propia.\n\n" + "\n\n".join(plegados))
 
     # ── Mi base ──
     c.md("""
@@ -597,10 +600,10 @@ Y debajo, un gráfico de 5 barras horizontales, con Pudahuel como la más larga.
 
 ## 🔍 Mi base
 
-Desde aquí trabajamos con **nuestra** base. En cada paso encontrarás primero **lo que necesitas saber** y luego **lo que debes hacer**.
+Desde aquí trabajamos con **nuestra** base y con **nuestras propias preguntas**. Podemos hacer **todos los análisis que queramos**, copiando y pegando la receta, siempre que cada uno quede bien explicado. **Lo que más se premia es la originalidad de las preguntas que nos hacemos y que investigamos.**
 """)
     c.md("### 🗂️ Mis 5 columnas sugeridas\n\nCada base trae 5 columnas que sirven bien para armar una pregunta. Busca la tuya:\n\n" + tabla_columnas_sugeridas()
-         + "\n\n> 🌟 **Explorar más allá de las 5 sugeridas se premia** (la rúbrica lo premia): con `list(tabla.columns)` ves todas las columnas de tu base, y la ficha del Paso 1 sirve para cualquiera.")
+         + "\n\n> 🌟 Las 5 columnas son una **ayuda, no un límite**: con `list(tabla.columns)` ves todas las de tu base, y la ficha del Paso 1 sirve para cualquiera. **Las preguntas que usan otras columnas se premian.**")
     c.md(NOTA_CODIGOS)
 
     c.md("""
@@ -635,7 +638,7 @@ for columna in columnas:
     c.md("> ✍️ **Responde ahora en el cuaderno de Texto, secciones 1 y 2** (contexto, pregunta e hipótesis · conoce tu base).")
 
     c.md("""
-### Paso 2 · Traduzco mi pregunta y corro la receta
+### Paso 2 · Mi análisis: traduzco mi pregunta y corro la receta
 
 **Lo que necesitas saber:** nuestra pregunta se traduce llenando los espacios de la receta. Antes, tres decisiones:
 
@@ -643,13 +646,12 @@ for columna in columnas:
 - **¿Qué junto y qué cifra resumo?** Una columna 🧺 para agrupar y una 🔢 para resumir. Elige `"sum"` si preguntas «¿cuánto hay en total?», `"mean"` para «¿cómo es lo típico?» y `"count"` para «¿cuántas filas hay?».
 - **¿Cuántos muestro?** Entre 5 y 10 se lee bien en un gráfico.
 
-**Lo que debes hacer:** llena los espacios `_____` con **tu** pregunta y ejecuta. Si el filtro deja 0 filas, la receta te lo avisa: revisa cómo escribiste `VALOR`.
+**Lo que debes hacer:** escribe tu pregunta en el título de abajo y llena los espacios `_____`. Puedes partir del ejemplo de tu base (plegado más arriba) y cambiarlo. Si el filtro deja 0 filas, la receta te lo avisa: revisa cómo escribiste `VALOR`.
 """)
+    c.md("### ⭐ Análisis 1 · mi pregunta: ¿…?")
     c.code(receta_completa(None))
-    c.md("> ✍️ **Responde ahora en el cuaderno de Texto, secciones 3 y 4** (cómo lo investigamos · hallazgo y evidencia).")
-
     c.md("""
-### Paso 3 · Miro lo que salió
+### Paso 3 · Reviso lo que salió
 
 **Lo que necesitas saber:** un resultado que «salió» no es un resultado correcto. Antes de creerle, revisa:
 
@@ -667,17 +669,19 @@ print()
 print("Resumen de la columna que sumaste o promediaste:")
 print(filtrada[COL_NUMERO].describe().round(2))
 ''')
-    c.md("> ✍️ **Responde ahora en el cuaderno de Texto, sección 5** (límites).")
+    c.md("> ✍️ **Responde ahora en el cuaderno de Texto, sección 3** (el bloque del Análisis 1).")
 
     c.md("""
-### Paso 4 · Una pregunta distinta
+### ➕ Más análisis (lo que más se premia)
 
-**Lo que necesitas saber:** una segunda pregunta cambia **al menos un espacio**: otro valor, otra columna para agrupar, otro resumen, o una columna que **no esté entre las 5 sugeridas**. Es lo que más se premia en la rúbrica.
+Para hacer otra pregunta, **copiamos las celdas de los Pasos 2 y 3, las pegamos debajo** y cambiamos los espacios. Ponemos un título arriba de cada análisis, por ejemplo: `### Análisis 2 · ¿en qué meses hubo más egresos?`
 
-**Lo que debes hacer:** llena los espacios de nuevo con la pregunta distinta y ejecuta. Anota qué cambiaste respecto de la primera.
+**Reglas del juego:**
+- **Cada análisis lleva su bloque de preguntas en el cuaderno de Texto** (sección 3). Un análisis sin explicación no suma.
+- Se premia la **originalidad**, no la cantidad: cuenta el análisis más original que esté bien explicado.
+- Marcamos con ⭐ cuál es nuestro **análisis principal**: de él salen las diapositivas 3 a 5, la nota de prensa y los errores de la Defensa técnica.
 """)
-    c.code(receta_completa(None))
-    c.md("> ✍️ **Responde ahora en el cuaderno de Texto, secciones 6, 7 y 8** (pregunta distinta · conclusión · nota de prensa).")
+    c.md("> ✍️ **Responde ahora en el cuaderno de Texto:** un bloque en la sección 3 por cada análisis, y después las secciones 4 y 5 (conclusión y nota de prensa).")
 
     c.md("""
 ---
@@ -686,10 +690,11 @@ print(filtrada[COL_NUMERO].describe().round(2))
 
 El **Colab final se entrega el lunes 26-oct hasta las 23:59** en Classroom. Antes de entregar:
 
-1. Ejecuta todo de arriba hacia abajo: menú **Entorno de ejecución → Ejecutar todo**. Revisa que no quede ningún error en rojo (las celdas de la Galería no se ejecutan: son texto).
+1. Ejecuta todo de arriba hacia abajo: menú **Entorno de ejecución → Ejecutar todo**. Revisa que no quede ningún error en rojo.
 2. Escribe tu nombre y el de tu pareja al inicio (**¿Quién soy?**).
-3. Si trabajamos en pareja, **cada uno entrega su cuaderno** (el de Código y el de Texto); después los unimos.
-4. Completa la **Bitácora** del cuaderno de Texto.
+3. Marca con ⭐ tu **análisis principal** y revisa que cada análisis tenga su explicación en el cuaderno de Texto.
+4. Si trabajamos en pareja, **cada uno entrega su cuaderno** (el de Código y el de Texto); después los unimos.
+5. Completa la **Bitácora** del cuaderno de Texto.
 """)
     return c, ejemplos
 
@@ -707,9 +712,9 @@ def cuaderno_texto() -> Cuaderno:
 
 **Curso:** 3ro y 4to medio  |  **Plataforma:** Google Colab
 
-Este cuaderno es la **parte escrita de nuestro proyecto**. Cada sección es una diapositiva de la presentación, así que lo que escribimos aquí es lo que después presentamos. Se completa a medida que avanzamos en el cuaderno de 🧑‍💻 **Código**: cada vez que allá aparezca **✍️ Responde ahora en el cuaderno de Texto, sección N**, volvemos acá.
+Este cuaderno es la **parte escrita de nuestro proyecto**. Cada sección corresponde a una o más diapositivas de la presentación, así que lo que escribimos aquí es lo que después presentamos. Se completa a medida que avanzamos en el cuaderno de 🧑‍💻 **Código**: cada vez que allá aparezca **✍️ Responde ahora en el cuaderno de Texto**, volvemos acá.
 
-Cada sección trae **frases para completar**. Haz doble clic en la celda de respuesta y reemplaza los `___` con tus palabras.
+Cada sección trae **preguntas**. Respóndanlas **con sus propias palabras y desarrollando la idea**: una palabra suelta no alcanza. Hagan doble clic en la celda de respuesta y escriban debajo de cada número.
 """)
     t.md("""
 ## 👤 ¿Quién soy?
@@ -721,7 +726,7 @@ Cada sección trae **frases para completar**. Haz doble clic en la celda de resp
     t.md("""
 ## 🔁 Mis espacios y mi tabla (copiados del cuaderno de Código)
 
-Para escribir las secciones 3, 4 y 5 necesitamos las cifras. **Pega aquí** los seis espacios de tu receta y las cifras del top, tal como salieron en el cuaderno de Código. Así puedes escribir aunque tu pareja tenga el otro cuaderno abierto.
+Para responder necesitamos las cifras. **Pega aquí** los seis espacios de la receta de tu **análisis principal** y las cifras que salieron en el cuaderno de Código. Así puedes escribir aunque tu pareja tenga el otro cuaderno abierto.
 """)
     t.md("""
 **Mis espacios:**
@@ -747,78 +752,36 @@ N          =
 
 ## 1️⃣ Contexto, pregunta e hipótesis · 📽️ diapositiva 1
 
-**Lo que necesitas saber:** una buena pregunta es **concreta**, se puede **responder con tu tabla** y no se contesta con un sí o un no. La hipótesis es lo que **esperas encontrar antes de mirar el resultado**.
+Una buena pregunta es **concreta**, se puede **responder con su tabla** y no se contesta con un sí o un no. La hipótesis es lo que **esperan encontrar antes de mirar el resultado**.
 
-**Completa:**
+1. ¿Qué situación o fenómeno quieren investigar con su base, y por qué la eligieron?
+2. ¿Cuál es su pregunta principal?
+3. ¿Qué esperan encontrar y en qué se basan para pensarlo? *(esa es su hipótesis)*
+4. ¿Por qué podría importarle esta pregunta a alguien fuera del curso?
 """)
-    t.md("""
-**Mi respuesta:**
-
-- Nuestra base trata de ___ y la elegimos porque ___.
-- Nuestra pregunta es: ¿___?
-- Creemos que vamos a encontrar que ___ porque ___. *(Esa es nuestra hipótesis.)*
-- Esta pregunta importa porque ___.
-""")
+    t.md("**Mis respuestas:**\n\n1. \n2. \n3. \n4. ")
 
     t.md("""
 ---
 
 ## 2️⃣ Conoce tu base · 📽️ diapositiva 2
 
-**Lo que necesitas saber:** aquí describes tu base como si se la explicaras a alguien que no la conoce. Las fuentes y los significados de cada columna están en el [Diccionario de Columnas](%s). Explorar más allá de las columnas sugeridas (sección 6) es lo que más se premia en la rúbrica.
+Aquí describen su base como si se la explicaran a alguien que no la conoce. Las fuentes y los significados de cada columna están en el [Diccionario de Columnas](%s).
 
-**Completa:**
+1. Si tuvieran que explicarle su base a alguien que no la conoce: ¿qué representa cada fila, cuántas filas y columnas tiene y de dónde vienen los datos?
+2. ¿Qué columnas usaron y qué papel cumplió cada una *(🔎 filtrar, 🧺 agrupar o 🔢 resumir)*? ¿Por qué eligieron esas?
+3. ¿Revisaron otras columnas fuera de las 5 sugeridas? ¿Cuáles les llamaron la atención y por qué?
 """ % LINK_DICCIONARIO)
-    t.md("""
-**Mi respuesta:**
-
-- Cada fila de nuestra base es ___ (un colegio, una carrera, un siniestro…).
-- Tiene ___ filas y ___ columnas. Los datos vienen de ___.
-- Usamos estas columnas: ___ *(para cada una: qué es y si la usamos para 🔎 filtrar, 🧺 agrupar o 🔢 resumir)*.
-- 🌟 *Columna fuera de las 5 sugeridas:* usamos ___ porque ___. *(Si no usamos ninguna, lo dejamos escrito: «no usamos ninguna».)*
-""")
+    t.md("**Mis respuestas:**\n\n1. \n2. \n3. ")
 
     t.md("""
 ---
 
-## 3️⃣ Cómo lo investigamos · 📽️ diapositiva 3
+## 3️⃣ Mis análisis · 📽️ diapositivas 3, 4 y 5
 
-**Lo que necesitas saber:** cuentas tus pasos **en palabras, sin pegar código**, y cada uno con su **porqué**. Mira tus espacios de arriba: cada uno es una respuesta.
+Aquí va **cada análisis** que hicimos en el cuaderno de Código. Marcamos con ⭐ el **principal**: de él salen las diapositivas 3 a 5, la nota de prensa y la Defensa técnica. Para cada análisis más, **copiamos el bloque de abajo (sus dos celdas) y lo pegamos**. Un análisis sin respuestas no suma, y se premia la **originalidad** de las preguntas, no la cantidad.
 
-**Completa:**
-""")
-    t.md("""
-**Mi respuesta:**
-
-- **Paso 1.** Nos quedamos con las filas donde ___ es ___, porque ___.
-- **Paso 2.** Juntamos por ___ y calculamos el/la *(total · promedio · cantidad)* de ___, porque ___.
-- **Paso 3.** Ordenamos de mayor a menor y mostramos los primeros ___, porque ___.
-- **Paso 4.** Lo graficamos en barras porque ___.
-""")
-
-    t.md("""
----
-
-## 4️⃣ Hallazgo y evidencia · 📽️ diapositiva 4
-
-**Lo que necesitas saber:** el hallazgo es **la frase que responde tu pregunta**, sin términos técnicos que tu audiencia no entienda, y se apoya en **cifras de tu tabla**. El gráfico está en el cuaderno de Código (Paso 2); en la presentación lo pegamos como imagen.
-
-**Completa:**
-""")
-    t.md("""
-**Mi respuesta:**
-
-- **Nuestro hallazgo, en una frase:** ___.
-- El valor más alto es ___ con ___; el más bajo de los que mostramos es ___ con ___.
-- Lo vemos en el gráfico porque ___.
-""")
-
-    t.md("""
----
-
-## 5️⃣ Límites · 📽️ diapositiva 5
-
-**Lo que necesitas saber:** todo resultado tiene límites, y decirlos es lo que lo hace creíble. Un límite real es **concreto de tus datos**, no una frase de relleno como «faltan más datos». Los más comunes:
+Un límite real es **concreto de sus datos**, no una frase de relleno como «faltan más datos». Los más comunes:
 
 | Tipo de límite | Ejemplo |
 |---|---|
@@ -829,67 +792,52 @@ N          =
 | Alcance | Es una región o un año, no todo Chile ni todos los años |
 | Asociación no es causa | Dos cosas que suben juntas no prueban que una cause la otra |
 
-**Completa:**
+### ⭐ Análisis 1 (principal)
+
+1. ¿Cuál es la pregunta de este análisis y qué la hace distinta del ejemplo de su base?
+2. 📽️ **Cómo lo investigamos.** Cuenten sus pasos con sus palabras: ¿con qué parte de la tabla se quedaron, qué juntaron y qué calcularon con eso? ¿Por qué tomaron cada decisión, y por qué ese cálculo y no otro?
+3. 📽️ **Hallazgo y evidencia.** ¿Qué encontraron? Respondan la pregunta en una frase, sin términos técnicos, y apóyenla con cifras de su tabla (el mayor, el menor, el total). ¿Qué les sorprendió del resultado?
+4. 📽️ **Límites.** ¿Cuántas filas se perdieron y por qué? ¿Cuántas filas hay detrás de cada barra? ¿Qué NO pueden afirmar con estos datos, y qué conclusión equivocada sacaría alguien que ignorara ese límite?
 """)
+    t.md("**Mis respuestas (Análisis 1 ⭐):**\n\n1. \n2. \n3. \n4. ")
     t.md("""
-**Mi respuesta:**
+### ➕ Análisis 2 *(opcional: copia este bloque por cada análisis más)*
 
-- Se perdieron ___ de ___ filas porque ___.
-- Con estos datos **NO** podemos concluir que ___ porque ___ *(una cifra o un dato de nuestra tabla)*.
-- Una barra se apoya en ___ filas y otra en ___ filas.
-- Si alguien olvidara este límite, sacaría la conclusión equivocada de que ___.
+1. ¿Cuál es la pregunta de este análisis y qué cambiamos respecto del análisis anterior o del ejemplo (otra columna, otro filtro, otro resumen…)?
+2. ¿Qué encontramos? Respondan con una frase y con cifras de su tabla.
+3. ¿Qué límite tiene este resultado?
 """)
-
-    t.md("""
----
-
-## 6️⃣ Una pregunta distinta · 🌟
-
-**Lo que necesitas saber:** una segunda pregunta, o una pregunta que use una columna **fuera de las 5 sugeridas**. Es lo que más se premia en la rúbrica.
-
-**Completa:**
-""")
-    t.md("""
-**Mi respuesta:**
-
-- Nuestra pregunta distinta es: ¿___?
-- Lo que cambiamos en los espacios respecto de la primera fue ___.
-- Lo que encontramos: ___ *(con una cifra)*.
-- Se diferencia de la primera en que ___.
-""")
+    t.md("**Mis respuestas (Análisis 2):**\n\n1. \n2. \n3. ")
 
     t.md("""
 ---
 
-## 7️⃣ Conclusión y próximo paso · 📽️ diapositiva 6
+## 4️⃣ Conclusión y próximo paso · 📽️ diapositiva 6
 
-**Lo que necesitas saber:** una conclusión no repite el gráfico: **responde la pregunta**, se apoya en la evidencia, reconoce su límite y **descarta al menos una explicación alternativa**.
+Una conclusión no repite el gráfico: **responde la pregunta**, se apoya en la evidencia, reconoce su límite y **descarta al menos una explicación alternativa**.
 
-**Completa:**
+1. ¿Cuál es la respuesta a su pregunta principal y qué cifra la respalda?
+2. ¿Se cumplió lo que esperaban al principio? ¿Por qué sí o por qué no?
+3. ¿Qué otra explicación podría haber para lo que encontraron? ¿Pudieron descartarla?
+4. Si hicieron más de un análisis: ¿qué aprendieron al compararlos?
+5. ¿Qué harían a continuación para seguir investigando?
 """)
-    t.md("""
-**Mi respuesta:**
-
-- Respondiendo nuestra pregunta: ___ *(con una cifra)*.
-- Volviendo a nuestra hipótesis: se cumplió / no se cumplió porque ___.
-- Una explicación alternativa que descartamos (o que no pudimos descartar): ___ porque ___.
-- Nuestro próximo paso sería ___.
-""")
+    t.md("**Mis respuestas:**\n\n1. \n2. \n3. \n4. \n5. ")
 
     t.md(f"""
 ---
 
-## 8️⃣ Nota de prensa
+## 5️⃣ Nota de prensa
 
 **Lo que necesitas saber:** traducimos el hallazgo a una **noticia**, para alguien que no sabe nada de datos. Una noticia real sigue un orden: **titular, bajada, entrada, desarrollo y cierre**. Así lo hace [la nota del LUN]({LINK_NOTICIA}) con la que partimos. Trae expertos y mucho texto; la nuestra es más corta y se apoya en **nuestros datos**.
 
 | Parte | En la nota del LUN | En la nuestra |
 |---|---|---|
-| **Titular** | «Cuánto ganan los ingenieros civiles industriales según su universidad de egreso» | Nuestro hallazgo en una frase *(sección 4)* |
+| **Titular** | «Cuánto ganan los ingenieros civiles industriales según su universidad de egreso» | Nuestro hallazgo en una frase *(sección 3)* |
 | **Bajada** | «Es la cuarta carrera con más alumnos en Chile: multifacéticos, pueden trabajar casi en cualquier parte.» | La frase que completa el titular o el dato que más sorprende |
-| **Entrada** | La cifra principal (cuántos estudian la carrera) y de qué fuente sale (el SIES) | Nuestra cifra principal y de dónde salen los datos *(secciones 2 y 4)* |
-| **Desarrollo** | Cómo se calcula el sueldo y las diferencias entre universidades | Cómo lo investigamos, las cifras del top, la pregunta distinta y un límite *(secciones 3, 4, 5 y 6)* |
-| **Cierre** | Una última idea que resume las dos miradas | Nuestra conclusión y el próximo paso *(sección 7)* |
+| **Entrada** | La cifra principal (cuántos estudian la carrera) y de qué fuente sale (el SIES) | Nuestra cifra principal y de dónde salen los datos *(secciones 2 y 3)* |
+| **Desarrollo** | Cómo se calcula el sueldo y las diferencias entre universidades | Cómo lo investigamos, las cifras del top, la pregunta distinta y un límite *(sección 3)* |
+| **Cierre** | Una última idea que resume las dos miradas | Nuestra conclusión y el próximo paso *(sección 4)* |
 
 > ♻️ **No hay que inventar nada nuevo:** reordenamos lo que ya escribimos en las secciones anteriores, en lenguaje de noticia y sin términos técnicos.
 
@@ -913,19 +861,19 @@ N          =
 > Se completa **al cerrar cada sesión**. Es lo que la rúbrica de Proceso revisa: avance real, clase a clase.
 
 **Sesión mar 20-oct — Clase 38**
-- Qué avanzamos hoy:
-- Qué nos costó o qué dudas tuvimos:
-- Qué pensamos hacer el jueves 22:
+1. ¿Qué avanzamos hoy?
+2. ¿Qué nos costó o qué dudas tuvimos?
+3. ¿Qué pensamos hacer el jueves 22?
 
 **Sesión jue 22-oct — Clase 38b**
-- Qué avanzamos hoy:
-- Qué nos costó o qué dudas tuvimos:
-- Qué nos falta para terminar el Colab final:
+1. ¿Qué avanzamos hoy?
+2. ¿Qué nos costó o qué dudas tuvimos?
+3. ¿Qué nos falta para terminar el Colab final?
 
 **Sesión lun 26-oct — cierre**
-- Qué dejamos terminado:
-- Qué cambiamos desde la última vez, y por qué:
-- Qué haríamos distinto si tuviéramos una clase más:
+1. ¿Qué dejamos terminado?
+2. ¿Qué cambiamos desde la última vez, y por qué?
+3. ¿Qué haríamos distinto si tuviéramos una clase más?
 """)
     t.md("""
 ---
@@ -934,7 +882,7 @@ N          =
 
 El **Colab final se entrega el lunes 26-oct hasta las 23:59** en Classroom. Antes de entregar:
 
-1. Revisa que todas las secciones tengan su respuesta y que no queden `___` sin completar.
+1. Revisa que todas las preguntas tengan su respuesta, que cada análisis tenga su bloque y que el **análisis principal** esté marcado con ⭐.
 2. Escribe tu nombre y el de tu pareja al inicio (**¿Quién soy?**).
 3. Si trabajamos en pareja, **cada uno entrega su cuaderno**; después los unimos.
 4. Completa la **Bitácora** de cada sesión.
@@ -987,28 +935,6 @@ Contiene: respuestas del Haz Ahora, código del ICN, la Guiada resuelta, los 12 
     for b in BASES:
         s.md(f"### {b['icono']} {b['n']} · {b['nombre']}\n\nSalida completa:\n```\n{ejemplos[b['n']]['salida'].strip()}\n```")
 
-    s.md("""
----
-
-## ✍️ Modelo del cuaderno de Texto (CONASET, para corregir)
-
-Un ejemplo de cómo se ve una buena respuesta en cada sección, sobre la pregunta de la Guiada. **No es la única forma correcta**: se califica lo que dicen y que se apoye en las cifras de su tabla.
-
-**1 · Contexto, pregunta e hipótesis.** Nuestra base trata de los siniestros de tránsito en la Región Metropolitana y la elegimos porque queremos saber dónde ocurren más accidentes graves. Nuestra pregunta es: ¿qué comunas tuvieron más fallecidos en siniestros de tránsito el 2025? Creemos que serán las comunas con más población, como Santiago o Maipú. Importa porque ayudaría a decidir dónde reforzar la seguridad vial.
-
-**2 · Conoce tu base.** Cada fila es un siniestro de tránsito. Tiene 123.343 filas y 37 columnas; los datos vienen de CONASET. Usamos `AÑO` (🔎 filtrar), `COMUNA` (🧺 agrupar) y `FALLECIDOS` (🔢 resumir). 🌟 Usamos además `Bicicleta`, que no está entre las sugeridas, para la segunda pregunta.
-
-**3 · Cómo lo investigamos.** Paso 1: nos quedamos con las filas donde `AÑO` es 2025, porque la pregunta es sobre ese año. Paso 2: juntamos por `COMUNA` y sumamos `FALLECIDOS`, porque queremos el total de cada comuna. Paso 3: ordenamos de mayor a menor y mostramos las 5 primeras, para que quepan en el gráfico. Paso 4: lo graficamos en barras para comparar.
-
-**4 · Hallazgo y evidencia.** Las comunas con más fallecidos el 2025 no son las más pobladas: Pudahuel tuvo 21, Santiago 19 y Quilicura 17. El valor más bajo del top es Maipú, con 13. Lo vemos en el gráfico porque Pudahuel es la barra más larga.
-
-**5 · Límites.** No se perdió ninguna fila (todas tenían dato en `FALLECIDOS`). Con estos datos **no** podemos concluir que Pudahuel sea la comuna más peligrosa: no sabemos cuánta gente circula ahí; 21 fallecidos en una comuna con mucho tránsito pesado no significa lo mismo que en una pequeña. Si alguien olvidara esto, concluiría que vivir en Pudahuel es más riesgoso que en Maipú.
-
-**6 · Una pregunta distinta.** ¿En qué comunas hubo más siniestros con bicicletas el 2025? Cambiamos `COL_NUMERO` a `Bicicleta` (una columna fuera de las sugeridas, de 0 y 1) y `RESUMEN` a `"sum"`.
-
-**7 · Conclusión.** Respondiendo nuestra pregunta: Pudahuel tuvo más fallecidos el 2025 (21). Nuestra hipótesis no se cumplió: las comunas más pobladas no encabezan el ranking. No pudimos descartar que influya el tránsito pesado de las rutas que cruzan la comuna. Nuestro próximo paso sería comparar con la cantidad de habitantes.
-
-""")
     tabla = ejemplos["7"]["ns"]["tabla"]
     bici = tabla[tabla["AÑO"] == 2025].groupby("COMUNA")["Bicicleta"].sum().sort_values(ascending=False).head(3)
     ranking = ejemplos["7"]["ns"]["top"]
@@ -1016,7 +942,45 @@ Un ejemplo de cómo se ve una buena respuesta en cada sección, sobre la pregunt
     promedio = f'{ejemplos["7"]["ns"]["resumen"].mean():.1f}'.replace(".", ",")
     porcentaje = f'{ranking.iloc[0] / total * 100:.1f}'.replace(".", ",")
     s.md(f"""
-**8 · Nota de prensa.**
+---
+
+## ✍️ Modelo del cuaderno de Texto (CONASET, para corregir)
+
+Un ejemplo de cómo se ve una buena respuesta en cada sección. **No es la única forma correcta**: se califica lo que dicen y que se apoye en las cifras de su tabla. Ojo: aquí el **Análisis 1 es el ejemplo de la galería**; en una entrega real, entregarlo tal cual vale 0 en originalidad, y la originalidad se gana con el Análisis 2.
+
+**1 · Contexto, pregunta e hipótesis.**
+1. Queremos entender dónde ocurren más muertes por siniestros de tránsito en la Región Metropolitana; elegimos CONASET porque es un problema que vemos a diario.
+2. ¿Qué comunas tuvieron más fallecidos en siniestros de tránsito el 2025?
+3. Esperamos que sean las comunas con más población, como Santiago o Maipú, porque hay más autos y más personas circulando.
+4. Podría servir para decidir dónde reforzar la seguridad vial.
+
+**2 · Conoce tu base.**
+1. Cada fila es un siniestro de tránsito. Tiene {cl(len(tabla))} filas y {tabla.shape[1]} columnas; los datos vienen de CONASET.
+2. Usamos `AÑO` para filtrar (queremos solo 2025), `COMUNA` para agrupar y `FALLECIDOS` para resumir, porque la pregunta compara comunas por cantidad de muertes.
+3. Revisamos también `Bicicleta`, que no está entre las sugeridas, porque queríamos ver qué pasaba con los ciclistas.
+
+**3 · Mis análisis.**
+
+⭐ *Análisis 1 (principal).*
+1. Es la pregunta del ejemplo de la galería: comunas con más fallecidos en 2025.
+2. Nos quedamos con las filas de 2025 porque la pregunta es sobre ese año. Juntamos por comuna y sumamos los fallecidos de cada una, porque queremos el total. Ordenamos de mayor a menor y mostramos las 5 primeras para que quepan en el gráfico.
+3. Las comunas con más fallecidos no son las más pobladas: Pudahuel tuvo {int(ranking.iloc[0])}, Santiago {int(ranking.iloc[1])} y Quilicura {int(ranking.iloc[2])}. Nos sorprendió que Maipú, tan grande, quedara quinta con {int(ranking.iloc[4])}.
+4. No se perdió ninguna fila: todas tenían dato en `FALLECIDOS`. Con estos datos **no** podemos afirmar que Pudahuel sea la comuna más peligrosa: no sabemos cuánta gente circula por cada una. Quien lo olvidara concluiría que vivir en Pudahuel es más riesgoso que en Maipú.
+
+➕ *Análisis 2 (el más original).*
+1. ¿En qué comunas hubo más siniestros con bicicletas el 2025? Cambiamos `COL_NUMERO` a `Bicicleta`, una columna fuera de las sugeridas (vale 0 o 1), y mantuvimos el resto.
+2. {bici.index[0]} ({int(bici.iloc[0])}), {bici.index[1]} ({int(bici.iloc[1])}) y {bici.index[2]} ({int(bici.iloc[2])}) encabezan los siniestros con bicicletas. {' y '.join(c for c in bici.index if c in ranking.index)} también estaban en el primer ranking, pero {' y '.join(c for c in bici.index if c not in ranking.index)} solo aparece en este.
+3. Una fila es un siniestro, no una persona, así que no sabemos cuántos ciclistas resultaron heridos.
+
+**4 · Conclusión.**
+1. Pudahuel tuvo más fallecidos el 2025 ({int(ranking.iloc[0])}).
+2. Nuestra hipótesis no se cumplió: las comunas más pobladas no encabezan el ranking.
+3. Podría influir el tránsito pesado de las rutas que cruzan la comuna; no pudimos descartarlo con estos datos.
+4. Al comparar los dos análisis vimos que dónde hay más muertes y dónde hay más siniestros con bicicletas son lugares distintos.
+5. Compararíamos con la población de cada comuna.
+""")
+    s.md(f"""
+**5 · Nota de prensa.**
 
 > **Pudahuel lidera las muertes en siniestros de tránsito de la Región Metropolitana en 2025**
 >
