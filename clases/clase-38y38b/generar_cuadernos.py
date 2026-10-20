@@ -349,25 +349,23 @@ TEXTO_BASES_LINK = "\n".join(
 )
 
 
-def tabla_columnas_sugeridas() -> str:
-    filas = ["| Base | 🔎 Para filtrar · 🧺 Para agrupar · 🔢 Cantidad a resumir (5 columnas sugeridas) |", "|---|---|"]
-    for b in BASES:
-        cols = " · ".join(f"{r} `{c}`" for r, c in b["cols"])
-        filas.append(f"| {b['icono']} **{b['n']}** · {b['nombre'].split(' (')[0].split(' —')[0]} | {cols} |")
-    return "\n".join(filas)
+_DEP5 = "1 Municipal · 2 Particular subvencionado · 3 Particular pagado · 4 Corp. de Administración Delegada · 5 Servicio Local de Educación"
+_ENCABEZADO_CODIGOS = ("> 🔢 **Códigos de esta base** (números que representan categorías: sirven para filtrar o agrupar, **no se suman**; "
+                       f"la lista completa está en el [Diccionario de Columnas]({LINK_DICCIONARIO})):\n>")
 
-
-NOTA_CODIGOS = """\
-> 🔢 **Códigos que verás en varias bases** (números que representan categorías: **no se suman ni se promedian**, se usan para filtrar o agrupar). La lista completa está en el [Diccionario de Columnas](%s).
->
-> | Código | Qué significa |
-> |---|---|
-> | Dependencia (`cod_depe2` en SIMCE) | 1 Municipal · 2 Particular subvencionado · 3 Particular pagado · 4 Servicio Local de Educación |
-> | Dependencia (`COD_DEPE2` en Matrícula y Subvenciones) | 1 Municipal · 2 Particular subvencionado · 3 Particular pagado · 4 Corp. de Administración Delegada · 5 Servicio Local de Educación |
-> | Grupo socioeconómico (`cod_grupo`, SIMCE) | 1 Bajo · 2 Medio bajo · 3 Medio · 4 Medio alto · 5 Alto |
-> | Rural (SIMCE: `cod_rural_rbd`) | 1 Urbano · 2 Rural |
-> | Rural (Matrícula y Subvenciones: `RURAL_RBD`) | **0** Urbano · **1** Rural (¡distinto que en SIMCE!) |
-""" % LINK_DICCIONARIO
+# Códigos especiales, solo en las bases que los traen (se muestran dentro del ejemplo plegado de cada base)
+CODIGOS = {
+    "3": _ENCABEZADO_CODIGOS + """
+> - `cod_depe2` (dependencia): 1 Municipal · 2 Particular subvencionado · 3 Particular pagado · 4 Servicio Local de Educación
+> - `cod_grupo` (grupo socioeconómico): 1 Bajo · 2 Medio bajo · 3 Medio · 4 Medio alto · 5 Alto
+> - `cod_rural_rbd`: 1 Urbano · 2 Rural *(¡distinto que en Matrícula y Subvenciones!)*""",
+    "5": _ENCABEZADO_CODIGOS + f"""
+> - `COD_DEPE2` (dependencia): {_DEP5}
+> - `RURAL_RBD`: **0** Urbano · **1** Rural *(¡distinto que en SIMCE!)*""",
+    "6": _ENCABEZADO_CODIGOS + f"""
+> - `COD_DEPE2` (dependencia): {_DEP5}
+> - `RURAL_RBD`: **0** Urbano · **1** Rural *(¡distinto que en SIMCE!)*""",
+}
 
 
 # ───────────────────────── Cuaderno de CÓDIGO ─────────────────────────
@@ -441,12 +439,17 @@ El proyecto de cierre se traduce en **una sola nota** (vale doble en el promedio
 
 > 🚫 **Sobre la IA:** el código y los textos de estos cuadernos se escriben sin IA. Es el código que vamos a tener que explicar en la Defensa técnica.
 """)
-    c.md("---\n\n## 🔗 Links de las bases\n\nCopia el link de **tu** base —con sus comillas— para el Paso 1. Están en la celda de abajo, comentados, así que ejecutarla no hace nada. Las bases ya vienen limpias: los números ya son números.")
-    c.code(TEXTO_BASES_LINK)
     c.md(f"""
+---
+
+## 🔗 Links de las bases
+
+Copia el link de **tu** base —con sus comillas— para el Paso 1. Están en la celda de abajo, comentados, así que ejecutarla no hace nada. Las bases ya vienen limpias: los números ya son números.
+
 📖 **Diccionario de Columnas** (qué significa cada columna): [abrir el PDF]({LINK_DICCIONARIO})
 👀 **Muestra de las bases** (6 filas reales de cada una): [abrir el PDF]({LINK_MUESTRA})
 """)
+    c.code(TEXTO_BASES_LINK)
     c.md("---\n\n### 🔧 Preparación\n\nEjecuta esta celda antes de empezar: instala pandas en tu sesión de Colab, por si acaso.")
     c.code("!pip install pandas")
 
@@ -520,7 +523,8 @@ for columna in columnas:
 | **Cuántas filas** hay por grupo | `RESUMEN = "count"` |
 | Sobre **toda la tabla**, sin filtrar | `VALOR = None` |
 | Una **comparación entre años o categorías** | `COL_GRUPO` = esa columna |
-
+""")
+    c.md("""
 ### 🧗 Para ir más allá (opcional)
 
 > **¿Mi pregunta necesita dos condiciones a la vez?** Une cada condición con `&` ("y"), escribiendo cada una **entre paréntesis**. Para "una **o** la otra" se usa `|`. No uses la palabra `and`: con tablas da error.
@@ -566,18 +570,33 @@ Y debajo, un gráfico de 5 barras horizontales, con Pudahuel como la más larga.
 ▶️ **Ejecuta primero esta celda** (ya está escrita): abre la tabla de siniestros en `tabla`.
 """)
     c.code(f'tabla = pd.read_csv("{RAW}07_conaset_rm.csv")\nprint("Filas:", tabla.shape[0], "| Columnas:", tabla.shape[1])')
-    c.md("✍️ **Llena los espacios `_____`** con la pregunta de arriba traducida (las columnas sugeridas de la base están en la tabla de más abajo) y ejecuta:")
+    c.md("✍️ **Llena los espacios `_____`** con la pregunta de arriba traducida (los nombres de las columnas están en el enunciado) y ejecuta:")
     c.code(receta_completa(None))
 
-    # ── Ejemplos (plegados, como las pistas) ──
+    # ── Mi base ──
+    c.md("""
+---
+
+## 🔍 Mi base
+
+Desde aquí trabajamos con **nuestra** base y con **nuestras propias preguntas**. Podemos hacer **todos los análisis que queramos**, copiando y pegando la receta, siempre que cada uno quede bien explicado. **Lo que más se premia es la originalidad de las preguntas que nos hacemos y que investigamos.**
+""")
     ejemplos, plegados = {}, []
     for b in BASES:
         r = ejecutar_ejemplo(b)
         ejemplos[b["n"]] = r
         e, esp = b["ej"], r["esp"]
+        cols = " · ".join(f"{rol} `{col}`" for rol, col in b["cols"])
         lineas_esp = "\n".join(f"{k:<10} = {lit(esp[k])}" for k in ("COL_FILTRO", "VALOR", "COL_GRUPO", "COL_NUMERO", "RESUMEN", "N"))
+        codigos = f"\n{CODIGOS[b['n']]}\n" if b["n"] in CODIGOS else ""
         plegados.append(f"""<details>
 <summary>{b['icono']} {b['n']} · {b['nombre']}</summary>
+
+**🗂️ Columnas sugeridas** *(🔎 para filtrar · 🧺 para agrupar · 🔢 cantidad a resumir)*
+
+{cols}
+{codigos}
+**📌 Ejemplo aplicado**
 
 **Pregunta:** {e['pregunta']}
 
@@ -590,31 +609,17 @@ Y debajo, un gráfico de 5 barras horizontales, con Pudahuel como la más larga.
 > 💡 {e['nota']}
 
 </details>""")
-    c.md("---\n\n## 📚 Ejemplos: ábrelos solo si los necesitas\n\n"
-         "Cada base tiene un ejemplo con la receta ya llena y su resultado (se verificaron ejecutándolos). Están **plegados**, como las pistas: abre solo el de tu base para ver cómo se traduce una pregunta. "
-         "**Son para entender, no para copiar:** entregar el ejemplo tal cual no cuenta como pregunta propia.\n\n" + "\n\n".join(plegados))
-
-    # ── Mi base ──
-    c.md("""
----
-
-## 🔍 Mi base
-
-Desde aquí trabajamos con **nuestra** base y con **nuestras propias preguntas**. Podemos hacer **todos los análisis que queramos**, copiando y pegando la receta, siempre que cada uno quede bien explicado. **Lo que más se premia es la originalidad de las preguntas que nos hacemos y que investigamos.**
-""")
-    c.md("### 🗂️ Mis 5 columnas sugeridas\n\nCada base trae 5 columnas que sirven bien para armar una pregunta. Busca la tuya:\n\n" + tabla_columnas_sugeridas()
-         + "\n\n> 🌟 Las 5 columnas son una **ayuda, no un límite**: con `list(tabla.columns)` ves todas las de tu base, y la ficha del Paso 1 sirve para cualquiera. **Las preguntas que usan otras columnas se premian.**")
-    c.md(NOTA_CODIGOS)
+    c.md("### 🗂️ Mi base: columnas sugeridas y ejemplo\n\n"
+         "Abre **solo la tuya**. Primero ves las 5 columnas sugeridas, que son una **ayuda y no un límite**: las preguntas que usan otras columnas se premian. "
+         "Después, un ejemplo aplicado con la receta ya llena y su resultado (se verificó ejecutándolo). "
+         "**El ejemplo es para entender, no para copiar:** entregarlo tal cual no cuenta como pregunta propia.\n\n" + "\n\n".join(plegados))
 
     c.md("""
 ### Paso 1 · Abro mi base y miro mis columnas
 
-**Lo que necesitas saber:** nuestra base ya viene limpia, así que lo primero es abrirla y entender qué hay en ella: qué representa una fila, cuántas filas y columnas tiene, y de qué tipo es cada una de nuestras 5 columnas.
+Nuestra base ya viene limpia, así que lo primero es abrirla y entender qué hay en ella: qué representa una fila, cuántas filas y columnas tiene, y de qué tipo es cada una de nuestras columnas.
 
-**Lo que debes hacer:**
-1. Pega el link de tu base (de la celda de links de arriba, **con las comillas**) y ejecuta.
-2. Escribe en la lista `columnas` los nombres de tus 5 columnas, copiados tal cual, y ejecuta la ficha.
-3. Mira las columnas con `list(tabla.columns)`: ¿hay alguna que te interese fuera de las 5?
+**1. Abrimos la base.** Pega el link de tu base (de la celda de links de más arriba, **con las comillas**) y ejecuta:
 """)
     c.code('''import pandas as pd
 import matplotlib.pyplot as plt
@@ -625,6 +630,7 @@ tabla = pd.read_csv(LINK)
 print("Filas:", tabla.shape[0], "| Columnas:", tabla.shape[1])
 tabla.head()
 ''')
+    c.md("**2. Miramos nuestras 5 columnas.** Las columnas sugeridas de tu base están en el bloque plegado de arriba. Escríbelas en la lista `columnas`, copiadas tal cual, y ejecuta la **ficha**: te dice el tipo de cada una, cuántos valores distintos tiene y cuántos vacíos.")
     c.code('''columnas = ["", "", "", "", ""]   # ← tus 5 columnas, entre comillas y separadas por coma
 
 for columna in columnas:
@@ -634,6 +640,7 @@ for columna in columnas:
     print("  ejemplos:", list(tabla[columna].dropna().unique()[:3]))
     print("  vacíos:", tabla[columna].isna().sum())
 ''')
+    c.md("**3. Exploramos más allá.** Esta celda muestra **todas** las columnas de tu base. ¿Hay alguna fuera de las 5 que te interese? Puedes pasarla por la ficha de arriba: las preguntas que usan otras columnas se premian.")
     c.code("list(tabla.columns)")
     c.md("> ✍️ **Responde ahora en el cuaderno de Texto, secciones 1 y 2** (contexto, pregunta e hipótesis · conoce tu base).")
 

@@ -78,3 +78,12 @@
 - **Rúbricas (estudiantes e interna):** «Conoce su base» = 5 mínimo + 10 originalidad, con tres niveles (10 / 5 / 0); sin tope de análisis pero cada uno con su explicación; cuenta el más original bien explicado; **análisis principal ⭐** (alimenta diapositivas 3-5, nota de prensa y Defensa); corrección acotada al principal y al más original. Mapas de «dónde se corrige» con la nueva numeración.
 
 **Pendiente de confirmar con Diego:** quién decide si una pregunta «cambia la comparación» (propuesta: el corrector, comparándola con el ejemplo de su base).
+
+## 2026-10-20 (noche, 3) — Columnas y códigos dentro de cada ejemplo, y texto antes de cada celda
+
+**Pedidos de Diego:** dentro de cada ejemplo plegado de base, mostrar primero las columnas sugeridas y luego el ejemplo aplicado (más compacto, se abre solo lo necesario), con los códigos especiales en esos mismos bloques; y que en el cuaderno de Código el texto explicativo vaya **antes de la celda donde se aplica** (por ejemplo, el Paso 1 daba las 3 instrucciones juntas), revisando el resto.
+
+**Qué se hizo**
+- **Plegables por base:** cada `<details>` trae (1) las 5 columnas sugeridas con su rol, (2) los códigos especiales cuando la base los tiene (SIMCE por establecimiento, Matrícula y Subvenciones; con la advertencia de que «rural» se codifica distinto en SIMCE) y (3) el ejemplo aplicado. Desaparecen la tabla global de columnas sugeridas y la nota global de códigos, que ocupaban celdas aparte; el bloque pasó a estar dentro de «Mi base», antes del Paso 1.
+- **Paso 1 intercalado:** cada instrucción va justo antes de su celda (1 abrir la base → 2 mirar las 5 columnas con la ficha → 3 explorar más allá), en lugar de las tres juntas arriba.
+- **Resto del cuaderno revisado:** los Conceptos 1-5 y los Pasos 2-3 ya tenían el texto inmediatamente antes de su celda. Se separaron las tablas de referencia de «Para ir más allá», que queda pegado a su código; los enlaces a los PDF pasan a la celda de texto que precede a los links de las bases; se corrigió la Guiada, que remitía a una tabla que ya no existe.

@@ -50,12 +50,12 @@ Salidas: filas que dejó el filtro y filas sin dato (límites) · cifras del top
 | ICN 1-4 | 22 min | Filtrar → agrupar → ordenar → graficar, cada uno con su pregunta, **Idea clave** y **✍️ Escríbelo tú**, sobre guaguas. |
 | **ICN 5 (nuevo)** | ~8 min | **Qué columna va en cada espacio** (etiqueta vs cantidad, trampas, ficha de columnas) y **cómo leer la salida**. Cierra con la tabla-resumen pregunta → espacios → tipo de columna → línea. |
 | Guiada | 8 min | La receta sobre CONASET: llenan los 6 espacios con la pregunta de las comunas con más fallecidos en 2025. |
-| Ejemplos | referencia | Una receta ya llena por cada una de las **12 bases**, **plegada** (`<details>`) para no alargar el cuaderno; se ejecutó cada una al generar. Son para entender: entregarlos tal cual vale 0 en originalidad. |
+| Mi base: columnas sugeridas y ejemplo | referencia | Un bloque **plegado** (`<details>`) por cada una de las **12 bases**, como las pistas, dentro de «Mi base». Cada uno trae primero las **5 columnas sugeridas** (🔎 filtrar · 🧺 agrupar · 🔢 cantidad), luego los **códigos especiales** de esa base si los tiene (dependencia, grupo socioeconómico, rural) y al final el **ejemplo aplicado** (se ejecutó cada uno al generar). Entregar el ejemplo tal cual vale 0 en originalidad. |
 | **Mi base** | resto de la sesión y la 38b | **Paso 1** abrir la base y ficha de las 5 columnas → ✍️ Texto 1-2 · **Paso 2** primer análisis (receta con los 6 espacios) · **Paso 3** revisar lo que salió → ✍️ Texto 3 · **Más análisis:** copian y pegan la receta las veces que quieran, cada uno con su bloque en el Texto; marcan con ⭐ el principal. |
 
 ## Bases: 5 columnas sugeridas, con rol
 
-Cada base trae 5 columnas sugeridas (🔎 filtrar · 🧺 agrupar · 🔢 cantidad) y una nota de «códigos que verás» (dependencia, grupo socioeconómico, rural), apoyada en el Diccionario de Columnas. Las bases viven en `datos-compartidos-v3/` (limpias, mismos nombres que la v2; ver su README).
+Cada base trae 5 columnas sugeridas (una ayuda, no un límite) y, en SIMCE por establecimiento, Matrícula y Subvenciones, una nota de códigos (dependencia, grupo socioeconómico, rural) apoyada en el Diccionario de Columnas. Ambas viven dentro del bloque plegado de su base. Las bases están en `datos-compartidos-v3/` (limpias, mismos nombres que la v2; ver su README).
 
 ## Evaluación (actualiza lo publicado el 19-oct)
 
