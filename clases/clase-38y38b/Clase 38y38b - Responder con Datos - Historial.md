@@ -87,3 +87,13 @@
 - **Plegables por base:** cada `<details>` trae (1) las 5 columnas sugeridas con su rol, (2) los códigos especiales cuando la base los tiene (SIMCE por establecimiento, Matrícula y Subvenciones; con la advertencia de que «rural» se codifica distinto en SIMCE) y (3) el ejemplo aplicado. Desaparecen la tabla global de columnas sugeridas y la nota global de códigos, que ocupaban celdas aparte; el bloque pasó a estar dentro de «Mi base», antes del Paso 1.
 - **Paso 1 intercalado:** cada instrucción va justo antes de su celda (1 abrir la base → 2 mirar las 5 columnas con la ficha → 3 explorar más allá), en lugar de las tres juntas arriba.
 - **Resto del cuaderno revisado:** los Conceptos 1-5 y los Pasos 2-3 ya tenían el texto inmediatamente antes de su celda. Se separaron las tablas de referencia de «Para ir más allá», que queda pegado a su código; los enlaces a los PDF pasan a la celda de texto que precede a los links de las bases; se corrigió la Guiada, que remitía a una tabla que ya no existe.
+
+## 2026-10-20 (noche, 4) — Ejemplo de pareja con nota 7 (DEMRE)
+
+**Pedido de Diego:** un solo Colab, al grano, que muestre cómo se vería una pareja que saca un 7, con la base más popular y con el código al inicio y el texto respondido al final.
+
+**Qué se hizo**
+- Nuevo `Clase 38y38b - Ejemplo Pareja Nota 7 (DEMRE).ipynb` (ejecutado, con salidas): pareja ficticia, base **DEMRE** (la más elegida, 5 equipos).
+- **Código:** Paso 1 (abrir y ficha), ⭐ Análisis 1 (Medicina, promedio del último seleccionado por universidad), Paso 3, y Análisis 2 (suma de vacantes de Medicina por universidad) con su Paso 3.
+- **Texto:** espacios y cifras, secciones 1 a 4, nota de prensa en formato noticia y bitácora de las tres sesiones. Cifras verificadas contra la ejecución.
+- Es material de referencia para Diego; no se ha publicado a estudiantes ni pusheado.
