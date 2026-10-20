@@ -439,18 +439,6 @@ El proyecto de cierre se traduce en **una sola nota** (vale doble en el promedio
 
 > 🚫 **Sobre la IA:** el código y los textos de estos cuadernos se escriben sin IA. Es el código que vamos a tener que explicar en la Defensa técnica.
 """)
-    filas_equipos = "\n".join(f"| {b} | {e} |" for b, e in EQUIPOS)
-    c.md(f"""
----
-
-## 👥 Equipos y bases
-
-| Base elegida | Equipos |
-|---|---|
-{filas_equipos}
-
-¿Tu nombre no aparece? Elige del menú de abajo la base que más te interese y avísale al profe cuál elegiste.
-""")
     c.md("---\n\n## 🔗 Links de las bases\n\nCopia el link de **tu** base —con sus comillas— para el Paso 1. Están en la celda de abajo, comentados, así que ejecutarla no hace nada. Las bases ya vienen limpias: los números ya son números.")
     c.code(TEXTO_BASES_LINK)
     c.md(f"""
