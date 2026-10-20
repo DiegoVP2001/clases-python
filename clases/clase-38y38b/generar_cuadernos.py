@@ -39,6 +39,7 @@ URL_GUAGUAS = REPO + "clases-octubre/datos-compartidos/bbdd_guaguas.csv"
 GH = "https://github.com/DiegoVP2001/clases-python/blob/master/clases/"
 LINK_DICCIONARIO = GH + "clase-38y38b/" + quote("Clase 38y38b - Diccionario de Columnas.pdf")
 LINK_MUESTRA = GH + "clase-38y38b/" + quote("Clase 38y38b - Muestra de las Bases.pdf")
+LINK_NOTICIA = "https://www.lun.com/Pages/NewsDetail.aspx?dt=2026-09-21&EsAviso=0&PaginaId=19&bodyid=0"
 LINK_RUBRICA = ("https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-38y38b/"
                 + quote("Clase 38y38b - Criterios de Evaluación del Proyecto.ipynb"))
 
@@ -407,6 +408,7 @@ Escribe estos datos para que podamos unir tu trabajo con el de tu pareja.
         "Con datos públicos como los de nuestra base se armó una noticia de circulación nacional: "
         "*cuánto ganan los ingenieros civiles industriales según su universidad de egreso*.\n\n"
         "![La nota del LUN — Cuánto ganan los ingenieros civiles industriales según su universidad de egreso](attachment:foto_lun.png)\n\n"
+        f"📰 **Léela completa:** [Cuánto ganan los ingenieros civiles industriales según su universidad de egreso]({LINK_NOTICIA}) (*Las Últimas Noticias*, 21-sep-2026).\n\n"
         "Un titular así es creíble por dos cosas: **la evidencia** (una cifra o un gráfico que responde una pregunta clara) y "
         "**la honestidad sobre sus límites** (qué no se puede afirmar con esos datos). En estas dos sesiones producimos las dos para nuestra propia pregunta."
     )
@@ -874,26 +876,33 @@ N          =
 - Nuestro próximo paso sería ___.
 """)
 
-    t.md("""
+    t.md(f"""
 ---
 
 ## 8️⃣ Nota de prensa
 
-**Lo que necesitas saber:** traduces el hallazgo a lenguaje de noticia, para quien no sabe nada de datos. Tiene un **titular** y un **cuerpo de 3 o 4 líneas**. La política de IA aplica solo aquí: el **borrador es nuestro**, y si después lo corregimos con IA, anotamos **qué le pedimos y qué nos respondió**.
+**Lo que necesitas saber:** traducimos el hallazgo a una **noticia**, para alguien que no sabe nada de datos. Una noticia real sigue un orden: **titular, bajada, entrada, desarrollo y cierre**. Así lo hace [la nota del LUN]({LINK_NOTICIA}) con la que partimos. Trae expertos y mucho texto; la nuestra es más corta y se apoya en **nuestros datos**.
+
+| Parte | En la nota del LUN | En la nuestra |
+|---|---|---|
+| **Titular** | «Cuánto ganan los ingenieros civiles industriales según su universidad de egreso» | Nuestro hallazgo en una frase *(sección 4)* |
+| **Bajada** | «Es la cuarta carrera con más alumnos en Chile: multifacéticos, pueden trabajar casi en cualquier parte.» | La frase que completa el titular o el dato que más sorprende |
+| **Entrada** | La cifra principal (cuántos estudian la carrera) y de qué fuente sale (el SIES) | Nuestra cifra principal y de dónde salen los datos *(secciones 2 y 4)* |
+| **Desarrollo** | Cómo se calcula el sueldo y las diferencias entre universidades | Cómo lo investigamos, las cifras del top, la pregunta distinta y un límite *(secciones 3, 4, 5 y 6)* |
+| **Cierre** | Una última idea que resume las dos miradas | Nuestra conclusión y el próximo paso *(sección 7)* |
+
+> ♻️ **No hay que inventar nada nuevo:** reordenamos lo que ya escribimos en las secciones anteriores, en lenguaje de noticia y sin términos técnicos.
 
 **Completa:**
 """)
     t.md("""
-**Borrador propio (sin corregir):**
+**Mi respuesta:**
 
 - **Titular** *(máx. 12 palabras)*: ___
-- **Cuerpo** *(3 o 4 líneas)*: ___
-
-**Versión corregida** *(si usamos IA)*:
-
-- Qué le pedimos: ___
-- Qué respondió: ___
-- Versión final: ___
+- **Bajada** *(1 frase)*: ___
+- **Entrada** *(2 o 3 líneas: la cifra principal y de dónde salen los datos)*: ___
+- **Desarrollo** *(2 o 3 párrafos cortos: cómo lo investigamos, qué muestran las cifras, qué encontramos en la pregunta distinta y qué límite tiene)*: ___
+- **Cierre** *(2 o 3 líneas: nuestra conclusión y el próximo paso)*: ___
 """)
 
     t.md("""
@@ -999,7 +1008,25 @@ Un ejemplo de cómo se ve una buena respuesta en cada sección, sobre la pregunt
 
 **7 · Conclusión.** Respondiendo nuestra pregunta: Pudahuel tuvo más fallecidos el 2025 (21). Nuestra hipótesis no se cumplió: las comunas más pobladas no encabezan el ranking. No pudimos descartar que influya el tránsito pesado de las rutas que cruzan la comuna. Nuestro próximo paso sería comparar con la cantidad de habitantes.
 
-**8 · Nota de prensa.** *Titular:* «Pudahuel lidera las muertes en siniestros de tránsito de la Región Metropolitana en 2025». *Cuerpo:* Con 21 fallecidos, Pudahuel superó a Santiago (19) y a Quilicura (17), según los registros de CONASET. Sin embargo, los datos no dicen cuánta gente circula por cada comuna…
+""")
+    tabla = ejemplos["7"]["ns"]["tabla"]
+    bici = tabla[tabla["AÑO"] == 2025].groupby("COMUNA")["Bicicleta"].sum().sort_values(ascending=False).head(3)
+    ranking = ejemplos["7"]["ns"]["top"]
+    total = int(ejemplos["7"]["ns"]["resumen"].sum())
+    promedio = f'{ejemplos["7"]["ns"]["resumen"].mean():.1f}'.replace(".", ",")
+    porcentaje = f'{ranking.iloc[0] / total * 100:.1f}'.replace(".", ",")
+    s.md(f"""
+**8 · Nota de prensa.**
+
+> **Pudahuel lidera las muertes en siniestros de tránsito de la Región Metropolitana en 2025**
+>
+> *Con {int(ranking.iloc[0])} fallecidos superó a Santiago y a Quilicura; pero los datos no dicen cuánta gente circula por cada comuna.*
+>
+> **Entrada.** Durante 2025 murieron {total} personas en siniestros de tránsito en la Región Metropolitana, según los registros de CONASET. Pudahuel fue la comuna con más fallecidos: {int(ranking.iloc[0])}, el {porcentaje} % del total.
+>
+> **Desarrollo.** Para llegar a esa cifra se sumaron los fallecidos de cada comuna durante 2025 y se ordenaron de mayor a menor. Detrás de Pudahuel aparecen Santiago ({int(ranking.iloc[1])}), Quilicura ({int(ranking.iloc[2])}), San Bernardo ({int(ranking.iloc[3])}) y Maipú ({int(ranking.iloc[4])}); las cinco más que duplican el promedio de las 50 comunas, que es {promedio}. Al mirar solo los siniestros con bicicletas, las comunas con más casos fueron {bici.index[0]} ({int(bici.iloc[0])}), {bici.index[1]} ({int(bici.iloc[1])}) y {bici.index[2]} ({int(bici.iloc[2])}). Con estos datos no se puede afirmar que Pudahuel sea la más peligrosa: no sabemos cuánta gente circula por cada comuna.
+>
+> **Cierre.** Los registros muestran dónde ocurren más muertes, pero no por qué. El próximo paso sería comparar estas cifras con la población de cada comuna.
 """)
     return s
 

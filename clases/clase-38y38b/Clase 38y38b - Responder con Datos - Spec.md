@@ -62,7 +62,7 @@ Cada base trae 5 columnas sugeridas (🔎 filtrar · 🧺 agrupar · 🔢 cantid
 La rúbrica completa, con equipos y bases, vive en esta carpeta: `Clase 38y38b - Criterios de Evaluación del Proyecto.ipynb` (para estudiantes) y `Rúbricas y Evaluación - Proyecto Cierre Octubre (v5).md` (interna, con puntajes y niveles). El cuaderno de Código solo enlaza a ella.
 
 - **«Conoce su base» (15 pts, dentro de Producto; reemplaza a «Archivo usable»):** **5 pts por cumplir el mínimo** (describir la base: qué es una fila, cuántas hay, qué columnas se usan y por qué) y **10 pts por una pregunta distinta** (una segunda pregunta, o una que use una columna fuera de las 5 sugeridas).
-- **Nota de prensa:** se mantiene, simplificada (titular y 3-4 líneas); la versión corregida con IA lleva registro.
+- **Nota de prensa:** se escribe como una **noticia real**, con titular, bajada, entrada, desarrollo y cierre (modelo: la nota del LUN, enlazada en los cuadernos de Código y de Texto), reutilizando lo escrito en las secciones 2 a 7. **Sin IA:** ya no hay versión corregida (política: 0 IA en código y en todos los textos).
 - **Defensa técnica (mar 27):** sin cambios de formato. Los errores intervenidos van en los espacios de la receta y en la receta misma.
 - **Nota de progreso 37b:** hito de Proceso, lineal por pareja (la que más avanzó = 7,0, aunque tenga errores). Pendiente de calcular.
 

@@ -54,3 +54,15 @@
 - La tabla de equipos viene de la 37b (19-oct) y **no coincide con el Calendario v4**: allí Benjamín Mejías queda fuera, y no aparecen la pareja Lucas Valenzuela + Víctor Olguín ni el trío Cifuentes + Moyano + Julián Aravena. Se corrige con la lista actual.
 - Niveles de «Pregunta distinta», cálculo de la nota de progreso 37b y normalización de Producto (115 pts): propuestas, por confirmar (§10 de la rúbrica interna).
 - En el cuaderno de estudiantes puse el hito 37b de forma neutra («cuenta el avance que dejó cada equipo ese día»); el detalle del cálculo queda solo en la versión interna.
+
+## 2026-10-20 (noche) — Nota de prensa como noticia real
+
+**Pedidos de Diego:** que la nota de prensa no sea de 3 o 4 líneas sino una noticia estructurada (bajada, entrada, desarrollo, cierre); poner el hipervínculo de la nota del LUN en los cuadernos de Código y de Texto; reutilizar lo escrito en las respuestas de texto; y sacar la idea de usar IA. Además, el cuaderno de Código ya no lleva el bloque de equipos (solo la rúbrica).
+
+**Qué se hizo**
+- **Texto, sección 8:** tabla que compara las partes de la nota del LUN con las de la nuestra (titular, bajada, entrada, desarrollo, cierre) y de qué sección se reutiliza cada una; celda de respuesta con las cinco partes. Se eliminó todo lo de borrador propio y versión con IA.
+- **Enlace a la noticia** en «De dónde partimos» (Código) y en la sección 8 (Texto).
+- **Solucionario:** el modelo de la nota de prensa sigue la estructura nueva, con CONASET. Las cifras (305 fallecidos, 6,9 %, promedio de 6,1 y el ranking de bicicletas) salen de ejecutar los datos, no de escribirlas a mano.
+- **Rúbrica (estudiantes e interna):** la nota de prensa se evalúa como noticia estructurada; se quitó el nivel de IA «con registro». Rigen «Nada de IA» (código y todos los textos) y «Libre» (diseño de la presentación). La tabla de IA de la v4 queda como registro en la versión interna.
+
+**Texto de la noticia:** solo se citan el titular, la bajada y la fuente; el desarrollo con expertos no se reproduce en los cuadernos.

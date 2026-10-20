@@ -98,7 +98,7 @@ Es el documento completo del equipo: los cuadernos de 🧑‍💻 **Código** y 
 | **Evidencia que responde la pregunta** | El gráfico o la tabla final **sostiene nuestra conclusión**, con cifras de nuestra tabla. No basta con un gráfico bonito. |
 | **Narración completa** | Se lee de principio a fin, en el orden de arriba, y cierra con una conclusión que responde la pregunta inicial. |
 | **Límites del dato** | Escribimos **qué NO podemos concluir** con esta base, apoyándonos en un dato real (por ejemplo, cuántas filas se perdieron), no en una frase de relleno. |
-| **Nota de prensa** | El hallazgo convertido en noticia: titular y 3 o 4 líneas, siguiendo la política de IA de más abajo. |
+| **Nota de prensa** | El hallazgo convertido en noticia, con **titular, bajada, entrada, desarrollo y cierre**, como la nota del LUN con la que partimos. |
 
 ### 🌟 Conoce su base
 
@@ -206,8 +206,7 @@ md("""
 
 | Nivel | ¿Dónde? | Regla |
 |---|---|---|
-| 🚫 **Nada de IA** | Todo el **código** (receta, filtros, gráficos) y todo el **texto del Colab narrado** (justificaciones, razonamiento, conclusión) | No se genera ni se corrige con IA. Es justo lo que se defiende en la Defensa técnica. |
-| 📝 **Con registro** | Solo la **nota de prensa** | Entregamos 2 versiones: nuestro **borrador propio** (puede tener errores) y una **versión corregida con IA**, anotando qué le pedimos y qué respondió. |
+| 🚫 **Nada de IA** | Todo el **código** (receta, filtros, gráficos) y todo el **texto del Colab narrado** (justificaciones, razonamiento, conclusión y nota de prensa) | No se genera ni se corrige con IA. Es justo lo que se defiende en la Defensa técnica. |
 | ✅ **Libre** | **Diseño de las diapositivas** y recursos visuales | Podemos usar plantillas o imágenes de internet, **siempre citando**: *"Descripción o título — Autor/Plataforma — Link"*. |
 """)
 
@@ -231,7 +230,7 @@ md("""
 - ☐ Describimos nuestra base y hicimos **una pregunta distinta**.
 - ☐ Cada operación tiene su texto de por qué.
 - ☐ Declaramos qué NO podemos concluir, con un dato real.
-- ☐ Incluimos la nota de prensa (borrador propio + versión corregida con registro).
+- ☐ Incluimos la nota de prensa, con titular, bajada, entrada, desarrollo y cierre.
 - ☐ La Bitácora está al día, con las tres sesiones.
 - ☐ Ejecutamos el Código de arriba hacia abajo y no hay errores.
 

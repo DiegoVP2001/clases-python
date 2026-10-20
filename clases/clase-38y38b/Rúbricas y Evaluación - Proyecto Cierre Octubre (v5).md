@@ -80,7 +80,7 @@ Los 9 criterios del inventario abierto quedan así:
 | **Evidencia construida** | 25 | El gráfico y las cifras del top responden efectivamente la pregunta y sostienen la conclusión; se citan **cifras de la tabla**. |
 | **Narración completa** | 20 | Se lee como un documento coherente, **en este orden: pregunta → base → evidencia → límites → conclusión**, y cierra con una conclusión que responde la pregunta inicial. |
 | **Límites del dato declarados** | 20 | Se dice por escrito qué NO se puede concluir, apoyado en un dato real de su tabla (filas perdidas, filas detrás de cada barra, promedio de promedios…), no en una frase de relleno. |
-| **Nota de prensa** | 15 | Titular + cuerpo de 3 o 4 líneas; borrador propio + versión corregida con IA documentada (§8). |
+| **Nota de prensa** | 15 | Escrita como noticia real, con **titular, bajada, entrada, desarrollo y cierre** (modelo: la nota del LUN). Reutiliza lo escrito en las secciones 2 a 7 del cuaderno de Texto. **Sin versión corregida con IA (v5).** |
 
 ### Conoce su base (15 pts)
 
@@ -189,6 +189,8 @@ Se evalúa el cuaderno que cada equipo dejó el **lunes 19-oct** (Clase 37b). Na
 ---
 
 ## 8. Política de IA — 3 niveles
+
+> **v5 (2026-10-20):** la nota de prensa ya **no lleva versión corregida con IA**, así que el nivel «Documentado» queda sin uso. Rigen solo «Restrictivo — 0 IA» (código y todos los textos, nota de prensa incluida) y «Permisivo» (diseño de la presentación). La tabla de abajo es la de v4, conservada como registro.
 
 **Principio central:** el uso de IA no se persigue ni se detecta — se verifica indirectamente a través de la Defensa técnica (§6) y el Q&A de la Presentación (§5). Lo que se evalúa nunca es "si usaron IA", sino si **pueden responder por lo que entregan**.
 
