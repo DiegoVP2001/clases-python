@@ -97,3 +97,14 @@
 - **Código:** Paso 1 (abrir y ficha), ⭐ Análisis 1 (Medicina, promedio del último seleccionado por universidad), Paso 3, y Análisis 2 (suma de vacantes de Medicina por universidad) con su Paso 3.
 - **Texto:** espacios y cifras, secciones 1 a 4, nota de prensa en formato noticia y bitácora de las tres sesiones. Cifras verificadas contra la ejecución.
 - Es material de referencia para Diego; no se ha publicado a estudiantes ni pusheado.
+
+## 2026-10-27 — Cuaderno de consejos: varias carreras y todos los años
+
+**Pedido de Diego:** un estudiante con SIES quería ver más de una carrera en `COL_FILTRO`, y otro con CONASET quería sumar los fallecidos de todos los años sin agrupar por año. Diego pidió dejarlo en un Colab por si otros equipos lo necesitan.
+
+**Qué se hizo**
+- Nuevo `Clase 38y38b - Consejos - Varias Carreras y Todos los Años.ipynb` (ejecutado con los datos locales, sin errores), con Paso previo y Casos 1, 2, 2b, 3 y 3b, más un resumen.
+- **Varias carreras:** `VALOR` pasa a lista y la receta usa `.isin(VALOR)` en vez de `== VALOR`. Con `COL_GRUPO` = la columna de carrera se comparan las carreras entre sí (2b).
+- **Todos los años:** `VALOR = None` (la receta ya lo soportaba), con `COL_GRUPO = "COMUNA"`, `COL_NUMERO = "FALLECIDOS"`, `RESUMEN = "sum"`. El 3b distingue personas fallecidas (1.859) de siniestros con fallecidos (1.725).
+- **Ojo de datos:** en SIES la carrera es "Medicina"; en DEMRE, "MEDICINA". Por eso el Paso previo muestra cómo está escrito el valor.
+- Publicado: commit `0aaf44b` en `master` (solo ese archivo).
