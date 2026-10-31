@@ -1,4 +1,7 @@
-# Proyecto: Clases de Python 4to Medio
+## Canary
+- Begin every response with the name "Diego".
+
+ Proyecto: Clases de Python 4to Medio
 
 Este proyecto sistematiza el diseño y producción de clases de programación en Python para estudiantes de 4to medio, siguiendo la progresión del Tutorial de Python de Picuino (clases 1 a 33).
 
@@ -399,7 +402,11 @@ Estas reglas aplican a TODAS las clases y no se negocian sin instrucción explí
          (Ctrl+F)... y los filtros de spam" (ligado a in/find())
          ❌ una frase genérica sin ejemplo concreto, o un ejemplo que no se
          conecta con lo que se practica en el Haz Ahora/Guiada/Independiente -->
-24. **Sección "¿Para qué sirve?" después del Propósito, siempre (default desde 2026-09-05, Clase 33).** Bloque corto de **máximo 2 frases**, con ejemplos reales y concretos de dónde se usa el **contenido técnico** de la clase (no la actitud, que ya cubre el Propósito), ligados a lo que efectivamente se practica ese día (Haz Ahora/Guiada/Independiente) — nunca una generalización vacía tipo "esto sirve para programar mejor". `disenar-clase` lo propone junto con objetivo/propósito en el mismo gate de aprobación; `generar-colab-clase` y `generar-ppt-clase` lo renderizan como callout breve justo después del Propósito, antes del Haz Ahora.
+<!-- why (actualización 2026-10-31): Diego pidió al diseñar la Clase 41 «quita de ahora en adelante propósito y cambia ¿para qué sirve? a ¿por qué lo veremos?»; quería menos texto reflexivo antes del contenido
+     evita: que las specs nuevas sigan llevando «## Propósito» o titulen la sección «¿Para qué sirve?»
+     ej: ✅ spec con «## ¿Por qué lo veremos?» y sin «## Propósito»
+         ❌ spec con «## Propósito» seguido de «## ¿Para qué sirve?» -->
+24. **Sección "¿Por qué lo veremos?" justo después del Objetivo, siempre; ya no hay sección "Propósito" (título y quita vigentes desde 2026-10-31; la sección existe desde 2026-09-05, Clase 33, con el título anterior "¿Para qué sirve?").** Bloque corto de **máximo 2 frases**, con ejemplos reales y concretos de dónde se usa el **contenido técnico** de la clase (no la actitud, que se mantiene como etiqueta del spec y como pregunta de cierre), ligados a lo que efectivamente se practica ese día (Haz Ahora/Guiada/Independiente) — nunca una generalización vacía tipo "esto sirve para programar mejor". `disenar-clase` lo propone junto con el objetivo en el mismo gate de aprobación; `generar-colab-clase` lo renderiza como callout breve justo después del Objetivo, antes del Haz Ahora (ya acepta ambos títulos). `generar-ppt-clase` también (desde 2026-10-31 el recuadro del slide de Objetivo se rotula «¿Por qué lo veremos?» y muestra ese texto; acepta ambos títulos). `disenar-clase/SKILL.md` aún conserva la plantilla de spec con Propósito: pendiente de actualizar cuando Diego lo decida.
 
 25. **ICN con formato "Escríbelo tú", siempre (default desde 2026-09-24; piloto Clase 33, 2026-09-08, generalizado al corregir Clase 35 — antes había quedado como "demo, NO default" y nunca se activó porque `disenar-clase` no pedía los campos).** Cada concepto del ICN trae, además de Definición/Ejemplo/Idea clave/Resumen tabla, dos campos: `Instrucción` (una frase imperativa que nombra la sintaxis nueva a escribir — única excepción a la regla 8 de no nombrar el constructo) y `Punto de partida` (bloque de código con solo lo que ya existía antes de esa sintaxis, sin la línea que la resuelve). La celda de código del estudiante en `Clase.ipynb` trae el "Punto de partida" incompleto, con la línea `✍️ **Escríbelo tú:** <instrucción>` debajo de la Idea clave — el estudiante escribe él mismo la sintaxis nueva, en vez de solo ejecutar un ejemplo ya completo. El `Ejemplo` completo del spec sigue siendo obligatorio (nunca se omite) y debe ser **autocontenido** (define sus propias variables, sin depender de que se haya ejecutado el concepto anterior): alimenta la sección "ICN — código completo" del Solucionario y sigue siendo la única fuente del PPT, que no cambia. Excepción: si Diego pide explícitamente el formato antiguo (ejemplo completo + output) para una clase puntual, se omiten ambos campos y el generador vuelve solo a ese comportamiento — sin preguntarlo por default en cada clase nueva.
 
@@ -571,6 +578,20 @@ Resumen del flujo: leer la Google Sheet de respuestas del Form vía Google Drive
 **Nada de `revision/`; esto sí puede ir a git.** A diferencia de las evaluaciones sumativas, Diego confirmó explícitamente que los nombres y respuestas del Ticket de Salida pueden vivir en el repo público sin restricción.
 
 ---
+
+## Bloque IA de noviembre 2026 (3ro medio, Clases 41–51)
+
+<!-- why: el 2026-10-31 Diego adoptó el plan de IA armado con ChatGPT y se produjo la Clase 41 con un flujo distinto al maestro (HTML interactivo con códigos, ChatGPT Voice como colega, práctica autorrevisada); sin esto, una sesión nueva diseñaría la Clase 42 con el flujo de 5 pasos, con Ticket por Form y con la voz como protagonista
+     evita: que una sesión nueva ignore el flujo liviano, los códigos de actividad, el criterio de la voz o los ejemplos acordados al continuar el bloque
+     ej: ✅ leer el archivo de traspaso y proponer la spec de N°42 con voz que solo habla cuando se le activa
+         ❌ diseñar N°42 con Haz Ahora/Guiada/Independiente/Ticket por Form como en las clases de Python -->
+Noviembre se rige por `clases/clases-znoviembre/Plan Noviembre 3ro Medio - IA - Especificacion operativa v3.md` (plan de ChatGPT + sección 10 de integración). **Antes de diseñar cualquier clase de este bloque lee `clases/clases-znoviembre/Plan Noviembre - Checklist y traspaso entre sesiones.md`**: ahí están el estado, el brief de N°42 y N°43, las decisiones vigentes, los pendientes y las trampas técnicas. Reglas que difieren del flujo maestro:
+
+- **Flujo liviano:** Spec → *gate* → Colab + Solucionario (+ HTML si aplica) → *gate* → push. Sin `Ejercicios.ipynb`, sin Ticket por Google Form y sin PPT (salvo que Diego lo pida). La actitud la elige Diego entre 3–4 opciones.
+- **Práctica autorrevisada:** Diego no recolecta resultados; pistas en todos los ejercicios y `check_*()` en los ejercicios clave de los Colabs.
+- **ChatGPT Voice como colega:** solo habla cuando Diego la activa; bienvenida, Haz Ahora y verificación del contenido nuevo; nunca protagonista en práctica ni cierre. Cada clase lleva `Guía Docente Voz.md`.
+- **Sitio de actividades interactivas:** `sitio-hub/` (Vercel `clases-ia-mario-bertero`, equipo `diegovp2001`); se publica con `npx vercel deploy --prod --yes --scope diegovp2001` desde `sitio-hub/`. **Nunca conectar ese proyecto al repo de GitHub.**
+- Curso en el encabezado: «3ro medio». Sin 4D hasta la clase de ética.
 
 ## Cómo iniciar una sesión
 

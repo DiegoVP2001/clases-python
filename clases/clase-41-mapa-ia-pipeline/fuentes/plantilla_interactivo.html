@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase 41 · Mapa de la IA</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#475569;--line:#cbd5e1;--accent:#1d4ed8;--accent-ink:#fff;
+--ok:#065f46;--okbg:#d1fae5;--warn:#92400e;--warnbg:#fef3c7;--lock:#e2e8f0}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#111a2e;--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;
+--accent:#93c5fd;--accent-ink:#0b1220;--ok:#a7f3d0;--okbg:#064e3b;--warn:#fde68a;--warnbg:#451a03;--lock:#1e293b}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 64px}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0}
+header.top .wrap{padding-bottom:0}
+header.top .row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.pags{display:flex;gap:8px;flex-wrap:wrap;padding:8px 0 2px}
+.pags button{min-height:40px}
+h1{font-size:1.25rem;margin:0}
+h2{font-size:1.4rem;margin:2.2rem 0 .6rem}
+h3{font-size:1.15rem;margin:0}
+.prog{display:flex;align-items:center;gap:10px;font-weight:600}
+.bar{width:160px;height:10px;border-radius:99px;background:var(--lock);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.muted{color:var(--muted)}
+button,input{font:inherit}
+button{min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--accent);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button[aria-pressed="true"],button[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
+button.mini{min-height:36px;padding:4px 10px;font-size:.92rem}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+input.code{width:5.5ch;text-align:center;font-size:1.4rem;letter-spacing:.2em;padding:6px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.act{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:16px;margin:18px 0}
+.act.done{border-color:var(--ok)}
+.act .head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{font-size:.85rem;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--lock)}
+.act.done .badge{background:var(--okbg);color:var(--ok)}
+.lock,.paglock{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px;padding:12px;background:var(--lock);border-radius:10px}
+.paglock{flex-direction:column;align-items:flex-start;padding:20px;margin-top:28px}
+.paglock form{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.msg{margin:6px 0 0;min-height:1.4em}
+.sig{margin:28px 0 0;text-align:right}
+details{margin:8px 0}
+summary{cursor:pointer;font-weight:600;padding:6px 0}
+.item{border-top:1px solid var(--line);padding:12px 0}
+.item:first-of-type{border-top:0}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.opts label{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;cursor:pointer;min-height:44px}
+.opts input:checked + span{font-weight:700}
+.opts label:has(input:checked){border-color:var(--accent)}
+.fb{margin-top:6px;padding:6px 10px;border-radius:8px;font-size:.95rem}
+.fb.ok{background:var(--okbg);color:var(--ok)}
+.fb.no{background:var(--warnbg);color:var(--warn)}
+.result{margin-top:12px;font-weight:600}
+.zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:10px 0}
+.zone{border:2px dashed var(--line);border-radius:12px;padding:8px;min-height:90px}
+.zone h4{margin:0 0 6px;font-size:1rem}
+.zone.over{border-color:var(--accent)}
+.mcard{border:2px solid var(--line);border-radius:10px;padding:8px;margin:6px 0;background:var(--card);cursor:grab}
+.mcard .btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.mcard label{display:block;margin-top:6px;font-size:.92rem}
+ol.orden{list-style:none;margin:10px 0;padding:0}
+ol.orden li{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;border:2px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;background:var(--card);cursor:grab}
+ol.orden .btns{display:flex;gap:6px}
+table.t{border-collapse:collapse;margin:8px 0;display:block;overflow-x:auto}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 12px;text-align:center}
+figure{margin:10px 0}
+figure svg{width:100%;height:auto;border:1px solid var(--line);border-radius:12px;display:block}
+figure:fullscreen{background:#f8fafc;display:flex;flex-direction:column;justify-content:center;padding:0}
+figure:fullscreen svg{height:calc(100vh - 56px);border:0;border-radius:0}
+.tl{margin:0;padding-left:1.2em}
+.tl li{margin:4px 0}
+@media (max-width:560px){body{font-size:16px}.bar{width:90px}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<div class="row">
+<h1>Clase 41 · Mapa de la IA + pipeline</h1>
+<div class="prog"><span><span id="prog">0</span> de 8 actividades</span><span class="bar" aria-hidden="true"><i id="progbar"></i></span>
+<button class="mini" id="reiniciar" type="button" title="Borra el avance guardado en este navegador">Reiniciar</button></div>
+</div>
+<nav class="pags" id="nav" aria-label="Páginas de la clase"></nav>
+</div></header>
+
+<main class="wrap">
+<div class="pagina" id="pag-1" data-n="1">
+<section id="recorrido">
+<h2>Nuestro recorrido de noviembre</h2>
+<div class="card">
+<ol class="tl">
+<li><strong>Lun 2</strong> · Mapa de la IA + pipeline (hoy)</li>
+<li><strong>Mar 3</strong> · Primer clasificador</li>
+<li><strong>Jue 5</strong> · Construir una neurona</li>
+<li><strong>Lun 9</strong> · Entrenar una red y medir aciertos</li>
+<li><strong>Mar 10</strong> · Mini-LLM: generar texto</li>
+<li><strong>Jue 12</strong> · Evaluación 1 (E1, 45 min)</li>
+<li><strong>Lun 16</strong> · Usar ChatGPT con instrucciones claras</li>
+<li><strong>Jue 19</strong> · Evaluación 2 (E2, 45 min) <span class="muted">(el mar 17 no hay clase)</span></li>
+<li><strong>Lun 23</strong> · Ética y uso responsable</li>
+<li><strong>Mar 24</strong> · Integración (práctica sin nota)</li>
+<li><strong>Jue 26</strong> · Evaluación 3 (E3)</li>
+</ol>
+<p><strong>Dos notas:</strong> la primera es el promedio de E1 y E2; la segunda es E3.</p>
+</div>
+</section>
+
+<section id="icn1">
+<h2>Concepto 1 · El mapa de la IA</h2>
+<figure id="fig1">
+{{SVG1}}
+<button class="mini" type="button" data-full="fig1">⛶ Pantalla completa</button>
+</figure>
+<div id="acts-icn1"></div>
+</section>
+<p class="sig"><button type="button" class="primary" data-ir="2">Ir a la página 2 ➜</button></p>
+</div>
+
+<div class="pagina" id="pag-2" data-n="2" hidden>
+<div class="contenido">
+<section id="icn2">
+<h2>Concepto 2 · El recorrido de los datos</h2>
+<figure id="fig2">
+{{SVG2}}
+<button class="mini" type="button" data-full="fig2">⛶ Pantalla completa</button>
+</figure>
+<div class="card"><strong>Ahora cambiamos de ejemplo.</strong> En las actividades de esta página trabajamos con el sistema de climatización de las bodegas donde fermenta la uva (datos ficticios): el sistema decide si hay que enfriar un tanque.</div>
+<div id="acts-icn2"></div>
+</section>
+<p class="sig"><button type="button" class="primary" data-ir="3">Ir a la página 3 (ticket) ➜</button></p>
+</div>
+</div>
+
+<div class="pagina" id="pag-3" data-n="3" hidden>
+<div class="contenido">
+<section id="ticket">
+<h2>Ticket de salida</h2>
+<div id="acts-ticket"></div>
+</section>
+</div>
+</div>
+</main>
+
+<script>
+"use strict";
+// ─── Códigos de 3 números. Cambiar aquí antes de la clase. ───
+// PAG2 abre la página 2 (y con ella la actividad P1); PAG3 abre la página 3 (y con ella el ticket).
+const CODIGOS = {M1: "417", M2: "238", M3: "659", P2: "884", P3: "306", P4: "591", PAG2: "172", PAG3: "725"};
+const PAGINAS = [
+ {n: 1, corto: "1 · El mapa"},
+ {n: 2, corto: "2 · El pipeline", cod: "PAG2", nombre: "El recorrido de los datos"},
+ {n: 3, corto: "3 · Ticket", cod: "PAG3", nombre: "Ticket de salida"}
+];
+
+// ─── Contenido ───
+const ACTS = [
+ {id: "M1", sec: "icn1", titulo: "Regla o patrón", tipo: "clasif",
+  instr: "Para cada ejemplo, elegimos si funciona con una regla escrita por una persona o con un patrón que la máquina descubrió en los datos.",
+  hints: ["¿Alguien escribió cada condición, una por una?", "¿Cambiaría lo que hace si le mostramos muchos datos nuevos?"],
+  opciones: ["Regla", "Patrón"],
+  items: [
+   {t: "Un semáforo que cambia de color cada 40 segundos.", ok: 0, exp: "Una persona escribió esos 40 segundos; el semáforo no los descubre.", pista: "¿Alguien escribió esos 40 segundos o los descubrió el semáforo?"},
+   {t: "Un sistema que recomienda música según lo que cada persona escucha.", ok: 1, exp: "Descubre qué canciones se parecen mirando muchísimos datos de escucha.", pista: "¿Alguien podría escribir una condición para cada canción y cada persona?"},
+   {t: "Un sistema de riego que abre las válvulas todos los días a las 7:00.", ok: 0, exp: "Una persona programó la hora; el sistema no descubre nada por su cuenta.", pista: "¿Alguien escribió esa hora o la descubrió el sistema?"},
+   {t: "Un sistema que decide cuándo enfriar un tanque de fermentación usando datos de vendimias anteriores.", ok: 1, exp: "Busca qué se repetía en las vendimias anteriores antes de que se enfriara el tanque.", pista: "¿De dónde saca lo que sabe: de una instrucción o de los datos?"},
+   {t: "Un sistema que distingue gatos de perros después de ver miles de fotos.", ok: 1, exp: "Nadie le escribió «las orejas puntudas son de gato»: lo descubrió viendo ejemplos.", pista: "¿Alguien le escribió cómo se ve un gato?"},
+   {t: "Un filtro que bloquea los correos que dicen «premio».", ok: 0, exp: "Es una condición escrita por una persona: si dice «premio», bloquea.", pista: "¿Quién decidió que la palabra «premio» era la importante?"}
+  ]},
+ {id: "M2", sec: "icn1", titulo: "Ubica en el mapa", tipo: "mapa",
+  instr: "Ubicamos cada ejemplo en su lugar del mapa (arrastrando la tarjeta o con los botones) y marcamos si genera contenido nuevo. Elegimos el círculo más específico. Son ejemplos típicos para practicar; en la vida real un mismo sistema puede combinar varias técnicas.",
+  hints: ["Si una persona escribió la condición, es solo regla. Si aprende de datos, es ML o DL.", "Si trabaja con imágenes, voz o texto usando una red neuronal de muchas capas, es DL."],
+  zonas: [["regla", "Solo regla (no aprende)"], ["ml", "ML"], ["dl", "DL"]],
+  items: [
+   {t: "ChatGPT escribiendo un texto.", zona: "dl", gen: true, exp: "Usa redes neuronales de muchas capas y produce texto nuevo."},
+   {t: "Un semáforo con temporizador fijo.", zona: "regla", gen: false, exp: "Una persona escribió el tiempo; no aprende de datos."},
+   {t: "Un sistema que recomienda música según lo que se escucha.", zona: "ml", gen: false, exp: "Descubre patrones en los datos de escucha, sin crear música nueva."},
+   {t: "Un programa que crea imágenes a partir de una descripción.", zona: "dl", gen: true, exp: "Usa redes neuronales de muchas capas y produce imágenes nuevas."},
+   {t: "Un filtro que bloquea correos que dicen «premio».", zona: "regla", gen: false, exp: "Es una condición escrita por una persona."},
+   {t: "Un desbloqueo del celular con reconocimiento de rostro.", zona: "dl", gen: false, exp: "Reconoce imágenes con redes de muchas capas, pero no crea nada nuevo."},
+   {t: "Un sistema que predice cuándo enfriar un tanque de fermentación con datos de vendimias anteriores.", zona: "ml", gen: false, exp: "Aprende patrones de datos, y no hace falta una red de muchas capas."},
+   {t: "Un programa que detecta si en una foto hay un perro.", zona: "dl", gen: false, exp: "Reconoce imágenes con redes de muchas capas; solo responde, no crea."}
+  ],
+  pistaZona: {regla: "¿Alguien escribió la condición? Entonces es solo regla.", ml: "Aprende patrones de datos, pero aquí no hace falta una red de muchas capas.", dl: "Trabaja con imágenes o texto usando redes neuronales de muchas capas: es DL."},
+  pistaGen: "¿Produce contenido nuevo (texto, imagen o música) o solo decide o reconoce?"},
+ {id: "M3", sec: "icn1", titulo: "El caso dudoso", tipo: "unicas",
+  instr: "A veces un ejemplo admite dos lecturas. Elegimos qué información nos falta para ubicarlo.",
+  hints: ["¿Qué recibe el corrector y qué produce?", "¿Quién decidió cada corrección: una persona o los datos?"],
+  preguntas: [
+   {q: "Un corrector de texto del celular cambia «ola» por «hola». ¿Qué información nos falta para ubicarlo en el mapa?",
+    ops: [
+     {t: "Cuántas aplicaciones tiene el celular.", fb: "Eso no cambia cómo decide el corrector."},
+     {t: "Cómo se construyó: si alguien escribió las correcciones una por una o si aprendió de muchos textos.", ok: true},
+     {t: "La marca del celular.", fb: "La marca no nos dice cómo decide el corrector."},
+     {t: "Cuánto cuesta el celular.", fb: "El precio no nos dice cómo decide el corrector."}],
+    exp: "Podría ser reglas, ML o una mezcla: depende de cómo se construyó. Sin esa información no podemos ubicarlo con certeza."}
+  ]},
+ {id: "P1", sec: "icn2", titulo: "Ordena el recorrido", tipo: "orden", sinCodigo: true,
+  instr: "Ordenamos los 7 pasos del sistema de climatización de una bodega de fermentación (arrastrando o con los botones ↑ ↓).",
+  hints: ["¿Qué tiene que existir antes de entrenar?", "¿Cuándo se mide cuántas veces acertó el modelo?"],
+  pasos: [
+   {t: "Definir el problema (¿hay que enfriar el tanque?).", pista: "Antes de buscar datos hay que saber qué queremos responder."},
+   {t: "Reunir los registros y reconocer variables y etiqueta.", pista: "Sin registros no hay nada que separar ni de dónde aprender."},
+   {t: "Separar el set de entrenamiento y el set de prueba.", pista: "Se separa antes de entrenar, para guardar el set de prueba aparte."},
+   {t: "Entrenar el modelo con el set de entrenamiento.", pista: "Aprende después de separar los datos y antes de que lo probemos."},
+   {t: "Predecir sobre el set de prueba.", pista: "Primero está entrenado; recién ahí le pedimos respuestas."},
+   {t: "Evaluar cuántas veces acertó.", pista: "Se compara lo que predijo con lo que realmente pasó."},
+   {t: "Usar el modelo en casos nuevos y revisar.", pista: "Es lo último: ya sabemos qué tan bien funciona."}
+  ],
+  inicio: [2, 5, 0, 6, 3, 1, 4]},
+ {id: "P2", sec: "icn2", titulo: "Variables y etiqueta", tipo: "clasif",
+  instr: "Esta es una tabla del sistema de climatización de una bodega de fermentación (datos ficticios). Para cada columna, elegimos si es una variable (lo que el modelo recibe) o la etiqueta (lo que queremos que prediga).",
+  tabla: {cab: ["Temperatura del tanque", "Temperatura de la bodega", "Horas de fermentación", "¿Se activó el enfriamiento?"], filas: [["26 °C", "31 °C", "18", "Sí"], ["21 °C", "22 °C", "40", "No"], ["28 °C", "33 °C", "6", "Sí"]]},
+  hints: ["¿Qué sabemos en el momento, antes de decidir?", "¿Qué es lo que queremos saber?"],
+  opciones: ["Variable", "Etiqueta"],
+  items: [
+   {t: "Temperatura del tanque", ok: 0, exp: "La conocemos en el momento y se la entregamos al modelo.", pista: "¿La sabemos antes de decidir si enfriamos?"},
+   {t: "¿Se activó el enfriamiento?", ok: 1, exp: "Es lo que queremos que el modelo prediga.", pista: "¿Es lo que queremos saber o lo que ya sabemos?"},
+   {t: "Horas de fermentación", ok: 0, exp: "Es un dato de entrada: lo que el modelo recibe.", pista: "¿Es un dato que ya tenemos o la respuesta que buscamos?"},
+   {t: "Temperatura de la bodega", ok: 0, exp: "Es un dato de entrada: lo que el modelo recibe.", pista: "¿Es un dato que ya tenemos o la respuesta que buscamos?"}
+  ]},
+ {id: "P3", sec: "icn2", titulo: "Entrenar o predecir", tipo: "clasif",
+  instr: "Para cada acción del sistema de climatización de la bodega, elegimos si corresponde a entrenar o a predecir.",
+  hints: ["Entrenar es aprender de ejemplos que ya traen su respuesta.", "Predecir es usar lo aprendido en un caso."],
+  opciones: ["Entrenar", "Predecir"],
+  items: [
+   {t: "Le damos la temperatura del tanque y de la bodega de ahora y responde «enfriar».", ok: 1, exp: "Usa lo aprendido en un caso: es predecir.", pista: "¿Está aprendiendo o usando lo que ya aprendió?"},
+   {t: "El sistema mira 40 registros de vendimias anteriores con su respuesta y ajusta lo que aprende.", ok: 0, exp: "Aprende de ejemplos que traen su respuesta: es entrenar.", pista: "¿Los ejemplos traen la respuesta? ¿Está aprendiendo de ellos?"},
+   {t: "Se corrige cada vez que se equivoca con un registro del set de entrenamiento.", ok: 0, exp: "Ajustarse con los ejemplos del set de entrenamiento es entrenar.", pista: "¿Se está ajustando o está respondiendo un caso nuevo?"},
+   {t: "Usamos el sistema ya listo con los datos de esta semana.", ok: 1, exp: "El sistema ya aprendió: lo usa en casos nuevos, es predecir.", pista: "¿El sistema ya está listo o todavía aprende?"},
+   {t: "Responde «no enfriar» para un registro del set de prueba.", ok: 1, exp: "Da una respuesta con lo aprendido: es predecir.", pista: "¿Está aprendiendo o contestando?"},
+   {t: "Compara sus respuestas con la etiqueta para mejorar lo que aprendió.", ok: 0, exp: "Mejorar con los ejemplos y su etiqueta es entrenar.", pista: "¿Está mejorando lo que aprendió o usándolo?"}
+  ]},
+ {id: "P4", sec: "icn2", titulo: "Caza el error", tipo: "unicas",
+  instr: "Leemos este recorrido y buscamos dónde está la falla.",
+  escenario: ["1. Definimos el problema: ¿hay que enfriar el tanque de fermentación?", "2. Reunimos 60 registros de vendimias anteriores: temperatura del tanque, temperatura de la bodega, horas de fermentación y si se enfrió.", "3. Entrenamos el modelo con los 60 registros.", "4. Evaluamos el modelo con los mismos 60 registros: acertó 60 de 60.", "5. Concluimos: «el sistema de climatización es perfecto»."],
+  hints: ["¿Con qué datos se evaluó?", "¿Esos datos ya los vio el modelo?"],
+  preguntas: [
+   {q: "¿En qué paso está el error?",
+    ops: [
+     {t: "Paso 2 · Reunimos los 60 registros.", fb: "Reunir datos no es el problema."},
+     {t: "Paso 3 · Entrenamos con los 60 registros.", fb: "Entrenar con esos datos es parte del recorrido; mira con qué se evalúa."},
+     {t: "Paso 4 · Evaluamos con los mismos 60 registros.", ok: true},
+     {t: "Paso 5 · Concluimos que es perfecto.", fb: "La conclusión falla por lo que pasó antes: ¿con qué datos se evaluó?"}],
+    exp: "Evaluar con los mismos registros que se usaron para entrenar no nos dice cómo le irá con casos nuevos."},
+   {q: "¿Qué paso del recorrido faltó antes de entrenar?",
+    ops: [
+     {t: "Separar el set de entrenamiento y el set de prueba.", ok: true},
+     {t: "Predecir sobre casos nuevos.", fb: "Eso viene después de entrenar."},
+     {t: "Definir el problema.", fb: "El problema sí se definió en el paso 1."},
+     {t: "Reunir más variables.", fb: "Más variables no arreglan que se evaluara con lo mismo que se entrenó."}],
+    exp: "Si guardamos un set de prueba aparte, el modelo no lo ve al entrenar y la evaluación es honesta."}
+  ]},
+ {id: "TK", sec: "ticket", titulo: "Ticket de salida", tipo: "unicas", sinCodigo: true,
+  instr: "Cuatro preguntas para ver cómo nos fue hoy. Es sin nota y nadie ve los resultados.",
+  hints: ["Volvemos a mirar los dos diagramas de las páginas anteriores."],
+  preguntas: [
+   {q: "Un sistema bloquea correos porque contienen la palabra «premio», con una condición escrita por una persona. Es:",
+    ops: [
+     {t: "Machine Learning.", fb: "ML descubre patrones en los datos; aquí una persona escribió la condición."},
+     {t: "Deep Learning.", fb: "DL usa redes neuronales de muchas capas; este filtro es una sola condición."},
+     {t: "Una regla escrita por una persona, que no aprende de datos.", ok: true},
+     {t: "IA generativa.", fb: "No produce contenido nuevo: solo decide si bloquea."}],
+    exp: "Una persona escribió la condición y no cambia sola: es una regla."},
+   {q: "Un equipo entrena el sistema de climatización de una bodega y lo evalúa con los mismos registros con que lo entrenó. ¿Qué problema tiene?",
+    ops: [
+     {t: "No sabemos cómo le irá con casos nuevos, porque esos registros ya los vio.", ok: true},
+     {t: "Usa pocas variables.", fb: "El problema no es cuántas variables usa, sino con qué datos se evaluó."},
+     {t: "Debió entrenar después de evaluar.", fb: "Primero se entrena y después se evalúa."},
+     {t: "No tiene ningún problema.", fb: "Sí lo tiene: ¿con qué datos se evaluó?"}],
+    exp: "El set de prueba se guarda aparte; si no, la evaluación no mide casos nuevos."},
+   {q: "En una tabla de climatización con las columnas temperatura del tanque, temperatura de la bodega, horas de fermentación y «¿se activó el enfriamiento?», ¿cuál es la etiqueta?",
+    ops: [
+     {t: "La temperatura del tanque.", fb: "La temperatura del tanque es una variable: es lo que el modelo recibe."},
+     {t: "La columna «¿se activó el enfriamiento?», porque es lo que queremos que el modelo prediga.", ok: true},
+     {t: "Las horas de fermentación.", fb: "Las horas de fermentación son una variable: es lo que el modelo recibe."},
+     {t: "Todas las columnas por igual.", fb: "La etiqueta es una sola columna: la que queremos predecir."}],
+    exp: "La etiqueta es lo que queremos predecir; las variables son lo que el modelo recibe."},
+   {q: "ChatGPT responde con mucha seguridad. ¿Qué conviene hacer?",
+    ops: [
+     {t: "Aceptarla: si suena segura, es correcta.", fb: "Que suene segura no significa que sea correcta."},
+     {t: "Descartarla siempre.", fb: "Descartarla siempre tampoco ayuda: la revisamos."},
+     {t: "Pedirle lo mismo hasta que cambie la respuesta.", fb: "Repetir la pregunta no verifica nada."},
+     {t: "Revisarla con otra fuente, porque genera texto que suena bien aunque pueda estar equivocado.", ok: true}],
+    exp: "Genera texto plausible; revisar con otra fuente es lo que nos protege de los errores."}
+  ]}
+];
+
+// ─── Estado guardado (solo qué páginas y actividades se abrieron o completaron) ───
+const KEY = "clase41-ia-v2";
+const store = {abiertas: {}, hechas: {}, paginas: {}};
+try {
+  const s = JSON.parse(localStorage.getItem(KEY) || "{}");
+  if (s && typeof s === "object") { store.abiertas = s.abiertas || {}; store.hechas = s.hechas || {}; store.paginas = s.paginas || {}; }
+} catch (e) { /* sin almacenamiento: la página funciona igual */ }
+function guardar() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { /* ignorar */ } }
+
+// ─── Utilidades ───
+function h(tag, props, hijos) {
+  const e = document.createElement(tag);
+  Object.assign(e, props || {});
+  (hijos || []).forEach(c => e.append(c));
+  return e;
+}
+function fb(ok, texto) { return h("div", {className: "fb " + (ok ? "ok" : "no"), textContent: (ok ? "✅ " : "⚠️ ") + texto}); }
+function quitarFb(cont) { cont.querySelectorAll(".fb").forEach(n => n.remove()); }
+
+function actualizarProgreso() {
+  const n = ACTS.filter(a => store.hechas[a.id]).length;
+  document.getElementById("prog").textContent = n;
+  document.getElementById("progbar").style.width = (n / ACTS.length * 100) + "%";
+}
+
+// ─── Cada tipo devuelve un {cuerpo, comprobar()}; comprobar() devuelve {bien, total} ───
+function tipoClasif(a) {
+  const cuerpo = h("div");
+  if (a.tabla) {
+    const t = h("table", {className: "t"});
+    t.append(h("tr", {}, a.tabla.cab.map(c => h("th", {textContent: c}))));
+    a.tabla.filas.forEach(f => t.append(h("tr", {}, f.map(c => h("td", {textContent: c})))));
+    cuerpo.append(t);
+  }
+  const filas = a.items.map((it, i) => {
+    const caja = h("div", {className: "item"});
+    caja.append(h("div", {textContent: (i + 1) + ". " + it.t}));
+    const ops = h("div", {className: "opts", role: "radiogroup", ariaLabel: it.t});
+    a.opciones.forEach((o, k) => {
+      const r = h("input", {type: "radio", name: a.id + "-" + i, value: k});
+      ops.append(h("label", {}, [r, h("span", {textContent: o})]));
+    });
+    caja.append(ops);
+    cuerpo.append(caja);
+    return caja;
+  });
+  return {cuerpo, comprobar() {
+    let bien = 0;
+    filas.forEach((caja, i) => {
+      quitarFb(caja);
+      const sel = caja.querySelector("input:checked");
+      const it = a.items[i];
+      if (!sel) { caja.append(fb(false, "Falta elegir una opción.")); return; }
+      if (Number(sel.value) === it.ok) { bien++; caja.append(fb(true, it.exp)); }
+      else { caja.append(fb(false, it.pista)); }
+    });
+    return {bien, total: a.items.length};
+  }};
+}
+
+function tipoUnicas(a) {
+  const cuerpo = h("div");
+  if (a.escenario) cuerpo.append(h("div", {className: "card"}, a.escenario.map(l => h("div", {textContent: l}))));
+  const cajas = a.preguntas.map((p, i) => {
+    const caja = h("div", {className: "item"});
+    caja.append(h("div", {textContent: (a.preguntas.length > 1 ? (i + 1) + ". " : "") + p.q}));
+    const ops = h("div", {className: "opts", role: "radiogroup", ariaLabel: p.q});
+    ops.style.flexDirection = "column"; ops.style.alignItems = "stretch";
+    p.ops.forEach((o, k) => {
+      const r = h("input", {type: "radio", name: a.id + "-" + i, value: k});
+      ops.append(h("label", {}, [r, h("span", {textContent: "ABCD"[k] + ") " + o.t})]));
+    });
+    caja.append(ops);
+    cuerpo.append(caja);
+    return caja;
+  });
+  return {cuerpo, comprobar() {
+    let bien = 0;
+    cajas.forEach((caja, i) => {
+      quitarFb(caja);
+      const sel = caja.querySelector("input:checked");
+      const p = a.preguntas[i];
+      if (!sel) { caja.append(fb(false, "Falta elegir una opción.")); return; }
+      const o = p.ops[Number(sel.value)];
+      if (o.ok) { bien++; caja.append(fb(true, p.exp)); } else { caja.append(fb(false, o.fb)); }
+    });
+    return {bien, total: a.preguntas.length};
+  }};
+}
+
+function tipoOrden(a) {
+  const orden = a.inicio.slice();
+  let feedback = {};
+  let foco = null;
+  const lista = h("ol", {className: "orden"});
+  let dragIdx = null;
+  function mover(de, hacia) {
+    if (hacia < 0 || hacia >= orden.length || de === hacia) return;
+    const [x] = orden.splice(de, 1); orden.splice(hacia, 0, x);
+    feedback = {}; pintar();
+  }
+  function pintar() {
+    lista.replaceChildren();
+    orden.forEach((idx, pos) => {
+      const li = h("li", {draggable: true});
+      li.append(h("span", {textContent: (pos + 1) + ". " + a.pasos[idx].t}));
+      const btns = h("span", {className: "btns"});
+      const sube = h("button", {type: "button", className: "mini", textContent: "↑", ariaLabel: "Subir: " + a.pasos[idx].t, disabled: pos === 0});
+      const baja = h("button", {type: "button", className: "mini", textContent: "↓", ariaLabel: "Bajar: " + a.pasos[idx].t, disabled: pos === orden.length - 1});
+      sube.dataset.idx = baja.dataset.idx = String(idx); sube.dataset.dir = "u"; baja.dataset.dir = "d";
+      sube.onclick = () => { foco = [idx, "u"]; mover(pos, pos - 1); };
+      baja.onclick = () => { foco = [idx, "d"]; mover(pos, pos + 1); };
+      btns.append(sube, baja);
+      li.append(btns);
+      li.ondragstart = e => { dragIdx = pos; e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", String(pos)); };
+      li.ondragover = e => e.preventDefault();
+      li.ondrop = e => { e.preventDefault(); if (dragIdx !== null) mover(dragIdx, pos); dragIdx = null; };
+      lista.append(li);
+      if (feedback[idx]) lista.append(h("li", {draggable: false, style: "border:0;padding:0;margin:0;cursor:default"}, [feedback[idx]]));
+    });
+    if (foco) {
+      // Keep keyboard focus on the button just used; fall back to the first enabled one at the list edges.
+      const usados = [...lista.querySelectorAll("button")].filter(b => b.dataset.idx === String(foco[0]) && b.dataset.dir === foco[1]);
+      const libre = usados.find(b => !b.disabled) || lista.querySelector("button:not([disabled])");
+      if (libre) libre.focus();
+      foco = null;
+    }
+  }
+  pintar();
+  return {cuerpo: lista, comprobar() {
+    let bien = 0; feedback = {};
+    orden.forEach((idx, pos) => {
+      if (idx === pos) { bien++; feedback[idx] = fb(true, "En su lugar."); }
+      else { feedback[idx] = fb(false, a.pasos[idx].pista); }
+    });
+    pintar();
+    return {bien, total: orden.length};
+  }};
+}
+
+function tipoMapa(a) {
+  const est = a.items.map(() => ({zona: null, gen: false, fb: []}));
+  const cuerpo = h("div");
+  const pool = h("div", {className: "zone"});
+  pool.append(h("h4", {textContent: "Por ubicar"}));
+  const zonas = {};
+  const zonasBox = h("div", {className: "zones"});
+  a.zonas.forEach(([k, nombre]) => {
+    const z = h("div", {className: "zone"}); z.append(h("h4", {textContent: nombre}));
+    zonas[k] = z; zonasBox.append(z);
+  });
+  cuerpo.append(pool, zonasBox);
+  let foco = null;
+  function destino(el, valor) {
+    el.ondragover = e => { e.preventDefault(); el.classList.add("over"); };
+    el.ondragleave = () => el.classList.remove("over");
+    el.ondrop = e => { e.preventDefault(); el.classList.remove("over"); const i = Number(e.dataTransfer.getData("text/plain")); if (!Number.isNaN(i)) ubicar(i, valor); };
+  }
+  destino(pool, null);
+  Object.keys(zonas).forEach(k => destino(zonas[k], k));
+  function ubicar(i, zona) { est[i].zona = zona; est[i].fb = []; foco = [i, zona]; pintar(); }
+  function pintar() {
+    [pool, ...Object.values(zonas)].forEach(z => z.querySelectorAll(".mcard").forEach(n => n.remove()));
+    a.items.forEach((it, i) => {
+      const c = h("div", {className: "mcard", draggable: true});
+      c.ondragstart = e => { e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", String(i)); };
+      c.append(h("div", {textContent: it.t}));
+      const btns = h("div", {className: "btns"});
+      a.zonas.forEach(([k, nombre]) => {
+        const b = h("button", {type: "button", className: "mini", textContent: nombre.split(" ")[0] === "Solo" ? "Regla" : nombre, ariaPressed: String(est[i].zona === k), ariaLabel: "Ubicar en " + nombre + ": " + it.t});
+        b.dataset.i = i; b.dataset.z = k;
+        b.onclick = () => ubicar(i, k);
+        btns.append(b);
+      });
+      c.append(btns);
+      const lab = h("label");
+      const chk = h("input", {type: "checkbox", checked: est[i].gen});
+      chk.onchange = () => { est[i].gen = chk.checked; est[i].fb = []; quitarFb(c); };
+      lab.append(chk, " Genera contenido nuevo");
+      c.append(lab);
+      est[i].fb.forEach(f => c.append(f));
+      (est[i].zona ? zonas[est[i].zona] : pool).append(c);
+    });
+    if (foco) {
+      const b = cuerpo.querySelector('button[data-i="' + foco[0] + '"][data-z="' + (foco[1] || a.zonas[0][0]) + '"]');
+      if (b) b.focus();
+      foco = null;
+    }
+  }
+  pintar();
+  return {cuerpo, comprobar() {
+    let bien = 0;
+    a.items.forEach((it, i) => {
+      const e = est[i]; e.fb = [];
+      if (!e.zona) e.fb.push(fb(false, "Falta ubicarlo en el mapa."));
+      else if (e.zona !== it.zona) e.fb.push(fb(false, a.pistaZona[it.zona]));
+      else if (e.gen !== it.gen) e.fb.push(fb(false, a.pistaGen));
+      else { bien++; e.fb.push(fb(true, it.exp)); }
+    });
+    pintar();
+    return {bien, total: a.items.length};
+  }};
+}
+
+const TIPOS = {clasif: tipoClasif, unicas: tipoUnicas, orden: tipoOrden, mapa: tipoMapa};
+
+// ─── Armado de cada actividad ───
+function crearActividad(a) {
+  const art = h("article", {className: "act", id: "act-" + a.id});
+  const badge = h("span", {className: "badge", textContent: a.sinCodigo ? "🔓 Abierta" : "🔒 Bloqueada"});
+  art.append(h("div", {className: "head"}, [h("h3", {textContent: (a.id === "TK" ? "🎫 " : a.id + " · ") + a.titulo}), badge]));
+  const lock = h("form", {className: "lock"});
+  const input = h("input", {className: "code", type: "text", inputMode: "numeric", maxLength: 3, pattern: "[0-9]{3}", autocomplete: "off", ariaLabel: "Código de la actividad " + a.id});
+  const abrir = h("button", {type: "submit", className: "primary", textContent: "Abrir actividad"});
+  const msg = h("p", {className: "msg", role: "status"});
+  lock.append(h("label", {}, ["Código de 3 números: ", input]), abrir);
+  const cuerpo = h("div", {hidden: !a.sinCodigo});
+  if (a.sinCodigo) art.append(cuerpo); else art.append(lock, msg, cuerpo);
+
+  const t = TIPOS[a.tipo](a);
+  cuerpo.append(h("p", {textContent: a.instr}));
+  a.hints.forEach((txt, i) => cuerpo.append(h("details", {}, [h("summary", {textContent: "💡 Pista " + (i + 1)}), h("div", {textContent: txt})])));
+  cuerpo.append(t.cuerpo);
+  const comprobar = h("button", {type: "button", className: "primary", textContent: "Comprobar"});
+  const resultado = h("div", {className: "result", role: "status"});
+  cuerpo.append(comprobar, resultado);
+
+  function marcarHecha() {
+    store.hechas[a.id] = true; guardar();
+    art.classList.add("done"); badge.textContent = "✅ Lista"; actualizarProgreso();
+  }
+  function abrirActividad(enfocar) {
+    lock.hidden = true; msg.textContent = ""; cuerpo.hidden = false;
+    if (!store.hechas[a.id]) badge.textContent = "🔓 Abierta";
+    store.abiertas[a.id] = true; guardar();
+    if (enfocar) { const f = cuerpo.querySelector("input,button"); if (f) f.focus(); }
+  }
+  lock.onsubmit = e => {
+    e.preventDefault();
+    if (input.value.trim() === CODIGOS[a.id]) abrirActividad(true);
+    else { msg.textContent = "Ese no es el código de esta actividad. Lo revisamos con quien nos lo entrega."; input.select(); }
+  };
+  comprobar.onclick = () => {
+    const r = t.comprobar();
+    if (r.bien === r.total) {
+      resultado.textContent = "🎉 ¡Completa! " + r.bien + " de " + r.total + "." + (a.sinCodigo ? "" : " Esperamos el código de la siguiente.");
+      marcarHecha();
+    } else resultado.textContent = r.bien + " de " + r.total + " bien. Leemos las pistas, corregimos y volvemos a comprobar.";
+  };
+  if (store.hechas[a.id]) { art.classList.add("done"); badge.textContent = "✅ Lista"; }
+  if (!a.sinCodigo && store.abiertas[a.id]) abrirActividad(false);
+  return art;
+}
+
+ACTS.forEach(a => document.getElementById("acts-" + a.sec).append(crearActividad(a)));
+actualizarProgreso();
+
+// ─── Páginas: la 2 y la 3 se abren con su propio código ───
+const nav = document.getElementById("nav");
+const botonesNav = {};
+function etiquetaNav(p) { return p.corto + (p.cod && !store.paginas[p.n] ? " 🔒" : ""); }
+function mostrarPagina(n, enfocar) {
+  document.querySelectorAll(".pagina").forEach(el => { el.hidden = Number(el.dataset.n) !== n; });
+  PAGINAS.forEach(p => { if (p.n === n) botonesNav[p.n].setAttribute("aria-current", "page"); else botonesNav[p.n].removeAttribute("aria-current"); });
+  window.scrollTo(0, 0);
+  try { history.replaceState(null, "", "#pagina-" + n); } catch (e) { /* ignorar */ }
+  if (enfocar) { const f = document.querySelector("#pag-" + n + " input.code:not([hidden])"); if (f && f.offsetParent) f.focus(); }
+}
+PAGINAS.forEach(p => {
+  const b = h("button", {type: "button", className: "mini", textContent: etiquetaNav(p)});
+  b.onclick = () => mostrarPagina(p.n, true);
+  botonesNav[p.n] = b; nav.append(b);
+  if (!p.cod) return;
+  const pag = document.getElementById("pag-" + p.n);
+  const contenido = pag.querySelector(".contenido");
+  const input = h("input", {className: "code", type: "text", inputMode: "numeric", maxLength: 3, pattern: "[0-9]{3}", autocomplete: "off", ariaLabel: "Código de la página " + p.n});
+  const msg = h("p", {className: "msg", role: "status"});
+  const form = h("form");
+  form.append(h("label", {}, ["Código de 3 números: ", input]), h("button", {type: "submit", className: "primary", textContent: "Abrir página " + p.n}));
+  const paglock = h("div", {className: "paglock"}, [h("h2", {textContent: "Página " + p.n + " · " + p.nombre, style: "margin:0"}),
+    h("p", {textContent: "Esta página se abre con un código de 3 números que nos entregan en la sala."}), form, msg]);
+  pag.prepend(paglock);
+  function abrirPagina(enfocar) {
+    paglock.hidden = true; contenido.hidden = false; store.paginas[p.n] = true; guardar();
+    b.textContent = etiquetaNav(p);
+    if (enfocar) { const f = contenido.querySelector("input,button"); if (f) f.focus(); }
+  }
+  form.onsubmit = e => {
+    e.preventDefault();
+    if (input.value.trim() === CODIGOS[p.cod]) { abrirPagina(true); window.scrollTo(0, 0); }
+    else { msg.textContent = "Ese no es el código de esta página. Lo revisamos con quien nos lo entrega."; input.select(); }
+  };
+  if (store.paginas[p.n]) abrirPagina(false); else contenido.hidden = true;
+});
+document.querySelectorAll("[data-ir]").forEach(b => b.onclick = () => mostrarPagina(Number(b.dataset.ir), true));
+const inicial = Number((location.hash.match(/^#pagina-(\d)$/) || [])[1]);
+mostrarPagina(PAGINAS.some(p => p.n === inicial) ? inicial : 1, false);
+
+document.getElementById("reiniciar").onclick = () => {
+  try { localStorage.removeItem(KEY); } catch (e) { /* ignorar */ }
+  try { history.replaceState(null, "", location.pathname); } catch (e) { /* ignorar */ }
+  location.reload();
+};
+document.querySelectorAll("[data-full]").forEach(b => b.onclick = () => {
+  const f = document.getElementById(b.dataset.full);
+  if (f.requestFullscreen) f.requestFullscreen().catch(() => {});
+});
+</script>
+</body>
+</html>
