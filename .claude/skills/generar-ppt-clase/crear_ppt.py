@@ -160,15 +160,15 @@ def parsear_spec(ruta_spec: Path) -> dict:
     contenido = ruta_spec.read_text(encoding="utf-8")
     spec = {
         "numero_clase": None, "tema": None, "contexto": {},
-        "objetivo": None, "proposito": None,
-        "haz_ahora": None, "haz_ahora_min": None,
+        "objetivo": None, "proposito": None, "para_que_sirve": None,
+        "haz_ahora": None, "haz_ahora_min": None, "haz_ahora_ppt": None,
         "icn": {"conceptos": [], "errores_tabla": [], "demos_apiladas": []},
         "guiada": {"situacion": None, "variables": None, "resultado": None},
         "independiente": [],
         "cierre": [],
         "cierre_estructurado": None,
     }
-    m = re.search(r"^#\s+Clase\s+(\w+)\s*[—\-–]\s*(.+)$", contenido, re.MULTILINE)
+    m = re.search(r"^#\s+Clase\s+([\w.]+)\s*[—\-–]\s*(.+)$", contenido, re.MULTILINE)
     if m:
         raw = m.group(1)
         spec["numero_clase"] = int(raw) if raw.isdigit() else raw
@@ -180,12 +180,43 @@ def parsear_spec(ruta_spec: Path) -> dict:
             if mkv:
                 spec["contexto"][mkv.group(1).strip()] = mkv.group(2).strip()
     spec["objetivo"] = limpiar(extraer(contenido, "## Objetivo", "## Propósito"))
+    # Specs sin "## Propósito" (desde 2026-10-31): sin este corte el objetivo se extendería
+    # hasta el final del documento, porque extraer() devuelve el resto si no halla el marcador.
+    if spec["objetivo"]:
+        _h2_obj = re.search(r"^##\s", spec["objetivo"], re.MULTILINE)
+        if _h2_obj:
+            spec["objetivo"] = spec["objetivo"][:_h2_obj.start()].strip()
     prop = limpiar(extraer(contenido, "## Propósito", "## Estructura de la clase"))
     if prop:
+        # Cortar en el siguiente encabezado de nivel 2: hay specs con secciones
+        # intermedias (OAs MINEDUC, Apertura) entre el Propósito y la Estructura.
+        corte = re.search(r"^##\s", prop, re.MULTILINE)
+        if corte:
+            prop = prop[:corte.start()].strip()
         spec["proposito"] = "\n".join(
             l.lstrip("> ").rstrip() for l in prop.split("\n")
         ).strip()
+    # "¿Por qué lo veremos?" (antes "¿Para qué sirve?"; regla 24 del CLAUDE.md raíz).
+    # Desde 2026-10-31 reemplaza al Propósito: el slide de Objetivo muestra este texto en el
+    # recuadro derecho de la plantilla (placeholder PROPOSITO) con el rótulo "¿Por qué lo veremos?".
+    # Las specs antiguas con "## Propósito" siguen igual (el recuadro conserva su rótulo).
+    spec["por_que_titulo"] = "¿Por qué lo veremos?"
+    pqs = limpiar(extraer(contenido, "## ¿Por qué lo veremos?", "## Estructura de la clase"))
+    if not pqs:
+        spec["por_que_titulo"] = "¿Para qué sirve?"
+        pqs = limpiar(extraer(contenido, "## ¿Para qué sirve?", "## Estructura de la clase"))
+    if pqs:
+        corte_pqs = re.search(r"^##\s", pqs, re.MULTILINE)
+        if corte_pqs:
+            pqs = pqs[:corte_pqs.start()].strip()
+        spec["para_que_sirve"] = "\n".join(
+            l.lstrip("> ").rstrip() for l in pqs.split("\n")
+        ).strip()
     spec["haz_ahora"] = limpiar(extraer(contenido, "### 1. Haz Ahora", "### 2."))
+    # Versión proyectada del Haz Ahora: cuando el Haz Ahora del Colab es demasiado
+    # largo para una slide (código ejecutable, varios programas), el spec puede
+    # declarar una versión compacta al final, que solo consume el PPT.
+    spec["haz_ahora_ppt"] = limpiar(extraer(contenido, "## Proyección — Haz Ahora (PPT)", None))
     m_dur_ha = re.search(r"###\s*1\.\s*Haz Ahora\s*\((\d+)", contenido)
     spec["haz_ahora_min"] = int(m_dur_ha.group(1)) if m_dur_ha else None
     icn_raw = limpiar(extraer(contenido, "### 2. Introducción al Contenido Nuevo", "### 3."))
@@ -213,18 +244,20 @@ def parsear_spec(ruta_spec: Path) -> dict:
 
 def parsear_cierre_estructurado(texto: str) -> dict:
     """Parsea el cierre con objetivo + pregunta de comprensión + pregunta de propósito.
-    Usa (?=\\n\\*\\*|\\Z) para no cortar en bold (**texto**) dentro de una línea."""
+    Usa (?=\\n\\*\\*|\\Z) para no cortar en bold (**texto**) dentro de una línea.
+    El \\s* tras la etiqueta acepta las dos formas: texto en la misma línea que la
+    etiqueta en negrita, o en la línea siguiente."""
     cierre = {"objetivo": None, "pregunta_meta": None, "pregunta_actitud": None}
 
-    m_obj = re.search(r"\*\*Objetivo de la clase[^*]*\*\*\s*\n(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
+    m_obj = re.search(r"\*\*Objetivo de la clase[^*]*\*\*\s*(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
     if m_obj:
         cierre["objetivo"] = m_obj.group(1).strip()
 
-    m_p1 = re.search(r"\*\*Pregunta 1[^*]*\*\*\s*\n(.+?)(?=\n\*\*Pregunta 2|\Z)", texto, re.DOTALL)
+    m_p1 = re.search(r"\*\*Pregunta 1[^*]*\*\*\s*(.+?)(?=\n\*\*Pregunta 2|\Z)", texto, re.DOTALL)
     if m_p1:
         cierre["pregunta_meta"] = m_p1.group(1).strip()
 
-    m_p2 = re.search(r"\*\*Pregunta 2[^*]*\*\*\s*\n(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
+    m_p2 = re.search(r"\*\*Pregunta 2[^*]*\*\*\s*(.+?)(?=\n\*\*|\Z)", texto, re.DOTALL)
     if m_p2:
         cierre["pregunta_actitud"] = m_p2.group(1).strip()
 
@@ -691,6 +724,21 @@ def reemplazar_placeholders(slide, mapping: dict, mapping_inline_code=None):
             for row in shape.table.rows:
                 for cell in row.cells:
                     reemplazar_en_text_frame(cell.text_frame, mapping)
+
+
+def renombrar_rotulo(slide, viejo: str, nuevo: str):
+    """Cambia el texto de un rótulo corto de la plantilla (p. ej. «💡  Propósito»).
+
+    Solo toca runs que terminan en `viejo` y son cortos, para no alterar texto de contenido.
+    """
+    for shape in slide.shapes:
+        if not shape.has_text_frame:
+            continue
+        for para in shape.text_frame.paragraphs:
+            for run in para.runs:
+                t = run.text
+                if len(t) <= 40 and t.rstrip().endswith(viejo):
+                    run.text = t.rstrip()[: -len(viejo)] + nuevo
 
 
 def reemplazar_en_text_frame(tf, mapping: dict):
@@ -1424,8 +1472,8 @@ def construir_slide_icn_dos_columnas(prs, num: str, plan: "SlidePlan"):
 # =====================================================================
 
 # Geometría del área de contenido (debajo del título, sobre el margen inferior)
-_Y_ICN_INICIO = 1.65   # pulgadas desde el tope del slide
-_Y_ICN_FIN    = 7.20   # margen inferior
+_Y_ICN_INICIO = 1.58   # pulgadas desde el tope del slide
+_Y_ICN_FIN    = 7.32   # margen inferior
 _GAP_BLOQUES  = 0.18   # espacio entre bloques
 
 # Anchos útiles para medición de fuente de código
@@ -1433,11 +1481,14 @@ _ANCHO_COD_FLEX = _W - 2 * _MX - 0.3 if _HELPERS_OK else 12.0
 
 
 def _renderizar_bloque(slide, bloque: "BloquePlan", y: float, h: float,
-                       key: str, mapping: dict) -> None:
+                       key: str, mapping: dict, tam: int = None) -> None:
     """Dibuja un bloque en la posición y con altura h.
 
     Para el texto con backticks, usa el sistema de placeholders de
     reemplazar_placeholders (que formatea código inline automáticamente).
+
+    `tam` es el tamaño de fuente que resolvió el solver de layout para que el
+    contenido quepa en h. Si viene None, se usa el tamaño por defecto del bloque.
     """
     if not _HELPERS_OK:
         return
@@ -1452,7 +1503,7 @@ def _renderizar_bloque(slide, bloque: "BloquePlan", y: float, h: float,
         _texto(slide, _MX + 0.25, y + 0.10, _W - 2 * _MX - 0.4, LABEL_H,
                label_txt, tamano=_T["titulo_bloque"], color="turquesa", negrita=True)
         contenido_display = _para_ppt(str(bloque.contenido))
-        tam_def = 20 if len(contenido_display) > 150 else 22
+        tam_def = tam or (20 if len(contenido_display) > 150 else 22)
         _texto(slide, _MX + 0.25, y + LABEL_H + 0.05,
                _W - 2 * _MX - 0.4, h - LABEL_H - 0.15,
                "{{" + key + "_DEF}}", tamano=tam_def, color="blanco")
@@ -1469,7 +1520,7 @@ def _renderizar_bloque(slide, bloque: "BloquePlan", y: float, h: float,
         ancho_caja = _W - 2 * _MX
         _rect(slide, _MX, y_caja, ancho_caja, h_caja, _C["terminal_bg"])
         _rect(slide, _MX, y_caja, ancho_caja, 0.10, _C["turquesa"])
-        tam_cod = calcular_tamano_codigo(str(bloque.contenido), ancho_caja - 0.30)
+        tam_cod = tam or calcular_tamano_codigo(str(bloque.contenido), ancho_caja - 0.30)
         _texto(slide, _MX + 0.20, y_caja + 0.15,
                ancho_caja - 0.30, h_caja - 0.25,
                "{{" + key + "_COD}}", tamano=tam_cod,
@@ -1485,7 +1536,7 @@ def _renderizar_bloque(slide, bloque: "BloquePlan", y: float, h: float,
                tamano=_T["titulo_bloque"], color="ambar", negrita=True)
         _texto(slide, _MX + 0.25, y + LABEL_H + 0.05,
                _W - 2 * _MX - 0.4, h - LABEL_H - 0.10,
-               "{{" + key + "_IK}}", tamano=_T["cuerpo_stock"], color="blanco",
+               "{{" + key + "_IK}}", tamano=tam or _T["cuerpo_stock"], color="blanco",
                anchor_vertical=MSO_ANCHOR.MIDDLE)
         mapping[key + "_IK"] = _para_ppt(str(bloque.contenido))
 
@@ -1510,6 +1561,96 @@ def _renderizar_bloque(slide, bloque: "BloquePlan", y: float, h: float,
                             Inches(_W - 2 * _MX), Inches(h))
 
     # "separador" y otros tipos desconocidos: noop
+
+
+_ANCHO_TXT_BLOQUE = _W - 2 * _MX - 0.4   # ancho útil de los bloques de texto
+_ESCALA_TEXTO = (22, 20, 18, 16)
+_ESCALA_CODIGO = (20, 18, 16, 14)
+
+
+def _escala_bloque(bloque: "BloquePlan") -> tuple:
+    """Tamaños de fuente que puede usar el bloque, del preferido al más chico."""
+    if bloque.tipo == "definicion":
+        txt = _para_ppt(str(bloque.contenido))
+        base = 20 if len(txt) > 150 else 22
+        return tuple(t for t in _ESCALA_TEXTO if t <= base)
+    if bloque.tipo == "idea_clave":
+        return _ESCALA_TEXTO
+    if bloque.tipo == "codigo":
+        # El ancho ya acota por su cuenta: de ahí hacia abajo.
+        base = calcular_tamano_codigo(str(bloque.contenido), _W - 2 * _MX - 0.30)
+        return tuple(t for t in _ESCALA_CODIGO if t <= base) or (_ESCALA_CODIGO[-1],)
+    return ()
+
+
+def _alto_bloque(bloque: "BloquePlan", tam: int) -> float:
+    """Altura que el bloque necesita para que su contenido no se salga de la caja."""
+    if bloque.tipo in ("definicion", "idea_clave"):
+        txt = _para_ppt(str(bloque.contenido))
+        lineas = estimar_lineas(txt, tam, _ANCHO_TXT_BLOQUE)
+        return 0.38 + 0.15 + lineas * (tam * 1.22 / 72.0)
+    if bloque.tipo == "codigo":
+        lineas = len(str(bloque.contenido).split("\n"))
+        label_h = 0.38 if bloque.label else 0.0
+        return label_h + 0.25 + lineas * (tam * 1.20 / 72.0)
+    return 0.0
+
+
+def _resolver_layout_icn(bloques, area: float, coef: float):
+    """Busca alturas y tamaños de fuente con los que todos los bloques caben.
+
+    El reparto proporcional por densidad no mira cuántas líneas ocupa de verdad
+    cada texto: con ejemplos largos, el código se dibujaba fuera de su terminal
+    y la Idea clave fuera de su recuadro. Acá se calcula el alto real de cada
+    bloque y, si no cabe, se baja un escalón de fuente a la vez (y se aprietan
+    los separadores) hasta que entre. Las slides que ya cabían no cambian:
+    el paso 0 usa los tamaños de siempre.
+
+    Devuelve (alturas, fuentes, ok).
+    """
+    n_reales = sum(1 for b in bloques if b.tipo != "separador")
+    escalas = [_escala_bloque(b) for b in bloques]
+    idx_cod = [i for i, b in enumerate(bloques) if b.tipo == "codigo"]
+    pasos_cod = max((len(escalas[i]) for i in idx_cod), default=1)
+    pasos_txt = max((len(e) for i, e in enumerate(escalas) if e and i not in idx_cod),
+                    default=1)
+
+    def _tantear(paso_cod, paso_txt):
+        gap = _GAP_BLOQUES if (paso_cod == 0 and paso_txt == 0) else 0.12
+        fuentes = []
+        for i, esc in enumerate(escalas):
+            if not esc:
+                fuentes.append(None)
+                continue
+            paso = paso_cod if i in idx_cod else paso_txt
+            fuentes.append(esc[min(paso, len(esc) - 1)])
+        alturas = []
+        for bloque, tam in zip(bloques, fuentes):
+            if bloque.tipo == "separador":
+                alturas.append(0.0)
+            elif tam is None:   # bullets, tabla: sin escala propia
+                alturas.append(max(bloque.filas * coef, 0.40))
+            else:
+                alturas.append(_alto_bloque(bloque, tam))
+        total = sum(alturas) + gap * max(0, n_reales - 1)
+        return alturas, fuentes, gap, total
+
+    # El código es lo que hay que leer desde el fondo de la sala: se achica
+    # último. Primero se aprieta la prosa hasta su piso, y recién ahí se baja
+    # un escalón el terminal.
+    alturas = fuentes = gap = None
+    for paso_cod in range(pasos_cod):
+        for paso_txt in range(pasos_txt):
+            alturas, fuentes, gap, total = _tantear(paso_cod, paso_txt)
+            if total <= area:
+                # El aire que sobra se lo lleva el código.
+                sobra = area - total
+                if sobra > 0 and idx_cod:
+                    for i in idx_cod:
+                        alturas[i] += sobra / len(idx_cod)
+                return alturas, fuentes, gap, True
+
+    return alturas, fuentes, gap, False
 
 
 def construir_slide_icn_flexible(prs, num: str, plan: "SlidePlan"):
@@ -1551,15 +1692,20 @@ def construir_slide_icn_flexible(prs, num: str, plan: "SlidePlan"):
         "NUMERO_CLASE": num,
         "SECCION": plan.seccion,
     }
+    alturas, fuentes, gap, ok = _resolver_layout_icn(bloques, area_total, coef)
+    if not ok:
+        log_warn(f"[layout] slide '{plan.titulo}': el contenido no cabe ni con "
+                 f"la fuente más chica — acorta el texto en el spec")
+
     y = _Y_ICN_INICIO
     for idx, bloque in enumerate(bloques):
         if bloque.tipo == "separador":
-            y += _GAP_BLOQUES
+            y += gap
             continue
-        h = max(bloque.filas * coef, 0.40)
         key = f"BLK{idx}"
-        _renderizar_bloque(slide, bloque, y, h, key, mapping)
-        y += h + _GAP_BLOQUES
+        _renderizar_bloque(slide, bloque, y, alturas[idx], key, mapping,
+                           tam=fuentes[idx])
+        y += alturas[idx] + gap
 
     reemplazar_placeholders(slide, mapping)
 
@@ -1710,8 +1856,9 @@ def generar_preview_haz_ahora(spec: dict, ruta_salida: Path):
     n = spec["numero_clase"]
     num = f"{n:02d}" if isinstance(n, int) else (str(n) if n is not None else "??")
 
-    if spec["haz_ahora"] and _PLANIFICADOR_OK and _HELPERS_OK:
-        plan_ha = planificar_haz_ahora(spec["haz_ahora"])
+    texto_ha = spec.get("haz_ahora_ppt") or spec["haz_ahora"]
+    if texto_ha and _PLANIFICADOR_OK and _HELPERS_OK:
+        plan_ha = planificar_haz_ahora(texto_ha)
         construir_slide_haz_ahora_flex(prs, num, plan_ha, spec.get("haz_ahora_min"))
 
     eliminar_slides(prs, list(range(TOTAL_SLIDES_MODELO)))
@@ -1890,24 +2037,32 @@ def generar_ppt(spec: dict, ruta_salida: Path):
     })
 
     # === Objetivo ===
+    # Con "## ¿Por qué lo veremos?" el recuadro derecho muestra ese texto y se rotula igual;
+    # con una spec antigua (sin esa sección) conserva el Propósito y su rótulo.
+    usa_por_que = spec.get("por_que_titulo") == "¿Por qué lo veremos?" and bool(spec.get("para_que_sirve"))
+    texto_recuadro = spec["para_que_sirve"] if usa_por_que else (spec["proposito"] or "")
     sl = duplicar_slide(prs, prs.slides[M_OBJETIVO])
     reemplazar_placeholders(sl, {
         "NUMERO_CLASE": num,
         "TITULO_CLASE": tema,
         "OBJETIVO": _para_ppt(spec["objetivo"] or ""),
-        "PROPOSITO": _para_ppt(spec["proposito"] or ""),
+        "PROPOSITO": _para_ppt(texto_recuadro),
         "REGLAS": generar_reglas(),
     })
+    if usa_por_que:
+        renombrar_rotulo(sl, "Propósito", "¿Por qué lo veremos?")
 
     # === Haz Ahora ===
-    if spec["haz_ahora"]:
+    # La versión proyectada manda cuando existe; si no, se usa la del Colab.
+    texto_ha = spec.get("haz_ahora_ppt") or spec["haz_ahora"]
+    if texto_ha:
         if _PLANIFICADOR_OK and _HELPERS_OK:
-            plan_ha = planificar_haz_ahora(spec["haz_ahora"])
+            plan_ha = planificar_haz_ahora(texto_ha)
             construir_slide_haz_ahora_flex(prs, num, plan_ha, spec.get("haz_ahora_min"))
         else:
             # Fallback: comportamiento v4 (clon de slide modelo)
             sl = duplicar_slide(prs, prs.slides[M_STOCK_TITULO])
-            ha = separar_haz_ahora(spec["haz_ahora"])
+            ha = separar_haz_ahora(texto_ha)
             tiene_codigo_ha = bool(ha["codigo"])
             shape_cod_ha = buscar_shape_por_key(sl, "CONTENIDO_CODIGO")
             shape_txt_ha = buscar_shape_por_key(sl, "CONTENIDO_TEXTO")

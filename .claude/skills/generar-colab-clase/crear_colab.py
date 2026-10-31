@@ -95,6 +95,11 @@ def parsear_spec(ruta_spec: Path) -> dict:
 
     # Objetivo
     spec["objetivo"] = extraer_seccion(contenido, "## Objetivo", "## Propósito", limpiar=True)
+    # Spec sin sección Propósito (Clase 38): el objetivo termina en el siguiente "## "
+    if spec["objetivo"]:
+        _h2 = re.search(r"\n## ", spec["objetivo"])
+        if _h2:
+            spec["objetivo"] = spec["objetivo"][:_h2.start()].strip()
 
     # Propósito — stop at next ## section to avoid capturing intermediate sections
     proposito_raw = extraer_seccion(contenido, "## Propósito", "## Estructura de la clase", limpiar=True)
@@ -109,7 +114,13 @@ def parsear_spec(ruta_spec: Path) -> dict:
     # ¿Para qué sirve? (default desde Clase 33 — ver regla 24 del CLAUDE.md raíz)
     # Ausente en specs anteriores a Clase 33: extraer_seccion devuelve None y el resto
     # del bloque simplemente no se agrega (retrocompatible, no es un error).
-    pqs_raw = extraer_seccion(contenido, "## ¿Para qué sirve?", "## Estructura de la clase", limpiar=True)
+    # Desde 2026-10-31 la sección se titula "¿Por qué lo veremos?" (sin Propósito); se acepta
+    # el título nuevo y el anterior, y se recuerda cuál tenía la spec para renderizarlo igual.
+    spec["para_que_sirve_titulo"] = "¿Por qué lo veremos?"
+    pqs_raw = extraer_seccion(contenido, "## ¿Por qué lo veremos?", "## Estructura de la clase", limpiar=True)
+    if not pqs_raw:
+        spec["para_que_sirve_titulo"] = "¿Para qué sirve?"
+        pqs_raw = extraer_seccion(contenido, "## ¿Para qué sirve?", "## Estructura de la clase", limpiar=True)
     if pqs_raw:
         next_h2 = re.search(r"\n## ", pqs_raw)
         if next_h2:
@@ -211,7 +222,50 @@ def parsear_icn(texto: str) -> dict:
     Soporta formato enriquecido (**Concepto N: nombre**) y formato antiguo (**Conceptos:**).
     Mantiene el orden de conceptos y demostraciones tal como aparecen en el spec.
     """
-    icn = {"items": [], "conceptos": [], "ejemplos": [], "errores": "", "demostraciones": []}
+    icn = {"items": [], "conceptos": [], "ejemplos": [], "errores": "", "demostraciones": [],
+           "inicio": None, "receta": None, "torpedo": None,
+           "tabla_resumen": None, "ir_mas_alla": None}
+
+    # Bloques opcionales (Clase 38): celda de inicio puente, receta y torpedo. Se extraen
+    # primero y se quitan del texto para que no se cuelen en el último concepto.
+    m_ini = re.search(r"\*\*Celda de inicio[^\n]*\*\*\s*\n```python\n(.*?)```", texto, re.DOTALL)
+    if m_ini:
+        icn["inicio"] = m_ini.group(1).rstrip()
+        texto = texto[:m_ini.start()] + texto[m_ini.end():]
+    # Tabla-resumen propia (pregunta → espacios → línea): reemplaza a la tabla automática
+    # "Concepto | Ejemplo". Se extrae antes del torpedo, cuyo regex es voraz hasta "Errores".
+    m_tr = re.search(r"\*\*Tabla-resumen[^\n]*\*\*\s*\n+(\|.*?)(?=\n\n|\Z)", texto, re.DOTALL)
+    if m_tr:
+        icn["tabla_resumen"] = m_tr.group(1).strip()
+        texto = texto[:m_tr.start()] + texto[m_tr.end():]
+    # "Para ir más allá": texto + un bloque de código ejecutable + texto opcional.
+    m_ima = re.search(
+        r"\*\*Para ir más allá[^\n]*\*\*\s*\n(.*?)(?=\n\*\*Errores típicos|\n\*\*Torpedo|\Z)",
+        texto, re.DOTALL)
+    if m_ima:
+        cuerpo = m_ima.group(1).strip()
+        m_cod = re.search(r"```python\n(.*?)```", cuerpo, re.DOTALL)
+        if m_cod:
+            icn["ir_mas_alla"] = {"antes": cuerpo[:m_cod.start()].strip(),
+                                  "codigo": m_cod.group(1).rstrip(),
+                                  "despues": cuerpo[m_cod.end():].strip()}
+        else:
+            icn["ir_mas_alla"] = {"antes": cuerpo, "codigo": "", "despues": ""}
+        texto = texto[:m_ima.start()] + texto[m_ima.end():]
+    m_tor = re.search(
+        r"\*\*Torpedo:\s*([^*\n]+?)\*\*.*?\n\n(\|.*?)(?=\n\n)(.*?)(?=\n\*\*Errores típicos|\Z)",
+        texto, re.DOTALL)
+    if m_tor:
+        m_nota = re.search(r"Nota en una línea bajo la tabla:\s*(.+?)(?=\n\n|\Z)", m_tor.group(3), re.DOTALL)
+        nota = m_nota.group(1).strip() if m_nota else ""
+        icn["torpedo"] = {"titulo": m_tor.group(1).strip(), "tabla": m_tor.group(2).strip(),
+                          "nota": nota[:1].upper() + nota[1:]}
+        texto = texto[:m_tor.start()] + texto[m_tor.end():]
+    m_rec = re.search(r"\*\*Receta \([^)]*\):\*\*\s*(.+?)\n```python\n(.*?)```", texto, re.DOTALL)
+    if m_rec:
+        txt = m_rec.group(1).strip()
+        icn["receta"] = {"texto": txt[:1].upper() + txt[1:], "codigo": m_rec.group(2).rstrip()}
+        texto = texto[:m_rec.start()] + texto[m_rec.end():]
 
     if re.search(r"\*\*(?:Concepto\s+\d+|Comparación):", texto):
         # Formato enriquecido: split por Concepto, Demostración o Comparación, manteniendo orden
@@ -233,16 +287,22 @@ def parsear_icn(texto: str) -> dict:
                 concepto = {
                     "tipo": "concepto", "titulo": titulo, "definicion": None,
                     "ejemplo": None, "idea_clave": None, "resumen_tabla": None,
-                    "instruccion": None, "punto_partida": None,
+                    "instruccion": None, "punto_partida": None, "pregunta": None,
                 }
 
                 # Lookahead compartido con todos los nombres de campo del bloque —
                 # así agregar un campo nuevo (ej. "- Instrucción:") no requiere tocar
                 # los regex de los campos que van antes de él en el bloque.
                 CAMPOS = (
-                    r"- Definición:|- Ejemplo:|- Idea clave:|- Instrucción:"
+                    r"- Pregunta:|- Definición:|- Ejemplo:|- Idea clave:|- Instrucción:"
                     r"|- Punto de partida:|- Resumen tabla:"
                 )
+
+                # Campo opcional (Clase 38, 2026-10-17): la pregunta guía que abre el
+                # concepto; Definición e Idea clave quedan como su respuesta.
+                m_preg = re.search(rf"- Pregunta:\s*(.+?)(?=\n(?:{CAMPOS})|\n\*\*|\Z)", content, re.DOTALL)
+                if m_preg:
+                    concepto["pregunta"] = m_preg.group(1).strip()
 
                 m_def = re.search(rf"- Definición:\s*(.+?)(?={CAMPOS}|\Z)", content, re.DOTALL)
                 if m_def:
@@ -525,7 +585,7 @@ def parsear_independiente(texto: str) -> list:
             "el_programa_debe": [], "etiqueta_debe": "El programa debe:", "pistas": [], "nota": None,
             "resultado": None, "resultado_tabla": None, "codigo_error": None,
             "celda_respuesta": None, "plantilla": None, "solucion_referencia": None,
-            "celda_verificacion": None,
+            "celda_verificacion": None, "celda_carga": None, "punto_partida": None,
             "solucion": None, "solucion_a": None, "solucion_b": None,
         }
 
@@ -559,6 +619,25 @@ def parsear_independiente(texto: str) -> list:
         if match_verificacion:
             ejercicio["celda_verificacion"] = textwrap.dedent(match_verificacion.group(1)).strip()
             contenido = (contenido[:match_verificacion.start()] + contenido[match_verificacion.end():]).strip()
+
+        # Celda de carga (Clase 38, 2026-10-17): código ya escrito que el estudiante
+        # ejecuta antes de resolver (ej. leer una segunda tabla). Celda propia, previa
+        # a la de respuesta.
+        match_carga = re.search(
+            r"\*\*Celda de carga:\*\*\s*\n\s*```python\n(.*?)```", contenido, re.DOTALL
+        )
+        if match_carga:
+            ejercicio["celda_carga"] = textwrap.dedent(match_carga.group(1)).strip()
+            contenido = (contenido[:match_carga.start()] + contenido[match_carga.end():]).strip()
+
+        # Punto de partida del ejercicio: código con espacios ("___") que se pega
+        # debajo del marcador "# Tu solución — Ejercicio N" en la celda de respuesta.
+        match_partida = re.search(
+            r"\*\*Punto de partida:\*\*\s*\n\s*```python\n(.*?)```", contenido, re.DOTALL
+        )
+        if match_partida:
+            ejercicio["punto_partida"] = textwrap.dedent(match_partida.group(1)).strip()
+            contenido = (contenido[:match_partida.start()] + contenido[match_partida.end():]).strip()
 
         # Solución de referencia: para ejercicios cuyo producto no es código y que
         # por lo tanto no tienen "- Solución:" en python (ej. una batería de casos
@@ -829,9 +908,16 @@ def construir_notebook(spec: dict, carpeta_spec: Path) -> nbformat.NotebookNode:
     # --- 2. INTRODUCCIÓN AL CONTENIDO NUEVO ---
     nb.cells.append(new_markdown_cell(generar_seccion_icn_intro(spec)))
     # Formato enriquecido: procesar items en orden (conceptos y demos intercalados)
+    inicio_emitido = False
     if spec["icn"].get("items"):
         for item in spec["icn"]["items"]:
             if item["tipo"] == "concepto":
+                if spec["icn"].get("inicio") and not inicio_emitido:
+                    nb.cells.append(new_markdown_cell(
+                        "### ▶️ Celda de inicio\n\nEjecútala una sola vez: lee la tabla y la deja lista "
+                        "en `tabla`. Todos los conceptos de hoy parten de ahí."))
+                    nb.cells.append(new_code_cell(spec["icn"]["inicio"]))
+                    inicio_emitido = True
                 nb.cells.append(new_markdown_cell(generar_concepto_markdown(item)))
                 # Piloto Clase 33: si el concepto trae "Punto de partida", la celda
                 # del estudiante queda con ese código incompleto en vez del ejemplo
@@ -859,8 +945,31 @@ def construir_notebook(spec: dict, carpeta_spec: Path) -> nbformat.NotebookNode:
         c for c in spec["icn"]["conceptos"]
         if isinstance(c, dict) and c.get("resumen_tabla")
     ]
-    if len(conceptos_resumen) >= 2:
+    if spec["icn"].get("tabla_resumen"):
+        # Clase 38: tabla propia pregunta → espacios → línea, reemplaza a la automática.
+        nb.cells.append(new_markdown_cell(
+            "### 📌 Entonces, ¿qué debe quedar claro en tu cuaderno?\n\n" + spec["icn"]["tabla_resumen"]))
+    elif len(conceptos_resumen) >= 2:
         nb.cells.append(new_markdown_cell(generar_resumen_icn_markdown(conceptos_resumen)))
+    # Receta y torpedo (Clase 38): bloques opcionales tras la tabla-resumen del ICN
+    if spec["icn"].get("receta"):
+        r = spec["icn"]["receta"]
+        nb.cells.append(new_markdown_cell("### 🧪 Receta\n\n" + r["texto"]))
+        nb.cells.append(new_code_cell(r["codigo"]))
+    if spec["icn"].get("torpedo"):
+        t = spec["icn"]["torpedo"]
+        nb.cells.append(new_markdown_cell(
+            "### 🚀 " + t["titulo"][:1].upper() + t["titulo"][1:] + "\n\n"
+            "Ideas para adaptar la receta a otras preguntas. Es una referencia para consultar: "
+            "hoy no se evalúa.\n\n" + t["tabla"] + ("\n\n" + t["nota"] if t["nota"] else "")))
+    # "Para ir más allá" (Clase 38): opcional, no se evalúa
+    if spec["icn"].get("ir_mas_alla"):
+        ima = spec["icn"]["ir_mas_alla"]
+        nb.cells.append(new_markdown_cell("### 🧗 Para ir más allá\n\n" + ima["antes"]))
+        if ima["codigo"]:
+            nb.cells.append(new_code_cell(ima["codigo"]))
+        if ima["despues"]:
+            nb.cells.append(new_markdown_cell(ima["despues"]))
     # Tabla de errores como markdown
     if spec["icn"]["errores"]:
         nb.cells.append(new_markdown_cell(
@@ -942,7 +1051,7 @@ def generar_objetivo_proposito(spec: dict) -> str:
         bloque += "## 💡 Propósito\n\n"
         bloque += f"> {spec['proposito']}\n\n"
     if spec.get("para_que_sirve"):
-        bloque += "## 🔎 ¿Para qué sirve?\n\n"
+        bloque += f"## 🔎 {spec.get('para_que_sirve_titulo', '¿Para qué sirve?')}\n\n"
         bloque += f"> {spec['para_que_sirve']}\n\n"
     if contenidos_previos or contenidos_nuevos:
         bloque += "---\n\n"
@@ -1033,6 +1142,8 @@ def generar_seccion_icn_intro(spec: dict) -> str:
 
 def generar_concepto_markdown(concepto: dict) -> str:
     bloque = f"### 💡 {concepto['titulo']}\n\n"
+    if concepto.get("pregunta"):
+        bloque += f"#### ❓ {concepto['pregunta']}\n\n"
     if concepto["definicion"]:
         bloque += concepto["definicion"] + "\n\n"
     if concepto["idea_clave"]:
@@ -1245,7 +1356,12 @@ def generar_celdas_ejercicio(ejercicio: dict) -> list:
         respuesta += ejercicio.get("plantilla") or ""
         celdas.append(new_markdown_cell(respuesta.rstrip()))
     if quiere_codigo:
-        celdas.append(new_code_cell(f"# Tu solución — {etiqueta}\n"))
+        if ejercicio.get("celda_carga"):
+            celdas.append(new_markdown_cell(
+                "▶️ **Ejecuta primero esta celda** (ya está escrita): carga la tabla de este ejercicio."))
+            celdas.append(new_code_cell(ejercicio["celda_carga"]))
+        celdas.append(new_code_cell(
+            f"# Tu solución — {etiqueta}\n" + (ejercicio.get("punto_partida") or "")))
         if verificacion:
             celdas.append(new_code_cell(verificacion))
 

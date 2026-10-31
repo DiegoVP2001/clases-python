@@ -354,6 +354,11 @@ def planificar_haz_ahora(texto: str) -> dict:
                 "instruccion": "", "situaciones": [], "cierre": ""}
 
     # Eliminar metadata interna antes de parsear
+    # Los blockquotes (> ...) del spec son notas de conducción para el profesor:
+    # nunca se proyectan. Igual que el marcador [[respuesta]], que es del Colab.
+    texto = re.sub(r"(?m)^\s*>.*$\n?", "", texto)
+    texto = texto.replace("[[respuesta]]", "")
+    texto = re.sub(r"\*{0,2}Nota de conducción:?\*{0,2}[^\n]*\n?", "", texto)
     texto = re.sub(r"\*\*Propósito:\*\*[^\n]*\n?", "", texto)
     texto = re.sub(r"^\s*\(\s*\d+\s*min\s*\)\s*$", "", texto, flags=re.MULTILINE)
     texto = re.sub(r"\*\*Actividad:\*\*\s*", "", texto)
