@@ -40,3 +40,10 @@
 - El Colab ya apunta a `https://clases-ia-mario-bertero.vercel.app/clase-41/` (no hizo falta regenerarlo).
 - Efecto secundario revertido: `vercel link` conectó el repo de GitHub al proyecto; se desconectó con `vercel git disconnect`.
 - **No pusheado a GitHub** (pendiente de autorización de Diego).
+
+## 2026-10-31 — Cierre de etapa: subido a GitHub
+
+- Commits `13cc600` (clase, hub, plan, traspaso, CLAUDE.md, Historial-Curricular) y `a9e2c86` (generadores sin «Propósito») en `master` de `DiegoVP2001/clases-python`.
+- Verificado después del push: el sitio de Vercel sigue en producción (un solo deploy, no se creó otro) y el Colab responde desde GitHub.
+- Link de Colab: https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-41-mapa-ia-pipeline/Clase%2041%20-%20Mapa%20IA%20-%20Clase.ipynb
+- `construir.py` ahora exporta las imágenes temporales a la carpeta temporal del sistema. Quedó una carpeta `fuentes/_slides/` bloqueada por permisos (ignorada por git).

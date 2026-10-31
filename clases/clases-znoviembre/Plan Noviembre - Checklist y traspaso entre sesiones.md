@@ -14,7 +14,7 @@
 
 | N° | Fecha | Tema | Estado |
 |---|---|---|---|
-| **41** | lun 2-nov | Mapa de la IA + pipeline | ✅ Aprobada por Diego y **desplegada** (https://clases-ia-mario-bertero.vercel.app/clase-41/). **Sin commit ni push a GitHub** (Diego no lo autorizó). |
+| **41** | lun 2-nov | Mapa de la IA + pipeline | ✅ Aprobada por Diego y **desplegada** (https://clases-ia-mario-bertero.vercel.app/clase-41/). **Pusheada a GitHub el 2026-10-31** (commits `13cc600` y `a9e2c86`). |
 | **42** | mar 3-nov | Primer clasificador ML | ☐ **Por diseñar — es lo siguiente.** Brief en §4. |
 | **43** | jue 5-nov | Construir una neurona | ☐ Por diseñar. Brief en §5. |
 | 44 | lun 9-nov | Entrenar una red (`MLPClassifier`) y medir aciertos (`accuracy`) | ☐ |
@@ -123,7 +123,9 @@ Carpeta `clases/clase-41-mapa-ia-pipeline/`:
 - **Cantidad real de estudiantes** (el «15» es un tope estimado).
 - Si hay clases en diciembre y qué pasa con Picuino N°29–33 (en pausa).
 - **Herramientas del proyecto aún con «Propósito»:** `disenar-clase/SKILL.md` conserva la plantilla de spec antigua; actualizarlo cuando Diego lo decida. (El generador del PPT y el del Colab ya aceptan «¿Por qué lo veremos?»: el PPT rotula así el recuadro del slide de Objetivo; hecho el 2026-10-31.)
-- Cerrar la **etapa de N°41 en GitHub** (commit + push de `clases/clase-41-mapa-ia-pipeline/` y `sitio-hub/`) cuando Diego lo autorice. Ojo: el repo es público y el HTML contiene las respuestas de las actividades y los códigos.
+- ✅ La etapa de N°41 ya está en GitHub (2026-10-31). Recordar que el repo es público y que el HTML contiene las respuestas de las actividades y los códigos.
+- **Carpeta que no se pudo borrar:** `clases/clase-41-mapa-ia-pipeline/fuentes/_slides/` quedó con un permiso bloqueado (la creó Edge al exportar diapositivas); está en el `.gitignore` de `fuentes/` y `construir.py` ya no la usa (escribe en la carpeta temporal del sistema). Diego puede borrarla desde el Explorador de archivos.
+- **Link de Colab de la N°41:** https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-41-mapa-ia-pipeline/Clase%2041%20-%20Mapa%20IA%20-%20Clase.ipynb
 
 ## 8. Checklist trazable
 
@@ -135,7 +137,7 @@ Carpeta `clases/clase-41-mapa-ia-pipeline/`:
 | P4 | Colab guía N°41 con link al hub | ✅ generado (Diego lo sube) |
 | P5 | Guía Docente Voz N°41 | ✅ |
 | P6 | Sitio-hub `clases-ia-mario-bertero` en Vercel | ✅ producción |
-| P7 | Gate N°41 → commit/push de la carpeta | ⏳ **falta autorización de Diego** |
+| P7 | Gate N°41 → commit/push de la carpeta | ✅ 2026-10-31 (link de Colab abajo) |
 | — | PPT paso a paso del pipeline (pedido por Diego) | ✅ |
 | P8 | Spec N°42 | ☐ **siguiente** |
 | P9 | Colab + Solucionario N°42 (`Escríbelo tú`, pistas, `check_*`) | ☐ |
