@@ -74,9 +74,44 @@ figure:fullscreen svg{height:calc(100vh - 56px);border:0;border-radius:0}
 .tl{margin:0;padding-left:1.2em}
 .tl li{margin:4px 0}
 @media (max-width:560px){body{font-size:16px}.bar{width:90px}header.top{position:static}}
+/* ─── Juego de apertura (obligatorio) ─── */
+body.jbloq{overflow:hidden}
+#juego{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:12px;
+background:linear-gradient(135deg,#1e1b4b,#7c3aed,#db2777,#f59e0b,#0ea5e9);background-size:400% 400%;animation:jfondo 14s ease infinite;color:#fff;overflow:auto}
+@keyframes jfondo{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+#jconf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1002}
+.jbox{position:relative;z-index:1001;width:min(760px,100%);background:rgba(15,23,42,.72);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,.35);border-radius:22px;padding:16px 18px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.jtop{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px}
+.jtop b{font-size:1.15rem}
+.jbar{flex:1;min-width:120px;max-width:260px;height:12px;border-radius:99px;background:rgba(255,255,255,.25);overflow:hidden}
+.jbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#facc15,#f472b6);transition:width .4s}
+#jarena{position:relative;min-height:min(52vh,420px);overflow:hidden;border-radius:14px;background:rgba(255,255,255,.08);padding:12px}
+#juego button{border-color:#fff;background:rgba(255,255,255,.14);color:#fff;font-weight:700}
+#juego button.primary{background:#facc15;color:#1e1b4b;border-color:#facc15}
+#juego button:disabled{opacity:.45;cursor:not-allowed}
+#juego .jmsg{min-height:1.6em;margin:8px 0 0;font-weight:700;text-align:center}
+.jllama{position:absolute;font-size:3.2rem;line-height:1;min-height:0;padding:6px 10px;border-radius:99px;transition:left .25s,top .25s;touch-action:manipulation}
+.jing{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:6px 0}
+.jing button{font-size:2rem;min-height:64px}
+.jing button[aria-pressed="true"]{background:#facc15!important;color:#1e1b4b}
+.jres{margin-top:10px;padding:12px;border-radius:12px;background:rgba(255,255,255,.14);text-align:center;font-size:1.1rem}
+.jres b{display:block;font-size:1.3rem}
+.jburb{position:absolute;width:64px;height:64px;min-height:0;padding:0;border-radius:50%;font-size:1.5rem;
+background:radial-gradient(circle at 30% 30%,#fff8,#38bdf8aa)!important;animation:jflota 4s ease-in-out infinite alternate;touch-action:manipulation}
+@keyframes jflota{from{transform:translate(0,0)}to{transform:translate(var(--dx),var(--dy))}}
+.jshake{animation:jtiembla .35s}
+@keyframes jtiembla{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.jcentro{text-align:center;padding:20px 6px}
+.jcentro .gran{font-size:4rem;line-height:1.1}
+@media (prefers-reduced-motion:reduce){#juego{animation:none}.jburb{animation:none}.jshake{animation:none}}
 </style>
 </head>
 <body>
+<div id="juego" role="dialog" aria-modal="true" aria-labelledby="jtit">
+<canvas id="jconf" aria-hidden="true"></canvas>
+<div class="jbox"><div class="jtop"><b id="jtit">🦙🚀 La Llama Galáctica del Pudú DJ</b><span class="jbar" aria-hidden="true"><i id="jprog"></i></span></div>
+<div id="jarena"></div><p class="jmsg" id="jmsg" aria-live="polite"></p></div>
+</div>
 <header class="top"><div class="wrap">
 <div class="row">
 <h1>Clase 41 · Mapa de la IA + pipeline</h1>
@@ -293,7 +328,7 @@ const KEY = "clase41-ia-v2";
 const store = {abiertas: {}, hechas: {}, paginas: {}};
 try {
   const s = JSON.parse(localStorage.getItem(KEY) || "{}");
-  if (s && typeof s === "object") { store.abiertas = s.abiertas || {}; store.hechas = s.hechas || {}; store.paginas = s.paginas || {}; }
+  if (s && typeof s === "object") { store.abiertas = s.abiertas || {}; store.hechas = s.hechas || {}; store.paginas = s.paginas || {}; store.juegoHecho = !!s.juegoHecho; }
 } catch (e) { /* sin almacenamiento: la página funciona igual */ }
 function guardar() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { /* ignorar */ } }
 
@@ -595,6 +630,188 @@ document.querySelectorAll("[data-full]").forEach(b => b.onclick = () => {
   const f = document.getElementById(b.dataset.full);
   if (f.requestFullscreen) f.requestFullscreen().catch(() => {});
 });
+
+// ─── Juego de apertura: obligatorio, no se puede saltar ───
+(function () {
+  const ov = document.getElementById("juego");
+  const arena = document.getElementById("jarena");
+  const msg = document.getElementById("jmsg");
+  const prog = document.getElementById("jprog");
+  const cv = document.getElementById("jconf");
+  const ctx = cv.getContext("2d");
+  const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const bloqueables = [document.querySelector("header.top"), document.querySelector("main")];
+  const azar = a => a[Math.floor(Math.random() * a.length)];
+  const COLS = ["#facc15", "#f472b6", "#38bdf8", "#4ade80", "#fb923c", "#a78bfa", "#fff"];
+
+  function cerrar() {
+    ov.remove();
+    document.body.classList.remove("jbloq");
+    bloqueables.forEach(e => e && e.removeAttribute("inert"));
+  }
+  if (store.juegoHecho) { cerrar(); return; }
+  document.body.classList.add("jbloq");
+  bloqueables.forEach(e => e && e.setAttribute("inert", ""));
+
+  // Confeti en canvas propio
+  let parts = [], corriendo = false;
+  function ajustar() { cv.width = innerWidth; cv.height = innerHeight; }
+  addEventListener("resize", ajustar); ajustar();
+  function confeti(x, y, n) {
+    n = reducido ? Math.ceil(n / 3) : n;
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * Math.PI * 2, v = 3 + Math.random() * 9;
+      parts.push({x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 4, g: .22, w: 6 + Math.random() * 8, h: 4 + Math.random() * 6,
+        r: Math.random() * 6, vr: (Math.random() - .5) * .4, c: azar(COLS), vida: 90 + Math.random() * 80});
+    }
+    if (!corriendo) { corriendo = true; requestAnimationFrame(paso); }
+  }
+  function paso() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    parts = parts.filter(p => p.vida > 0 && p.y < cv.height + 20);
+    parts.forEach(p => {
+      p.vy += p.g; p.x += p.vx; p.y += p.vy; p.vx *= .99; p.r += p.vr; p.vida--;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.globalAlpha = Math.min(1, p.vida / 30);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+    });
+    if (parts.length) requestAnimationFrame(paso); else corriendo = false;
+  }
+  function lluvia() {
+    for (let i = 0; i < 8; i++) setTimeout(() => confeti(Math.random() * innerWidth, innerHeight * .25, 60), i * 220);
+  }
+
+  // Sonido sintetizado (sin archivos)
+  let ac = null;
+  function bip(f, d) {
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = "triangle"; o.frequency.value = f; g.gain.value = .08;
+      g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + (d || .15));
+      o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime + (d || .15));
+    } catch (e) { /* sin audio */ }
+  }
+  const el = (t, props, hijos) => { const e = document.createElement(t); Object.assign(e, props || {}); (hijos || []).forEach(h => e.append(h)); return e; };
+  function limpiar() { arena.replaceChildren(); msg.textContent = ""; }
+  function avance(p) { prog.style.width = p + "%"; }
+
+  // Intro
+  function intro() {
+    limpiar(); avance(0);
+    const b = el("button", {type: "button", className: "primary", textContent: "¡Jugar! 🎮"});
+    b.onclick = () => { bip(660); nivel1(); };
+    arena.append(el("div", {className: "jcentro"}, [
+      el("div", {className: "gran", textContent: "🦙🌮🚀"}),
+      el("h2", {textContent: "Antes de la clase: 3 retos locos"}),
+      el("p", {textContent: "Tienes que completarlos para entrar. Este juego lo programó una IA."}), b]));
+    setTimeout(() => b.focus(), 50);
+  }
+
+  // Nivel 1: atrapar la llama
+  function nivel1() {
+    limpiar(); avance(5);
+    const frases = ["¡Taco-tástico!", "¡La llama se resbaló en una cueca!", "¡Plop! Eso sonó a empanada", "¡Casi vuela a Marte!", "¡Ñuñoa sabe!"];
+    let n = 0, t;
+    msg.textContent = "Reto 1: atrapa a la llama-taco 5 veces (0/5)";
+    const ll = el("button", {type: "button", className: "jllama", textContent: "🦙🌮", ariaLabel: "Llama-taco: atrápala"});
+    arena.append(ll);
+    function mover() {
+      const w = Math.max(0, arena.clientWidth - 110), h = Math.max(0, arena.clientHeight - 90);
+      ll.style.left = Math.random() * w + "px"; ll.style.top = Math.random() * h + "px";
+    }
+    mover(); t = setInterval(mover, reducido ? 1600 : 900);
+    ll.onclick = () => {
+      n++; const r = ll.getBoundingClientRect();
+      confeti(r.left + r.width / 2, r.top + r.height / 2, 30); bip(400 + n * 120);
+      msg.textContent = n >= 5 ? "" : azar(frases) + " (" + n + "/5)";
+      avance(5 + n * 6); mover();
+      if (n >= 5) { clearInterval(t); setTimeout(nivel2, 500); }
+    };
+  }
+
+  // Nivel 2: máquina de inventos
+  const ING = {"🥑": ["aguacate", "aguacates"], "🐙": ["pulpo", "pulpos"], "🎸": ["guitarra eléctrica", "guitarristas"], "🌋": ["volcán", "volcanes"],
+    "🧦": ["calcetín", "calcetines"], "🍩": ["rosquilla", "roscas"], "🛸": ["ovni", "marcianos"], "🐧": ["pingüino", "pingüinos DJ"]};
+  const OBJ = ["Licuadora", "Mochila", "Robot", "Zapatillas", "Paraguas", "Microondas", "Skate"];
+  const PODER = ["toca cumbia cuando llueve", "tiene wifi en la cola", "hace tareas solo… pero las hace al revés", "brilla si alguien dice «¡chuta!»", "se vuelve invisible los lunes"];
+  function nivel2() {
+    limpiar(); avance(38);
+    let sel = [], hechos = 0;
+    msg.textContent = "Reto 2: elige 3 ingredientes y crea 2 inventos (0/2)";
+    const grid = el("div", {className: "jing"});
+    const res = el("div", {className: "jres", textContent: "Aquí aparecerá tu invento ✨"});
+    const go = el("button", {type: "button", className: "primary", textContent: "¡Inventar! 🧪", disabled: true});
+    const sig = el("button", {type: "button", className: "primary", textContent: "Siguiente reto ➜", hidden: true});
+    Object.keys(ING).forEach(k => {
+      const b = el("button", {type: "button", textContent: k, ariaLabel: ING[k][0]}); b.setAttribute("aria-pressed", "false");
+      b.onclick = () => {
+        const i = sel.indexOf(k);
+        if (i >= 0) sel.splice(i, 1); else if (sel.length < 3) sel.push(k); else return;
+        b.setAttribute("aria-pressed", String(sel.includes(k))); go.disabled = sel.length !== 3; bip(500);
+      };
+      grid.append(b);
+    });
+    go.onclick = () => {
+      go.disabled = true; res.textContent = "🤖 Pensando… bzzzt… bzzzt…"; bip(200, .5);
+      setTimeout(() => {
+        const [a, b, c] = sel.map(k => ING[k]);
+        res.replaceChildren(el("b", {textContent: azar(OBJ) + " de " + a[0] + " con " + b[0] + " para " + c[1]}), "Superpoder: " + azar(PODER));
+        hechos++; confeti(innerWidth / 2, innerHeight / 2, 80); bip(800, .3);
+        msg.textContent = "Reto 2: inventos " + Math.min(hechos, 2) + "/2";
+        avance(38 + Math.min(hechos, 2) * 12);
+        sel = []; grid.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", "false"));
+        go.textContent = "¡Otro invento! 🧪"; go.disabled = true;
+        if (hechos >= 2) { sig.hidden = false; sig.focus(); }
+      }, 1200);
+    };
+    sig.onclick = nivel3;
+    arena.append(grid, go, res, sig);
+  }
+
+  // Nivel 3: burbujas en orden
+  function nivel3() {
+    limpiar(); avance(66);
+    let sig = 1;
+    msg.textContent = "Reto 3: revienta las burbujas del 1 al 6, en orden";
+    const bs = [];
+    function colocar() {
+      const w = Math.max(0, arena.clientWidth - 70), h = Math.max(0, arena.clientHeight - 70);
+      bs.forEach(b => {
+        b.style.left = Math.random() * w + "px"; b.style.top = Math.random() * h + "px";
+        b.style.setProperty("--dx", (Math.random() * 60 - 30) + "px"); b.style.setProperty("--dy", (Math.random() * 60 - 30) + "px");
+      });
+    }
+    for (let i = 1; i <= 6; i++) {
+      const b = el("button", {type: "button", className: "jburb", textContent: String(i)});
+      b.onclick = () => {
+        if (i !== sig) {
+          bip(150, .2); msg.textContent = "¡Ups! Busca el " + sig; arena.classList.remove("jshake"); void arena.offsetWidth;
+          arena.classList.add("jshake"); colocar(); return;
+        }
+        const r = b.getBoundingClientRect(); confeti(r.left + 32, r.top + 32, 35); bip(300 + i * 110, .2);
+        b.remove(); bs.splice(bs.indexOf(b), 1); sig++; avance(66 + (sig - 1) * 5);
+        msg.textContent = sig > 6 ? "" : "Ahora el " + sig;
+        if (sig > 6) setTimeout(final, 500);
+      };
+      bs.push(b); arena.append(b);
+    }
+    colocar();
+  }
+
+  // Final
+  function final() {
+    limpiar(); avance(100); lluvia(); bip(880, .6);
+    const b = el("button", {type: "button", className: "primary", textContent: "Entrar a la clase 🚀"});
+    b.onclick = () => { store.juegoHecho = true; guardar(); cerrar(); };
+    arena.append(el("div", {className: "jcentro"}, [
+      el("div", {className: "gran", textContent: "🏆🎉"}),
+      el("h2", {textContent: "¡Lo lograste!"}),
+      el("p", {textContent: "Todo esto lo programó una IA en minutos. Hoy vamos a entender cómo funciona por dentro."}), b]));
+    setTimeout(() => b.focus(), 50);
+  }
+
+  intro();
+})();
 </script>
 </body>
 </html>

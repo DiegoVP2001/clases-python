@@ -47,3 +47,11 @@
 - Verificado después del push: el sitio de Vercel sigue en producción (un solo deploy, no se creó otro) y el Colab responde desde GitHub.
 - Link de Colab: https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-41-mapa-ia-pipeline/Clase%2041%20-%20Mapa%20IA%20-%20Clase.ipynb
 - `construir.py` ahora exporta las imágenes temporales a la carpeta temporal del sistema. Quedó una carpeta `fuentes/_slides/` bloqueada por permisos (ignorada por git).
+
+## 2026-11-02 — Juego de apertura obligatorio en el interactivo
+
+- Pedido de Diego: un juego loco, random, bonito y con confeti al inicio de la página publicada, imposible de saltar, para mostrar a los estudiantes lo que la IA puede crear.
+- «La Llama Galáctica del Pudú DJ»: 3 retos (atrapar la llama-taco 5 veces, máquina de inventos absurdos x2, burbujas del 1 al 6 en orden) + confeti en canvas propio y sonido sintetizado. Overlay con `inert` sobre header/main; Escape no lo cierra.
+- Se guarda `juegoHecho` en `localStorage` (no se repite al recargar; «Reiniciar» lo borra). No cuenta entre las 8 actividades ni cambia los códigos.
+- Fuente: `fuentes/plantilla_interactivo.html`; regenerado con `construir.py` (copió a `sitio-hub/clase-41/`).
+- Verificado en Edge headless (flujo completo hasta cerrar). **Deploy a Vercel pendiente:** el CLI pide `vercel login`.
