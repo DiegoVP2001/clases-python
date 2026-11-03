@@ -27,8 +27,13 @@ def ir_a(actividad: str) -> str:
     return f"👉 **Vamos a la actividad {actividad} de la página.**"
 
 
-def ir_a_pagina(pagina: int, destino: str) -> str:
-    return f"👉 **Vamos {destino} de la página** (cambiamos a la **página {pagina}**: nos piden el código)."
+def ir_a_pagina(pagina: int, destino: str, con_codigo: bool = False) -> str:
+    cierre = "nos piden el código" if con_codigo else "se abre sola al terminar la actividad anterior"
+    return f"👉 **Vamos {destino} de la página** (cambiamos a la **página {pagina}**: {cierre})."
+
+
+def ejemplos(texto: str) -> str:
+    return f"*Ejemplos:* {texto}"
 
 
 def idea(titulo: str, texto: str) -> str:
@@ -55,7 +60,9 @@ celdas = [
        "empezando por predecir si hay que regar una viña."),
     md("## 🌐 La página de la clase\n\n"
        "Las actividades viven en una página. Cuando este Colab diga **«vamos a la actividad X de la página»**, la "
-       "abrimos y entramos con el código que nos entregan en la sala.\n\n"
+       "abrimos. Cada actividad se abre sola cuando terminamos la anterior; el único código es el del ticket de "
+       "salida, que nos entregan en la sala. Arriba de la página queda fijo el esquema del mapa (y después el del "
+       "recorrido de los datos) para mirarlo mientras trabajamos.\n\n"
        f"👉 **[Abrir la página de la clase]({URL_PAGINA})**"),
     md("---\n\n## 🧠 Haz Ahora — ¿Qué sabemos de la IA?\n\n"
        "Escuchamos cada pregunta y respondemos en voz alta. Si queremos, anotamos nuestra idea (no se revisa)."),
@@ -83,18 +90,25 @@ celdas += [
     md("---\n\n## 📘 Concepto 1 · El mapa de la IA\n\n" + imagen("Diagrama 1 - El mapa de la IA.png", "El mapa de la IA")),
     md("### Regla y patrón\n\n"
        + idea("Regla", "instrucción que escribe una persona y que le dice a la máquina qué hacer en cada caso. No cambia sola.")
+       + "\n\n" + ejemplos("«si hace calor, enciende el ventilador»; una calculadora.")
        + "\n\n"
        + idea("Patrón", "algo que se repite en los datos y que la máquina descubre sola, mirando muchos ejemplos.")
+       + "\n\n" + ejemplos("con calor se venden más helados; quienes ven un tipo de video suelen ver otros parecidos.")
        + "\n\n" + ir_a("M1")),
     md("### IA, ML, DL e IA generativa\n\n"
        + idea("IA", "máquinas que hacen tareas que normalmente requieren inteligencia humana: aprender, razonar y decidir.")
+       + "\n\n" + ejemplos("el GPS que calcula la ruta más corta; el rival de ajedrez del computador.")
        + "\n\n"
        + idea("Machine Learning (ML)", "la computadora descubre patrones en los datos y decide sin que le indiquen cómo.")
+       + "\n\n" + ejemplos("TikTok sugiere videos según lo que vemos; el banco detecta una compra rara con la tarjeta; "
+                          "predecir si hay que regar una viña mañana.")
        + "\n\n"
        + idea("Deep Learning (DL)", "ML con redes neuronales de muchas capas; sirve para imágenes, voz y texto.")
+       + "\n\n" + ejemplos("los subtítulos automáticos de YouTube; un traductor de voz; un auto que reconoce peatones en la cámara.")
        + "\n\n"
        + idea("IA generativa", "produce contenido nuevo (texto, imágenes, música) a partir de lo que aprendió. "
                               "Hoy se construye sobre todo con DL (por ejemplo, ChatGPT).")
+       + "\n\n" + ejemplos("ChatGPT escribe un cuento; una app crea una canción a partir de una descripción.")
        + "\n\n" + ir_a("M2")),
     md("### Cuando algo no calza\n\n"
        "A veces un ejemplo admite dos lecturas: para ubicarlo en el mapa nos falta saber cómo se construyó.\n\n"
@@ -130,7 +144,7 @@ celdas += [
 
     md("---\n\n## 🎫 Ticket de salida\n\n"
        "Lo resolvemos en silencio, cada uno por su cuenta, y sin nota.\n\n"
-       + ir_a_pagina(3, "al ticket de salida")),
+       + ir_a_pagina(3, "al ticket de salida", con_codigo=True)),
     md("---\n\n## 🏁 Cierre\n\n"
        "**Objetivo de hoy:** ubicar ejemplos de IA en el mapa y ordenar el recorrido de los datos hasta la "
        "evaluación de un modelo, con curiosidad.\n\n"

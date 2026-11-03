@@ -63,34 +63,87 @@ def diagrama_mapa():
     b.append('<path d="M644 400 L900 365" stroke="#0f766e" stroke-width="4" fill="none"/>')
     b.append('<path d="M600 640 L900 545" stroke="#6d28d9" stroke-width="4" fill="none"/>')
     b.append('<path d="M585 700 L900 745" stroke="#c2410c" stroke-width="4" stroke-dasharray="14 10" fill="none"/>')
-    b.append(box(900, 110, 960, 150, "#eff6ff", "#1d4ed8"))
-    b.append(text(930, 160, "IA · Inteligencia artificial", 34, "bold", fill="#1e3a8a"))
-    b.append(lines(930, 205, ["Máquinas que hacen tareas que normalmente requieren",
-                              "inteligencia humana: aprender, razonar y decidir."], 30, 40))
-    b.append(box(900, 290, 960, 150, "#f0fdfa", "#0f766e"))
-    b.append(text(930, 340, "ML · Machine Learning", 34, "bold", fill="#115e59"))
-    b.append(lines(930, 385, ["La computadora descubre patrones en los datos",
-                              "y decide sin que le indiquen cómo."], 30, 40))
-    b.append(box(900, 470, 960, 150, "#f5f3ff", "#6d28d9"))
-    b.append(text(930, 520, "DL · Deep Learning", 34, "bold", fill="#4c1d95"))
-    b.append(lines(930, 565, ["ML con redes neuronales de muchas capas;",
-                              "sirve para imágenes, voz y texto."], 30, 40))
-    b.append(box(900, 650, 960, 190, "#fff7ed", "#c2410c", dashed=True))
-    b.append(text(930, 700, "IA generativa · se define por lo que produce", 34, "bold", fill="#9a3412"))
-    b.append(lines(930, 745, ["Produce contenido nuevo (texto, imágenes, música) a",
-                              "partir de lo que aprendió. Hoy se construye sobre todo",
-                              "con DL (por ejemplo, ChatGPT)."], 30, 38))
-    b.append(box(60, 880, 870, 160, "#ffffff", SLATE))
-    b.append(text(90, 932, "REGLA", 36, "bold", fill=SLATE))
-    b.append(lines(90, 980, ["Instrucción que escribe una persona y que le dice",
-                             "a la máquina qué hacer en cada caso. No cambia sola."], 30, 40))
-    b.append(box(990, 880, 870, 160, "#ffffff", SLATE))
-    b.append(text(1020, 932, "PATRÓN", 36, "bold", fill=SLATE))
-    b.append(lines(1020, 980, ["Algo que se repite en los datos y que la máquina",
-                               "descubre sola, mirando muchos ejemplos."], 30, 40))
+    EJ = "#475569"
+    b.append(box(900, 105, 960, 165, "#eff6ff", "#1d4ed8"))
+    b.append(text(930, 147, "IA · Inteligencia artificial", 34, "bold", fill="#1e3a8a"))
+    b.append(lines(930, 185, ["Máquinas que hacen tareas que normalmente requieren",
+                              "inteligencia humana: aprender, razonar y decidir."], 28, 34))
+    b.append(text(930, 253, "Ej.: el GPS que calcula la ruta más corta; un rival de ajedrez", 26, fill=EJ))
+    b.append(box(900, 285, 960, 165, "#f0fdfa", "#0f766e"))
+    b.append(text(930, 327, "ML · Machine Learning", 34, "bold", fill="#115e59"))
+    b.append(lines(930, 365, ["La computadora descubre patrones en los datos",
+                              "y decide sin que le indiquen cómo."], 28, 34))
+    b.append(text(930, 433, "Ej.: TikTok sugiere videos; el banco detecta compras raras", 26, fill=EJ))
+    b.append(box(900, 465, 960, 165, "#f5f3ff", "#6d28d9"))
+    b.append(text(930, 507, "DL · Deep Learning", 34, "bold", fill="#4c1d95"))
+    b.append(lines(930, 545, ["ML con redes neuronales de muchas capas;",
+                              "sirve para imágenes, voz y texto."], 28, 34))
+    b.append(text(930, 613, "Ej.: subtítulos automáticos de YouTube; auto que reconoce peatones", 26, fill=EJ))
+    b.append(box(900, 645, 960, 190, "#fff7ed", "#c2410c", dashed=True))
+    b.append(text(930, 687, "IA generativa · se define por lo que produce", 34, "bold", fill="#9a3412"))
+    b.append(lines(930, 725, ["Produce contenido nuevo (texto, imágenes, música) a partir de",
+                              "lo que aprendió. Hoy se hace sobre todo con DL."], 28, 34))
+    b.append(text(930, 817, "Ej.: ChatGPT escribe un cuento; una app crea una canción", 26, fill=EJ))
+    b.append(box(60, 865, 870, 195, "#ffffff", SLATE))
+    b.append(text(90, 912, "REGLA", 36, "bold", fill=SLATE))
+    b.append(lines(90, 955, ["Instrucción que escribe una persona y que le dice",
+                             "a la máquina qué hacer en cada caso. No cambia sola."], 28, 34))
+    b.append(text(90, 1031, "Ej.: «si hace calor, enciende el ventilador»", 26, fill=EJ))
+    b.append(box(990, 865, 870, 195, "#ffffff", SLATE))
+    b.append(text(1020, 912, "PATRÓN", 36, "bold", fill=SLATE))
+    b.append(lines(1020, 955, ["Algo que se repite en los datos y que la máquina",
+                               "descubre sola, mirando muchos ejemplos."], 28, 34))
+    b.append(text(1020, 1031, "Ej.: con calor se venden más helados", 26, fill=EJ))
     return wrap_svg("".join(b), "El mapa de la IA",
                     "Tres círculos anidados: IA contiene a Machine Learning y este a Deep Learning. "
                     "La IA generativa se define por lo que produce. Abajo, las definiciones de regla y patrón.")
+
+
+def wrap_franja(body, title, desc, vb):
+    x, y, w, h = vb
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{x} {y} {w} {h}" role="img" '
+            f'aria-labelledby="t d" width="{w}" height="{h}">'
+            f'<title id="t">{escape(title)}</title><desc id="d">{escape(desc)}</desc>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#f8fafc"/>{body}</svg>')
+
+
+def _chip(x, y, titulo, defs, ejemplo, fill, stroke, tcol, dashed=False):
+    return (box(x, y, 650, 170, fill, stroke, dashed=dashed, radius=18)
+            + text(x + 22, y + 42, titulo, 30, "bold", fill=tcol)
+            + lines(x + 22, y + 80, defs, 26, 32)
+            + text(x + 22, y + 150, ejemplo, 26, fill="#475569"))
+
+
+# ───────────── Franja fija del mapa (se ve arriba mientras se hacen las actividades) ─────────────
+def franja_mapa():
+    b = ['<circle cx="270" cy="280" r="250" fill="#dbeafe" stroke="#1d4ed8" stroke-width="5"/>',
+         '<circle cx="270" cy="345" r="175" fill="#ccfbf1" stroke="#0f766e" stroke-width="5"/>',
+         '<circle cx="270" cy="420" r="95" fill="#ede9fe" stroke="#6d28d9" stroke-width="5"/>',
+         text(270, 100, "IA", 48, "bold", "middle", "#1e3a8a"),
+         text(270, 262, "ML", 40, "bold", "middle", "#115e59"),
+         text(270, 432, "DL", 36, "bold", "middle", "#4c1d95")]
+    X1, X2 = 560, 1230
+    b.append(_chip(X1, 10, "IA · Inteligencia artificial",
+                   ["Máquinas que hacen tareas que requieren", "inteligencia humana: aprender y decidir."],
+                   "Ej.: el GPS que calcula la ruta más corta", "#eff6ff", "#1d4ed8", "#1e3a8a"))
+    b.append(_chip(X2, 10, "ML · Machine Learning",
+                   ["La computadora descubre patrones en los", "datos y decide sin que le indiquen cómo."],
+                   "Ej.: TikTok sugiere videos según lo que ves", "#f0fdfa", "#0f766e", "#115e59"))
+    b.append(_chip(X1, 192, "DL · Deep Learning",
+                   ["ML con redes neuronales de muchas capas:", "imágenes, voz y texto."],
+                   "Ej.: subtítulos automáticos de YouTube", "#f5f3ff", "#6d28d9", "#4c1d95"))
+    b.append(_chip(X2, 192, "IA generativa · por lo que produce",
+                   ["Produce contenido nuevo: texto, imágenes,", "música. Hoy se hace sobre todo con DL."],
+                   "Ej.: ChatGPT escribe un cuento", "#fff7ed", "#c2410c", "#9a3412", dashed=True))
+    b.append(_chip(X1, 374, "REGLA",
+                   ["Instrucción que escribe una persona;", "no cambia sola."],
+                   "Ej.: «si hace calor, enciende el ventilador»", "#ffffff", SLATE, SLATE))
+    b.append(_chip(X2, 374, "PATRÓN",
+                   ["Algo que se repite en los datos y que la", "máquina descubre sola."],
+                   "Ej.: con calor se venden más helados", "#ffffff", SLATE, SLATE))
+    return wrap_franja("".join(b), "El mapa de la IA (resumen fijo)",
+                       "IA contiene a ML y este a DL; IA generativa se define por lo que produce; "
+                       "definiciones y ejemplos de regla y patrón.", (0, 0, 1920, 560))
 
 
 # ───────────────────── Piezas del pipeline (compartidas con las diapositivas) ─────────────────────
@@ -194,3 +247,9 @@ def diagrama_pipeline():
     return wrap_svg("".join(b), "El recorrido de los datos: el pipeline",
                     "Siete pasos agrupados en preparar, entrenar, evaluar y usar. Un set de datos se separa en set de "
                     "entrenamiento, donde la computadora aprende, y set de prueba, donde vemos si es capaz de predecir.")
+
+
+# ───────────── Franja fija del pipeline (los 7 pasos, siempre visibles en la página 2) ─────────────
+def franja_pipeline():
+    return wrap_franja("".join(tira()), "El recorrido de los datos (resumen fijo)",
+                       "Los 7 pasos: preparar, entrenar, evaluar y usar el modelo.", (60, 152, 1800, 285))

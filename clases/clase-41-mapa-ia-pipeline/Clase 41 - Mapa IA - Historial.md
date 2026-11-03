@@ -55,3 +55,14 @@
 - Se guarda `juegoHecho` en `localStorage` (no se repite al recargar; «Reiniciar» lo borra). No cuenta entre las 8 actividades ni cambia los códigos.
 - Fuente: `fuentes/plantilla_interactivo.html`; regenerado con `construir.py` (copió a `sitio-hub/clase-41/`).
 - Verificado en Edge headless (flujo completo hasta cerrar). **Deploy a Vercel pendiente:** el CLI pide `vercel login`.
+
+## 2026-11-03 — Ajustes tras usar la clase
+
+- **Juego oculto** (`JUEGO_ACTIVO = false` en la plantilla).
+- **Ejemplos de cada concepto** (regla, patrón, IA, ML, DL, IA generativa): en el Diagrama 1 (PNG e HTML), en el Colab (`*Ejemplos:*` bajo cada idea clave) y en una tarjeta de la página 1.
+- **M2 rediseñada:** filas fijas (Solo regla / ML / DL) + Parte B aparte «¿genera contenido nuevo?». Se eliminaron las tarjetas arrastrables y la casilla ambigua. Ocho ítems nuevos (16 respuestas).
+- **Avance automático:** sin códigos por actividad; completar bien abre la siguiente (botón «Seguir a…»). M3 abre la página 2, P4 muestra el botón a la página 3. Única contraseña: ticket = 725. Clave de localStorage `clase41-ia-v3`.
+- **Esquema fijo:** franja pegada arriba con el mapa (pág. 1) y el pipeline (pág. 2), con «Achicar» (se recuerda) y «Esquema completo» (pantalla completa). Plegada por defecto en celular.
+- Guía Docente Voz y Spec actualizadas; Colab regenerado; PPT reconstruido (sin cambios de contenido).
+- **Verificado** (Edge headless con Playwright, 1366×768 y 390 px): sin juego; M2 bloqueada hasta completar M1; respuestas vacías/malas no desbloquean; cadena completa M1→TK; página 2 se habilita con M3; ticket pide código (111 rechazado, 725 abre); progreso 8/8 y franja plegada persisten al recargar; sin scroll horizontal. **No verificado:** arrastre ya no existe; Colab dentro de Google Colab; deploy.
+- **Pendiente:** aprobación de Diego, deploy a Vercel (puede pedir `vercel login`) y push.

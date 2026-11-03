@@ -1,6 +1,6 @@
 # Noviembre IA · 3ro medio — Checklist y traspaso entre sesiones
 
-**Actualizado:** 2026-10-31 (cierre de la sesión que produjo la Clase 41). **Para quién:** la próxima sesión de Claude Code que diseñe la **Clase 42** (y las siguientes). Léelo completo antes de proponer nada.
+**Actualizado:** 2026-11-03 (ajustes de la Clase 41 tras usarla: ver «Avance de actividades»). **Para quién:** la próxima sesión de Claude Code que diseñe la **Clase 42** (y las siguientes). Léelo completo antes de proponer nada.
 
 ## 0. Cómo partir (orden de lectura)
 
@@ -41,7 +41,7 @@ La numeración 41–51 sigue la del `Historial-Curricular.md` (el N°41 antiguo,
 - **Dos ejemplos en una misma clase:** lo que Diego explica usa el **riego automatizado de una viña de Isla de Maipo, como Santa Ema**; las actividades usan el **sistema de climatización de las bodegas donde fermenta la uva**. Datos ficticios. En N°42–43 decidir en la spec cuál va en cada parte (regla de contextos variados).
 - **Terminología:** «set de entrenamiento» («aquí la computadora aprende») y «set de prueba» («aquí vemos si es capaz de predecir»).
 - **4D:** no entran hasta la clase de ética (23-nov). Antes se puede hablar de «revisar si algo es confiable» sin nombrarlas.
-- **Cambio de página con código:** en N°41 cada actividad del HTML se abre con un código de 3 números que entrega Diego; no es seguridad.
+- **Avance de actividades (cambia desde 2026-11-03):** ya no hay código por actividad; completar bien una abre la siguiente. Única contraseña: la del ticket de salida (N°41 = 725). El esquema (mapa/pipeline) queda fijo arriba en una franja. El juego de apertura está oculto (`JUEGO_ACTIVO = false`). M2 es de filas fijas, sin arrastre.
 - **ChatGPT Voice como colega** (criterio completo en la memoria `feedback-voz-codocente-chatgpt-criterio`): solo habla cuando Diego la activa («Colega, …»); **bienvenida** (espera el saludo del curso y pide que alguien lea el objetivo), **Haz Ahora** y **verificación de comprensión del contenido nuevo**; **no es protagonista** en práctica guiada, independiente ni cierre. Cada clase lleva su `Guía Docente Voz.md` (prompt de arranque, tabla momento → frase de activación → qué dice → plan B, y aviso de silenciar el micrófono entre intervenciones).
 - **Ejemplos genéricos:** no afirmar que un producto concreto usa una técnica sin evidencia (v2 §4).
 
@@ -54,7 +54,7 @@ Carpeta `clases/clase-41-mapa-ia-pipeline/`:
 | `Clase 41 - Mapa IA - Spec.md` | Contrato aprobado | A mano, con aprobación de Diego |
 | `fuentes/diagramas.py` | Diagramas SVG (mapa y pipeline) y helpers (`tira`, `tabla`, `bloque_*`) | Editar y correr `construir.py` |
 | `fuentes/diapositivas.py` | 14 diapositivas del pipeline + notas | Ídem |
-| `fuentes/plantilla_interactivo.html` | HTML interactivo (3 páginas, 8 actividades, códigos en `CODIGOS`) | Ídem |
+| `fuentes/plantilla_interactivo.html` | HTML interactivo (3 páginas, 8 actividades en cadena, solo el ticket con código en `CODIGOS`) | Ídem |
 | `fuentes/construir.py` | Arma el HTML, exporta los PNG con Edge, genera el `.pptx` y copia todo a `sitio-hub/clase-41/` | `cd fuentes && py -3 construir.py` |
 | `generar_clase.py` | Genera `Clase 41 - Mapa IA - Clase.ipynb` (JSON directo, sin `nbformat`) | `py -3 generar_clase.py` |
 | `Guía Docente Voz.md`, `Historial.md` | Docentes / registro | A mano |

@@ -9,7 +9,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from diagramas import diagrama_mapa, diagrama_pipeline
+from diagramas import diagrama_mapa, diagrama_pipeline, franja_mapa, franja_pipeline
 
 AQUI = Path(__file__).resolve().parent
 CLASE = AQUI.parent
@@ -61,7 +61,8 @@ def construir_ppt() -> Path:
 def main() -> int:
     svg1, svg2 = diagrama_mapa(), diagrama_pipeline()
     plantilla = (AQUI / "plantilla_interactivo.html").read_text(encoding="utf-8")
-    html = plantilla.replace("{{SVG1}}", svg1).replace("{{SVG2}}", svg2)
+    html = (plantilla.replace("{{SVG1}}", svg1).replace("{{SVG2}}", svg2)
+            .replace("{{FRANJA1}}", franja_mapa()).replace("{{FRANJA2}}", franja_pipeline()))
     (CLASE / NOMBRE_HTML).write_text(html, encoding="utf-8")
 
     carpeta_png = CLASE / "diagramas"

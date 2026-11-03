@@ -73,7 +73,14 @@ figure:fullscreen{background:#f8fafc;display:flex;flex-direction:column;justify-
 figure:fullscreen svg{height:calc(100vh - 56px);border:0;border-radius:0}
 .tl{margin:0;padding-left:1.2em}
 .tl li{margin:4px 0}
-@media (max-width:560px){body{font-size:16px}.bar{width:90px}header.top{position:static}}
+.act{scroll-margin-top:calc(34vh + 140px)}
+.bloq{margin:12px 0 0;padding:12px;background:var(--lock);border-radius:10px;font-weight:600}
+.franja{border-top:1px solid var(--line);margin-top:8px;padding-top:6px}
+.franja .fbtns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.franja .fsvg{text-align:center}
+.franja .fsvg svg{width:auto;max-width:100%;height:30vh;border:1px solid var(--line);border-radius:10px;display:inline-block}
+h4.sub{margin:14px 0 4px;font-size:1.05rem}
+@media (max-width:560px){body{font-size:16px}.bar{width:90px}.franja .fsvg svg{height:auto}}
 /* ─── Juego de apertura (obligatorio) ─── */
 body.jbloq{overflow:hidden}
 #juego{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:12px;
@@ -119,6 +126,14 @@ background:radial-gradient(circle at 30% 30%,#fff8,#38bdf8aa)!important;animatio
 <button class="mini" id="reiniciar" type="button" title="Borra el avance guardado en este navegador">Reiniciar</button></div>
 </div>
 <nav class="pags" id="nav" aria-label="Páginas de la clase"></nav>
+<div class="franja" id="franja" hidden>
+<div class="fbtns"><button class="mini" type="button" id="fplegar" aria-expanded="true">▴ Achicar esquema</button>
+<button class="mini" type="button" id="ffull">⛶ Esquema completo</button></div>
+<div class="fsvg" id="fcont">
+<div data-fr="1">{{FRANJA1}}</div>
+<div data-fr="2" hidden>{{FRANJA2}}</div>
+</div>
+</div>
 </div></header>
 
 <main class="wrap">
@@ -149,9 +164,18 @@ background:radial-gradient(circle at 30% 30%,#fff8,#38bdf8aa)!important;animatio
 {{SVG1}}
 <button class="mini" type="button" data-full="fig1">⛶ Pantalla completa</button>
 </figure>
+<div class="card"><strong>Ejemplos para tener a la vista</strong>
+<ul class="tl">
+<li><strong>Regla:</strong> «si hace calor, enciende el ventilador».</li>
+<li><strong>Patrón:</strong> con calor se venden más helados.</li>
+<li><strong>IA:</strong> el GPS que calcula la ruta más corta.</li>
+<li><strong>ML:</strong> TikTok sugiere videos según lo que ves; el banco detecta compras raras con la tarjeta.</li>
+<li><strong>DL:</strong> subtítulos automáticos de YouTube; un auto que reconoce peatones.</li>
+<li><strong>IA generativa:</strong> ChatGPT escribe un cuento.</li>
+</ul></div>
 <div id="acts-icn1"></div>
 </section>
-<p class="sig"><button type="button" class="primary" data-ir="2">Ir a la página 2 ➜</button></p>
+<p class="sig"><button type="button" class="primary" id="ir2" data-ir="2" hidden>Ir a la página 2 ➜</button></p>
 </div>
 
 <div class="pagina" id="pag-2" data-n="2" hidden>
@@ -165,7 +189,7 @@ background:radial-gradient(circle at 30% 30%,#fff8,#38bdf8aa)!important;animatio
 <div class="card"><strong>Ahora cambiamos de ejemplo.</strong> En las actividades de esta página trabajamos con el sistema de climatización de las bodegas donde fermenta la uva (datos ficticios): el sistema decide si hay que enfriar un tanque.</div>
 <div id="acts-icn2"></div>
 </section>
-<p class="sig"><button type="button" class="primary" data-ir="3">Ir a la página 3 (ticket) ➜</button></p>
+<p class="sig"><button type="button" class="primary" id="ir3" data-ir="3" hidden>Ir a la página 3 (ticket) ➜</button></p>
 </div>
 </div>
 
@@ -181,12 +205,15 @@ background:radial-gradient(circle at 30% 30%,#fff8,#38bdf8aa)!important;animatio
 
 <script>
 "use strict";
-// ─── Códigos de 3 números. Cambiar aquí antes de la clase. ───
-// PAG2 abre la página 2 (y con ella la actividad P1); PAG3 abre la página 3 (y con ella el ticket).
-const CODIGOS = {M1: "417", M2: "238", M3: "659", P2: "884", P3: "306", P4: "591", PAG2: "172", PAG3: "725"};
+// Las actividades se abren solas, en orden, al completar la anterior. La única contraseña es la del ticket de salida
+// (página 3). Cambiar aquí antes de la clase.
+const CODIGOS = {PAG3: "725"};
+// Poner en true para volver a mostrar el juego de apertura.
+const JUEGO_ACTIVO = false;
+// req: la página se habilita al completar esa actividad (M3 abre la página 2).
 const PAGINAS = [
  {n: 1, corto: "1 · El mapa"},
- {n: 2, corto: "2 · El pipeline", cod: "PAG2", nombre: "El recorrido de los datos"},
+ {n: 2, corto: "2 · El pipeline", req: "M3"},
  {n: 3, corto: "3 · Ticket", cod: "PAG3", nombre: "Ticket de salida"}
 ];
 
@@ -204,22 +231,23 @@ const ACTS = [
    {t: "Un sistema que distingue gatos de perros después de ver miles de fotos.", ok: 1, exp: "Nadie le escribió «las orejas puntudas son de gato»: lo descubrió viendo ejemplos.", pista: "¿Alguien le escribió cómo se ve un gato?"},
    {t: "Un filtro que bloquea los correos que dicen «premio».", ok: 0, exp: "Es una condición escrita por una persona: si dice «premio», bloquea.", pista: "¿Quién decidió que la palabra «premio» era la importante?"}
   ]},
- {id: "M2", sec: "icn1", titulo: "Ubica en el mapa", tipo: "mapa",
-  instr: "Ubicamos cada ejemplo en su lugar del mapa (arrastrando la tarjeta o con los botones) y marcamos si genera contenido nuevo. Elegimos el círculo más específico. Son ejemplos típicos para practicar; en la vida real un mismo sistema puede combinar varias técnicas.",
+ {id: "M2", sec: "icn1", titulo: "Ubica en el mapa", tipo: "doble",
+  instr: "Parte A: ubicamos cada ejemplo en su lugar del mapa; elegimos el círculo más específico. Parte B: marcamos si el ejemplo produce contenido nuevo. Son ejemplos típicos para practicar; en la vida real un mismo sistema puede combinar varias técnicas.",
   hints: ["Si una persona escribió la condición, es solo regla. Si aprende de datos, es ML o DL.", "Si trabaja con imágenes, voz o texto usando una red neuronal de muchas capas, es DL."],
-  zonas: [["regla", "Solo regla (no aprende)"], ["ml", "ML"], ["dl", "DL"]],
+  opciones: ["Solo regla", "ML", "DL"],
+  titulo2: "Parte B · ¿Genera contenido nuevo (texto, imagen o música)?",
+  pistaZona: ["¿Alguien escribió la condición? Entonces es solo regla.", "Aprende patrones de datos, pero aquí no hace falta una red de muchas capas.", "Trabaja con imágenes, voz o texto usando redes neuronales de muchas capas: es DL."],
+  pistaGen: "¿Produce contenido nuevo (texto, imagen o música) o solo decide o reconoce?",
   items: [
-   {t: "ChatGPT escribiendo un texto.", zona: "dl", gen: true, exp: "Usa redes neuronales de muchas capas y produce texto nuevo."},
-   {t: "Un semáforo con temporizador fijo.", zona: "regla", gen: false, exp: "Una persona escribió el tiempo; no aprende de datos."},
-   {t: "Un sistema que recomienda música según lo que se escucha.", zona: "ml", gen: false, exp: "Descubre patrones en los datos de escucha, sin crear música nueva."},
-   {t: "Un programa que crea imágenes a partir de una descripción.", zona: "dl", gen: true, exp: "Usa redes neuronales de muchas capas y produce imágenes nuevas."},
-   {t: "Un filtro que bloquea correos que dicen «premio».", zona: "regla", gen: false, exp: "Es una condición escrita por una persona."},
-   {t: "Un desbloqueo del celular con reconocimiento de rostro.", zona: "dl", gen: false, exp: "Reconoce imágenes con redes de muchas capas, pero no crea nada nuevo."},
-   {t: "Un sistema que predice cuándo enfriar un tanque de fermentación con datos de vendimias anteriores.", zona: "ml", gen: false, exp: "Aprende patrones de datos, y no hace falta una red de muchas capas."},
-   {t: "Un programa que detecta si en una foto hay un perro.", zona: "dl", gen: false, exp: "Reconoce imágenes con redes de muchas capas; solo responde, no crea."}
-  ],
-  pistaZona: {regla: "¿Alguien escribió la condición? Entonces es solo regla.", ml: "Aprende patrones de datos, pero aquí no hace falta una red de muchas capas.", dl: "Trabaja con imágenes o texto usando redes neuronales de muchas capas: es DL."},
-  pistaGen: "¿Produce contenido nuevo (texto, imagen o música) o solo decide o reconoce?"},
+   {t: "Un programa que dibuja un paisaje a partir de una descripción escrita.", zona: 2, gen: true, exp: "Usa redes neuronales de muchas capas y produce una imagen nueva."},
+   {t: "Un reloj despertador que suena a la hora programada.", zona: 0, gen: false, exp: "Una persona escribió la hora; no aprende de datos."},
+   {t: "Un sistema que predice si el metro llegará atrasado usando datos de meses anteriores.", zona: 1, gen: false, exp: "Aprende patrones de datos, y no hace falta una red de muchas capas."},
+   {t: "Una app que reconoce qué fruta aparece en la cámara del celular.", zona: 2, gen: false, exp: "Reconoce imágenes con redes de muchas capas; solo responde, no crea."},
+   {t: "Un cajero automático que no entrega dinero si el saldo es menor que lo pedido.", zona: 0, gen: false, exp: "Es una condición escrita por una persona."},
+   {t: "Un asistente que redacta un correo a partir de unas ideas sueltas.", zona: 2, gen: true, exp: "Usa redes neuronales de muchas capas y produce un texto nuevo."},
+   {t: "Un sistema que estima cuánto demorará un bus según datos de viajes anteriores.", zona: 1, gen: false, exp: "Descubre patrones en los datos de viajes, sin crear nada nuevo."},
+   {t: "Un asistente de voz que entiende lo que le decimos.", zona: 2, gen: false, exp: "Reconoce voz con redes de muchas capas; entiende, pero no crea contenido."}
+  ]},
  {id: "M3", sec: "icn1", titulo: "El caso dudoso", tipo: "unicas",
   instr: "A veces un ejemplo admite dos lecturas. Elegimos qué información nos falta para ubicarlo.",
   hints: ["¿Qué recibe el corrector y qué produce?", "¿Quién decidió cada corrección: una persona o los datos?"],
@@ -232,7 +260,7 @@ const ACTS = [
      {t: "Cuánto cuesta el celular.", fb: "El precio no nos dice cómo decide el corrector."}],
     exp: "Podría ser reglas, ML o una mezcla: depende de cómo se construyó. Sin esa información no podemos ubicarlo con certeza."}
   ]},
- {id: "P1", sec: "icn2", titulo: "Ordena el recorrido", tipo: "orden", sinCodigo: true,
+ {id: "P1", sec: "icn2", titulo: "Ordena el recorrido", tipo: "orden",
   instr: "Ordenamos los 7 pasos del sistema de climatización de una bodega de fermentación (arrastrando o con los botones ↑ ↓).",
   hints: ["¿Qué tiene que existir antes de entrenar?", "¿Cuándo se mide cuántas veces acertó el modelo?"],
   pasos: [
@@ -324,11 +352,11 @@ const ACTS = [
 ];
 
 // ─── Estado guardado (solo qué páginas y actividades se abrieron o completaron) ───
-const KEY = "clase41-ia-v2";
-const store = {abiertas: {}, hechas: {}, paginas: {}};
+const KEY = "clase41-ia-v3";
+const store = {hechas: {}, paginas: {}, franjaPlegada: innerWidth <= 560};
 try {
   const s = JSON.parse(localStorage.getItem(KEY) || "{}");
-  if (s && typeof s === "object") { store.abiertas = s.abiertas || {}; store.hechas = s.hechas || {}; store.paginas = s.paginas || {}; store.juegoHecho = !!s.juegoHecho; }
+  if (s && typeof s === "object") { store.hechas = s.hechas || {}; store.paginas = s.paginas || {}; store.juegoHecho = !!s.juegoHecho; if (typeof s.franjaPlegada === "boolean") store.franjaPlegada = s.franjaPlegada; }
 } catch (e) { /* sin almacenamiento: la página funciona igual */ }
 function guardar() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { /* ignorar */ } }
 
@@ -463,84 +491,36 @@ function tipoOrden(a) {
   }};
 }
 
-function tipoMapa(a) {
-  const est = a.items.map(() => ({zona: null, gen: false, fb: []}));
+function tipoDoble(a) {
+  const A = tipoClasif({id: a.id + "a", opciones: a.opciones,
+    items: a.items.map(it => ({t: it.t, ok: it.zona, exp: it.exp, pista: a.pistaZona[it.zona]}))});
+  const B = tipoClasif({id: a.id + "b", opciones: ["Sí", "No"],
+    items: a.items.map(it => ({t: it.t, ok: it.gen ? 0 : 1, pista: a.pistaGen,
+      exp: it.gen ? "Produce contenido nuevo." : "Solo decide o reconoce; no crea nada nuevo."}))});
   const cuerpo = h("div");
-  const pool = h("div", {className: "zone"});
-  pool.append(h("h4", {textContent: "Por ubicar"}));
-  const zonas = {};
-  const zonasBox = h("div", {className: "zones"});
-  a.zonas.forEach(([k, nombre]) => {
-    const z = h("div", {className: "zone"}); z.append(h("h4", {textContent: nombre}));
-    zonas[k] = z; zonasBox.append(z);
-  });
-  cuerpo.append(pool, zonasBox);
-  let foco = null;
-  function destino(el, valor) {
-    el.ondragover = e => { e.preventDefault(); el.classList.add("over"); };
-    el.ondragleave = () => el.classList.remove("over");
-    el.ondrop = e => { e.preventDefault(); el.classList.remove("over"); const i = Number(e.dataTransfer.getData("text/plain")); if (!Number.isNaN(i)) ubicar(i, valor); };
-  }
-  destino(pool, null);
-  Object.keys(zonas).forEach(k => destino(zonas[k], k));
-  function ubicar(i, zona) { est[i].zona = zona; est[i].fb = []; foco = [i, zona]; pintar(); }
-  function pintar() {
-    [pool, ...Object.values(zonas)].forEach(z => z.querySelectorAll(".mcard").forEach(n => n.remove()));
-    a.items.forEach((it, i) => {
-      const c = h("div", {className: "mcard", draggable: true});
-      c.ondragstart = e => { e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", String(i)); };
-      c.append(h("div", {textContent: it.t}));
-      const btns = h("div", {className: "btns"});
-      a.zonas.forEach(([k, nombre]) => {
-        const b = h("button", {type: "button", className: "mini", textContent: nombre.split(" ")[0] === "Solo" ? "Regla" : nombre, ariaPressed: String(est[i].zona === k), ariaLabel: "Ubicar en " + nombre + ": " + it.t});
-        b.dataset.i = i; b.dataset.z = k;
-        b.onclick = () => ubicar(i, k);
-        btns.append(b);
-      });
-      c.append(btns);
-      const lab = h("label");
-      const chk = h("input", {type: "checkbox", checked: est[i].gen});
-      chk.onchange = () => { est[i].gen = chk.checked; est[i].fb = []; quitarFb(c); };
-      lab.append(chk, " Genera contenido nuevo");
-      c.append(lab);
-      est[i].fb.forEach(f => c.append(f));
-      (est[i].zona ? zonas[est[i].zona] : pool).append(c);
-    });
-    if (foco) {
-      const b = cuerpo.querySelector('button[data-i="' + foco[0] + '"][data-z="' + (foco[1] || a.zonas[0][0]) + '"]');
-      if (b) b.focus();
-      foco = null;
-    }
-  }
-  pintar();
+  cuerpo.append(h("h4", {className: "sub", textContent: "Parte A · ¿Dónde va en el mapa?"}), A.cuerpo,
+    h("h4", {className: "sub", textContent: a.titulo2}), B.cuerpo);
   return {cuerpo, comprobar() {
-    let bien = 0;
-    a.items.forEach((it, i) => {
-      const e = est[i]; e.fb = [];
-      if (!e.zona) e.fb.push(fb(false, "Falta ubicarlo en el mapa."));
-      else if (e.zona !== it.zona) e.fb.push(fb(false, a.pistaZona[it.zona]));
-      else if (e.gen !== it.gen) e.fb.push(fb(false, a.pistaGen));
-      else { bien++; e.fb.push(fb(true, it.exp)); }
-    });
-    pintar();
-    return {bien, total: a.items.length};
+    const x = A.comprobar(), y = B.comprobar();
+    return {bien: x.bien + y.bien, total: x.total + y.total};
   }};
 }
 
-const TIPOS = {clasif: tipoClasif, unicas: tipoUnicas, orden: tipoOrden, mapa: tipoMapa};
+const TIPOS = {clasif: tipoClasif, unicas: tipoUnicas, orden: tipoOrden, doble: tipoDoble};
 
-// ─── Armado de cada actividad ───
+// ─── Armado de cada actividad: se abre sola al completar la anterior (el ticket se abre con el código de su página) ───
+const VISTAS = {};
+function previa(a) { const i = ACTS.indexOf(a); return i > 0 ? ACTS[i - 1] : null; }
+function desbloqueada(a) { const p = previa(a); return a.sinCodigo || !p || !!store.hechas[p.id]; }
+
 function crearActividad(a) {
   const art = h("article", {className: "act", id: "act-" + a.id});
-  const badge = h("span", {className: "badge", textContent: a.sinCodigo ? "🔓 Abierta" : "🔒 Bloqueada"});
+  const badge = h("span", {className: "badge"});
   art.append(h("div", {className: "head"}, [h("h3", {textContent: (a.id === "TK" ? "🎫 " : a.id + " · ") + a.titulo}), badge]));
-  const lock = h("form", {className: "lock"});
-  const input = h("input", {className: "code", type: "text", inputMode: "numeric", maxLength: 3, pattern: "[0-9]{3}", autocomplete: "off", ariaLabel: "Código de la actividad " + a.id});
-  const abrir = h("button", {type: "submit", className: "primary", textContent: "Abrir actividad"});
-  const msg = h("p", {className: "msg", role: "status"});
-  lock.append(h("label", {}, ["Código de 3 números: ", input]), abrir);
-  const cuerpo = h("div", {hidden: !a.sinCodigo});
-  if (a.sinCodigo) art.append(cuerpo); else art.append(lock, msg, cuerpo);
+  const p = previa(a);
+  const bloq = h("p", {className: "bloq", textContent: "🔒 Se abre al completar " + (p ? p.id + " · " + p.titulo : "la anterior") + "."});
+  const cuerpo = h("div", {hidden: true});
+  art.append(bloq, cuerpo);
 
   const t = TIPOS[a.tipo](a);
   cuerpo.append(h("p", {textContent: a.instr}));
@@ -550,43 +530,71 @@ function crearActividad(a) {
   const resultado = h("div", {className: "result", role: "status"});
   cuerpo.append(comprobar, resultado);
 
-  function marcarHecha() {
-    store.hechas[a.id] = true; guardar();
-    art.classList.add("done"); badge.textContent = "✅ Lista"; actualizarProgreso();
+  function refrescar() {
+    const abierta = desbloqueada(a), lista = !!store.hechas[a.id];
+    bloq.hidden = abierta; cuerpo.hidden = !abierta;
+    art.classList.toggle("done", lista);
+    badge.textContent = lista ? "✅ Lista" : (abierta ? "🔓 Abierta" : "🔒 Bloqueada");
   }
-  function abrirActividad(enfocar) {
-    lock.hidden = true; msg.textContent = ""; cuerpo.hidden = false;
-    if (!store.hechas[a.id]) badge.textContent = "🔓 Abierta";
-    store.abiertas[a.id] = true; guardar();
-    if (enfocar) { const f = cuerpo.querySelector("input,button"); if (f) f.focus(); }
-  }
-  lock.onsubmit = e => {
-    e.preventDefault();
-    if (input.value.trim() === CODIGOS[a.id]) abrirActividad(true);
-    else { msg.textContent = "Ese no es el código de esta actividad. Lo revisamos con quien nos lo entrega."; input.select(); }
-  };
+  VISTAS[a.id] = {art, cuerpo, refrescar};
   comprobar.onclick = () => {
     const r = t.comprobar();
-    if (r.bien === r.total) {
-      resultado.textContent = "🎉 ¡Completa! " + r.bien + " de " + r.total + "." + (a.sinCodigo ? "" : " Esperamos el código de la siguiente.");
-      marcarHecha();
-    } else resultado.textContent = r.bien + " de " + r.total + " bien. Leemos las pistas, corregimos y volvemos a comprobar.";
+    if (r.bien !== r.total) { resultado.textContent = r.bien + " de " + r.total + " bien. Leemos las pistas, corregimos y volvemos a comprobar."; return; }
+    store.hechas[a.id] = true; guardar(); actualizarProgreso();
+    Object.values(VISTAS).forEach(v => v.refrescar());
+    actualizarPaginas();
+    resultado.replaceChildren("🎉 ¡Completa! " + r.bien + " de " + r.total + ".");
+    const sig = ACTS[ACTS.indexOf(a) + 1];
+    if (sig && sig.sec === a.sec) {
+      const ir = h("button", {type: "button", className: "primary", textContent: "Seguir a " + sig.id + " ➜"});
+      ir.onclick = () => {
+        const v = VISTAS[sig.id];
+        v.art.scrollIntoView({behavior: "smooth", block: "start"});
+        const f = v.cuerpo.querySelector("input,button"); if (f) f.focus({preventScroll: true});
+      };
+      resultado.append(" ", ir);
+    } else if (a.id === "M3") resultado.append(" Ya se abrió la página 2: el botón está al final de esta página y en el menú de arriba.");
+    else if (a.id === "P4") resultado.append(" Ya podemos ir a la página 3: nos piden el código del ticket.");
   };
-  if (store.hechas[a.id]) { art.classList.add("done"); badge.textContent = "✅ Lista"; }
-  if (!a.sinCodigo && store.abiertas[a.id]) abrirActividad(false);
+  refrescar();
   return art;
 }
 
 ACTS.forEach(a => document.getElementById("acts-" + a.sec).append(crearActividad(a)));
 actualizarProgreso();
 
-// ─── Páginas: la 2 y la 3 se abren con su propio código ───
+// ─── Páginas: la 2 se abre al completar M3; la 3 (ticket) con su código ───
 const nav = document.getElementById("nav");
 const botonesNav = {};
-function etiquetaNav(p) { return p.corto + (p.cod && !store.paginas[p.n] ? " 🔒" : ""); }
+let paginaActual = 1;
+function pagLibre(p) { return !p.req || !!store.hechas[p.req]; }
+function etiquetaNav(p) { return p.corto + (((p.cod && !store.paginas[p.n]) || !pagLibre(p)) ? " 🔒" : ""); }
+function actualizarPaginas() {
+  PAGINAS.forEach(p => { const b = botonesNav[p.n]; b.textContent = etiquetaNav(p); b.disabled = !pagLibre(p); });
+  document.getElementById("ir2").hidden = !store.hechas.M3;
+  document.getElementById("ir3").hidden = !store.hechas.P4;
+}
+// Franja fija con el esquema de la página activa (sin franja en el ticket).
+const franja = document.getElementById("franja");
+const fcont = document.getElementById("fcont");
+const fplegar = document.getElementById("fplegar");
+function pintarFranja() {
+  franja.hidden = paginaActual !== 1 && paginaActual !== 2;
+  franja.querySelectorAll("[data-fr]").forEach(el => { el.hidden = Number(el.dataset.fr) !== paginaActual; });
+  fcont.hidden = store.franjaPlegada;
+  fplegar.textContent = store.franjaPlegada ? "▾ Mostrar esquema" : "▴ Achicar esquema";
+  fplegar.setAttribute("aria-expanded", String(!store.franjaPlegada));
+}
+fplegar.onclick = () => { store.franjaPlegada = !store.franjaPlegada; guardar(); pintarFranja(); };
+document.getElementById("ffull").onclick = () => {
+  const f = document.getElementById("fig" + paginaActual);
+  if (f && f.requestFullscreen) f.requestFullscreen().catch(() => {});
+};
 function mostrarPagina(n, enfocar) {
+  paginaActual = n;
   document.querySelectorAll(".pagina").forEach(el => { el.hidden = Number(el.dataset.n) !== n; });
   PAGINAS.forEach(p => { if (p.n === n) botonesNav[p.n].setAttribute("aria-current", "page"); else botonesNav[p.n].removeAttribute("aria-current"); });
+  pintarFranja();
   window.scrollTo(0, 0);
   try { history.replaceState(null, "", "#pagina-" + n); } catch (e) { /* ignorar */ }
   if (enfocar) { const f = document.querySelector("#pag-" + n + " input.code:not([hidden])"); if (f && f.offsetParent) f.focus(); }
@@ -619,7 +627,8 @@ PAGINAS.forEach(p => {
 });
 document.querySelectorAll("[data-ir]").forEach(b => b.onclick = () => mostrarPagina(Number(b.dataset.ir), true));
 const inicial = Number((location.hash.match(/^#pagina-(\d)$/) || [])[1]);
-mostrarPagina(PAGINAS.some(p => p.n === inicial) ? inicial : 1, false);
+actualizarPaginas();
+mostrarPagina(PAGINAS.some(p => p.n === inicial && pagLibre(p)) ? inicial : 1, false);
 
 document.getElementById("reiniciar").onclick = () => {
   try { localStorage.removeItem(KEY); } catch (e) { /* ignorar */ }
@@ -649,7 +658,7 @@ document.querySelectorAll("[data-full]").forEach(b => b.onclick = () => {
     document.body.classList.remove("jbloq");
     bloqueables.forEach(e => e && e.removeAttribute("inert"));
   }
-  if (store.juegoHecho) { cerrar(); return; }
+  if (!JUEGO_ACTIVO || store.juegoHecho) { cerrar(); return; }
   document.body.classList.add("jbloq");
   bloqueables.forEach(e => e && e.setAttribute("inert", ""));
 

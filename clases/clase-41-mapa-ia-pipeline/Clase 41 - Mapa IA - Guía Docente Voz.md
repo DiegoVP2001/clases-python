@@ -10,7 +10,7 @@ La voz es **un colega que verifica comprensión**, no un cuello de botella: tú 
 - [ ] **Conexión estable.** Si la red del liceo es inestable, ten el celular como respaldo.
 - [ ] **Pega el prompt de arranque** (sección 2) y espera su confirmación («Listo, Colega al aire»). Después **silencia el micrófono**: ella responde ante cualquier pausa o ruido, así que no dependas solo del prompt.
 - [ ] Página abierta en `clases-ia-mario-bertero.vercel.app/clase-41/` y Colab abierto (el objetivo y los diagramas se proyectan desde ahí).
-- [ ] Los **códigos** de la sección 4 a la mano (puedes cambiarlos en la constante `CODIGOS` al inicio del HTML antes de la clase).
+- [ ] El **código del ticket** (sección 4) a la mano.
 - [ ] Plan B listo: esta guía impresa o en otra pantalla.
 
 ## 2. Prompt de arranque (copiar y pegar)
@@ -48,20 +48,14 @@ La voz es **un colega que verifica comprensión**, no un cuello de botella: tú 
 
 **Frases de apoyo (no son guion):** si el curso no responde, «¿Alguien se anima a intentarlo con sus palabras?»; si se equivocan, «¿Cómo podemos comprobarlo?».
 
-## 4. Códigos de la página (se entregan justo antes de cada actividad)
+## 4. Avance de la página (desde el 2026-11-03: sin contraseñas, salvo el ticket)
 
-| Actividad                | Qué es                                                     | Código       | Cuándo lo entregas                                                           |
-| ------------------------ | ----------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------- |
-| M1                       | Regla o patrón                                             | **417** | Tras explicar *regla y patrón* con el Diagrama 1                           |
-| M2                       | Ubica en el mapa                                            | **238** | Tras explicar IA, ML, DL e IA generativa, cuando el curso ya terminó M1      |
-| M3                       | El caso dudoso                                              | **659** | Tras explicar «cuando algo no calza», cuando ya terminó M2                 |
-| **Página 2** + P1 | Ordena el recorrido (el código abre la página 2 y P1)     | **172** | Tras explicar los 7 pasos con el PPT o el Diagrama 2: es un cambio de página |
-| P2                       | Variables y etiqueta                                        | **884** | Tras explicar variables y etiqueta                                            |
-| P3                       | Entrenar o predecir                                         | **306** | Tras explicar entrenar y predecir                                             |
-| P4                       | Caza el error                                               | **591** | Tras explicar «la prueba se guarda aparte»                                  |
-| **Página 3** + TK | Ticket de salida (el código abre la página 3 y el ticket) | **725** | Al terminar P4 y antes del cierre: es un cambio de página                    |
-
-Los códigos solo regulan el ritmo: el archivo se puede inspeccionar, así que no son seguridad. Si quieres otros, cámbialos en `CODIGOS` (al inicio del `<script>` del HTML) y regenera con `fuentes/construir.py`.
+- Las actividades se abren **solas, en orden**, cuando el curso completa bien la anterior (M1 → M2 → M3). Al completar M3 se habilita la **página 2** (P1 → P2 → P3 → P4). Al completar P4 aparece el botón a la página 3.
+- **Única contraseña: el ticket de salida (página 3) = `725`.** Entrégala solo cuando termines de explicar y quieras que lo rindan.
+- Cada estudiante avanza a su ritmo dentro de lo que ya explicaste: **explica el concepto antes de que lleguen a su actividad**; la página ya no frena a quien se adelanta.
+- **Esquema fijo:** arriba queda siempre el mapa (página 1) y el pipeline (página 2); se puede achicar y tiene botón de pantalla completa.
+- **Juego de apertura:** oculto. Para reactivarlo, `JUEGO_ACTIVO = true` en el HTML y regenerar con `fuentes/construir.py`.
+- Si quieres otro código para el ticket, cámbialo en `CODIGOS` (al inicio del `<script>`) y regenera.
 
 ## 5. Reglas de uso de la voz
 
@@ -84,4 +78,4 @@ Los códigos solo regulan el ritmo: el archivo se puede inspeccionar, así que n
 
 - [ ] Anota en el `Historial.md` qué momento de la voz funcionó y cuál no (insumo para la N°42).
 - [ ] Anota qué ideas del diagnóstico cambiaron al cierre.
-- [ ] Si los códigos se filtraron o alguien se adelantó, cámbialos para el curso de la tarde (si hay otro).
+- [ ] Si el código del ticket se filtró, cámbialo para el curso de la tarde (si hay otro).

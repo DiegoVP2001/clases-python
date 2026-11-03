@@ -253,3 +253,11 @@ Es la **puerta de entrada y el hilo de la clase**; la práctica vive en el HTML 
 - [ ] **Códigos de las 8 actividades:** los de la tabla son valores por defecto; Diego los cambia o aprueba antes de generar el HTML.
 - [ ] **Anuncio de la modalidad:** lo hace Diego en vivo (no aparece en ningún material).
 - [ ] Confirmar que `clases-ia-mario-bertero` esté disponible como nombre de proyecto en Vercel; si no, se avisa antes de elegir otro.
+
+## Cambios del 2026-11-03 (v4) — prevalecen sobre el resto de la spec
+
+- **Sin contraseñas por actividad.** Cada actividad se abre sola al completar bien la anterior; M3 habilita la página 2 y P4 el botón a la página 3. **Única contraseña: el ticket (página 3) = 725.** (Las tablas de códigos de arriba quedan obsoletas.)
+- **Juego de apertura oculto** (`JUEGO_ACTIVO = false`; el código se conserva).
+- **Ejemplos antes de las actividades:** cada concepto del mapa (regla, patrón, IA, ML, DL, IA generativa) lleva ejemplos en el Diagrama 1, en el Colab y en una tarjeta de la página 1.
+- **M2 rediseñada:** ya no hay tarjetas que se mueven. Parte A: filas fijas con tres opciones (Solo regla / ML / DL). Parte B: pregunta aparte «¿genera contenido nuevo?» (Sí / No). Ítems nuevos, distintos de los ejemplos de la explicación.
+- **Esquema fijo arriba:** franja con el mapa (página 1) y los 7 pasos del pipeline (página 2) que no se mueve al avanzar; se puede achicar y abrir en pantalla completa.
