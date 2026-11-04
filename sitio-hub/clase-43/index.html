@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase 43 · Construir una neurona</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#475569;--line:#cbd5e1;--accent:#1d4ed8;--accent-ink:#fff;
+--a:#b45309;--abg:#fef3c7;--p:#1d4ed8;--pbg:#dbeafe;--ok:#065f46;--okbg:#d1fae5;--bad:#b91c1c;--badbg:#fee2e2}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#111a2e;--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;--accent:#93c5fd;--accent-ink:#0b1220;
+--a:#fcd34d;--abg:#451a03;--p:#93c5fd;--pbg:#1e3a5f;--ok:#a7f3d0;--okbg:#064e3b;--bad:#fca5a5;--badbg:#450a0a}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 48px}
+nav.tabs{display:flex;gap:8px;padding:12px 0;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav.tabs a{padding:8px 14px;border-radius:10px;border:2px solid var(--line);color:inherit;text-decoration:none;font-weight:600}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+h1{font-size:1.2rem;margin:16px 0 0}
+h2{font-size:1.45rem;margin:.1rem 0 .4rem}
+.part{font-size:.85rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);margin:0}
+.slide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0;min-height:470px}
+.muted{color:var(--muted)}
+.ctrl{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{font:inherit;min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--accent);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button:disabled{opacity:.4;cursor:default}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.dots button{min-height:28px;width:28px;padding:0;border-radius:99px;border:2px solid var(--accent);background:var(--card)}
+.dots button[aria-current="true"]{background:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:3px 8px;text-align:center}
+th{background:var(--pbg)}
+tr.row{animation:fade .35s both}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.note{background:var(--abg);border-left:5px solid var(--a);padding:10px 14px;border-radius:8px;margin:12px 0}
+.good{background:var(--okbg);border-left-color:var(--ok)}
+.calc{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;min-height:3.2em}
+code{background:var(--bg);padding:1px 5px;border-radius:5px}
+.days{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.days button{min-height:36px;min-width:42px;padding:2px 8px}
+.days button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--ink);font-family:inherit}
+.box rect{fill:var(--card);stroke:var(--p);stroke-width:2.5}
+.neu circle{fill:var(--abg);stroke:var(--a);stroke-width:4}
+.pos{stroke:var(--ok);fill:none}.neg{stroke:var(--bad);fill:none}.gen{stroke:var(--muted);fill:none}
+.lab-gen{fill:var(--muted)!important;font-weight:700}
+.lab-pos{fill:var(--ok)!important;font-weight:700}.lab-neg{fill:var(--bad)!important;font-weight:700}
+.halo{paint-order:stroke;stroke:var(--card);stroke-width:5px;stroke-linejoin:round}
+.out rect{fill:var(--card);stroke-width:3;transition:fill .3s,opacity .3s}
+.out.on rect{fill:var(--okbg);stroke:var(--ok)}
+.out.on.no rect{fill:var(--badbg);stroke:var(--bad)}
+.out.off{opacity:.35}
+.out.idle rect{fill:var(--card);stroke:var(--line);stroke-dasharray:6 5}
+.fade-in{animation:fade .5s both}
+.lab{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:760px){.lab{grid-template-columns:260px 1fr}.lab>div:last-child{position:sticky;top:8px;align-self:start}}
+.ctl{display:grid;gap:4px;margin-bottom:8px}
+.ctl label{display:flex;justify-content:space-between;font-weight:600;font-size:.95rem}
+.ctl input[type=range]{width:100%;accent-color:var(--accent);min-height:28px}
+.grp{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:0 0 10px}
+.grp legend{font-weight:700;font-size:.9rem;padding:0 6px}
+.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}
+.score{font-size:1.2rem;font-weight:700}
+.bar{display:inline-block;vertical-align:middle;height:22px;border-radius:6px;background:var(--accent);min-width:6px;margin-right:8px}
+.scale{display:grid;grid-template-columns:150px 1fr;gap:8px 12px;align-items:center;margin:10px 0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="tabs" aria-label="Clases">
+<a href="../clase-41/">Clase 41</a>
+<a href="../clase-42/">Clase 42</a>
+<a href="./" aria-current="page">Clase 43</a>
+<a href="../">Inicio</a>
+</nav>
+<h1>Clase 43 · Construir una neurona</h1>
+<p class="muted" style="margin:.2rem 0">Primero el paso a paso de lo que programamos; después, un laboratorio para jugar con la neurona. Avanza con los botones o con las flechas del teclado.</p>
+
+<section class="slide" id="slide"></section>
+
+<div class="ctrl">
+<button id="prev">← Anterior</button>
+<div class="dots" id="dots" role="group" aria-label="Ir a la slide"></div>
+<button id="next" class="primary">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const DIAS=[[24,5,0],[28,10,0],[19,3,0],[30,20,0],[22,8,0],[26,6,4],[14,4,0],[25,28,0]];
+const ET=[1,1,1,0,1,0,0,0];
+const PRU=[[27,12,0],[18,6,0],[21,10,0],[29,24,0]];
+const PET=[1,0,1,0];
+const COMP={w:[3.77,-3.83,-9.53],b:-45.22};
+const W0=[1,-0.5,-2], B0=-13;
+const NOM=['temperatura','viento','lluvia'], UNI=['°C','km/h','mm'];
+const fmt=n=>String(Math.round(n*100)/100).replace('.',',').replace('-','−');
+const zeta=(d,w,b)=>d[0]*w[0]+d[1]*w[1]+d[2]*w[2]+b;
+const sal=(d,w,b)=>zeta(d,w,b)>=0?1:0;
+const S=document.getElementById('slide');
+let cur=0,dayIdx=0,timers=[];
+const clear=()=>{timers.forEach(clearTimeout);timers=[]};
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+
+/* ---------- diagrama de la neurona (espejo del código) ---------- */
+// stage: 0 pesos | 1 entra el día | 2 dato × peso | 3 suma + sesgo | 4 se evalúa y se activa (o no)
+function diagram(o){
+  const d=o.d,w=o.w,b=o.b,st=o.stage,Y=[64,160,256],CX=392,CY=160,R=62;
+  const z=d?zeta(d,w,b):null, out=(z!==null)?(z>=0?1:0):null;
+  let s=`<svg viewBox="0 0 720 320" role="img" aria-label="Diagrama de una neurona: tres datos con sus pesos entran a una neurona que suma, agrega el sesgo y decide si sale 1 o 0.">`;
+  for(let i=0;i<3;i++){
+    const x1=160,y1=Y[i],x2=CX-R+4,y2=CY+(Y[i]-CY)*0.30;
+    const gen=st<2; // antes de «dato × peso» el diagrama es general: solo «peso», sin valores
+    const cls=gen?'gen':(w[i]>=0?'pos':'neg'), sw=gen?4:2+Math.min(5,Math.abs(w[i])*2.4);
+    s+=`<path class="${cls}" stroke-width="${sw}" d="M${x1} ${y1} L${x2} ${y2}"/>`;
+    const mx=(x1+x2)/2-4,my=(y1+y2)/2+(i===2?22:-10);
+    const txt=gen?'peso':((st>=2&&d)?`${d[i]} × ${fmt(w[i])} = ${fmt(d[i]*w[i])}`:`peso ${fmt(w[i])}`);
+    s+=`<text class="halo ${gen?'lab-gen':(w[i]>=0?'lab-pos':'lab-neg')}" x="${mx}" y="${my}" text-anchor="middle" font-size="14">${txt}</text>`;
+  }
+  for(let i=0;i<3;i++){
+    const v=(st>=1&&d)?`${d[i]} ${UNI[i]}`:UNI[i];
+    s+=`<g class="box"><rect x="10" y="${Y[i]-27}" width="150" height="54" rx="10"/>
+    <text x="85" y="${Y[i]-5}" text-anchor="middle" font-size="14" font-weight="700">${NOM[i]}</text>
+    <text x="85" y="${Y[i]+16}" text-anchor="middle" font-size="16" font-weight="700" ${(st>=1&&d)?'class="fade-in"':''}>${v}</text></g>`;
+  }
+  s+=`<g class="neu"><circle cx="${CX}" cy="${CY}" r="${R}"/></g>`;
+  if(st>=3&&z!==null){
+    s+=`<text x="${CX}" y="${CY-14}" text-anchor="middle" font-size="13" font-weight="700" class="fade-in">z =</text>
+    <text x="${CX}" y="${CY+16}" text-anchor="middle" font-size="26" font-weight="700" class="fade-in">${fmt(z)}</text>
+    <text x="${CX}" y="${CY+38}" text-anchor="middle" font-size="12">(sesgo ${fmt(b)})</text>`;
+  }else{
+    s+=st<2?`<text x="${CX}" y="${CY-4}" text-anchor="middle" font-size="15" font-weight="700">NEURONA</text>
+    <text x="${CX}" y="${CY+18}" text-anchor="middle" font-size="13">decide</text>`
+    :`<text x="${CX}" y="${CY-4}" text-anchor="middle" font-size="15" font-weight="700">NEURONA</text>
+    <text x="${CX}" y="${CY+18}" text-anchor="middle" font-size="12">suma + sesgo</text>`;
+  }
+  const on=(st>=4&&out!==null);
+  const cls1=on?(out===1?'on':'off'):'idle', cls0=on?(out===0?'on no':'off'):'idle';
+  s+=`<path stroke="var(--muted)" stroke-width="3" fill="none" d="M${CX+R} ${CY-20} L574 94"/>
+  <path stroke="var(--muted)" stroke-width="3" fill="none" d="M${CX+R} ${CY+20} L574 226"/>
+  <text class="halo" x="${(CX+R+574)/2-4}" y="${CY-40}" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--ok)">${st<3?'se activa':'z ≥ 0'}</text>
+  <text class="halo" x="${(CX+R+574)/2-4}" y="${CY+66}" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--bad)">${st<3?'no se activa':'z &lt; 0'}</text>
+  <g class="out ${cls1}"><rect x="574" y="64" width="136" height="60" rx="10"/>
+  <text x="642" y="90" text-anchor="middle" font-size="22" font-weight="700">1</text><text x="642" y="111" text-anchor="middle" font-size="14" font-weight="700">SALEN</text></g>
+  <g class="out ${cls0}"><rect x="574" y="198" width="136" height="60" rx="10"/>
+  <text x="642" y="224" text-anchor="middle" font-size="22" font-weight="700">0</text><text x="642" y="245" text-anchor="middle" font-size="14" font-weight="700">SE QUEDAN</text></g>`;
+  return s+'</svg>';
+}
+
+function picker(){
+  return `<div class="days" role="group" aria-label="Elegir el día">${DIAS.map((_,i)=>`<button data-d="${i}" aria-pressed="${i===dayIdx}">Día ${i+1}</button>`).join('')}</div>`;
+}
+function hookPicker(redraw){
+  S.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{dayIdx=+b.dataset.d;redraw()});
+}
+function walk(stage,titulo,texto,calc){
+  const d=DIAS[dayIdx];
+  S.innerHTML=`<p class="part">Parte A · Lo que hicimos, paso a paso</p><h2>${titulo}</h2><p>${texto}</p>${stage>=1?picker():''}
+  ${diagram({d:stage>=1?d:null,w:W0,b:B0,stage})}
+  <div class="calc" aria-live="polite">${calc(d)}</div>`;
+  if(stage>=1)hookPicker(()=>slides[cur]());
+}
+
+/* ---------- slides ---------- */
+const slides=[
+function(){ // 0 recordatorio
+  S.innerHTML=`<p class="part">Parte A · Lo que hicimos, paso a paso</p><h2>1 · Ayer → Hoy → Después</h2>
+  <div class="note"><b>🔁 Ayer:</b> el árbol de decisión <b>aprendió solo</b> una cadena de preguntas sí/no. Nosotros solo le dimos datos.</div>
+  <div class="note good"><b>🔀 Hoy es distinto:</b> la neurona no hace preguntas, hace una <b>suma de datos × importancia</b> y decide al final. Y esta vez <b>la regla la armamos nosotros</b>, moviendo pesos y sesgo para ver cómo piensa.</div>
+  <div class="note" style="background:var(--pbg);border-left-color:var(--p)"><b>➡️ La próxima clase:</b> la computadora <b>aprenderá sola</b> esos mismos números, y compararemos con los nuestros.</div>
+  <table><thead><tr><th></th><th>Árbol (clase 42)</th><th>Neurona (hoy)</th></tr></thead><tbody>
+  <tr><td><b>Cómo decide</b></td><td>Cadena de preguntas sí/no</td><td>Suma de datos × pesos + sesgo, y un sí/no al final</td></tr>
+  <tr><td><b>Quién armó la regla</b></td><td>La computadora (<code>fit</code>)</td><td>Nosotros, a mano</td></tr>
+  <tr><td><b>Qué se puede mover</b></td><td>Nada a mano</td><td>Perillas: pesos y sesgo</td></tr></tbody></table>
+  <p class="muted" style="margin-top:10px"><b>Árbol = preguntas · neurona = suma de importancias · la próxima clase = la computadora ajusta los números.</b></p>`;
+},
+function(){ // 1
+  S.innerHTML=`<p class="part">Parte A · Lo que hicimos, paso a paso</p><h2>2 · Nuestra primera inteligencia artificial</h2>
+  <p>Esta es la idea general de lo que construimos en el Colab: <b>tres datos</b> entran, cada uno con su <b>peso</b> (su importancia), y la neurona <b>decide</b> si se activa: sale 1 y <b>salen las abejas</b>, o sale 0 y <b>se quedan</b>.</p>
+  ${diagram({d:null,w:W0,b:B0,stage:0})}
+  <p class="muted">Todavía sin números: los valores irán apareciendo paso a paso, a medida que entra un día.</p>`;
+},
+function(){ walk(1,'3 · Entra un día','Elige un día de los 8 que anotó el apicultor: sus tres datos entran por la izquierda.',
+  d=>`Día ${dayIdx+1}: <code>temperatura</code> = <b>${d[0]} °C</b> · <code>viento</code> = <b>${d[1]} km/h</b> · <code>lluvia</code> = <b>${d[2]} mm</b>. <span class="muted">En el Colab: <code>dia = dias[${dayIdx}]</code>.</span>`)},
+function(){ walk(2,'4 · Cada dato × su peso','Cada línea multiplica el dato del día por su peso: así se mide cuánto aporta cada uno.',
+  d=>`${d[0]}×${fmt(W0[0])} = <b>${fmt(d[0]*W0[0])}</b> · ${d[1]}×${fmt(W0[1])} = <b>${fmt(d[1]*W0[1])}</b> · ${d[2]}×${fmt(W0[2])} = <b>${fmt(d[2]*W0[2])}</b><br>Suma ponderada: <b>${fmt(d[0]*W0[0]+d[1]*W0[1]+d[2]*W0[2])}</b>`)},
+function(){ walk(3,'5 · Se suman y se agrega el sesgo','La neurona suma los tres resultados y le agrega el sesgo: ese es el valor <code>z</code>.',
+  d=>{const s=d[0]*W0[0]+d[1]*W0[1]+d[2]*W0[2];return `Suma ponderada <b>${fmt(s)}</b> + sesgo <b>(${fmt(B0)})</b> = <b>z = ${fmt(s+B0)}</b>. <span class="muted">En el Colab: <code>z = z + sesgo</code>.</span>`}) },
+function(){ walk(4,'6 · Se evalúa y se activa (o no)','La regla es la activación escalón: si <code>z</code> es 0 o más, la neurona <b>se activa</b> y sale 1; si no, queda apagada y sale 0. Prueba varios días.',
+  d=>{const z=zeta(d,W0,B0),o=z>=0?1:0,e=ET[dayIdx];
+    return `¿z = <b>${fmt(z)}</b> ≥ 0? <b>${o?'Sí':'No'}</b> → sale <b>${o}</b> (${o?'SALEN':'SE QUEDAN'}). Etiqueta real: <b>${e}</b> → error = ${e} − ${o} = <b>${e-o}</b> ${e===o?'<span class="ok">✅ acertó</span>':'<span class="bad">❌ falló</span>'}.`})},
+function(){ // 6
+  S.innerHTML=`<p class="part">Parte A · Lo que hicimos, paso a paso</p><h2>7 · Los 8 días del entrenamiento</h2>
+  <p>Repetimos el recorrido con cada día del <b>entrenamiento</b> y comparamos con lo que pasó de verdad. Con los pesos de partida la neurona <b>falla dos días</b>.</p>
+  <div style="max-height:300px;overflow:auto"><table><thead><tr><th>Día</th><th>temp.</th><th>viento</th><th>lluvia</th><th>z</th><th>salida</th><th>etiqueta</th><th>error</th></tr></thead><tbody id="tb"></tbody></table></div>
+  <p class="score" id="sc" aria-live="polite"></p>
+  <button id="goLab" class="primary" style="display:none">Ir al laboratorio y arreglarla →</button>`;
+  const tb=document.getElementById('tb');let n=0;
+  DIAS.forEach((d,i)=>later(()=>{const z=zeta(d,W0,B0),o=z>=0?1:0,e=ET[i]-o;
+    const tr=document.createElement('tr');tr.className='row';
+    tr.innerHTML=`<td>${i+1}</td><td>${d[0]}</td><td>${d[1]}</td><td>${d[2]}</td><td>${fmt(z)}</td><td>${o}</td><td>${ET[i]}</td><td>${e===0?'<span class="ok">0 ✅</span>':'<span class="bad">'+e+' ❌</span>'}</td>`;
+    tb.appendChild(tr);if(e===0)n++;
+    document.getElementById('sc').textContent=`Días acertados: ${n} de ${i+1}`;
+    if(i===DIAS.length-1)document.getElementById('goLab').style.display='';},i*400));
+  document.getElementById('goLab').onclick=()=>go(7);
+},
+function(){ // 7 laboratorio
+  S.innerHTML=`<p class="part">Parte B · Laboratorio en vivo</p><h2>8 · Mueve las perillas</h2>
+  <p class="muted" style="margin:0 0 8px">Ajusta mirando solo el <b>entrenamiento</b>. La <b>prueba</b> se mira <b>una sola vez</b>, al final. Desafío: ¿puedes llegar a <b>8 de 8</b> cambiando <b>un solo peso</b>?</p>
+  <div class="lab"><div>
+    <fieldset class="grp"><legend>Datos del día</legend><div id="cd"></div>
+      <div class="ctl"><label for="cargar">Cargar un día del entrenamiento</label><select id="cargar" style="font:inherit;min-height:40px"><option value="">— elegir —</option>${DIAS.map((_,i)=>`<option value="${i}">Día ${i+1}</option>`).join('')}</select></div></fieldset>
+    <fieldset class="grp"><legend>Pesos</legend><div id="cw"></div></fieldset>
+    <fieldset class="grp"><legend>Sesgo</legend><div id="cb"></div></fieldset>
+    <button id="reset">Volver a los pesos de partida</button>
+  </div><div><div id="dg"></div><div class="calc" id="cl" aria-live="polite"></div></div></div>
+  <h3 style="margin:14px 0 4px;font-size:1.05rem">Entrenamiento <span class="muted" style="font-weight:400">(aquí ajustamos)</span></h3>
+  <div style="max-height:250px;overflow:auto"><table><thead><tr><th>Día</th><th>temp.</th><th>viento</th><th>lluvia</th><th>z</th><th>salida</th><th>etiqueta</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+  <p class="score" id="sc" aria-live="polite"></p>
+  <h3 style="margin:14px 0 4px;font-size:1.05rem">Prueba <span class="muted" style="font-weight:400">(días nuevos: se mira una sola vez, al final)</span></h3>
+  <button id="verPrueba" class="primary">🔒 Mirar la prueba (una sola vez)</button>
+  <div id="pr" hidden>
+    <div style="max-height:200px;overflow:auto;margin-top:8px"><table><thead><tr><th>Día nuevo</th><th>temp.</th><th>viento</th><th>lluvia</th><th>z</th><th>salida</th><th>etiqueta</th><th></th></tr></thead><tbody id="tp"></tbody></table></div>
+    <p class="score" id="sp" aria-live="polite"></p><p id="avisoP" class="bad" aria-live="polite"></p>
+  </div>`;
+  const st={d:[24,5,0],w:W0.slice(),b:B0,visto:null};
+  const mk=(host,id,label,min,max,step,get,set,fmtv)=>{
+    const h=document.getElementById(host);const wrap=document.createElement('div');wrap.className='ctl';
+    wrap.innerHTML=`<label for="${id}">${label}<span id="${id}v"></span></label><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${get()}">`;
+    h.appendChild(wrap);const inp=wrap.querySelector('input');
+    const show=()=>{inp.value=get();document.getElementById(id+'v').textContent=fmtv(get())};
+    inp.oninput=()=>{set(+inp.value);upd()};show();return show;};
+  const shows=[];
+  [[0,40],[0,40],[0,10]].forEach((r,i)=>shows.push(mk('cd','d'+i,NOM[i]+' ('+UNI[i]+')',r[0],r[1],1,()=>st.d[i],v=>st.d[i]=v,v=>' '+v)));
+  [0,1,2].forEach(i=>shows.push(mk('cw','w'+i,'peso de '+NOM[i],-3,3,0.25,()=>st.w[i],v=>st.w[i]=v,v=>' '+fmt(v))));
+  shows.push(mk('cb','b0','sesgo',-30,10,1,()=>st.b,v=>st.b=v,v=>' '+fmt(v)));
+  const filas=(DS,ET_,host)=>{let n=0;const tb=document.getElementById(host);tb.innerHTML='';
+    DS.forEach((d,i)=>{const zz=zeta(d,st.w,st.b),oo=zz>=0?1:0,ok=oo===ET_[i];if(ok)n++;
+      const tr=document.createElement('tr');tr.innerHTML=`<td>${i+1}</td><td>${d[0]}</td><td>${d[1]}</td><td>${d[2]}</td><td>${fmt(zz)}</td><td>${oo}</td><td>${ET_[i]}</td><td>${ok?'<span class="ok">✅</span>':'<span class="bad">❌</span>'}</td>`;tb.appendChild(tr)});return n};
+  function upd(){
+    document.getElementById('dg').innerHTML=diagram({d:st.d,w:st.w,b:st.b,stage:4});
+    const z=zeta(st.d,st.w,st.b),o=z>=0?1:0;
+    document.getElementById('cl').innerHTML=`z = ${st.d[0]}×${fmt(st.w[0])} + ${st.d[1]}×${fmt(st.w[1])} + ${st.d[2]}×${fmt(st.w[2])} + (${fmt(st.b)}) = <b>${fmt(z)}</b> → ${z>=0?'z ≥ 0':'z &lt; 0'} → sale <b>${o}</b> (${o?'SALEN':'SE QUEDAN'}).`;
+    const n=filas(DIAS,ET,'tb');
+    document.getElementById('sc').innerHTML=`Aciertos en el entrenamiento: ${n} de ${DIAS.length}${n===DIAS.length?' 🎉 ¡Ajustaste la neurona!':''}`;
+    if(st.visto){
+      const m=filas(PRU,PET,'tp');
+      document.getElementById('sp').innerHTML=`Aciertos en la prueba: ${m} de ${PRU.length}`;
+      const igual=st.visto.w.every((x,i)=>x===st.w[i])&&st.visto.b===st.b;
+      document.getElementById('avisoP').textContent=igual?'':'⚠️ Cambiaste los pesos después de mirar la prueba: ya no es una prueba limpia.';
+    }
+  }
+  document.getElementById('cargar').onchange=e=>{if(e.target.value==='')return;st.d=DIAS[+e.target.value].slice();shows.forEach(f=>f());upd()};
+  document.getElementById('reset').onclick=()=>{st.w=W0.slice();st.b=B0;st.visto=null;document.getElementById('pr').hidden=true;document.getElementById('verPrueba').hidden=false;shows.forEach(f=>f());upd()};
+  document.getElementById('verPrueba').onclick=e=>{st.visto={w:st.w.slice(),b:st.b};document.getElementById('pr').hidden=false;e.target.hidden=true;upd()};
+  upd();
+},
+function(){ // 8 revelación
+  const nM=DIAS.filter((d,i)=>sal(d,[1,-1,-2],-13)===ET[i]).length, pM=PRU.filter((d,i)=>sal(d,[1,-1,-2],-13)===PET[i]).length;
+  const nC=DIAS.filter((d,i)=>sal(d,COMP.w,COMP.b)===ET[i]).length, pC=PRU.filter((d,i)=>sal(d,COMP.w,COMP.b)===PET[i]).length;
+  S.innerHTML=`<p class="part">Parte C · ¿Y si la computadora lo hace sola?</p><h2>9 · Tus pesos vs. los de la computadora</h2>
+  <p>Una pregunta para la próxima clase: ¿qué pasa si dejamos que <b>la computadora</b> busque los pesos por su cuenta con los mismos 8 días de entrenamiento? Esto fue lo que encontró (una sola neurona, entrenada con <code>fit</code>):</p>
+  <table><thead><tr><th></th><th>pesos (temp., viento, lluvia)</th><th>sesgo</th><th>entrenamiento</th><th>prueba</th></tr></thead><tbody>
+  <tr><td><b>A mano</b> (un buen ajuste)</td><td>1 · −1 · −2</td><td>−13</td><td>${nM} de 8</td><td>${pM} de 4</td></tr>
+  <tr><td><b>La computadora</b></td><td>${fmt(COMP.w[0])} · ${fmt(COMP.w[1])} · ${fmt(COMP.w[2])}</td><td>${fmt(COMP.b)}</td><td>${nC} de 8</td><td>${pC} de 4</td></tr></tbody></table>
+  <div class="note good"><b>Mira el patrón:</b> los números son distintos, pero se parecen en la forma: <b>el calor y el viento pesan casi igual con signo contrario</b> y <b>la lluvia pesa más</b>. Las dos neuronas aciertan los 8 del entrenamiento y <b>fallan el mismo día de la prueba</b>.</div>
+  <p class="muted">¿Cómo lo logró? Probó, midió el error y fue corrigiendo los pesos un poquito, muchas veces: justo lo que hicimos a mano. La próxima clase lo vemos paso a paso.</p>`;
+},
+function(){ // 9 escala
+  S.innerHTML=`<p class="part">Parte C · ¿Y esto qué tiene que ver con la IA de verdad?</p><h2>10 · Una pieza pequeña, muchas veces</h2>
+  <p>Lo que escribimos hoy es una suma, un número y un <code>if</code>. Las inteligencias artificiales de verdad, como el colega que nos acompañó, se construyen juntando una cantidad enorme de piezas así y dejando que la computadora ajuste los pesos sola.</p>
+  <div class="scale" role="img" aria-label="Escala: una neurona hoy, una red pequeña después, y el cerebro humano con unos 86 mil millones de neuronas.">
+    <div>Nuestra neurona</div><div><span class="bar" style="width:2%"></span><b>1</b></div>
+    <div>Una red pequeña</div><div><span class="bar" style="width:12%"></span><b>unas pocas</b></div>
+    <div>Cerebro humano</div><div><span class="bar" style="width:100%"></span><b>~86 mil millones</b></div>
+  </div>
+  <p class="muted" style="font-size:.9rem;margin-top:-4px">Escala sin proporción real: el cerebro humano tiene unos 86 mil millones de neuronas (Azevedo et al., 2009, <i>Journal of Comparative Neurology</i>).</p>
+  <div class="note"><b>¿Y por qué no basta una sola?</b> Una neurona solo traza una «línea»: hay casos que no puede separar. Con <b>varias neuronas conectadas</b> sí se puede, pero <b>cuántas</b> usar se decide por prueba y error, y hoy existen sistemas complejos que automatizan esa búsqueda. Nosotros seguiremos con <b>una sola</b>.</div>
+  <div class="note good"><b>La próxima clase:</b> la computadora <b>aprende sola</b> los pesos de una neurona, con más días de las mismas colmenas, y comparamos con la tuya.</div>`;
+}];
+
+/* ---------- navegación ---------- */
+const dots=document.getElementById('dots');
+slides.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b)});
+function go(i){clear();cur=Math.max(0,Math.min(slides.length-1,i));slides[cur]();
+  [...dots.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur));
+  document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+go(0);
+</script>
+</body>
+</html>

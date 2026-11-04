@@ -14,20 +14,22 @@
 
 | N° | Fecha | Tema | Estado |
 |---|---|---|---|
-| **41** | lun 2-nov | Mapa de la IA + pipeline | ✅ Aprobada por Diego y **desplegada** (https://clases-ia-mario-bertero.vercel.app/clase-41/). **Pusheada a GitHub el 2026-10-31** (commits `13cc600` y `a9e2c86`). |
-| **42** | mar 3-nov | Primer clasificador ML | ✅ **Spec, Colab, Solucionario, Guía Voz y slides animadas listos y pusheados (2026-11-04).** Siguiente: N°43. |
-| **43** | jue 5-nov | Construir una neurona | ☐ Por diseñar. Brief en §5. |
-| 44 | lun 9-nov | Entrenar una red (`MLPClassifier`) y medir aciertos (`accuracy`) | ☐ |
-| 45 | mar 10-nov | Mini-LLM (generador de juguete; se evalúa en E2) | ☐ |
-| 46 | jue 12-nov | **E1** (45 min) + revisión + intro a prompting | ☐ |
-| 47 | lun 16-nov | Prompting con ChatGPT (Colab de registro) | ☐ (bloqueada por permisos/edad, ver §7) |
+| **41** | lun 2 y mar 3-nov | Mapa de la IA + pipeline | ✅ Aprobada por Diego y **desplegada** (https://clases-ia-mario-bertero.vercel.app/clase-41/). **Pusheada a GitHub el 2026-10-31** (commits `13cc600` y `a9e2c86`). |
+| **42** | jue 5-nov | Primer clasificador ML | ✅ **Spec, Colab, Solucionario, Guía Voz y slides animadas listos y pusheados (2026-11-04).** Siguiente: N°43. |
+| **43** | lun 9-nov | Construir una neurona | ✅ **Aprobada por Diego y publicada (2026-11-04):** Colab, Solucionario, Guía del colega y página pusheados y desplegados; Ticket PPT solo local. Ver «Estado Clase 43». |
+| **44** | mar 10-nov | La computadora ajusta sola: una neurona con `fit`/`partial_fit`, más datos, `accuracy` | ☐ Por diseñar. Brief en «Estado Clase 43». |
+| 45 | jue 12-nov | Mini-LLM (generador de juguete; se evalúa en E2) | ☐ |
+| 46 | lun 16-nov | Prompting con ChatGPT | ☐ (bloqueada por permisos/edad, ver §7) |
 | — | mar 17-nov | **Sin clase** (ausencia docente) | — |
-| 48 | jue 19-nov | **E2** (45 min) + revisión + intro a ética | ☐ (bloqueada por permisos/edad y contingencia) |
-| 49 | lun 23-nov | Ética y 4D | ☐ (necesita las definiciones 4D: ver §7) |
-| 50 | mar 24-nov | Integración (práctica sin nota) | ☐ |
-| 51 | jue 26-nov | **E3** (60–65 min) | ☐ |
+| 47 | jue 19-nov | **E1** (45 min, alcance 41–44) + revisión | ☐ |
+| 48 | lun 23-nov | Prompting: conversación real e iteración | ☐ (bloqueada por permisos/edad y contingencia) |
+| 49 | mar 24-nov | Repaso de mini-LLM y prompting + intro a ética | ☐ |
+| 50 | jue 26-nov | **E2** (45 min) + revisión | ☐ |
+| 51 | lun 30-nov | Ética y 4D | ☐ (necesita las definiciones 4D: ver §7) |
+| 52 | mar 1-dic | Integración (práctica sin nota) | ☐ |
+| 53 | jue 3-dic | **E3** (60–65 min) | ☐ |
 
-La numeración 41–51 sigue la del `Historial-Curricular.md` (el N°41 antiguo, evaluación Funciones+Strings+Listas, quedó eliminado el 2026-10-07 y el número se reutilizó). Las filas 42–51 **ya están en el Historial** como «Por diseñar».
+**Calendario v4 (2026-11-04, acordado con Diego): las evaluaciones van siempre los jueves; se agregó la N°44 «la computadora ajusta sola» y el resto se corrió (E1 jue 19, E2 jue 26, E3 jue 3-dic; último día para notas: 10-dic; feriados no verificados). Esta tabla manda sobre las fechas del plan v3.** La numeración 41–53 sigue la del `Historial-Curricular.md` (el N°41 antiguo, evaluación Funciones+Strings+Listas, quedó eliminado el 2026-10-07 y el número se reutilizó). Las filas 42–51 **ya están en el Historial** como «Por diseñar».
 
 ## 2. Decisiones vigentes (no reabrir sin que Diego lo pida)
 
@@ -100,6 +102,8 @@ Carpeta `clases/clase-41-mapa-ia-pipeline/`:
 
 ## 6. Clases 44–51 (resumen del v2)
 
+> ⚠️ **Numeración y fechas superadas por el calendario v4 (2026-11-04):** el contenido de cada fila sigue vigente, pero la tabla de arriba (§1) manda. Equivalencias: «44 `MLPClassifier` + `accuracy`» → N°44 «la computadora ajusta sola» (martes 10-nov, una sola neurona); «45 mini-LLM» → jue 12-nov; «46 E1» → N°47 (jue 19-nov); «47 prompting» → N°46 y N°48; «48 E2» → N°50 (jue 26-nov); «49 ética y 4D» → N°51; «50 integración» → N°52; «51 E3» → N°53 (jue 3-dic).
+
 | N° | Contenido nuevo | Producto individual |
 |---|---|---|
 | 44 | `MLPClassifier`; separación entrenamiento/prueba; aprendizaje como ajuste de pesos; **`accuracy` = aciertos / total evaluado** | Colab con `fit()`, `predict()`, `accuracy` sobre prueba y un cambio controlado; explicar un error y por qué no garantiza desempeño futuro. No usar prueba para elegir cambios. |
@@ -142,9 +146,9 @@ Carpeta `clases/clase-41-mapa-ia-pipeline/`:
 | P8 | Spec N°42 | ✅ |
 | P9 | Colab + Solucionario N°42 | ✅ |
 | P10 | Guía Docente Voz N°42 + gate + push | ✅ |
-| P11 | Spec N°43 | ☐ |
-| P12 | Colab + Solucionario N°43 (neurona, LaTeX, `check_*`) | ☐ |
-| P13 | Guía Docente Voz N°43 + gate + push | ☐ |
+| P11 | Spec N°43 | ✅ aprobada |
+| P12 | Colab + Solucionario N°43 (neurona, LaTeX, `check_*`) | ✅ aprobados y publicados |
+| P13 | Guía Docente Voz N°43 + gate + push | ✅ 2026-11-04 |
 | P14 | `Historial-Curricular.md` (41–51) | ✅ filas agregadas; actualizar estado al cerrar cada clase |
 | P15 | Memorias (criterio de la voz, sin Propósito, proyecto noviembre) | ✅ |
 | P16 | Actualizar `disenar-clase` y `generar-ppt-clase` (sin Propósito) | 🟡 `generar-ppt-clase` ✅ (2026-10-31, probado con una spec real); `disenar-clase/SKILL.md` ☐ cuando Diego lo decida |
@@ -159,3 +163,20 @@ Tras cada gate aprobado: guardar estado → `git add "clases/clase-NN-tema/"` (y
 - Slides animadas: https://clases-ia-mario-bertero.vercel.app/clase-42/ (`sitio-hub/clase-42/`), enlazadas en el Colab. Patrón replicable para N°43+: pestañas por clase + resumen animado que muestre también la deficiencia del modelo.
 - Colab: 0/1 de las etiquetas lo elegimos nosotros; recuadro «Ojo»: corte en 4 km vs regla real 5 km = falta de datos cerca del corte (con días en 4 y 4,5 km pasa a 4,75). Train/test se aborda después (el `fit` usa todos los datos).
 - Pendientes: pestañas en `sitio-hub/clase-41/`; `Ticket de Salida.pptx` de la 42 está solo local (se subió por error en 604a217 y se retiró en 976dadc; sigue en el historial público).
+
+## Estado Clase 43 (2026-11-04)
+
+- Carpeta `clases/clase-43-neurona/`: Spec v2 (aprobada), `generar_clase.py`, `Clase.ipynb`, `Solucionario.ipynb`, `Guía Docente Voz.md` (el colega del profesor), `Historial.md`, `diagramas/` y `Ticket de Salida.pptx` (solo local). Página `sitio-hub/clase-43/index.html` (10 slides: recordatorio, paso a paso, laboratorio con entrenamiento/prueba, tus pesos vs. los de la computadora, escala) y pestaña/tarjeta en `clase-42/` e `index.html`. **Aprobada por Diego y publicada el 2026-11-04 (GitHub + Vercel); el `Ticket de Salida.pptx` queda solo local hasta después de dictar la clase.**
+- Decisiones de Diego: objetivo «Crear nuestra primera inteligencia artificial: una neurona, con asombro.»; actitud asombro; historia de las **colmenas**; el «¿Por qué lo veremos?» lo dice el **colega del profesor**; Haz Ahora enfocado en automatizar algo que no conocen (qué patrones revisarían); **recordatorio puente** ayer → hoy → próxima clase; **caja lista primero** (iterar desde el inicio); evaluador **preparado** (programan la neurona, no los errores; justifican); **entrenamiento y prueba** siempre; desafío = mejor combinación en un set de 12 días con un día raro (11 de 12 es el máximo; verificado) y luego prueba; sin perceptrón/Nobel/mosca.
+- Reglas guardadas en `disenar-clase/SKILL.md` («Reglas vigentes desde 2026-11-04») y en la memoria (no en `CLAUDE.md`).
+- Cómo se publicó (y cómo repetirlo si se edita): `git add "clases/clase-43-neurona/"` (sin el `Ticket de Salida.pptx`) y `sitio-hub/` + commit con pathspec + push (con autorización) y `npx vercel deploy --prod --yes --scope diegovp2001` desde `sitio-hub/` (el Colab enlaza `https://clases-ia-mario-bertero.vercel.app/clase-43/`).
+- Pendientes: confirmar OAs (propuestos OA1, OA3 | OAd; Diego aprobó la clase sin confirmarlos explícitamente); pestañas en `sitio-hub/clase-41/`; diseñar la N°44.
+
+### Brief para la N°44 (mar 10-nov) — la computadora ajusta sola
+
+- Mismas colmenas con **más datos** (p. ej., ~40 días). `MLPClassifier(hidden_layer_sizes=(), activation="logistic")` **es una sola neurona** (verificado: `coefs_` de forma (3, 1), `predict` coincide con `z >= 0`). `.fit()` con `solver="lbfgs"` da pesos ≈ `[3,77, −3,83, −9,53]` y sesgo ≈ `−45,2` con las colmenas de la 43 (8 de 8; 3 de 4 en la prueba; falla el mismo día que la neurona a mano).
+- **Ver el entrenamiento paso a paso:** `partial_fit` con `solver="sgd"` y datos escalados; con `learning_rate_init=0.1` los aciertos suben de 4 a 7 de 8 en ~100 vueltas y a 8 de 8 en ~3.000 (con 0,01 es mucho más lento: buen ejercicio de «cambia un número y mira»). Los pesos de ese modo están en datos escalados: no comparar numéricamente con los de mano; comparar con la versión `lbfgs`.
+- **`accuracy` = aciertos / total evaluado** en la prueba, calculada por los estudiantes con un `for`.
+- **`hidden_layer_sizes`:** mencionarlo como el argumento que define cuántas neuronas más; su valor se decide por **prueba y error** y hoy existen sistemas complejos que **automatizan esa búsqueda**; en línea con la N°43 **seguimos con una sola neurona** (`()`). Con `(3,)` el caso «calor o néctar pero no ambos» pasa de 2 a 4 de 4 (verificado): opcional como curiosidad, no como contenido.
+- Matiz honesto: la neurona de scikit-learn entrena con activación logística (suave) y predice con la misma regla `z >= 0` que nuestro escalón.
+- Aplicar las reglas de `disenar-clase`: recordatorio puente (ayer = neurona a mano, hoy = la computadora ajusta, después = …), entrenamiento y prueba, colega del profesor, caja lista primero.
