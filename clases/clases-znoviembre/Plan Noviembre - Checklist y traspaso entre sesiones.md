@@ -1,6 +1,6 @@
 # Noviembre IA · 3ro medio — Checklist y traspaso entre sesiones
 
-**Actualizado:** 2026-11-03 (ajustes de la Clase 41 tras usarla: ver «Avance de actividades»). **Para quién:** la próxima sesión de Claude Code que diseñe la **Clase 42** (y las siguientes). Léelo completo antes de proponer nada.
+**Actualizado:** 2026-11-04 (Clase 42 lista y publicada: ver «Estado Clase 42») (ajustes de la Clase 41 tras usarla: ver «Avance de actividades»). **Para quién:** la próxima sesión de Claude Code que diseñe la **Clase 42** (y las siguientes). Léelo completo antes de proponer nada.
 
 ## 0. Cómo partir (orden de lectura)
 
@@ -15,7 +15,7 @@
 | N° | Fecha | Tema | Estado |
 |---|---|---|---|
 | **41** | lun 2-nov | Mapa de la IA + pipeline | ✅ Aprobada por Diego y **desplegada** (https://clases-ia-mario-bertero.vercel.app/clase-41/). **Pusheada a GitHub el 2026-10-31** (commits `13cc600` y `a9e2c86`). |
-| **42** | mar 3-nov | Primer clasificador ML | ☐ **Por diseñar — es lo siguiente.** Brief en §4. |
+| **42** | mar 3-nov | Primer clasificador ML | ✅ **Spec, Colab, Solucionario, Guía Voz y slides animadas listos y pusheados (2026-11-04).** Siguiente: N°43. |
 | **43** | jue 5-nov | Construir una neurona | ☐ Por diseñar. Brief en §5. |
 | 44 | lun 9-nov | Entrenar una red (`MLPClassifier`) y medir aciertos (`accuracy`) | ☐ |
 | 45 | mar 10-nov | Mini-LLM (generador de juguete; se evalúa en E2) | ☐ |
@@ -139,9 +139,9 @@ Carpeta `clases/clase-41-mapa-ia-pipeline/`:
 | P6 | Sitio-hub `clases-ia-mario-bertero` en Vercel | ✅ producción |
 | P7 | Gate N°41 → commit/push de la carpeta | ✅ 2026-10-31 (link de Colab abajo) |
 | — | PPT paso a paso del pipeline (pedido por Diego) | ✅ |
-| P8 | Spec N°42 | ☐ **siguiente** |
-| P9 | Colab + Solucionario N°42 (`Escríbelo tú`, pistas, `check_*`) | ☐ |
-| P10 | Guía Docente Voz N°42 + gate + push | ☐ |
+| P8 | Spec N°42 | ✅ |
+| P9 | Colab + Solucionario N°42 | ✅ |
+| P10 | Guía Docente Voz N°42 + gate + push | ✅ |
 | P11 | Spec N°43 | ☐ |
 | P12 | Colab + Solucionario N°43 (neurona, LaTeX, `check_*`) | ☐ |
 | P13 | Guía Docente Voz N°43 + gate + push | ☐ |
@@ -153,3 +153,9 @@ Carpeta `clases/clase-41-mapa-ia-pipeline/`:
 ## 9. Cierre de etapa (recordatorio del `CLAUDE.md`)
 
 Tras cada gate aprobado: guardar estado → `git add "clases/clase-NN-tema/"` (y `sitio-hub/` si cambió) → `git commit` → `git push` (**solo con autorización de Diego**, nunca `-A` ni `.`) → entregar el link de Colab (`https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-NN-tema/<Archivo%20con%20%20%20espacios>.ipynb`) → decir literalmente *«Cierre de etapa: te recomiendo ejecutar `/compact` ahora antes de seguir, para mantener el contexto limpio. Cuando quieras, lo corres y seguimos.»*
+
+## Estado Clase 42 (2026-11-04)
+
+- Slides animadas: https://clases-ia-mario-bertero.vercel.app/clase-42/ (`sitio-hub/clase-42/`), enlazadas en el Colab. Patrón replicable para N°43+: pestañas por clase + resumen animado que muestre también la deficiencia del modelo.
+- Colab: 0/1 de las etiquetas lo elegimos nosotros; recuadro «Ojo»: corte en 4 km vs regla real 5 km = falta de datos cerca del corte (con días en 4 y 4,5 km pasa a 4,75). Train/test se aborda después (el `fit` usa todos los datos).
+- Pendientes: pestañas en `sitio-hub/clase-41/`; `Ticket de Salida.pptx` de la 42 está solo local (se subió por error en 604a217 y se retiró en 976dadc; sigue en el historial público).
