@@ -29,3 +29,11 @@
 ## Siguiente
 
 - Gate 2 → commit/push → decidir el HTML `/clase-42/` viendo el Colab.
+
+## 2026-11-04 — Ajustes tras revisión + HTML publicado
+
+- Tabla `entradas` / `etiquetas` en «Crear el modelo»; aviso de que el 0 y el 1 los elegimos nosotros (también en «Recordemos la clase 41»).
+- «Entrenar con fit()»: aclara que luego se usarán días no vistos para evaluar.
+- Recuadro «👀 Ojo» tras `export_text`: el corte en 4 km vs la regla real de 5 km es falta de datos cerca del corte, no de entrenamiento (con días en 4 y 4,5 km el corte pasa a 4,75).
+- Página de slides animadas publicada: https://clases-ia-mario-bertero.vercel.app/clase-42/ (código en `sitio-hub/clase-42/`), enlazada al final del contenido nuevo del Colab.
+- Pendiente: pestañas de navegación en `sitio-hub/clase-41/`.

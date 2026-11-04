@@ -405,7 +405,7 @@ def celdas_comunes_clase() -> list:
                 "| `lluvia_mm` | variable: lluvia de la madrugada | 12 |\n"
                 "| `km_taco` | variable: km de taco en la Ruta 78 a las 6:45 | 6 |\n"
                 "| `pasajeros` | variable: personas esperando en el paradero | 22 |\n"
-                "| etiqueta | `1` = la micro llegó atrasada · `0` = llegó puntual | 1 |"))
+                "| etiqueta | `1` = la micro llegó atrasada · `0` = llegó puntual (**lo definimos nosotros**; podría ser al revés) | 1 |"))
     return c
 
 
@@ -427,11 +427,24 @@ def icn_clase() -> list:
                 "Antes de usar un árbol hay que crearlo. Recién creado está vacío: todavía no sabe ninguna pregunta ni ninguna respuesta. "
                 "Los **16 días** que anotó la junta de vecinos ya vienen escritos: cada día es una lista `[lluvia_mm, km_taco, pasajeros]` "
                 "y su etiqueta está en la misma posición de `etiquetas`.\n\n"
+                "Así se ve esa tabla (las 3 primeras filas son las primeras 3 posiciones; el resto sigue igual hasta los 16 días):\n\n"
+                "| Posición | `entradas` → `lluvia_mm` | `km_taco` | `pasajeros` | `etiquetas` (0 = puntual, 1 = atrasada) |\n"
+                "|---|---|---|---|---|\n"
+                "| 0 | 0 | 1 | 10 | 0 |\n"
+                "| 1 | 0 | 2 | 25 | 0 |\n"
+                "| 2 | 1 | 0 | 15 | 0 |\n"
+                "| … | … | … | … | … |\n"
+                "| 6 | 12 | 6 | 22 | 1 |\n"
+                "| 15 | 14 | 3 | 20 | 1 |\n\n"
+                "Cada fila de `entradas` se empareja con el valor de `etiquetas` que está en su misma posición.\n\n"
+                "> ⚠️ **El 0 y el 1 los elegimos nosotros.** Decidimos que `1` = atrasada y `0` = puntual, pero podría ser perfectamente al revés. "
+                "El modelo no sabe qué significan: solo separa dos grupos, y somos nosotros quienes les damos el sentido.\n\n"
                 + idea("El modelo es un árbol de preguntas sí/no; al crearlo todavía no sabe nada.") + "\n\n"
                 + escribelo("importa `DecisionTreeClassifier` y crea el modelo con `max_depth=3` y `random_state=0` en una variable llamada `modelo`.")))
     c.append(codigo(ARRANQUE_C1))
     c.append(md("### 💡 Entrenar con `fit()`\n\n"
-                "Entrenar es mostrarle al modelo los días anteriores **con sus etiquetas**, para que descubra qué preguntas separan los días atrasados de los puntuales.\n\n"
+                "Entrenar es mostrarle al modelo los días anteriores **con sus etiquetas**, para que descubra qué preguntas separan los días atrasados de los puntuales. "
+                "Todos estos días se usan para **entrenar**; más adelante usaremos días que el modelo no vio para **evaluar** qué tan bien aprendió.\n\n"
                 + idea("`modelo.fit(entradas, etiquetas)` es entrenar: el árbol busca las preguntas que mejor separan los días atrasados de los puntuales.") + "\n\n"
                 + escribelo("entrena el modelo con las entradas y las etiquetas.")))
     c.append(codigo(ARRANQUE_C2))
@@ -455,6 +468,9 @@ def icn_clase() -> list:
                 + idea("`export_text` muestra las preguntas que el árbol encontró: es el **patrón** que descubrió solo.") + "\n\n"
                 + escribelo("importa `export_text` y muestra el árbol, indicando los nombres de las variables.")))
     c.append(codigo(ARRANQUE_C4))
+    c.append(md("> 👀 **Ojo:** el árbol corta en `km_taco <= 4.00`, pero la regla real de La Islita es **5 km**. "
+                "No es un error de entrenamiento: en los 16 días no hay ninguno con 4 km, así que el modelo solo sabe que el corte está entre 3 y 5 y elige el punto medio. "
+                "Con más días **cerca del corte** (no solo más días) se acercaría a 5."))
     c.append(md("#### 🕵️ Explicar un error\n\n"
                 "Un día nuevo tiene **5 mm de lluvia, 1 km de taco y 40 pasajeros**, y el árbol predice **puntual**. "
                 "Escuchamos cómo la voz explica por qué, y **juzgamos entre todos si su explicación cuadra con las preguntas del árbol** que acabamos de leer.\n\n"
@@ -469,6 +485,9 @@ def icn_clase() -> list:
                 "| Entrenar | `modelo.fit(entradas, etiquetas)` |\n"
                 "| Predecir un día nuevo | `modelo.predict([dia_nuevo])` |\n"
                 "| Leer el árbol | `export_text(modelo, feature_names=nombres_variables)` |"))
+    c.append(md("#### 🎞️ Resumen animado\n\n"
+                "Para repasar cómo aprende el árbol (datos, `fit()`, `predict()` y por qué faltan datos cerca del corte), "
+                "mira las slides animadas: [https://clases-ia-mario-bertero.vercel.app/clase-42/](https://clases-ia-mario-bertero.vercel.app/clase-42/)"))
     c.append(md("#### ⚠️ Errores típicos a evitar\n\n"
                 "| Error | Qué ocurre | Cómo corregirlo |\n|---|---|---|\n"
                 "| Pasar un solo día suelto: `modelo.predict([0, 2, 12])` | `ValueError`: `predict()` espera una lista de días | Poner el día dentro de otra lista: `modelo.predict([[0, 2, 12]])` |\n"
