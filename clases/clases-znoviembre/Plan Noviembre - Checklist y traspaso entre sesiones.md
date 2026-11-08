@@ -29,6 +29,8 @@
 | 52 | mar 1-dic | Integración (práctica sin nota) | ☐ |
 | 53 | jue 3-dic | **E3** (60–65 min) | ☐ |
 
+> ⚠️ **CALENDARIO v5 (2026-11-07) SUPERA ESTA TABLA Y LA v4.** Ver la sección «Calendario v5 y reajuste de contenido (2026-11-07)» al final de este archivo: el jueves 12 no hay clase, entra la N°42b (tabla → listas), la N°43 se rehace como «v2» (la computadora aprende sola con `fit`) y las evaluaciones pasan a 2 pruebas de 60 min. La tabla de arriba se conserva solo como historial.
+
 **Calendario v4 (2026-11-04, acordado con Diego): las evaluaciones van siempre los jueves; se agregó la N°44 «la computadora ajusta sola» y el resto se corrió (E1 jue 19, E2 jue 26, E3 jue 3-dic; último día para notas: 10-dic; feriados no verificados). Esta tabla manda sobre las fechas del plan v3.** La numeración 41–53 sigue la del `Historial-Curricular.md` (el N°41 antiguo, evaluación Funciones+Strings+Listas, quedó eliminado el 2026-10-07 y el número se reutilizó). Las filas 42–51 **ya están en el Historial** como «Por diseñar».
 
 ## 2. Decisiones vigentes (no reabrir sin que Diego lo pida)
@@ -180,3 +182,76 @@ Tras cada gate aprobado: guardar estado → `git add "clases/clase-NN-tema/"` (y
 - **`hidden_layer_sizes`:** mencionarlo como el argumento que define cuántas neuronas más; su valor se decide por **prueba y error** y hoy existen sistemas complejos que **automatizan esa búsqueda**; en línea con la N°43 **seguimos con una sola neurona** (`()`). Con `(3,)` el caso «calor o néctar pero no ambos» pasa de 2 a 4 de 4 (verificado): opcional como curiosidad, no como contenido.
 - Matiz honesto: la neurona de scikit-learn entrena con activación logística (suave) y predice con la misma regla `z >= 0` que nuestro escalón.
 - Aplicar las reglas de `disenar-clase`: recordatorio puente (ayer = neurona a mano, hoy = la computadora ajusta, después = …), entrenamiento y prueba, colega del profesor, caja lista primero.
+
+## Calendario v5 y reajuste de contenido (2026-11-07)
+
+**Origen:** entrevista con Diego tras la N°42. Diagnóstico: el curso entendió *crear → entrenar → evaluar*, pero **no qué significa cada coma dentro de un corchete ni cada grupo de corchetes**; y la N°43 (v1) parte ajustando pesos a mano, cuando el mensaje de Diego es **dejar que la computadora aprenda los patrones de los datos**. Prefiere consolidar a avanzar por avanzar. Plan completo: `C:\Users\diego\.claude\plans\necsito-hacer-una-o-vast-mochi.md`.
+
+### Calendario v5 (manda sobre v3 y v4)
+
+| Fecha | N° | Contenido | Estado |
+|---|---|---|---|
+| lun 9-nov | **42b** | De la tabla a las listas (wifi del liceo) | ☐ |
+| mar 10-nov | **43 v2** | Neurona con `fit`/`predict`/`accuracy` + «está ponderando» + desplegable árbol vs. neurona | ☐ (la v1 queda intacta, sin dictar) |
+| jue 12-nov | — | **Sin clase** | — |
+| lun 16-nov | 44 | Mini-LLM **o** prompting (decide Diego: checkpoint C1) | ☐ |
+| mar 17-nov | — | Sin clase (ausencia docente) | — |
+| jue 19-nov | 45 | **Prueba 1** (60 min, ML) + revisión en clase | ☐ |
+| lun 23-nov | 46 | Prompting (o mini-LLM) | ☐ |
+| mar 24-nov | 47 | Segundo tema de IA si se mantienen ambos (C1) | ☐ |
+| jue 26-nov | 48 | Ética y 4D | ☐ |
+| lun 30-nov | 49 | Integración / colchón (según C1) | ☐ |
+| mar 1-dic | 50 | Colchón | ☐ |
+| jue 3-dic | 51 | **Prueba 2** (60 min) + revisión en clase | ☐ |
+
+Feriados sin verificar. La N°44 antigua («la computadora ajusta sola») queda **absorbida por la 43 v2**. Sin clases de ejercitación.
+
+### Decisiones nuevas (no reabrir sin que Diego lo pida)
+
+- **42b:** una sola clase nueva, sin ponderar ni if/else, recordando que el ML encuentra patrones solo. **Las listas se escriben a mano** copiando del cuaderno (tabla en markdown): se muestra la estructura (`[dato1, dato2, dato3]` por fila; filas separadas por coma y envueltas en otro corchete), **sin índices, sin `for`/`append`, sin slicing**. Enfoque intuitivo, no automatizable.
+- **Elección de columnas:** en la 42b eligen 3 de 6 (3 claras, 2 medias, 1 sin relación). Desde ahí, cada clase dice «el problema tenía X columnas, pero [personaje] les pide trabajar con estas Z».
+- **Regla de datos:** filas divisibles por 5; por defecto **20 = 16 *train* (las primeras) + 4 *test* (las últimas)**, nombres en inglés. El split lo hacen a mano. Se formaliza en código el «esto debería dar 1/0»: se predice el *test* y se cuenta con `accuracy_score`.
+- **43 v2:** sin ajuste manual de pesos; `MLPClassifier(hidden_layer_sizes=())` desde el inicio; al final «abrir la caja» (`coefs_`, `intercepts_`) para mostrar que pondera; desplegable corto con la receta árbol vs. neurona para copiar y pegar.
+- **Slides animadas en Vercel en cada clase** (inicio / durante / después del contenido nuevo).
+- **Evaluaciones:** 2 pruebas de 60 min revisadas en clase = 2 notas directas (reemplaza E1/E2/E3). Prueba 1 = ML (tabla → elegir 3 columnas → split → árbol y neurona con `crear-fit-predict-accuracy` → cuál es mejor y por qué; con pocos días de *test*, un acierto de diferencia dice poco). Prueba 2 = lo que quede (+ ética).
+- **Mini-LLM vs. prompting:** decide Diego más adelante (C1, a más tardar jue 12). **Ética sí va.**
+
+### Checklist v5
+
+| ID | Tarea | Estado |
+|---|---|---|
+| R1 | Este traspaso actualizado | ✅ 2026-11-07 |
+| R2 | `Historial-Curricular.md`: filas 42b y 43 v2 | ✅ 2026-11-07 |
+| R3 | `disenar-clase/SKILL.md`: reglas nuevas (columnas, sin ajuste a mano, split, slides, filas, Revisar, slides por concepto, ticket al Form) | ✅ 2026-11-08 (reglas 1-11) |
+| R4 | Memorias de feedback y de proyecto | ✅ 2026-11-08 |
+| R5 | `CLAUDE.md`: sección «Bloque IA» (calendario v5, molde, slides por concepto, ticket) | ✅ 2026-11-08 |
+| A1 | Dataset micro 20×6 verificado | 🟡 en búsqueda |
+| A2 | Spec 42b → gate | 🟡 Spec v1 escrita, falta gate de Diego |
+| A3 / A3b | Colab + Solucionario + Guía + slides 42b → gate | ✅ aprobado por Diego 2026-11-08 |
+| A4 | Push + deploy 42b (antes del lun 9) | ✅ 2026-11-08 |
+| B1 | Dataset colmenas 20 filas verificado | ☐ |
+| B2 | Spec 43 v2 → gate | ☐ |
+| B3 / B3b | Colab v2 + Solucionario v2 + Guía + slides v2 → gate | ☐ |
+| B4 | Push + deploy 43 v2 (antes del mar 10) | ☐ |
+| C1 | Diego decide mini-LLM / prompting | ☐ |
+| E1 / E2 | Prueba 1 y Prueba 2 (puntajes y descriptores antes de los ítems) | ☐ |
+
+## Estado al cierre de sesión (2026-11-08) — léelo primero
+
+**✅ N°42b «De la tabla a las listas» (lun 9-nov): aprobada por Diego, pusheada y desplegada.**
+- Carpeta `clases/clase-42b-tabla-a-listas/`: Spec v3, `Clase.ipynb`, `Solucionario.ipynb`, `Guía Docente Voz.md`, `Historial.md`, `Ticket de Salida Respuestas.json` (D, B, C, A), `generar_clase.py`, `construir_slides.py`, `crear_ticket_ppt.py`, datos verificados (`datos_*.json`) y `diagramas/`.
+- Colab: https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-42b-tabla-a-listas/Clase%2042b%20-%20De%20la%20Tabla%20a%20las%20Listas%20-%20Clase.ipynb
+- Slides (11, una por concepto): https://clases-ia-mario-bertero.vercel.app/clase-42b/ · regenerar con `py -3 construir_slides.py` y desplegar desde `sitio-hub/`.
+- **`Ticket de Salida.pptx` de la 42b está SOLO local** (no se pushea hasta después de dictar la clase; repo público). Pendiente de Diego: subirlo al repo tras el lunes 9 si quiere.
+- Dataset wifi 20×6 (semilla 16393): fila a fila en `datos_wifi_verificados.json`; trío elegido por la clase = dispositivos, video, horas desde reinicio; árbol `max_depth=3`, 4/4 en el test.
+
+**Reglas nuevas de Diego que valen para toda clase siguiente** (están en `disenar-clase/SKILL.md` 1–11, en el `CLAUDE.md` y en la memoria):
+1. La computadora aprende sola (sin ajuste manual); 2. listas tipeadas a mano, sin índices/`for`/slicing; 3. 20 filas = 16 *train* + 4 *test*; 4. «el problema tenía X columnas, el personaje pide estas Z»; 5. **«filas» / «filas de datos», nunca «bloques»**; 6. todo el ICN con el ejemplo del escenario de la clase (nada de ejemplos ajenos); 7. concepto final «Revisar» (dos viñetas: leer el árbol con *features* + ver la precisión) y detalles de hiperparámetros en un `<details>` oculto; 8. la guiada es el único ejercicio obligatorio, los demás son extras; 9. **una slide animada por concepto del ICN** + partes del Haz Ahora + «Para pensar» + resumen en viñetas, rotuladas «Concepto N del cuaderno»; 10. **el Colab termina con el link al Google Form del ticket y NUNCA trae las preguntas** (van en el PPT del ticket y el Solucionario); 11. etiqueta binaria definida en el Haz Ahora con la pregunta del personaje (1 = sí, 0 = no).
+
+**Lo siguiente (orden):**
+1. **N°43 v2 — «La neurona aprende sola»** (mar 10-nov). Spec v2 no escrita aún. Usar la 42b como molde: misma tabla→listas→train/test→receta, cambiando una línea (`MLPClassifier(hidden_layer_sizes=(), activation="logistic", solver="lbfgs", random_state=0)` = una neurona); «abrir la caja» con `coefs_`/`intercepts_` (pondera: $z = w_1x_1 + w_2x_2 + w_3x_3 + b$; el calor suma, el viento y la lluvia restan); desplegable final árbol vs. neurona (`crear→fit→predict→accuracy` en ~10 líneas). **Dataset nuevo de las colmenas: 20 filas (16/4) y 5–6 columnas con 3 usadas, por diseñar y verificar** (que `lbfgs` converja sin escalar, que los signos se lean bien y que árbol y neurona no den lo mismo en el test). Archivos con sufijo `v2` en `clases/clase-43-neurona/` (la v1 queda archivada y su página sigue en línea). Slides en `sitio-hub/clase-43-v2/` (una por concepto), Ticket al Form + PPT local + JSON de respuestas. Nombres de las *features* en el mismo orden que las columnas.
+2. **C1 (jue 12 como máximo):** Diego decide mini-LLM, prompting o ambos para el lun 16.
+3. **Prueba 1** (jue 19-nov, 60 min): puntajes y descriptores antes de los ítems; no pedir elegir columnas desde cero, sino justificar un trío dado.
+4. Prueba 2, ética y 4D (pendientes de A, B, D del v2).
+
+**Trampas técnicas nuevas:** en este equipo las herramientas de Bash/PowerShell en heredocs de Python pueden mal-interpretar `\n`: escribir scripts con la herramienta de archivos y ejecutarlos; la consola de Windows necesita `PYTHONIOENCODING=utf-8` para imprimir emojis; el `.gitignore` ya excluye `__pycache__`.

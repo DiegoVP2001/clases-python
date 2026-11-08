@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase 42b · De la tabla a las listas</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#475569;--line:#cbd5e1;--accent:#1d4ed8;--accent-ink:#fff;
+--a:#b45309;--abg:#fef3c7;--p:#1d4ed8;--pbg:#dbeafe;--ok:#065f46;--okbg:#d1fae5;--bad:#b91c1c;--badbg:#fee2e2}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#111a2e;--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;--accent:#93c5fd;--accent-ink:#0b1220;
+--a:#fcd34d;--abg:#451a03;--p:#93c5fd;--pbg:#1e3a5f;--ok:#a7f3d0;--okbg:#064e3b;--bad:#fca5a5;--badbg:#450a0a}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 48px}
+nav.tabs{display:flex;gap:8px;padding:12px 0;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav.tabs a{padding:8px 14px;border-radius:10px;border:2px solid var(--line);color:inherit;text-decoration:none;font-weight:600}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+h1{font-size:1.2rem;margin:16px 0 0}
+h2{font-size:1.45rem;margin:.2rem 0 .5rem}
+.slide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0;min-height:440px}
+.muted{color:var(--muted)}
+.ctrl{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{font:inherit;min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--accent);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button:disabled{opacity:.4;cursor:default}
+button[aria-pressed="true"]{background:var(--pbg)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.dots{display:flex;gap:8px;flex-wrap:wrap}
+.dots button{min-height:28px;width:28px;padding:0;border-radius:99px;border:2px solid var(--accent);background:var(--card)}
+.dots button[aria-current="true"]{background:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:3px 8px;text-align:center;transition:opacity .4s}
+th{background:var(--pbg)}
+td.c0,th.c0{box-shadow:inset 0 -3px 0 var(--p)}td.c1,th.c1{box-shadow:inset 0 -3px 0 var(--a)}td.c2,th.c2{box-shadow:inset 0 -3px 0 var(--ok)}
+tr.hl td{outline:3px solid var(--accent);outline-offset:-3px}
+.off{opacity:.22}
+tr.row{animation:fade .4s both}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.note{background:var(--abg);border-left:5px solid var(--a);padding:10px 14px;border-radius:8px;margin:12px 0}
+.good{background:var(--okbg);border-left-color:var(--ok)}
+.bad{background:var(--badbg);border-left-color:var(--bad)}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;overflow:auto;font-size:.95rem;margin:8px 0;line-height:1.7}
+code{font-family:Consolas,Menlo,monospace}
+.d0{color:var(--p);font-weight:700}.d1{color:var(--a);font-weight:700}.d2{color:var(--ok);font-weight:700}
+.comma{color:var(--bad);font-weight:700;font-size:1.15em}
+.br{color:var(--muted);font-weight:700}
+.tag{display:inline-block;padding:2px 8px;border-radius:8px;font-weight:700}
+.tag.l1{background:var(--abg);color:var(--a)}.tag.l0{background:var(--pbg);color:var(--p)}
+.pair{display:flex;gap:14px;flex-wrap:wrap}.pair>div{flex:1;min-width:260px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.bar{display:flex;gap:3px;margin:14px 0}
+.bar span{flex:1;text-align:center;padding:12px 0;border-radius:6px;font-weight:700;border:2px solid var(--p);background:var(--pbg);color:var(--p);transition:all .35s}
+.bar span.t{border-color:var(--a);background:var(--abg);color:var(--a)}
+.bar span.off{opacity:.15}
+.hbar{height:22px;border-radius:6px;background:var(--pbg);border:1px solid var(--line);overflow:hidden}.hbar i{display:block;height:100%;background:var(--accent)}
+.hot{background:var(--okbg);border-radius:4px;font-weight:700}
+.think{display:flex;gap:4px;margin:8px 0}.think span{flex:1;height:30px;border-radius:6px;border:2px solid var(--p);background:var(--card);transition:background .3s}.think span.on{background:var(--pbg)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="tabs" aria-label="Clases">
+<a href="../clase-41/">Clase 41</a>
+<a href="../clase-42/">Clase 42</a>
+<a href="./" aria-current="page">Clase 42b</a>
+<a href="../clase-43/">Clase 43</a>
+<a href="../">Inicio</a>
+</nav>
+<h1>Clase 42b · De la tabla a las listas</h1>
+<p class="muted" style="margin:.2rem 0">Resumen animado con el wifi del liceo. Avanza con los botones o con las flechas del teclado.</p>
+
+<section class="slide" id="slide" aria-live="polite"></section>
+
+<div class="ctrl">
+<button id="prev">← Anterior</button>
+<div class="dots" id="dots" role="group" aria-label="Ir a la slide"></div>
+<button id="next" class="primary">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const COLS=["dispositivos_conectados", "estudiantes_viendo_video", "horas_desde_reinicio", "temperatura_sala", "hora_del_bloque", "dia_del_mes"];
+const X=[[71, 0, 20, 24, 8, 7], [62, 2, 12, 29, 6, 23], [79, 2, 2, 23, 1, 23], [73, 0, 15, 19, 7, 20], [102, 9, 22, 18, 6, 4], [103, 20, 1, 23, 6, 31], [101, 17, 12, 26, 5, 29], [59, 22, 23, 30, 3, 6], [77, 7, 22, 24, 4, 4], [50, 0, 14, 30, 4, 27], [76, 0, 14, 26, 6, 28], [69, 0, 7, 24, 5, 18], [59, 0, 19, 33, 7, 21], [115, 28, 22, 20, 4, 26], [47, 2, 2, 19, 6, 21], [78, 0, 16, 29, 3, 31], [51, 0, 16, 22, 5, 3], [117, 0, 16, 30, 4, 5], [75, 22, 2, 18, 8, 24], [66, 0, 9, 27, 6, 5]];
+const Y=[1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0];
+const RES={"0-1-2": {"pred": [0, 1, 1, 0], "ok": 4, "cv": 0.9}, "0-1-3": {"pred": [0, 1, 1, 0], "ok": 4, "cv": 0.7}, "0-1-4": {"pred": [0, 0, 1, 0], "ok": 3, "cv": 0.7}, "0-1-5": {"pred": [1, 1, 1, 1], "ok": 2, "cv": 0.8}, "0-2-3": {"pred": [0, 1, 0, 0], "ok": 3, "cv": 0.55}, "0-2-4": {"pred": [0, 1, 0, 0], "ok": 3, "cv": 0.65}, "0-2-5": {"pred": [0, 0, 0, 0], "ok": 2, "cv": 0.6}, "0-3-4": {"pred": [0, 1, 1, 0], "ok": 4, "cv": 0.7}, "0-3-5": {"pred": [1, 1, 0, 1], "ok": 1, "cv": 0.55}, "0-4-5": {"pred": [1, 1, 0, 1], "ok": 1, "cv": 0.65}, "1-2-3": {"pred": [1, 1, 1, 0], "ok": 3, "cv": 0.8}, "1-2-4": {"pred": [1, 1, 1, 0], "ok": 3, "cv": 0.8}, "1-2-5": {"pred": [1, 1, 1, 0], "ok": 3, "cv": 0.8}, "1-3-4": {"pred": [0, 0, 1, 0], "ok": 3, "cv": 0.8}, "1-3-5": {"pred": [1, 1, 1, 1], "ok": 2, "cv": 0.75}, "1-4-5": {"pred": [1, 1, 1, 1], "ok": 2, "cv": 0.75}, "2-3-4": {"pred": [0, 0, 0, 0], "ok": 2, "cv": 0.6}, "2-3-5": {"pred": [0, 0, 0, 0], "ok": 2, "cv": 0.7}, "2-4-5": {"pred": [0, 0, 0, 0], "ok": 2, "cv": 0.7}, "3-4-5": {"pred": [1, 1, 0, 1], "ok": 1, "cv": 0.55}};
+const DEPTH={"1": {"err": 2, "real": 1, "hojas": 2}, "2": {"err": 1, "real": 2, "hojas": 3}, "3": {"err": 0, "real": 3, "hojas": 4}, "4": {"err": 0, "real": 3, "hojas": 4}};
+const ARBOL=["|--- estudiantes_viendo_video <= 4.50", "|   |--- horas_desde_reinicio <= 15.50", "|   |   |--- class: 0", "|   |--- horas_desde_reinicio >  15.50", "|   |   |--- dispositivos_conectados <= 65.00", "|   |   |   |--- class: 0", "|   |   |--- dispositivos_conectados >  65.00", "|   |   |   |--- class: 1", "|--- estudiantes_viendo_video >  4.50", "|   |--- class: 1"];
+const T3=[0,1,2];
+const N3=T3.map(i=>COLS[i]);
+const S=document.getElementById('slide');
+let cur=0,timers=[];
+const clear=()=>{timers.forEach(clearTimeout);timers=[]};
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+const fmt=v=>String(v).replace('.',',');
+const COLOR=['d0','d1','d2'];
+const B=i=>T3.map(c=>X[i][c]);            // fila i (0-based) con las 3 columnas elegidas
+const lst=(arr,colored)=>'<span class="br">[</span>'+arr.map((v,j)=>colored?`<span class="${COLOR[j]}">${v}</span>`:v).join('<span class="comma">, </span>')+'<span class="br">]</span>';
+const sino=v=>v===1?'sí':'no';
+
+function tabla6(n,dim){ // primeras n filas, 6 columnas; dim = columnas que se apagan
+  return `<table><thead><tr><th>Fila</th>${COLS.map((c,i)=>`<th class="${dim&&!T3.includes(i)?'off':''}">${c}</th>`).join('')}<th>cae</th></tr></thead><tbody>`+
+  X.slice(0,n).map((r,k)=>`<tr><td>${k+1}</td>${r.map((v,i)=>`<td class="${dim&&!T3.includes(i)?'off':''}">${v}</td>`).join('')}<td><span class="tag l${Y[k]}">${Y[k]}</span></td></tr>`).join('')+`</tbody></table>`;
+}
+function tabla3(n,hl){ // primeras n filas con las 3 columnas elegidas
+  return `<table><thead><tr><th>Fila</th>${N3.map((c,j)=>`<th class="c${j}">${c}</th>`).join('')}<th>cae</th></tr></thead><tbody>`+
+  X.slice(0,n).map((r,k)=>`<tr class="${k===hl?'hl':''}"><td>${k+1}</td>${B(k).map((v,j)=>`<td class="c${j}">${v}</td>`).join('')}<td><span class="tag l${Y[k]}">${Y[k]}</span></td></tr>`).join('')+`</tbody></table>`;
+}
+
+const slides=[
+/* 1 · la pregunta y la etiqueta */
+function(){
+  let modo='num';
+  const draw=()=>{
+    S.innerHTML=`<h2>1 · La pregunta y la etiqueta</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Haz Ahora · pregunta 3</p>
+    <p>Al final de cada registro, el encargado tiene otra columna: <b>«¿Se cayó el wifi?»</b>. Para el computador, esa respuesta se representa con un <b>número</b>: una <b>etiqueta</b> binaria.</p>
+    <div class="chips"><button id="m1" aria-pressed="${modo==='num'}">Ver 1 / 0</button><button id="m2" aria-pressed="${modo==='txt'}">Ver sí / no</button></div>
+    <table><thead><tr><th>Fila</th>${COLS.map(c=>`<th>${c}</th>`).join('')}<th>¿se cayó el wifi?</th></tr></thead><tbody>`+
+    X.slice(0,5).map((r,k)=>`<tr><td>${k+1}</td>${r.map(v=>`<td>${v}</td>`).join('')}<td><span class="tag l${Y[k]}">${modo==='num'?Y[k]:sino(Y[k])}</span></td></tr>`).join('')+`</tbody></table>
+    <div class="note"><b>1 = sí</b> · <b>0 = no</b>. El 1 significa «sí», <b>no «bueno»</b>: aquí «sí» quiere decir que el wifi <b>se cayó</b>. Esa etiqueta se llama <code>cae</code> en la tabla.</div>`;
+    document.getElementById('m1').onclick=()=>{modo='num';draw()};
+    document.getElementById('m2').onclick=()=>{modo='txt';draw()};
+  };
+  draw();
+},
+/* 2 · de 6 columnas a 3 */
+function(){
+  let paso=0;
+  const razones=[['dispositivos_conectados','cuantos más aparatos hay conectados, más carga la red','d0'],['estudiantes_viendo_video','el video es lo que más consume','d1'],['horas_desde_reinicio','un router que lleva muchas horas sin reiniciarse se degrada','d2']];
+  const draw=()=>{
+    S.innerHTML=`<h2>2 · De 6 columnas a 3</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 1 del cuaderno</p>
+    <p>El cuaderno del encargado tiene <b>6 columnas</b>. Un modelo no necesita todas: nos quedamos con las que podrían <b>explicar</b> la etiqueta y lo <b>justificamos</b>.</p>
+    ${tabla6(5,paso>=1)}
+    ${paso>=1?`<div class="pair" style="margin-top:12px"><div class="note good"><b>Nos quedamos con:</b><br>${razones.map(r=>`<span class="${r[2]}">${r[0]}</span>: ${r[1]}.`).join('<br>')}</div>
+    <div class="note bad"><b>Quedan fuera:</b><br>temperatura_sala, hora_del_bloque y dia_del_mes: no cargan la red por sí solas.</div></div>
+    <div class="note"><b>¿Para qué?</b> Menos columnas = menos datos que anotar y que escribir, menos ruido y, en bases enormes, <b>menos procesamiento</b>. Aquí casi no se nota, pero igual hay que justificar.</div>`:'<p class="muted">¿Cuáles tres creen que ayudan más?</p>'}
+    <div class="chips"><button id="st" class="primary">${paso<1?'Quedarnos con 3':'Volver a las 6'}</button></div>`;
+    document.getElementById('st').onclick=()=>{paso=paso<1?1:0;draw()};
+  };
+  draw();
+},
+/* 3 · una fila = una lista */
+function(){
+  let step=0,swapped=false;
+  const draw=()=>{
+    const fila=B(0);
+    const orden=swapped?[1,0,2]:[0,1,2];
+    const f=orden.map(i=>fila[i]);
+    let code;
+    if(step===0)code='<span class="muted"># Tomamos la fila de la fila 1…</span>';
+    else if(step===1)code='fila_1 = <span class="br">[ ]</span>   <span class="muted"># los datos van entre corchetes</span>';
+    else code='fila_1 = <span class="br">[</span>'+f.map((v,j)=>`<span class="${COLOR[orden[j]]}">${v}</span>`).join('<span class="comma">, </span>')+'<span class="br">]</span>';
+    S.innerHTML=`<h2>3 · Una fila es una lista</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 2 del cuaderno</p>
+    <p class="muted">Con las 3 columnas elegidas del wifi del liceo.</p>
+    ${tabla3(3,step>=0?0:-1)}
+    <pre>${code}</pre>
+    <div class="note">${step===0?'Tomamos <b>una fila</b>: la fila 1.':step===1?'Los datos de la fila van <b>entre corchetes</b>.':swapped?'Cada coma separa una columna… pero aquí <b>dos datos cambiaron de lugar</b>: ahora el primer dato son los <b>estudiantes viendo video</b>. El modelo aprendería algo falso <b>sin dar ningún error</b>.':'Cada <span class="comma">coma</span> separa una columna y el <b>orden</b> es siempre el mismo: <span class="d0">dispositivos</span>, <span class="d1">video</span>, <span class="d2">horas desde el reinicio</span>.'}</div>
+    <div class="chips"><button id="st" class="primary">${step<2?'Siguiente paso':'Repetir'}</button>
+    <button id="sw" aria-pressed="${swapped}" ${step<2?'disabled':''}>Cambiar dos datos de lugar</button></div>`;
+    document.getElementById('st').onclick=()=>{step=step<2?step+1:0;swapped=false;draw()};
+    document.getElementById('sw').onclick=()=>{swapped=!swapped;draw()};
+  };
+  draw();
+},
+/* 4 · varias filas = la tabla */
+function(){
+  let n=0;const total=4;
+  const draw=()=>{
+    const filas=Array.from({length:n},(_,i)=>'    '+lst(B(i),true)+(i<n-1?'<span class="comma">,</span>':'')).join('\n');
+    const et=Y.slice(0,n).join(', ');
+    S.innerHTML=`<h2>4 · Varias filas forman la tabla</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 3 del cuaderno</p>
+    <p>Las filas se <b>separan con comas</b> y se <b>envuelven en otro par de corchetes</b>. Las etiquetas (1 = sí, 0 = no) van en <b>otra lista, en el mismo orden</b>.</p>
+    ${tabla3(n,n-1)}
+    <div class="pair"><div><pre>entradas_train = <span class="br">[</span>
+${filas}
+<span class="br">]</span></pre></div>
+    <div><pre>etiquetas_train = <span class="br">[</span>${et}<span class="br">]</span></pre>
+    <p class="muted" style="margin:0">${n?`La etiqueta de la fila ${n} (<b>${Y[n-1]} = ${sino(Y[n-1])}</b>) está en la posición ${n}, igual que su fila.`:'Todavía no hay filas.'}</p></div></div>
+    <div class="chips"><button id="add" class="primary" ${n>=total?'disabled':''}>Agregar el siguiente fila</button><button id="rs">Reiniciar</button></div>`;
+    document.getElementById('add').onclick=()=>{n++;draw()};
+    document.getElementById('rs').onclick=()=>{n=0;draw()};
+  };
+  draw();
+},
+/* 5 · el 80/20 */
+function(){
+  S.innerHTML=`<h2>5 · Aprender con el 80 %, probar con el 20 %</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 4 del cuaderno</p>
+  <p>De las <b>20 filas</b> anotadas, la computadora <b>aprende</b> con las <b>primeras 16</b> (train) y las <b>últimas 4</b> se guardan para <b>probarla</b> (test).</p>
+  <div class="bar" id="bar">${Array.from({length:20},(_,i)=>`<span class="off" data-i="${i}">${i+1}</span>`).join('')}</div>
+  <div class="pair"><div class="note" style="border-left-color:var(--p);background:var(--pbg)">🧠 <b>train · 80 %</b><br>filas 1 a 16 → <code>entradas_train</code> y <code>etiquetas_train</code></div>
+  <div class="note">📝 <b>test · 20 %</b><br>filas 17 a 20 → <code>entradas_test</code> y <code>etiquetas_test</code></div></div>
+  <p class="muted">En el test sabemos qué pasó de verdad, pero <b>el modelo nunca lo vio</b>: sirve para saber si la computadora funciona con filas nuevos.</p>`;
+  [...document.querySelectorAll('#bar span')].forEach((s,i)=>later(()=>{s.classList.remove('off');if(i>=16)s.classList.add('t')},i*110));
+},
+/* 6 · predict necesita una tabla */
+function(){
+  let modo='tabla';
+  const nuevo=[88,17,4];
+  const draw=()=>{
+    S.innerHTML=`<h2>6 · Preguntar por una sola fila también lleva una tabla</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 5 del cuaderno · predict</p>
+    <p><code>predict()</code> recibe una <b>tabla</b> (una lista de filas), aunque tenga <b>una sola fila</b>. Por eso lleva doble corchete.</p>
+    <p class="muted">Un fila nueva: 88 dispositivos, 17 estudiantes viendo video y 4 horas desde el reinicio.</p>
+    <div class="chips"><button id="b1" aria-pressed="${modo==='suelta'}">predict([88, 17, 4])</button><button id="b2" aria-pressed="${modo==='tabla'}">predict([[88, 17, 4]])</button></div>
+    ${modo==='suelta'?`<pre>modelo.predict(${lst(nuevo,true)})</pre><div class="note bad">❌ <b>ValueError:</b> el modelo esperaba una tabla y recibió una sola fila suelta.</div>`
+    :`<pre>modelo.predict(<span class="br">[</span>${lst(nuevo,true)}<span class="br">]</span>)</pre><div class="note good">✅ Una tabla de <b>una</b> fila: el modelo responde con <b>una</b> predicción.</div>`}
+    <p class="muted">Cuando pedimos el test completo, <code>entradas_test</code> ya es una tabla (con 4 filas): el modelo entrega <b>una predicción por fila</b>.</p>`;
+    document.getElementById('b1').onclick=()=>{modo='suelta';draw()};
+    document.getElementById('b2').onclick=()=>{modo='tabla';draw()};
+  };
+  draw();
+},
+/* 7 · la receta y max_depth */
+function(){
+  let d=3;
+  const draw=()=>{
+    const r=DEPTH[d];
+    S.innerHTML=`<h2>7 · La receta: crear → fit → predict</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 5 del cuaderno · la receta</p>
+    <pre>modelo = DecisionTreeClassifier(max_depth=<b>${d}</b>, random_state=0)
+modelo.fit(entradas_train, etiquetas_train)      <span class="muted"># aprende con el 80 %</span>
+predicciones = modelo.predict(entradas_test)     <span class="muted"># una predicción por fila del test</span></pre>
+    <p><code>max_depth</code> es <b>cuánto le dejamos «pensar»</b> al computador: el máximo de preguntas sí/no seguidas. Prueba distintos valores:</p>
+    <div class="chips">${[1,2,3,4].map(k=>`<button data-d="${k}" aria-pressed="${k===d}">max_depth = ${k}</button>`).join('')}</div>
+    <div class="think">${[1,2,3,4].map(k=>`<span class="${k<=r.real?'on':''}"></span>`).join('')}</div>
+    <table><tbody><tr><td style="text-align:left">Preguntas seguidas que realmente usa el árbol</td><td><b>${r.real}</b></td></tr>
+    <tr><td style="text-align:left">Se equivoca en el entrenamiento</td><td><b>${r.err} de 16</b> filas</td></tr></tbody></table>
+    <div class="note ${d>=3?'good':''}">${d<3?'Con poco «pensar» el árbol aún se equivoca en el entrenamiento.':d===3?'<b>3</b> es el menor valor con el que el árbol acierta todo el entrenamiento: <b>mientras menos, mejor si los resultados no cambian</b>, porque es menos procesamiento.':'Con 4 el árbol <b>no necesita más preguntas</b>: queda igual que con 3. Pensar de más no mejora nada.'}</div>
+    <p class="muted">Y <code>random_state=0</code> es una semilla: hace que a todos nos resulte el mismo árbol.</p>`;
+    document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{d=+b.dataset.d;draw()});
+  };
+  draw();
+},
+/* 8 · revisar 1: leer el árbol */
+function(){
+  let paso=0;
+  const camino=[[0],[0,3],[0,3,4],[0,3,4,5]];
+  const msgs=['',`¿<b>estudiantes_viendo_video</b> ≤ 4,5? Son 0 → <b>sí</b>.`,`¿<b>horas_desde_reinicio</b> ≤ 15,5? Son 16 → <b>no</b>.`,`¿<b>dispositivos_conectados</b> ≤ 65? Son 51 → <b>sí</b>.`,`Respuesta: <b>0 = no</b> se cae el wifi.`];
+  const draw=()=>{
+    const hot=paso>0?camino[paso-1]:[];
+    S.innerHTML=`<h2>8 · Revisar (1): leer el árbol</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 6 del cuaderno · Revisar (1)</p>
+    <p>Con <code>export_text</code> el árbol se lee como preguntas. Le damos los <b>nombres de las columnas</b> (las <b>features</b>), <b>en el mismo orden</b> que las columnas de nuestras listas:</p>
+    <pre>nombres_variables = ${JSON.stringify(N3).replace(/,/g,', ')}
+print(export_text(modelo, feature_names=nombres_variables))</pre>
+    <pre>${ARBOL.map((l,i)=>`<span class="${hot.includes(i)?'hot':''}">${l.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`).join('\n')}</pre>
+    <div class="note">${paso===0?'Sigamos el camino de la <b>fila 17</b>: 51 dispositivos, 0 estudiantes viendo video, 16 horas desde el reinicio.':msgs[paso]}</div>
+    <div class="chips"><button id="go" class="primary" ${paso>=4?'disabled':''}>Seguir el camino de la fila 17</button><button id="rs">Reiniciar</button></div>`;
+    document.getElementById('go').onclick=()=>{paso++;draw()};
+    document.getElementById('rs').onclick=()=>{paso=0;draw()};
+  };
+  draw();
+},
+/* 9 · revisar 2: accuracy */
+function(){
+  const r=RES['0-1-2'];
+  S.innerHTML=`<h2>9 · Revisar (2): la precisión (accuracy)</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 6 del cuaderno · Revisar (2)</p>
+  <p>Comparamos las <code>predicciones</code> con lo que de verdad pasó (<code>etiquetas_test</code>), fila por fila.</p>
+  <pre>exactitud = accuracy_score(etiquetas_test, predicciones)</pre>
+  <table><thead><tr><th>Fila</th><th>Predijo</th><th>Realidad</th><th></th></tr></thead><tbody id="tb"></tbody></table>
+  <div class="note good" id="acc" style="visibility:hidden"></div>`;
+  const tb=document.getElementById('tb');
+  r.pred.forEach((p,i)=>later(()=>{const ok=p===Y[16+i];
+    tb.insertAdjacentHTML('beforeend',`<tr class="row"><td>${17+i}</td><td><span class="tag l${p}">${p}</span></td><td><span class="tag l${Y[16+i]}">${Y[16+i]}</span></td><td>${ok?'✅':'❌'}</td></tr>`)},500+i*600));
+  later(()=>{const a=document.getElementById('acc');a.style.visibility='visible';
+    a.innerHTML=`<b>accuracy = aciertos ÷ total = ${r.ok} ÷ 4 = ${fmt(r.ok/4)}</b>`},500+4*600);
+},
+/* 10 · 4 filas prueban poco */
+function(){
+  const filas=[['0-1-2','Dispositivos, video, horas reinicio (el de la clase)'],['0-1-3','Dispositivos, video, temperatura'],['0-1-5','Dispositivos, video, día del mes'],['0-3-5','Dispositivos, temperatura, día del mes'],['3-4-5','Temperatura, hora del bloque, día del mes']];
+  S.innerHTML=`<h2>10 · Con solo 4 filas, un 4 de 4 prueba poco</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Para pensar</p>
+  <p>Probamos varios tríos con las mismas 20 filas. Mira cuántos acertaron en el test y cómo les fue al probarlos de varias maneras distintas (<b>validación cruzada</b>, que no se enseña hoy). Es la <b>evidencia</b> detrás de nuestra justificación.</p>
+  <table><thead><tr><th>Trío</th><th>Aciertos en test</th><th>Validación cruzada</th></tr></thead><tbody>${filas.map(([k,n])=>`<tr><td style="text-align:left">${n}</td><td>${RES[k].ok} de 4</td><td><div class="hbar" style="min-width:90px"><i style="width:${RES[k].cv*100}%"></i></div>${fmt(RES[k].cv)}</td></tr>`).join('')}</tbody></table>
+  <div class="note">El trío «dispositivos, video, temperatura» también acierta <b>4 de 4</b> en el test, pero en la validación cruzada le va peor. Con <b>4 filas</b> no alcanzamos a notar la diferencia.</div>
+  <div class="note good"><b>Conclusión:</b> acertar 4 de 4 <b>no prueba</b> que el modelo es bueno; hay que probarlo con <b>más filas</b> antes de confiar. Y un solo dato mal anotado puede mover mucho el resultado: por eso importa la <b>atención</b>.</div>`;
+},
+/* 11 · resumen */
+function(){
+  S.innerHTML=`<h2>11 · ¿Qué aprendimos y qué viene?</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Cierre</p>
+  <ul>
+  <li><b>La etiqueta</b> responde la pregunta del encargado: <code>1 = sí</code> (se cayó), <code>0 = no</code>.</li>
+  <li><b>Elegimos 3 de 6 columnas</b> y lo justificamos: menos datos, menos ruido, menos procesamiento.</li>
+  <li><b>Una fila</b> es una lista: <code>[dato1, dato2, dato3]</code>. <b>La tabla</b> son filas separadas por coma dentro de otro corchete; las etiquetas van en otra lista, en el mismo orden.</li>
+  <li><b>Train y test:</b> con el 80 % (16 filas) la computadora aprende; el 20 % (4) se guarda para probarla.</li>
+  <li><b><code>max_depth</code></b> es cuánto le dejamos pensar: el menor valor que no empeora los resultados.</li>
+  <li><b>Revisar:</b> leer el árbol con <code>export_text</code> y los nombres de las features, y medir el accuracy = aciertos ÷ total.</li>
+  <li>Con pocos filas de test, un buen accuracy <b>no basta</b> para confiar.</li></ul>
+  <div class="note good"><b>Mañana:</b> la <b>misma receta</b> con otro modelo: una <b>neurona</b>. Cambiaremos una sola línea.</div>`;
+}];
+
+/* ---------- navegación ---------- */
+const dots=document.getElementById('dots');
+slides.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b)});
+function go(i){clear();cur=Math.max(0,Math.min(slides.length-1,i));slides[cur]();
+  [...dots.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur));
+  document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(e.target.tagName==='BUTTON'&&e.key===' ')return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+go(0);
+</script>
+</body>
+</html>

@@ -587,11 +587,34 @@ Resumen del flujo: leer la Google Sheet de respuestas del Form vía Google Drive
          ❌ diseñar N°42 con Haz Ahora/Guiada/Independiente/Ticket por Form como en las clases de Python -->
 Noviembre se rige por `clases/clases-znoviembre/Plan Noviembre 3ro Medio - IA - Especificacion operativa v3.md` (plan de ChatGPT + sección 10 de integración). **Antes de diseñar cualquier clase de este bloque lee `clases/clases-znoviembre/Plan Noviembre - Checklist y traspaso entre sesiones.md`**: ahí están el estado, el brief de N°42 y N°43, las decisiones vigentes, los pendientes y las trampas técnicas. Reglas que difieren del flujo maestro:
 
-- **Flujo liviano:** Spec → *gate* → Colab + Solucionario (+ HTML si aplica) → *gate* → push. Sin `Ejercicios.ipynb`, sin Ticket por Google Form y sin PPT (salvo que Diego lo pida). La actitud la elige Diego entre 3–4 opciones.
-- **Práctica autorrevisada:** Diego no recolecta resultados; pistas en todos los ejercicios y `check_*()` en los ejercicios clave de los Colabs.
+- **Flujo liviano:** Spec → *gate* → Colab + Solucionario + `Ticket de Salida.pptx` y su JSON de respuestas (+ HTML/slides si aplica) → *gate* → push. Sin `Ejercicios.ipynb` y sin PPT de clase (salvo que Diego lo pida). La actitud la elige Diego entre 3–4 opciones.
+<!-- why: el 2026-11-08 Diego pidió que el Colab termine con el link al formulario del ticket y no traiga las preguntas, «esto siempre, no solo ahora», porque las preguntas las proyecta en el PPT; las Clases 42 y 43 las habían puesto en el Colab con `check_ticket()` autocorregido
+     evita: que una clase nueva vuelva a incrustar las preguntas del ticket (y las huellas de las respuestas) en el cuaderno de estudiantes
+     ej: ✅ sección «🎫 Ticket de Salida» con aviso + link `https://forms.gle/sjRpbgmQzrpkEBsH9` + el tema a escribir en el Form; preguntas solo en el Solucionario y en `Ticket de Salida.pptx` (que no se pushea antes de dictar)
+         ❌ preguntas A–D y `check_ticket(respuestas)` dentro de `Clase.ipynb` -->
+- **Ticket de Salida (siempre):** el Colab trae solo el link al Google Form y el tema breve a escribir; **nunca las preguntas** (van en el PPT del ticket y en el Solucionario). Cada clase genera `Ticket de Salida Respuestas.json`. El `.pptx` queda solo local hasta después de dictar la clase (repo público).
+- **Práctica autorrevisada:** Diego no recolecta resultados; pistas en todos los ejercicios y `check_*()` en los ejercicios clave de los Colabs (el ticket ya no se autocorrige en el Colab).
 - **ChatGPT Voice como colega:** solo habla cuando Diego la activa; bienvenida, Haz Ahora y verificación del contenido nuevo; nunca protagonista en práctica ni cierre. Cada clase lleva `Guía Docente Voz.md`.
 - **Sitio de actividades interactivas:** `sitio-hub/` (Vercel `clases-ia-mario-bertero`, equipo `diegovp2001`); se publica con `npx vercel deploy --prod --yes --scope diegovp2001` desde `sitio-hub/`. **Nunca conectar ese proyecto al repo de GitHub.**
 - Curso en el encabezado: «3ro medio». Sin 4D hasta la clase de ética.
+
+<!-- why: tras dictar la Clase 42 el curso entendió crear→entrenar→evaluar pero no qué significa cada coma/corchete de las listas; además la Clase 43 v1 partía ajustando pesos a mano y Diego la descartó (2026-11-07) porque su mensaje es que la computadora aprende sola; el jueves 12-nov no hay clase y se corrió el calendario
+     evita: que una sesión nueva retome el calendario v4 (E1/E2/E3, N°44 aparte) o diseñe la neurona con ajuste manual de pesos
+     ej: ✅ N°42b (tabla→listas) → N°43 v2 (`MLPClassifier(hidden_layer_sizes=())` con fit/predict/accuracy, «abrir la caja» con `coefs_`) → Prueba 1 el jue 19-nov
+         ❌ diseñar «N°44 la computadora ajusta sola» como clase aparte o mover pesos a mano en clase -->
+- **Calendario v5 (2026-11-07) manda sobre v3 y v4:** 42b (lun 9) · 43 v2 (mar 10; la 43 v1 queda archivada sin dictar) · *jue 12 y mar 17 sin clase* · mini-LLM o prompting (lun 16; decide Diego) · **Prueba 1** (jue 19, 60 min, ML) · … · ética · **Prueba 2** (jue 3-dic, 60 min). Evaluaciones: 2 pruebas de 60 min revisadas en clase = 2 notas directas. Detalle en el traspaso («Calendario v5»).
+
+<!-- why: Diego pulió la Clase 42b en dos rondas (2026-11-07 y 08) y quiere repetir el mismo molde en las clases siguientes; sin esto cada sesión redescubre las reglas una por una
+     evita: repetir correcciones ya hechas (ejemplos ajenos al escenario, «bloques», ajuste manual, ticket/ejercicios que no caben en el tiempo)
+     ej: ✅ datos de 20 filas (16 *train* + 4 *test*) tipeados a mano; todo el ICN con el ejemplo del escenario; «filas», nunca «bloques»; la Práctica guiada es el único ejercicio obligatorio y el resto son extras; el último concepto se llama «Revisar» (dos viñetas)
+         ❌ un ejemplo de básquetbol dentro de la clase del wifi; llamar «bloques» a las filas; una independiente de 3 ejercicios obligatorios -->
+- **Molde de clase de IA (desde la 42b):** ver `disenar-clase/SKILL.md` («Reglas vigentes desde 2026-11-07»): la computadora aprende sola (sin ajuste manual), listas tipeadas a mano sin índices ni slicing, split 80/20 con nombres *train*/*test*, «X columnas, el personaje pide estas Z», terminología «filas / filas de datos», concepto «Revisar» al grano y detalles de hiperparámetros en un `<details>` oculto. La guiada es el ejercicio obligatorio; los demás ejercicios son extras sin bloque de tiempo.
+
+<!-- why: Diego dijo el 2026-11-08, tras ver las slides de la 42b, que le gustó usarlas concepto por concepto («por cada concepto la iré mostrando») y pidió dejarlo como estándar
+     evita: entregar una clase con Colab pero con slides genéricas o sin cubrir cada concepto del ICN
+     ej: ✅ una slide animada por concepto del ICN, rotulada «Concepto N del cuaderno» y mostrando el código en juego; slides de las partes pertinentes del Haz Ahora; una slide «Para pensar»; una slide de resumen en viñetas
+         ❌ publicar solo un resumen final o slides que no sigan el orden y los nombres del cuaderno -->
+- **Slides animadas en cada clase de IA (`sitio-hub/clase-NN/`):** una slide por **cada concepto del ICN**, bien demarcada y mostrando el código que se está escribiendo; slides de las partes **pertinentes del Haz Ahora** (p. ej. la pregunta y la etiqueta); una slide **«Para pensar»** y una slide de **resumen en viñetas**. Cada slide lleva la etiqueta «Concepto N del cuaderno». Patrón y generador: `clases/clase-42b-tabla-a-listas/construir_slides.py`.
 
 ## Cómo iniciar una sesión
 
