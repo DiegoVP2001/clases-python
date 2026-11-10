@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase 43 v2 · La neurona aprende sola</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#475569;--line:#cbd5e1;--accent:#1d4ed8;--accent-ink:#fff;
+--a:#b45309;--abg:#fef3c7;--p:#1d4ed8;--pbg:#dbeafe;--ok:#065f46;--okbg:#d1fae5;--bad:#b91c1c;--badbg:#fee2e2}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#111a2e;--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;--accent:#93c5fd;--accent-ink:#0b1220;
+--a:#fcd34d;--abg:#451a03;--p:#93c5fd;--pbg:#1e3a5f;--ok:#a7f3d0;--okbg:#064e3b;--bad:#fca5a5;--badbg:#450a0a}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 48px}
+nav.tabs{display:flex;gap:8px;padding:12px 0;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav.tabs a{padding:8px 14px;border-radius:10px;border:2px solid var(--line);color:inherit;text-decoration:none;font-weight:600}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+h1{font-size:1.2rem;margin:16px 0 0}
+h2{font-size:1.45rem;margin:.2rem 0 .5rem}
+.slide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0;min-height:440px}
+.muted{color:var(--muted)}
+.ctrl{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{font:inherit;min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--accent);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button:disabled{opacity:.4;cursor:default}
+button[aria-pressed="true"]{background:var(--pbg)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.dots{display:flex;gap:8px;flex-wrap:wrap}
+.dots button{min-height:28px;width:28px;padding:0;border-radius:99px;border:2px solid var(--accent);background:var(--card)}
+.dots button[aria-current="true"]{background:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:3px 8px;text-align:center;transition:opacity .4s}
+th{background:var(--pbg)}
+td.c0,th.c0{box-shadow:inset 0 -3px 0 var(--p)}td.c1,th.c1{box-shadow:inset 0 -3px 0 var(--a)}td.c2,th.c2{box-shadow:inset 0 -3px 0 var(--ok)}
+.off{opacity:.22}
+tr.row{animation:fade .4s both}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.note{background:var(--abg);border-left:5px solid var(--a);padding:10px 14px;border-radius:8px;margin:12px 0}
+.good{background:var(--okbg);border-left-color:var(--ok)}
+.bad{background:var(--badbg);border-left-color:var(--bad)}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;overflow:auto;font-size:.95rem;margin:8px 0;line-height:1.7}
+code{font-family:Consolas,Menlo,monospace}
+.d0{color:var(--p);font-weight:700}.d1{color:var(--a);font-weight:700}.d2{color:var(--ok);font-weight:700}
+.tag{display:inline-block;padding:2px 8px;border-radius:8px;font-weight:700}
+.tag.l1{background:var(--abg);color:var(--a)}.tag.l0{background:var(--pbg);color:var(--p)}
+.pair{display:flex;gap:14px;flex-wrap:wrap}.pair>div{flex:1;min-width:260px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.bar{display:flex;gap:3px;margin:14px 0}
+.bar span{flex:1;text-align:center;padding:12px 0;border-radius:6px;font-weight:700;border:2px solid var(--p);background:var(--pbg);color:var(--p);transition:all .35s}
+.bar span.t{border-color:var(--a);background:var(--abg);color:var(--a)}
+.bar span.off{opacity:.15}
+.hl{background:var(--accent);color:var(--accent-ink);border-radius:4px;padding:0 4px}
+.wbar{display:flex;align-items:center;gap:8px;margin:6px 0}
+.wbar .lab{width:210px;font-size:.9rem}
+.wbar .zero{position:relative;flex:1;height:22px;background:var(--bg);border:1px solid var(--line);border-radius:6px}
+.wbar .zero i{position:absolute;top:0;height:100%;transition:all .4s}
+.wbar .zero b{position:absolute;left:50%;top:0;height:100%;width:2px;background:var(--line)}
+.flow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.flow>span{padding:6px 10px;border:2px solid var(--line);border-radius:10px;transition:all .4s;opacity:.25}
+.flow>span.on{opacity:1;border-color:var(--accent);background:var(--pbg)}
+.slide{animation:in .45s ease both}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.prog{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 0}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--a));transition:width .5s ease}
+.flowline{stroke-dasharray:8 8;animation:dash .9s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 1.1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.pop{animation:pop .55s cubic-bezier(.2,1.6,.4,1) both;transform-box:fill-box;transform-origin:center}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.8s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.grow{animation:grow .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes grow{from{transform:scaleX(0)}}
+.stag>*{animation:in .5s ease both}
+.stag>*:nth-child(1){animation-delay:.05s}.stag>*:nth-child(2){animation-delay:.2s}.stag>*:nth-child(3){animation-delay:.35s}
+.stag>*:nth-child(4){animation-delay:.5s}.stag>*:nth-child(5){animation-delay:.65s}
+.glow{box-shadow:0 0 0 0 rgba(29,78,216,.5);animation:glow 1.6s ease-out infinite}
+@keyframes glow{to{box-shadow:0 0 0 14px rgba(29,78,216,0)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="tabs" aria-label="Clases">
+<a href="../clase-41/">Clase 41</a>
+<a href="../clase-42/">Clase 42</a>
+<a href="../clase-42b/">Clase 42b</a>
+<a href="./" aria-current="page">Clase 43 v2</a>
+<a href="../">Inicio</a>
+</nav>
+<h1>Clase 43 v2 · La neurona aprende sola</h1>
+<p class="muted" style="margin:.2rem 0">Resumen animado con el wifi del liceo. Avanza con los botones o con las flechas del teclado.</p>
+<div class="prog" aria-hidden="true"><i id="pg"></i></div>
+<section class="slide" id="slide" aria-live="polite"></section>
+<div class="ctrl">
+<button id="prev">← Anterior</button>
+<div class="dots" id="dots" role="group" aria-label="Ir a la slide"></div>
+<button id="next" class="primary">Siguiente →</button>
+</div>
+</div>
+<script>
+const W0=[-0.035, 0.376, 0.098],COLS6=["dispositivos_conectados", "estudiantes_viendo_video", "horas_desde_reinicio", "temperatura_sala", "hora_del_bloque", "dia_del_mes"],X6=[[71, 0, 20, 24, 8, 7], [62, 2, 12, 29, 6, 23], [79, 2, 2, 23, 1, 23], [73, 0, 15, 19, 7, 20], [102, 9, 22, 18, 6, 4], [103, 20, 1, 23, 6, 31], [101, 17, 12, 26, 5, 29], [59, 22, 23, 30, 3, 6], [77, 7, 22, 24, 4, 4], [50, 0, 14, 30, 4, 27], [76, 0, 14, 26, 6, 28], [69, 0, 7, 24, 5, 18], [59, 0, 19, 33, 7, 21], [115, 28, 22, 20, 4, 26], [47, 2, 2, 19, 6, 21], [78, 0, 16, 29, 3, 31], [51, 0, 16, 22, 5, 3], [117, 0, 16, 30, 4, 5], [75, 22, 2, 18, 8, 24], [66, 0, 9, 27, 6, 5]],Y=[1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0],N3=["dispositivos_conectados", "estudiantes_viendo_video", "horas_desde_reinicio"],FILAS=[{"n": 17, "x": [51, 0, 16], "prod": [-1.7885118174176942, 0.0, 1.5681455996340874], "z": -0.26846310969046194, "p": 0.4332844382001627, "real": 0}, {"n": 18, "x": [117, 0, 16], "prod": [-4.103056522311181, 0.0, 1.5681455996340874], "z": -2.583007814583948, "p": 0.07024004730897315, "real": 1}, {"n": 19, "x": [75, 22, 2], "prod": [-2.630164437378962, 8.276326401604182, 0.19601819995426092], "z": 5.794083272272625, "p": 0.996963725975519, "real": 1}, {"n": 20, "x": [66, 0, 9], "prod": [-2.3145447048934864, 0.0, 0.8820818997941742], "z": -1.4805596970061674, "p": 0.1853428952511487, "real": 0}],SEM={"0": {"w": [-0.035, 0.376, 0.098], "b": -0.048, "train": 0.875, "test": 0.75, "pred": [0, 0, 1, 0]}, "1": {"w": [-0.001, 0.767, -0.099], "b": -0.559, "train": 0.75, "test": 0.75, "pred": [0, 0, 1, 0]}, "2": {"w": [-0.013, 0.18, 0.087], "b": -0.974, "train": 0.875, "test": 0.75, "pred": [0, 0, 1, 0]}, "3": {"w": [-0.034, 0.43, 0.109], "b": -0.428, "train": 0.875, "test": 0.75, "pred": [0, 0, 1, 0]}, "4": {"w": [1.132, 0.104, 1.146], "b": 0.514, "train": 0.5, "test": 0.5, "pred": [1, 1, 1, 1]}},PA=[0, 1, 1, 0];
+const S=document.getElementById('slide');
+let cur=0,timers=[];
+const clear=()=>{timers.forEach(clearTimeout);timers=[]};
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+const fmt=(v,d=3)=>String(+v.toFixed(d)).replace('.',',');
+const COLOR=['d0','d1','d2'];
+const QUE={dispositivos_conectados:'cuántos aparatos hay conectados',estudiantes_viendo_video:'cuántos estudiantes ven videos',horas_desde_reinicio:'horas sin reiniciar el router',temperatura_sala:'temperatura de la sala',hora_del_bloque:'bloque horario del día',dia_del_mes:'día del mes'};
+
+const slides=[
+/* 1 · Haz Ahora */
+function(){
+  let paso=0;const notas=[5,5,5];
+  const draw=()=>{
+    S.innerHTML=`<h2>1 · El problema tenía 6 columnas…</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Haz Ahora · pregunta 1</p>
+    <p>El cuaderno del encargado tiene <b>6 columnas</b>, pero hoy nos pide trabajar con <b>estas 3</b>, las mismas de ayer.</p>
+    <table><thead><tr>${COLS6.map((c,i)=>`<th class="${paso&&i>2?'off':''} ${paso&&i<3?'c'+i:''}">${c}</th>`).join('')}</tr></thead><tbody>
+    ${X6.slice(0,4).map(r=>`<tr>${r.map((v,i)=>`<td class="${paso&&i>2?'off':''}">${v}</td>`).join('')}</tr>`).join('')}</tbody></table>
+    <div class="chips"><button id="b" class="primary">${paso?'Volver a las 6':'Mostrar las 3 del encargado'}</button></div>
+    ${paso?`<div class="note"><b>Pregunta 1 (ponderación):</b> para saber si el wifi se cae, no todas las columnas pesan igual. Ponle una <b>importancia de 0 a 10</b> a cada una y justifica. <span class="muted">(Hoy veremos cómo la computadora decide esos pesos sola.)</span></div>
+    ${N3.map((c,j)=>`<div class="wbar"><span class="lab ${COLOR[j]}">${c}</span><input type="range" min="0" max="10" value="${notas[j]}" data-n="${j}" aria-label="Importancia de ${c}" style="flex:1"><b id="nv${j}" style="width:30px">${notas[j]}</b></div>`).join('')}`:''}`;
+    document.getElementById('b').onclick=()=>{paso=paso?0:1;draw()};
+    document.querySelectorAll('[data-n]').forEach(r=>r.oninput=()=>{notas[+r.dataset.n]=+r.value;document.getElementById('nv'+r.dataset.n).textContent=r.value});
+  };
+  draw();
+},
+/* 2 · datos listos */
+function(){
+  S.innerHTML=`<h2>2 · Datos listos</h2>
+  <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 1 del cuaderno</p>
+  <p>Son los mismos 20 días del wifi de la N°42b, <b>ya escritos como listas</b>. Solo hay que ejecutar la celda.</p>
+  <div class="bar" id="bar">${Array.from({length:20},(_,i)=>`<span class="off">${i+1}</span>`).join('')}</div>
+  <div class="pair"><div class="note" style="border-left-color:var(--p);background:var(--pbg)">🧠 <b>train</b> · filas 1 a 16<br><code>entradas_train</code> y <code>etiquetas_train</code></div>
+  <div class="note">📝 <b>test</b> · filas 17 a 20<br><code>entradas_test</code> y <code>etiquetas_test</code> = <code>[0, 1, 1, 0]</code></div></div>
+  <p class="muted">Etiqueta: <b>1 = el wifi se cayó</b>, 0 = aguantó. Los <code>import</code> ya se ejecutaron en la primera celda.</p>`;
+  [...document.querySelectorAll('#bar span')].forEach((s,i)=>later(()=>{s.classList.remove('off');if(i>=16)s.classList.add('t')},i*90));
+},
+/* 3 · qué es una neurona */
+function(){
+  let k=0,paso=0;
+  const draw=()=>{
+    const f=FILAS[k],dec=f.p>0.5?1:0,mx=Math.max(...W0.map(Math.abs));
+    const op=n=>paso>=n?1:.15;
+    const svg=`<svg viewBox="0 0 660 240" style="width:100%;max-width:660px" role="img" aria-label="Diagrama de la neurona">
+    ${[0,1,2].map(j=>{const y=45+j*75;const col=['var(--p)','var(--a)','var(--ok)'][j];return `
+      <text x="4" y="${y-8}" font-size="12" fill="${col}" font-weight="700">${N3[j]}</text>
+      <text x="4" y="${y+10}" font-size="16" fill="var(--ink)" font-weight="700">${f.x[j]}</text>
+      <line x1="170" y1="${y}" x2="330" y2="120" stroke="${col}" stroke-width="${1.5+7*Math.abs(W0[j])/mx}" opacity="${op(1)}" class="${paso>=1?'flowline':''}"/>
+      <text x="215" y="${y+(120-y)*0.35-6}" font-size="12" fill="${col}" opacity="${op(1)}">× ${fmt(W0[j],2)} = ${fmt(f.prod[j],2)}</text>`}).join('')}
+    <circle cx="360" cy="120" r="36" fill="var(--pbg)" stroke="var(--accent)" stroke-width="3" opacity="${op(2)}" class="${paso===2?'pulse':''}"/>
+    <text x="360" y="116" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)" opacity="${op(2)}">suma</text>
+    <text x="360" y="133" text-anchor="middle" font-size="13" fill="var(--ink)" opacity="${op(2)}">${fmt(f.z,2)}</text>
+    <line x1="398" y1="120" x2="450" y2="120" stroke="var(--muted)" stroke-width="2" opacity="${op(3)}"/>
+    <rect x="450" y="85" width="105" height="70" rx="8" fill="var(--abg)" stroke="var(--a)" stroke-width="3" opacity="${op(3)}"/>
+    <text x="502" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)" opacity="${op(3)}">nivel de activación</text>
+    <text x="502" y="135" text-anchor="middle" font-size="20" font-weight="700" fill="var(--ink)" opacity="${op(3)}">${fmt(f.p,2)}</text>
+    <rect x="462" y="142" width="82" height="7" rx="3" fill="var(--line)" opacity="${op(3)}"/><rect x="462" y="142" width="${paso>=3?82*f.p:0}" height="7" rx="3" fill="var(--a)" opacity="${op(3)}">${paso>=3?`<animate attributeName="width" from="0" to="${82*f.p}" dur="1.1s" fill="freeze"/>`:''}</rect><line x1="503" y1="139" x2="503" y2="152" stroke="var(--ink)" stroke-width="2" opacity="${op(3)}"/><line x1="555" y1="120" x2="590" y2="120" stroke="var(--muted)" stroke-width="2" opacity="${op(4)}"/>
+    <text class="${paso>=4?'pop':''}" x="596" y="115" font-size="22" font-weight="700" fill="${dec?'var(--a)':'var(--p)'}" opacity="${op(4)}">${dec}</text>
+    <text x="596" y="134" font-size="11" fill="var(--ink)" opacity="${op(4)}">${dec?'se cae':'aguanta'}</text></svg>`;
+    S.innerHTML=`<h2>3 · ¿Qué es una neurona?</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 2 del cuaderno</p>
+    <p>Recibe las 3 columnas, <b>pondera</b> cada una (le da más o menos importancia), las <b>suma</b>, calcula su <b>nivel de activación</b> (de 0 a 1) y <b>decide</b>.</p>
+    <div class="chips">${FILAS.map((g,i)=>`<button data-k="${i}" aria-pressed="${i===k}">Fila ${g.n}</button>`).join('')}</div>
+    ${svg}
+    ${paso>=3?`<div class="note">Nivel de activación <b>${fmt(f.p,2)}</b>: ${f.p>0.5?'pasa de 0,5 → decide <b>1 (se cae)</b>':'no pasa de 0,5 → decide <b>0 (aguanta)</b>'}.${paso>=4?` Lo que pasó de verdad: <b>${f.real}</b> ${dec===f.real?'✅':'❌ (la neurona se equivocó)'}`:''}</div>`:''}
+    <div class="chips"><button id="st" class="primary">${paso<4?'Siguiente paso':'Repetir'}</button><button id="au">▶ Animar solo</button></div>
+    <p class="muted" style="font-size:.85rem">Pasos: 0 datos · 1 × peso · 2 suma · 3 activación · 4 decide. Los pesos son los que la computadora ajustó sola (los veremos en el concepto 4); la flecha más gruesa es el dato con más peso.</p>`;
+    document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{clear();k=+b.dataset.k;paso=0;draw()});
+    document.getElementById('st').onclick=()=>{clear();paso=paso<4?paso+1:0;draw()};
+    document.getElementById('au').onclick=()=>{clear();paso=0;draw();[1,2,3,4].forEach((n,i)=>later(()=>{paso=n;draw()},(i+1)*1500))};
+  };
+  draw();
+},
+/* 4 · el nivel de activación */
+function(){
+  let k=1,anim=true;
+  const draw=()=>{
+    const X0=40,X1=620,Y0=20,Y1=200,sx=z=>X0+(z+7)/14*(X1-X0),sy=p=>Y1-p*(Y1-Y0);
+    let d='';for(let z=-7;z<=7.01;z+=0.25)d+=(d?'L':'M')+sx(z).toFixed(1)+' '+sy(1/(1+Math.exp(-z))).toFixed(1);
+    const pts=FILAS.map((g,i)=>`<g class="${anim?'pop':''}" style="animation-delay:${1.6+i*.3}s">${i===k?`<circle cx="${sx(g.z)}" cy="${sy(g.p)}" r="16" fill="none" stroke="var(--accent)" stroke-width="2" class="pulse"/>`:''}<circle cx="${sx(g.z)}" cy="${sy(g.p)}" r="${i===k?10:6}" fill="${g.real?'var(--a)':'var(--p)'}" stroke="var(--ink)" stroke-width="${i===k?3:1}"/><text x="${sx(g.z)+12}" y="${sy(g.p)-12}" font-size="12" fill="var(--ink)">fila ${g.n}</text></g>`).join('');
+    const f=FILAS[k],dec=f.p>0.5?1:0;
+    S.innerHTML=`<h2>4 · El nivel de activación</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 2 del cuaderno · activación</p>
+    <p>La suma se convierte en un número entre <b>0 y 1</b>: el <b>nivel de activación</b>. Si pasa de <b>0,5</b>, la neurona decide <b>1</b>; si no, <b>0</b>.</p>
+    <svg viewBox="0 0 660 230" style="width:100%;max-width:660px" role="img" aria-label="Curva del nivel de activación">
+    <line x1="${X0}" y1="${sy(0.5)}" x2="${X1}" y2="${sy(0.5)}" stroke="var(--muted)" stroke-dasharray="6 4"/>
+    <text x="${X0+4}" y="${sy(0.5)-5}" font-size="12" fill="var(--muted)">umbral 0,5</text>
+    <text x="${X1-4}" y="${sy(0.95)}" text-anchor="end" font-size="12" fill="var(--a)">decide 1</text>
+    <text x="${X1-4}" y="${sy(0.05)}" text-anchor="end" font-size="12" fill="var(--p)">decide 0</text>
+    <path d="${d}" pathLength="1" fill="none" stroke="var(--accent)" stroke-width="3" class="${anim?'draw':''}"/>${pts}
+    <text x="${X0}" y="226" font-size="12" fill="var(--muted)">suma de lo ponderado →</text></svg>
+    <div class="chips">${FILAS.map((g,i)=>`<button data-k="${i}" aria-pressed="${i===k}">Fila ${g.n}</button>`).join('')}</div>
+    <div class="note ${dec===f.real?'good':'bad'}">Fila ${f.n}: suma <b>${fmt(f.z,2)}</b> → activación <b>${fmt(f.p,2)}</b> → decide <b>${dec}</b>; en realidad fue <b>${f.real}</b> ${dec===f.real?'✅':'❌'}.</div>
+    <p class="muted" style="font-size:.85rem">Color del punto = lo que pasó de verdad (naranja = se cayó, azul = aguantó).</p>`;
+    anim=false;
+    document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{k=+b.dataset.k;draw()});
+  };
+  draw();
+},
+/* 4 · la receta */
+function(){
+  let m='arbol';
+  const draw=()=>{
+    const crea=m==='arbol'?'<span class="hl">DecisionTreeClassifier(max_depth=3, random_state=0)</span>':'<span class="hl">MLPClassifier(hidden_layer_sizes=(), max_iter=2000, random_state=0)</span>';
+    S.innerHTML=`<h2>5 · La receta: cambia una sola línea</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 3 del cuaderno</p>
+    <div class="chips"><button id="m1" aria-pressed="${m==='arbol'}">Árbol (ayer)</button><button id="m2" aria-pressed="${m==='neurona'}">Neurona (hoy)</button></div>
+    <pre>modelo = ${crea}
+modelo.fit(entradas_train, etiquetas_train)
+predicciones = modelo.predict(entradas_test)
+exactitud = accuracy_score(etiquetas_test, predicciones)
+print("Accuracy:", exactitud)</pre>
+    <div class="note"><b>Solo cambia la línea que crea el modelo.</b> <code>fit</code>, <code>predict</code> y <code>accuracy_score</code> quedan igual.</div>
+    <p class="muted"><code>hidden_layer_sizes=()</code> = una sola neurona.</p>`;
+    document.getElementById('m1').onclick=()=>{m='arbol';draw()};
+    document.getElementById('m2').onclick=()=>{m='neurona';draw()};
+  };
+  draw();
+},
+/* 5 · abrir la caja */
+function(){
+  let s=0;
+  const draw=()=>{
+    const r=SEM[s];const mx=Math.max(...r.w.map(Math.abs),Math.abs(r.b),0.001);
+    const bar=(lab,v,c)=>`<div class="wbar"><span class="lab">${lab}</span><span class="zero"><b></b><i class="grow" style="transform-origin:${v>=0?"left":"right"};left:${v>=0?50:50+v/mx*50}%;width:${Math.abs(v)/mx*50}%;background:var(--${c})"></i></span><span style="width:70px">${fmt(v)}</span></div>`;
+    S.innerHTML=`<h2>6 · Abrir la caja: los pesos</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 4 del cuaderno</p>
+    <pre>print("Pesos:", modelo.coefs_)
+print("Sesgo:", modelo.intercepts_)</pre>
+    <p>Son las <b>importancias que la computadora ajustó sola</b>. Cambia la semilla (<code>random_state</code>) y mira qué pasa:</p>
+    <div class="chips">${[0,1,2,3,4].map(i=>`<button data-s="${i}" aria-pressed="${i===s}">random_state = ${i}</button>`).join('')}</div>
+    ${bar(N3[0],r.w[0],'p')}${bar(N3[1],r.w[1],'a')}${bar(N3[2],r.w[2],'ok')}${bar('sesgo',r.b,'muted')}
+    <table><tbody><tr><td style="text-align:left">Accuracy en train</td><td><b>${fmt(r.train)}</b></td></tr><tr><td style="text-align:left">Accuracy en test</td><td><b>${fmt(r.test)}</b></td></tr></tbody></table>
+    <div class="note">🎲 Con otra semilla los pesos (y a veces el accuracy) <b>salen distintos</b>. <b>En las pruebas siempre <code>random_state=0</code></b>. Los pesos <b>no se leen como verdad absoluta</b>: quédate con que existen y los ajusta la computadora.</div>
+    <p class="muted" style="font-size:.85rem">También pueden variar por otras razones técnicas que no veremos en este curso.</p>`;
+    document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{s=+b.dataset.s;draw()});
+  };
+  draw();
+},
+/* 6 · revisar y comparar */
+function(){
+  const pn=SEM[0].pred;
+  S.innerHTML=`<h2>7 · Revisar y comparar</h2>
+  <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Concepto 5 del cuaderno</p>
+  <p><b>1. Leer el resultado:</b> predicciones frente a las etiquetas reales, fila por fila. <b>2. Comparar la precisión</b> con los mismos datos.</p>
+  <table><thead><tr><th>Fila</th><th>Realidad</th><th>Árbol</th><th>Neurona</th></tr></thead><tbody id="tb"></tbody></table>
+  <div class="pair"><div class="note good" id="a1" style="visibility:hidden"></div><div class="note bad" id="a2" style="visibility:hidden"></div></div>`;
+  const tb=document.getElementById('tb');
+  PA.forEach((p,i)=>later(()=>{const re=Y[16+i];
+    tb.insertAdjacentHTML('beforeend',`<tr class="row"><td>${17+i}</td><td><span class="tag l${re}">${re}</span></td><td><span class="tag l${p}">${p}</span> ${p===re?'✅':'❌'}</td><td><span class="tag l${pn[i]}">${pn[i]}</span> ${pn[i]===re?'✅':'❌'}</td></tr>`)},400+i*600));
+  later(()=>{const a=document.getElementById('a1'),b=document.getElementById('a2');a.style.visibility=b.style.visibility='visible';
+    a.innerHTML='<b>Árbol:</b> 4 ÷ 4 = <b>1,0</b>';b.innerHTML='<b>Neurona:</b> 3 ÷ 4 = <b>0,75</b> (falla la fila 18)'},400+4*600);
+},
+/* 7 · para pensar */
+function(){
+  let r='';
+  const msg={arbol:'El árbol acertó una fila más con los mismos datos. Pero ojo: con <b>4 filas cada fila vale 25 %</b>.',neurona:'La neurona falló en una fila. Con <b>4 filas</b>, ¿una fila de diferencia alcanza para descartarla?',dep:'¡Buena idea! Con 4 filas la diferencia prueba poco: habría que probar con <b>más filas</b> (y revisar la semilla).'};
+  const draw=()=>{
+    S.innerHTML=`<h2>8 · Para pensar</h2>
+    <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Para pensar</p>
+    <p>El árbol sacó <b>1,0</b> y la neurona <b>0,75</b> con los mismos datos. <b>¿Cuál usarían y por qué?</b></p>
+    <div class="chips"><button data-r="arbol" aria-pressed="${r==='arbol'}">El árbol</button><button data-r="neurona" aria-pressed="${r==='neurona'}">La neurona</button><button data-r="dep" aria-pressed="${r==='dep'}">Depende / probar más</button></div>
+    ${r?`<div class="note">${msg[r]}</div>`:'<p class="muted">Elige una y justifícala con números.</p>'}`;
+    document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{r=b.dataset.r;draw()});
+  };
+  draw();
+},
+/* 8 · resumen */
+function(){
+  S.innerHTML=`<h2>9 · ¿Qué aprendimos y qué viene?</h2>
+  <p class="muted" style="margin:0 0 .5rem;font-size:.85rem">Resumen</p>
+  <ul class="stag">
+  <li><b>Los <code>import</code></b> van siempre en la primera celda, ejecutada primero.</li>
+  <li>Una <b>neurona</b> recibe datos, <b>pondera</b> cada uno (pesos), suma y decide 0 o 1; los pesos los ajusta sola la computadora.</li>
+  <li>La receta es la misma del árbol: <code>crear → fit → predict → accuracy_score</code>; <b>solo cambia la línea que crea el modelo</b>.</li>
+  <li><code>modelo.coefs_</code> e <code>intercepts_</code> son esos pesos; con otra <code>random_state</code> salen distintos. <b>En las pruebas, siempre 0.</b></li>
+  <li>Con los mismos datos: árbol <b>1,0</b>, neurona <b>0,75</b>. Con 4 filas, cada fila vale 25 %: una diferencia pequeña prueba poco.</li></ul>
+  <div class="note good"><b>Próxima clase (lunes 16):</b> mini-LLM, cómo una IA de lenguaje predice la siguiente palabra.</div>`;
+}];
+
+const dots=document.getElementById('dots');
+slides.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b)});
+function go(i){clear();cur=Math.max(0,Math.min(slides.length-1,i));S.style.animation='none';void S.offsetHeight;S.style.animation='';document.getElementById('pg').style.width=((cur+1)/slides.length*100)+'%';slides[cur]();
+  [...dots.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur));
+  document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(e.target.tagName==='BUTTON'&&e.key===' ')return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+go(0);
+</script>
+</body>
+</html>
