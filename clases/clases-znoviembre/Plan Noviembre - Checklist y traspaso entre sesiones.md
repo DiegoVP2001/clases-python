@@ -29,7 +29,9 @@
 | 52 | mar 1-dic | Integración (práctica sin nota) | ☐ |
 | 53 | jue 3-dic | **E3** (60–65 min) | ☐ |
 
-> ⚠️ **CALENDARIO v5 (2026-11-07) SUPERA ESTA TABLA Y LA v4.** Ver la sección «Calendario v5 y reajuste de contenido (2026-11-07)» al final de este archivo: el jueves 12 no hay clase, entra la N°42b (tabla → listas), la N°43 se rehace como «v2» (la computadora aprende sola con `fit`) y las evaluaciones pasan a 2 pruebas de 60 min. La tabla de arriba se conserva solo como historial.
+> ⚠️ **CALENDARIO v6 (2026-11-10) SUPERA ESTA TABLA, LA v4 Y LA v5** (ver sección «Calendario v6» al final).
+
+> (Nota histórica) **CALENDARIO v5 (2026-11-07) SUPERABA ESTA TABLA Y LA v4.** Ver la sección «Calendario v5 y reajuste de contenido (2026-11-07)» al final de este archivo: el jueves 12 no hay clase, entra la N°42b (tabla → listas), la N°43 se rehace como «v2» (la computadora aprende sola con `fit`) y las evaluaciones pasan a 2 pruebas de 60 min. La tabla de arriba se conserva solo como historial.
 
 **Calendario v4 (2026-11-04, acordado con Diego): las evaluaciones van siempre los jueves; se agregó la N°44 «la computadora ajusta sola» y el resto se corrió (E1 jue 19, E2 jue 26, E3 jue 3-dic; último día para notas: 10-dic; feriados no verificados). Esta tabla manda sobre las fechas del plan v3.** La numeración 41–53 sigue la del `Historial-Curricular.md` (el N°41 antiguo, evaluación Funciones+Strings+Listas, quedó eliminado el 2026-10-07 y el número se reutilizó). Las filas 42–51 **ya están en el Historial** como «Por diseñar».
 
@@ -255,3 +257,44 @@ Feriados sin verificar. La N°44 antigua («la computadora ajusta sola») queda 
 4. Prueba 2, ética y 4D (pendientes de A, B, D del v2).
 
 **Trampas técnicas nuevas:** en este equipo las herramientas de Bash/PowerShell en heredocs de Python pueden mal-interpretar `\n`: escribir scripts con la herramienta de archivos y ejecutarlos; la consola de Windows necesita `PYTHONIOENCODING=utf-8` para imprimir emojis; el `.gitignore` ya excluye `__pycache__`.
+
+
+## Calendario v6 (2026-11-10) — manda sobre v3, v4 y v5
+
+**Origen:** lun 30-nov y mar 1-dic no hay clase (se rinde la PAES). Se acorta el calendario; Diego quiere 2 notas: **Prueba 1 técnica** y **Prueba 2 ética y análisis**. Aprobado por Diego.
+
+| Fecha | N° | Contenido | Bloque |
+|---|---|---|---|
+| mar 10-nov | 43 v2 | Neurona; **modificada**: mismo pipeline del árbol (wifi), BBDD ya cargada, solo cambia el modelo y su análisis | Técnico |
+| jue 12-nov | — | Sin clase | |
+| lun 16-nov | 44 | **Mini-LLM** (contenido nuevo simple y al grano: tokens, predicción de la siguiente palabra) | Técnico |
+| mar 17-nov | — | Sin clase (ausencia docente) | |
+| jue 19-nov | 45 | **Prueba 1: técnica** (60 min) + revisión en clase | |
+| lun 23-nov | 46 | **Prompting** (usar y evaluar bien una IA) | Análisis |
+| mar 24-nov | 47 | **Ética y 4D** | Ético |
+| jue 26-nov | 48 | **Análisis de casos** + repaso (colchón y ensayo de la Prueba 2) | Análisis |
+| lun 30-nov / mar 1-dic | — | Sin clase (PAES) | |
+| jue 3-dic | 49 | **Prueba 2: ética y análisis** (60 min) + revisión en clase | |
+| hasta 10-dic | — | Último día para ingresar notas | |
+
+**Decisiones:** C1 resuelto → mini-LLM el 16, prompting el 23. Prueba 1 = clases 41–44 (pipeline, listas, train/test, fit/predict/accuracy, neurona, pocos ítems de mini-LLM). Prueba 2 = clases 46–48, por casos; Diego quiere que se rinda **promptando a ChatGPT y entregando links de compartir** (pendiente de diseñar). Entregables pedidos: Colab de clases técnicas restantes (43 modificada + 44), Colab de prompting + ética/4D + análisis de casos, y borradores de ambas pruebas con solución.
+
+### Entregables de la sesión del 2026-11-10 (Calendario v6)
+
+- **Prueba 1 técnica** (`clase-45-prueba-1-tecnica/`): `Prueba.ipynb`, `Solucionario.ipynb`, `Temario.tex/.pdf` (1 plana, oficio), `generar_pruebas.py` (fuente de verdad; también genera la Prueba 2). Base piscina (20×6 numéricas), árbol 1.0 / neurona 0.75 / árbol con otras columnas 0.5. Imports en la primera celda.
+- **Prueba 2 prompting y ética** (`clase-49-prueba-2-prompting-etica/`): `Prueba.ipynb`, `Guía de Corrección.ipynb`, `Temario.tex/.pdf`. Caso único: reconocimiento facial; partes A y B con ChatGPT, C sin IA con texto fijo y fallas intencionales.
+- **Prompts para diseñar las clases:** `clase-43-neurona/Prompt v2.md` (hoy), `clase-44-mini-llm/`, `clase-46-prompting/`, `clase-47-etica-4d/`, `clase-48-analisis-casos/`.
+- **No se pushea nada de las pruebas hasta después de rendidas** (repo público): P1 después del jue 19-nov, P2 después del jue 3-dic. Los temarios sí se pueden entregar antes.
+- **Pendientes:** alinear las 4 partes del prompt con la Clase 46 y las 4D con la 47 (§7); (✅ hecho 2026-11-11: Parte D de P1 alineada con la 44) decidir si se muestran `coefs_` en la 43 v2 (ver su Prompt).
+
+
+## Estado Clase 44 (2026-11-11) — cierre de etapa
+
+**✅ N°44 «Cómo funciona ChatGPT» (lun 16-nov): Colab, Solucionario y slides aprobados por Diego y publicados** (commit a GitHub + deploy a Vercel).
+- Carpeta `clases/clase-44-mini-llm/`: `Spec.md` (v2 + ajustes v3/v4 en su encabezado), `Clase.ipynb`, `Solucionario.ipynb`, `Ticket de Salida Respuestas.json` (C, D, B, A), `generar_clase.py`, `construir_slides.py`, `crear_ticket_ppt.py`, `Historial.md`. **`Ticket de Salida.pptx` queda SOLO local** (repo público; se sube después de dictar la clase).
+- Colab: https://colab.research.google.com/github/DiegoVP2001/clases-python/blob/master/clases/clase-44-mini-llm/Clase%2044%20-%20Mini%20LLM%20-%20Clase.ipynb · Slides: https://clases-ia-mario-bertero.vercel.app/clase-44/ (8 slides, `sitio-hub/clase-44/`).
+- **Estructura (4 conceptos, sin programar: solo se ejecutan celdas):** 1 LLM = *Large Language Model* y **estocástico** · 2 tokens (fichas) · 3 **probabilidad y azar: la bolsa de fichas** (con bajada «las respuestas de un LLM son azarosas; el proceso para verlo es…»; palabra nunca vista = saca una ficha al azar entre las que sí conoce) · 4 **evidenciarlo en la práctica** (el profesor envía dos veces «Explica las diferencias entre ChatGPT, Claude y Gemini»). Práctica guiada = **réplica de la Parte D de la Prueba 1** (texto «hoy toca mate…», D1–D4, se responde a mano y se comprueba ejecutando). Ticket de 4 preguntas, una por concepto. Verificamos lo aprendido: 2 preguntas por concepto.
+- **Decisiones de Diego (vigentes para el resto del bloque de IA):** (1) el término es **«estocástico»**, nunca «probabilístico»: sistema cuyo comportamiento no se puede predecir con total exactitud, o sea tiene azar; (2) **no separar** el mini modelo («determinístico») del LLM real: **todo es estocástico**; «determinístico» solo como contraste con la calculadora; (3) imagen única: **bolsa de fichas** (más fichas = más probable, sin garantía; «la más probable no es la segura»); (4) lo que responde un modelo depende del azar y de las probabilidades con que se entrenó; (5) se descartó el interactivo final; (6) sin referencias a la prueba dentro del Colab (solo el aviso de logística en el Cierre).
+- **Alineación hecha (sin pushear):** `clase-45-prueba-1-tecnica/generar_pruebas.py` (D3 acepta «sí, pero al azar, sin base»; nota de alineación con la 44) y `clase-49-prueba-2-prompting-etica/` (rúbrica B2 y Temario con «estocástico»; PDF recompilado, 1 plana); `Prompt.md` de las clases 46 y 48 con el vocabulario de la 44.
+- **Pendientes de la N°44:** Guía Docente Voz y confirmar OAs (propuestos OA1, OA3); dictar el lunes 16 y, después, subir el `Ticket de Salida.pptx`; el `Ticket de Salida - Trazabilidad` cuando haya respuestas del Form.
+- **Siguiente:** repaso de la Prueba 1 y **Prueba 1** (jue 19; no se pushea hasta después de rendida) → N°46 prompting (lun 23) → N°47 ética y 4D (mar 24) → N°48 análisis de casos y repaso (jue 26) → **Prueba 2** (jue 3-dic). Pendientes abiertos (§7): alinear las 4 partes del prompt con la 46 y las 4D con la 47.
