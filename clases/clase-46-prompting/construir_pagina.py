@@ -1,0 +1,360 @@
+"""Genera sitio-hub/clase-46/index.html: LA página de la Clase 46 (guion del profesor + actividades de los estudiantes), a partir de contenido.py.
+
+Reemplaza a las slides y al laboratorio por separado: un solo lugar. Cada paso tiene «🎬 Para mostrar» (lo que proyecta Diego)
+y «🧪 Actividad» (lo que hacen los estudiantes). El Colab queda solo para escribir (ver «Hoja de ruta» en el Colab).
+Fuente de verdad: este script + contenido.py + la Spec aprobada. No editar el HTML a mano.
+Ejecutar: py -3 -X utf8 construir_pagina.py
+Los modelos de prompt ("Eres un profesor de Biología…") NO van en la página: viven solo en el Solucionario.
+"""
+import json
+from pathlib import Path
+
+from contenido import (DEBIL_1, DEBIL_2, DEBIL_3, DEBIL_4, DEFINICION, EJEMPLOS, GUIAS, ITEMS_A2, ITEMS_A3, MEJORADOS, PARTES,
+                       RESPUESTA_HAZ_AHORA)
+
+AQUI = Path(__file__).resolve().parent
+DESTINO = AQUI.parents[1] / "sitio-hub" / "clase-46" / "index.html"
+
+DATOS = {
+    "debil1": DEBIL_1, "debil2": DEBIL_2, "debil3": DEBIL_3, "debil4": DEBIL_4, "definicion": DEFINICION,
+    "respuestaHaz": RESPUESTA_HAZ_AHORA, "partes": PARTES, "guias": GUIAS,
+    "pedido1": MEJORADOS[1]["pedido"], "pedido4": MEJORADOS[4]["pedido"],
+    "a2": [{"p": p, "falta": f} for p, f in ITEMS_A2], "a3": ITEMS_A3,
+    # plan B: solo respuestas (sin el texto del prompt mejorado)
+    "planB": [{"t": t, "debil": EJEMPLOS[n]["debil"], "mejorada": EJEMPLOS[n]["mejorada"]}
+              for n, t in ((1, DEBIL_1), (2, DEBIL_2), (3, DEBIL_3), (4, DEBIL_4))],
+}
+
+PLANTILLA = r'''<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase 46 · Prompting</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#475569;--line:#cbd5e1;--accent:#1d4ed8;--accent-ink:#fff;
+--a:#b45309;--abg:#fef3c7;--p:#1d4ed8;--pbg:#dbeafe;--ok:#065f46;--okbg:#d1fae5;--bad:#b91c1c;--badbg:#fee2e2;--v:#7c3aed;--vbg:#ede9fe}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#111a2e;--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;--accent:#93c5fd;--accent-ink:#0b1220;
+--a:#fcd34d;--abg:#451a03;--p:#93c5fd;--pbg:#1e3a5f;--ok:#a7f3d0;--okbg:#064e3b;--bad:#fca5a5;--badbg:#450a0a;--v:#c4b5fd;--vbg:#2e1065}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 48px}
+nav.tabs{display:flex;gap:8px;padding:12px 0;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav.tabs a{padding:8px 14px;border-radius:10px;border:2px solid var(--line);color:inherit;text-decoration:none;font-weight:600}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+h1{font-size:1.2rem;margin:16px 0 0}
+h2{font-size:1.45rem;margin:.2rem 0 .5rem}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.steps button{min-height:40px;padding:4px 12px;border-radius:99px;font-size:.95rem}
+.steps button[aria-current="step"]{background:var(--accent);color:var(--accent-ink)}
+.slide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:10px 0;min-height:440px}
+.tagline{margin:0 0 .5rem;font-size:.85rem;color:var(--muted)}
+.muted{color:var(--muted)}
+.ctrl{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{font:inherit;min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--accent);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button:disabled{opacity:.4;cursor:default}
+button[aria-pressed="true"]{background:var(--pbg)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pane{border:2px solid var(--line);border-radius:12px;padding:10px 14px;margin:12px 0}
+.pane.show{border-color:var(--p)}
+.pane.act{border-color:var(--ok)}
+.ph{font-weight:700;margin-bottom:6px}
+.show .ph{color:var(--p)}.act .ph{color:var(--ok)}
+.note{background:var(--abg);border-left:5px solid var(--a);padding:10px 14px;border-radius:8px;margin:10px 0}
+.good{background:var(--okbg);border-left-color:var(--ok)}
+.bad{background:var(--badbg);border-left-color:var(--bad)}
+.info{background:var(--pbg);border-left-color:var(--p)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.tok{display:inline-block;padding:4px 9px;margin:3px;border:2px solid var(--p);background:var(--pbg);color:var(--p);border-radius:8px;font-weight:700;animation:pop .35s both}
+.tok.hl{border-color:var(--a);background:var(--abg);color:var(--a)}
+.tok.nx{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
+@keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+.resp{border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:6px 0;background:var(--bg)}
+.resp p{margin:.35rem 0}
+.resp p.on{background:var(--abg);border-radius:6px;outline:2px solid var(--a)}
+mark{background:var(--badbg);color:var(--bad);border-radius:4px;padding:0 3px;font-weight:700}
+.big{font-size:1.5rem;font-weight:700}
+.defn{font-size:1.25rem}
+.chk{display:flex;gap:8px;align-items:flex-start;margin:6px 0}
+.chk input{margin-top:6px;width:20px;height:20px}
+.item{border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0}
+.item.ok{border-color:var(--ok);background:var(--okbg)}
+.item.err{border-color:var(--bad)}
+label.cb{display:inline-flex;gap:6px;align-items:center;margin-right:14px;min-height:32px}
+.sent{display:block;width:100%;text-align:left;margin:4px 0}
+.sent.ok{background:var(--okbg);border-color:var(--ok)}
+.sent.err{background:var(--badbg);border-color:var(--bad)}
+textarea{font:inherit;width:100%;padding:8px;border-radius:8px;border:2px solid var(--line);background:var(--card);color:var(--ink);min-height:60px;resize:vertical}
+.guia{margin:.5rem 0 .1rem}
+.prev{white-space:pre-wrap;border:2px dashed var(--accent);border-radius:12px;padding:10px 14px;margin:8px 0;min-height:56px}
+.cl{margin:.3rem 0;padding:0;list-style:none;display:flex;gap:14px;flex-wrap:wrap}
+.cyc{list-style:none;padding:0;margin:8px 0}
+.cyc li{border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:6px 0;opacity:.45;transition:all .3s}
+.cyc li.on{opacity:1;border-color:var(--accent);background:var(--pbg)}
+.pair{display:flex;gap:14px;flex-wrap:wrap}.pair>div{flex:1;min-width:230px}
+details{border:2px solid var(--line);border-radius:10px;padding:6px 12px;margin:8px 0}
+details summary{cursor:pointer;font-weight:700}
+details.v{border-color:var(--ok);background:var(--okbg)}
+blockquote{margin:.3rem 0;padding:4px 12px;border-left:4px solid var(--line);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="tabs" aria-label="Clases">
+<a href="../clase-41/">Clase 41</a>
+<a href="../clase-42/">Clase 42</a>
+<a href="../clase-42b/">Clase 42b</a>
+<a href="../clase-43-v2/">Clase 43 v2</a>
+<a href="../clase-44/">Clase 44</a>
+<a href="./" aria-current="page">Clase 46</a>
+<a href="../">Inicio</a>
+</nav>
+<h1>Clase 46 · Prompting</h1>
+<p class="muted" style="margin:.2rem 0">Un solo lugar para toda la clase: <b>🎬 Para mostrar</b> (lo proyecta el profesor) y <b>🧪 Actividad</b> (lo que haces tú). Lo que escribes lo respondes en el <b>Colab</b>. Avanza con los botones o las flechas del teclado.</p>
+<p class="note"><b>Cuidado:</b> no escribas en ChatGPT tu nombre completo, RUT, dirección ni datos de otras personas: el link que compartes muestra todo lo que escribiste.</p>
+<div class="steps" id="steps" role="group" aria-label="Pasos de la clase"></div>
+<section class="slide" id="slide" aria-live="polite"></section>
+<div class="ctrl">
+<button id="prev">← Anterior</button>
+<span class="muted" id="pos"></span>
+<button id="next" class="primary">Siguiente →</button>
+</div>
+<details style="margin-top:18px"><summary>🛟 Plan B: respuestas de ejemplo preparadas (solo si no puedes usar ChatGPT)</summary>
+<p class="muted">Escritas a mano para la clase; no las generó ChatGPT. Úsalas para hacer igual el diagnóstico y la comparación.</p>
+<div id="planb"></div></details>
+</div>
+
+<script>
+const D=__DATOS__;
+const S=document.getElementById('slide');
+const $=id=>document.getElementById(id);
+let cur=0,timers=[];
+const clear=()=>{timers.forEach(clearTimeout);timers=[]};
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+const chip=(w,c)=>`<span class="tok ${c||''}">${w}</span>`;
+const st={chk:{},c2:['','','',''],c4:['','','',''],cg:['','','',''],a2:{},a3:{},ev3:{}};
+const TECH=['autótrofos','fototrofos','anabólico','tilacoidales','cloroplastos','ATP','NADPH','Calvin-Benson','estroma','RuBisCO','tróficas'];
+
+const show=h=>`<div class="pane show"><div class="ph">🎬 Para mostrar</div>${h}</div>`;
+const act=h=>`<div class="pane act"><div class="ph">🧪 Actividad de los estudiantes</div>${h}</div>`;
+const verif=qs=>`<details class="v"><summary>✅ Verificamos lo aprendido (el colega)</summary><ul style="margin:.4rem 0">${qs.map(q=>`<li>${q}</li>`).join('')}</ul></details>`;
+const colab=t=>`<div class="note info">📝 <b>En el Colab:</b> ${t}</div>`;
+
+function copiar(txt,msgId){
+  const ok=()=>{if($(msgId))$(msgId).textContent='¡Copiado! Pégalo en ChatGPT.'};
+  const no=()=>{if($(msgId))$(msgId).textContent='No se pudo copiar: selecciona el texto y cópialo a mano.'};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,no)}
+  else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){no()}ta.remove()}
+}
+/* lista de verificación (no vuelve a dibujar: no reinicia animaciones) */
+function checks(key,items){
+  return `<div>${items.map((t,i)=>`<label class="chk"><input type="checkbox" data-chk="${key}|${i}" ${st.chk[key+'|'+i]?'checked':''}><span>${t}</span></label>`).join('')}</div>`;
+}
+function ligarChecks(){document.querySelectorAll('[data-chk]').forEach(c=>c.onchange=()=>{st.chk[c.dataset.chk]=c.checked})}
+function botonCopiar(id,txt){return `<span class="chips"><button id="${id}" class="primary" data-txt="${txt.replace(/"/g,'&quot;')}">📋 Copiar «${txt}»</button><span class="muted" id="${id}m" role="status"></span></span>`}
+function ligarCopiar(id){const b=$(id);if(b)b.onclick=()=>copiar(b.dataset.txt,id+'m')}
+
+/* constructor de prompt (el mismo para el paso 2, guiado por el profesor, y el paso 4, de cada estudiante) */
+function arma(key,pedido){const v=st[key].map(x=>x.trim());return [v[0],v[1],pedido,v[2],v[3]].filter(Boolean).join(' ')}
+function constructor(key,pedido,guiado){
+  return `<p class="muted" style="margin:.2rem 0">Pedido (siempre el mismo): <b>«${pedido}»</b></p>
+  ${D.partes.map((p,i)=>`<p class="guia"><b>${['🎭','📍','📋','🚫'][i]} ${p}</b>${guiado?' <span class="muted">· '+D.guias[p]+'</span>':''}</p><textarea data-cons="${key}|${i}" aria-label="${p}" placeholder="${guiado?'Lo que diga el curso…':'Escribe aquí tu '+p.toLowerCase()+'…'}">${st[key][i]}</textarea>`).join('')}
+  <ul class="cl" id="cl-${key}"></ul>
+  <div class="prev" id="pv-${key}"></div>
+  <div class="chips"><button class="primary" id="cp-${key}">📋 Copiar el prompt armado</button><span id="cm-${key}" class="muted" role="status"></span></div>`;
+}
+function ligarConstructor(key,pedido){
+  const pinta=()=>{if(!$('pv-'+key))return;$('pv-'+key).textContent=arma(key,pedido);
+    $('cl-'+key).innerHTML=D.partes.map((p,i)=>`<li>${st[key][i].trim()?'✅':'⬜'} ${p}</li>`).join('')};
+  document.querySelectorAll('[data-cons^="'+key+'|"]').forEach(t=>t.oninput=()=>{st[key][+t.dataset.cons.split('|')[1]]=t.value;pinta()});
+  if($('cp-'+key))$('cp-'+key).onclick=()=>copiar(arma(key,pedido),'cm-'+key);
+  pinta();
+}
+
+/* ---------------- pasos ---------------- */
+function stepHaz(){
+  let modo='';
+  const draw=()=>{
+    const ps=D.respuestaHaz.map((t,i)=>{let h=t;if(modo==='tec')TECH.forEach(w=>{h=h.split(w).join('<mark>'+w+'</mark>')});
+      return `<p class="${modo==='par'?'on':''}">${modo==='par'?'<b>'+(i+1)+'.</b> ':''}${h}</p>`}).join('');
+    const msg={'':'Elige qué mirar en la respuesta.',par:'La respuesta tiene <b>3 párrafos</b>.',
+      nivel:'Busqué «3ro medio», «curso», «nivel»… <b>no aparece ninguna</b>: la respuesta no dice para qué nivel es.',
+      fecha:'Busqué «jueves», «prueba», «mañana»… <b>no aparece ninguna</b>: no sabe para cuándo es.',
+      tec:'Estas palabras están <b>sin explicar</b>: ¿la entenderías en 5 minutos de estudio?'}[modo];
+    S.innerHTML=`<h2>Una estudiante le pide ayuda a ChatGPT</h2><p class="tagline">Haz Ahora · el colega plantea el caso</p>
+    ${show(`<p>Prepara la <b>prueba de Biología del jueves</b> y le escribe: <b>«${D.debil1}»</b></p>
+    <div class="resp">${ps}</div>
+    <div class="chips"><button data-m="par" aria-pressed="${modo==='par'}">¿Cuántos párrafos?</button><button data-m="nivel" aria-pressed="${modo==='nivel'}">¿Dice el nivel?</button><button data-m="fecha" aria-pressed="${modo==='fecha'}">¿Dice cuándo es la prueba?</button><button data-m="tec" aria-pressed="${modo==='tec'}">¿Se entiende?</button></div>
+    <div class="note ${modo==='tec'?'bad':''}">${msg}</div><p class="muted" style="margin:.2rem 0">Respuesta de ejemplo preparada para la clase.</p>`)}
+    ${colab('responde las 4 preguntas del Haz Ahora en «Mis respuestas».')}`;
+    document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{modo=b.dataset.m;draw()});
+  };draw();
+}
+
+function stepP1(){
+  const R1='La fotosíntesis es el proceso por el cual las plantas producen su alimento .'.split(' ');
+  const R2='La fotosíntesis es un proceso anabólico que ocurre en los cloroplastos .'.split(' ');
+  S.innerHTML=`<h2>1 · ¿Qué es un prompt?</h2><p class="tagline">Paso 1 · ChatGPT dos veces</p>
+  ${show(`<div class="note info defn">📝 <b>Prompt</b> = el texto que le escribes a una IA para pedirle algo.</div>
+  <p>Por ejemplo: ${chip(D.debil1,'hl')} ➜ 🤖 ChatGPT ➜ una respuesta. <b>Lo que escribas guía el camino de la respuesta.</b></p>
+  <p class="muted">Ayer vimos que ChatGPT es <b>estocástico</b>: con el mismo prompt la respuesta puede cambiar. Hoy lo comprobamos. <span>(Ilustración inventada)</span></p>
+  <p><b>Respuesta 1:</b> <span id="r1"></span></p><p><b>Respuesta 2:</b> <span id="r2"></span></p>
+  <div class="note" id="nt">Las dos <b>empiezan igual</b>…</div>
+  <div class="chips"><button id="pl">▶ Reproducir de nuevo</button></div>
+  ${verif(['¿Qué es un prompt?','¿Qué quiere decir que ChatGPT sea estocástico?'])}`)}
+  ${act(`${checks('p1',['Abre ChatGPT y crea una <b>conversación nueva</b>.','Envía <b>exactamente</b> el prompt de abajo.','Abre <b>otra conversación nueva</b> y envía <b>exactamente lo mismo</b> otra vez.','Compara las dos respuestas.'])}
+  ${botonCopiar('c1',D.debil1)}
+  ${colab('Paso 1: escribe <b>qué cambió</b>, <b>qué se mantuvo</b> y <b>por qué</b> (usa la palabra «estocástico»). Sin citas.')}`)}`;
+  ligarChecks();ligarCopiar('c1');
+  const play=()=>{clear();$('r1').innerHTML='';$('r2').innerHTML='';$('nt').innerHTML='Las dos <b>empiezan igual</b>…';
+    const n=Math.max(R1.length,R2.length);
+    for(let i=0;i<n;i++)later(()=>{
+      if(i<R1.length)$('r1').insertAdjacentHTML('beforeend',chip(R1[i],i<3?'':'hl'));
+      if(i<R2.length)$('r2').insertAdjacentHTML('beforeend',chip(R2[i],i<3?'':'nx'));
+      if(i===3)$('nt').innerHTML='…pero en la cuarta palabra el modelo <b>sacó otra ficha</b> y el camino cambió: es <b>estocástico</b>.'},i*550)};
+  $('pl').onclick=play;play();
+}
+
+function stepP2(){
+  S.innerHTML=`<h2>2 · Las 4 partes: lo construimos juntos</h2><p class="tagline">Paso 2 · el curso propone, el profe escribe</p>
+  ${show(`<p>Un buen prompt tiene <b>4 partes</b>. Para cada una el profesor pregunta al curso y escribe lo que decidan entre todos.</p>
+  ${constructor('c2',D.pedido1,true)}
+  ${verif(['¿Qué parte le falta a «Eres profesor de Biología. Explícame la fotosíntesis»?','Da un ejemplo de <b>Formato</b> y uno de <b>Restricción</b> para un prompt sobre estudiar para una prueba.'])}`)}
+  ${act(`${checks('p2',['Escribe aquí (o copia) lo que decidimos entre todos.','Copia el prompt armado.','Pégalo en una <b>conversación nueva</b> de ChatGPT.','Compara con la respuesta del Paso 1.'])}
+  ${colab('Paso 2: pega el prompt que armamos y escribe <b>qué cambió</b> en la respuesta frente a la primera.')}`)}`;
+  ligarChecks();ligarConstructor('c2',D.pedido1);
+}
+
+function stepP3(){
+  const draw=()=>{
+    const done2=D.a2.every((_,k)=>st.a2[k]===true);
+    const done3=D.a3.every((_,k)=>st.a3[k]&&st.a3[k].ok);
+    S.innerHTML=`<h2>3 · ¿Qué le falta a este prompt?</h2><p class="tagline">Paso 3 · diagnosticar</p>
+    ${show(`<p>Diagnosticar es decir <b>qué parte falta</b>, <b>qué consecuencia se nota</b> en la respuesta y <b>citar una frase</b> que lo prueba.</p>
+    <div class="note info">Marco: «Le falta ___; por eso la respuesta ___, por ejemplo: “___”».</div>
+    <p class="muted">Con la respuesta del Haz Ahora: «Le falta el <b>Contexto</b> y el <b>Formato</b>; por eso la respuesta es demasiado técnica y larga, por ejemplo: “autótrofos fototrofos transforman la energía lumínica”».</p>
+    ${verif(['¿Qué tres cosas tiene un buen diagnóstico?','¿Por qué una cita sirve más que decir «la respuesta es mala»?'])}`)}
+    ${act(`<p><b>① Marca lo que falta</b> en cada prompt: puede faltar una parte, varias o <b>ninguna</b>. ${done2?'✅':''}</p>
+    ${D.a2.map((it,i)=>{const e=st.a2[i];return `<div class="item ${e===true?'ok':e===false?'err':''}"><div>«${it.p}»</div>
+      <div>${D.partes.map(p=>`<label class="cb"><input type="checkbox" data-a2="${i}" value="${p}"> ${p}</label>`).join('')}<label class="cb"><input type="checkbox" data-a2="${i}" value="__none"> No falta nada</label></div>
+      <button data-a2c="${i}" ${e===true?'disabled':''}>Revisar</button>${e===true?' ✅ Correcto.':e===false?' ⚠️ Revisa: ¿dice quién es la IA, para qué lo necesitas, cómo quieres la respuesta y qué debe evitar?':''}</div>`}).join('')}
+    <p><b>② Elige la cita que prueba la consecuencia.</b> ${done3?'✅':''}</p>
+    ${!done2?'<p class="muted">🔒 Completa ① para abrir ②.</p>':D.a3.map((it,i)=>{const e=st.a3[i];return `<div class="item ${e&&e.ok?'ok':''}"><div>Prompt: <b>«${it.prompt}»</b><br>Diagnóstico: «Le falta ${it.falta}; por eso <b>${it.consecuencia}</b>».</div>
+      ${it.oraciones.map((o,j)=>`<button class="sent ${e&&e.j===j?(e.ok?'ok':'err'):''}" data-a3="${i}|${j}" ${e&&e.ok?'disabled':''}>${o}</button>`).join('')}
+      ${e?`<small>${e.ok?'✅ '+it.porque:'⚠️ Esa frase no prueba la consecuencia: es relleno. Prueba otra.'}</small>`:''}</div>`}).join('')}
+    ${colab('Paso 3: escribe tu <b>diagnóstico</b> de la respuesta del Paso 1 con el marco (parte que falta + consecuencia + una <b>cita</b>).')}`)}`;
+    document.querySelectorAll('[data-a2c]').forEach(b=>b.onclick=()=>{const i=+b.dataset.a2c;
+      const v=[...document.querySelectorAll('[data-a2="'+i+'"]:checked')].map(x=>x.value);
+      const f=D.a2[i].falta;
+      const ok=v.includes('__none')?(v.length===1&&f.length===0):(v.length===f.length&&v.every(x=>f.includes(x)));
+      st.a2[i]=ok;draw()});
+    document.querySelectorAll('[data-a3]').forEach(b=>b.onclick=()=>{const[i,j]=b.dataset.a3.split('|').map(Number);st.a3[i]={j,ok:j===D.a3[i].correcta};draw()});
+  };draw();
+}
+
+function stepP4(){
+  S.innerHTML=`<h2>4 · Otra situación: armas tú el prompt</h2><p class="tagline">Paso 4 · mejorar y comprobar</p>
+  ${show(`<p>El curso tiene <b>tres pruebas el mismo jueves</b> y quiere pedirle al <b>profesor jefe</b> que cambie una. Un compañero le escribió a ChatGPT:</p>
+  <p>${chip(D.debil4,'hl')}</p>
+  <div class="note"><b>Flexibilidad:</b> si la primera forma de pedir no sirve, la <b>cambias</b>. ¿Qué parte le falta a ese prompt? Ahora lo mejoramos y lo probamos de verdad.</div>
+  ${verif(['¿Qué haces si la primera respuesta no sirvió?','¿Por qué conviene cambiar solo lo que diagnosticaste?'])}`)}
+  ${act(`${checks('p4',['Envía el prompt débil de abajo en una <b>conversación nueva</b> y mira la respuesta.','Arma <b>tu</b> prompt con las 4 partes (constructor).','Cópialo y envíalo en <b>otra conversación nueva</b>.','Compara las dos respuestas: ¿mejoró? ¿qué falta aún?'])}
+  ${botonCopiar('c4',D.debil4)}
+  ${constructor('c4',D.pedido4,false)}
+  ${colab('Paso 4: cita una frase de <b>antes</b> y una de <b>ahora</b>, y escribe <b>qué mejoró</b> y <b>qué falta aún</b>.')}`)}`;
+  ligarChecks();ligarCopiar('c4');ligarConstructor('c4',D.pedido4);
+}
+
+function stepGuiada(){
+  const ents=[
+    {t:'Entrega de un compañero A',d:'Link <code>https://chatgpt.com/share/…</code> que se abre sin pedir nada, y la frase «Estudiar de día es siempre mejor.» copiada entre comillas.',ok:true,r:'✅ <b>Sirve.</b> Cualquiera puede abrir el link y comprobar que la frase está en la respuesta.'},
+    {t:'Entrega de un compañero B',d:'Una foto de la pantalla con la conversación, pero <b>sin el link</b>.',ok:false,r:'❌ <b>No sirve.</b> Sin el link nadie puede abrir la conversación ni comprobar lo que dijo la IA.'},
+    {t:'Entrega de un compañero C',d:'Link que, al abrirlo, muestra «Necesitas permiso para ver esto», y una frase entre comillas.',ok:false,r:'❌ <b>No sirve.</b> Si el link pide permiso, nadie puede comprobarlo. Ábrelo en una ventana de incógnito <b>antes</b> de entregar.'}];
+  const preguntas=[
+    {n:1,t:'Envía el prompt débil y comparte el link',v:'link_1',
+     h:`<ol><li>Abre ChatGPT y crea una <b>conversación nueva</b>.</li><li>Envía <b>exactamente</b> este prompt: ${botonCopiar('cg1',D.debil2)}</li><li>Cuando responda, usa el botón <b>Compartir</b>, copia el link y ábrelo en una <b>ventana de incógnito</b>: si abre sin pedir permiso, sirve.</li></ol>`,
+     r:'el <b>link</b> (empieza con <code>https://chatgpt.com/share/</code>).'},
+    {n:2,t:'Escribe tu diagnóstico',v:'diagnostico',
+     h:`<p>Mira la respuesta y completa: <b>«Le falta ___; por eso la respuesta ___, por ejemplo: “___”»</b>. La frase de la cita se copia tal cual de la respuesta.</p>`,
+     r:'tu <b>diagnóstico</b>: parte que falta + consecuencia + <b>una cita</b> entre comillas.'},
+    {n:3,t:'Escribe tu prompt mejorado',v:'prompt_mejorado',
+     h:`<p>Arma el prompt con las <b>4 partes</b> en el constructor y cópialo:</p>${constructor('cg',D.debil2,false)}`,
+     r:'tu <b>prompt completo</b> (pégalo tal cual).'},
+    {n:4,t:'Envía tu prompt mejorado y comparte el link',v:'link_2',
+     h:`<p>Pega tu prompt en <b>otra conversación nueva</b>, espera la respuesta y comparte el link (como en la Pregunta 1). Debe ser un link <b>distinto</b> al de la Pregunta 1.</p>`,
+     r:'el <b>segundo link</b>.'},
+    {n:5,t:'¿Funcionó?',v:'analisis',
+     h:`<p>Compara las dos respuestas y completa: <b>«Mejoró ___: antes decía “___”, ahora dice “___”. Todavía falta ___.»</b></p>`,
+     r:'tu <b>análisis</b>: una cita de cada respuesta + una cosa que todavía falta.'}];
+  const draw=()=>{
+    S.innerHTML=`<h2>Práctica guiada: el ciclo completo</h2><p class="tagline">Guiada · 5 preguntas en orden · espejo de la Parte A de la prueba</p>
+    ${show(`<p>Prompt débil de hoy: ${chip(D.debil2,'hl')}</p>
+    <p><b>Son 5 preguntas, en orden.</b> Cada una se responde en el <b>Colab</b>, en su propio cuadro (<b>Pregunta 1, Pregunta 2…</b>); aquí en la página está cómo hacerla.</p>
+    <table style="border-collapse:collapse;width:100%"><thead><tr><th align="left">Pregunta</th><th align="left">Qué respondes</th></tr></thead><tbody>
+    ${preguntas.map(q=>`<tr><td style="border-top:1px solid var(--line);padding:4px 8px 4px 0"><b>${q.n}.</b> ${q.t}</td><td style="border-top:1px solid var(--line);padding:4px 0">${q.r}</td></tr>`).join('')}
+    <tr><td style="border-top:1px solid var(--line);padding:4px 8px 4px 0"><b>Al final</b></td><td style="border-top:1px solid var(--line);padding:4px 0">ejecutas el <b>verificador</b> (revisa solo la forma: links y citas)</td></tr></tbody></table>`)}
+    ${act(`<p class="muted" style="margin:.1rem 0">Haz cada pregunta aquí (instrucciones) y <b>escribe la respuesta en el Colab</b>. Marca cuando termines.</p>
+    ${preguntas.map(q=>`<div class="item"><label class="chk"><input type="checkbox" data-chk="g|${q.n}" ${st.chk['g|'+q.n]?'checked':''}><span><b>Pregunta ${q.n} · ${q.t}</b></span></label>
+      ${q.h}<div class="note info" style="margin:.4rem 0">✍️ <b>Tu respuesta va en el Colab</b>, cuadro «Pregunta ${q.n}» (variable <code>${q.v}</code>): ${q.r}</div></div>`).join('')}
+    <div class="item"><label class="chk"><input type="checkbox" data-chk="g|6" ${st.chk['g|6']?'checked':''}><span><b>Al final · Ejecuta el verificador</b></span></label>
+      <p style="margin:.2rem 0">En el Colab, ejecuta la última celda. Si todo está bien, imprime <b>✅ Entrega completa en su forma</b>; si no, te dice qué corregir.</p></div>
+    <details><summary>🔍 ¿Mi link sirve como evidencia? (revísalo antes de la Pregunta 4)</summary>
+    <p class="muted" style="margin:.1rem 0">Tres compañeros entregaron esto. Decide en cada una si <b>sirve</b> o <b>no sirve</b>.</p>
+    ${ents.map((e,i)=>{const v=st.ev3[i];return `<div class="item ${v===undefined?'':(v===e.ok?'ok':'err')}"><b>${e.t}:</b> ${e.d}
+      <div class="chips"><button data-e="${i}|1" ${v!==undefined?'disabled':''}>✅ Sirve</button><button data-e="${i}|0" ${v!==undefined?'disabled':''}>❌ No sirve</button></div>
+      ${v!==undefined?`<div class="note ${v===e.ok?'good':'bad'}">${v===e.ok?'¡Bien! ':'Revisa: '}${e.r}</div>`:''}</div>`}).join('')}
+    <div class="note info"><b>Regla:</b> una evidencia válida es el <b>link que abre sin pedir permiso</b> + una <b>frase copiada entre comillas</b> de la respuesta.</div></details>`)}
+    <details><summary>⚔️ Opcional (si sobra tiempo): duelo de prompts</summary><p>Prompt débil: ${chip(D.debil3,'hl')}. Dos estudiantes lo mejoran por separado, se proyectan las dos respuestas y el curso vota cuál resolvió mejor <b>justificando con una cita</b>.</p></details>`;
+    document.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{const[i,v]=b.dataset.e.split('|');st.ev3[+i]=(v==='1');draw()});
+    ligarChecks();ligarCopiar('cg1');ligarConstructor('cg',D.debil2);
+  };draw();
+}
+
+function stepCierre(){
+  let r=false;
+  const draw=()=>{
+    S.innerHTML=`<h2>Cierre</h2><p class="tagline">Para pensar y resumen</p>
+    ${show(`<p class="big">🤔 Tu primera forma de pedir no funcionó. ¿Qué cambias primero, y por qué cambiar poco en vez de todo?</p>
+    <div class="chips"><button id="b" class="primary">${r?'Ocultar':'Ver la idea'}</button></div>
+    ${r?`<div class="note good">Cambias <b>la parte que diagnosticaste</b> y dejas el resto igual: así, si la respuesta mejora, <b>sabes qué lo causó</b>. Eso es <b>flexibilidad</b>. Y como ChatGPT es estocástico, <b>tu prompt guía el camino</b>.</div>`:''}
+    <h3>¿Qué aprendimos?</h3>
+    <ul><li><b>Prompt:</b> el texto que le escribes a una IA para pedirle algo.</li>
+    <li><b>4 partes:</b> <b>Rol</b> (quién es la IA), <b>Contexto</b> (situación, para qué, a quién), <b>Formato</b> (lista, tabla, extensión, tono), <b>Restricción</b> (qué evitar).</li>
+    <li><b>Diagnóstico:</b> qué parte falta + qué consecuencia se nota + una <b>cita</b>.</li>
+    <li><b>Mejora:</b> reescribir, volver a probar, citar lo que mejoró y decir <b>qué falta aún</b>.</li>
+    <li><b>Evidencia:</b> el <b>link</b> (que abre sin pedir permiso) y frases <b>entre comillas</b>.</li></ul>
+    <div class="note good"><b>Ojo:</b> el martes 24 vemos <b>ética y las 4D</b>: cómo revisar con criterio lo que responde una IA.</div>`)}
+    ${act(`<p>📝 Cierra en el Colab: <b>Ticket de Salida</b> (el profesor proyecta las preguntas y luego abres el Form) y las dos reflexiones finales.</p>`)}`;
+    $('b').onclick=()=>{r=!r;draw()};
+  };draw();
+}
+
+const steps=[
+  {id:'haz',label:'Haz Ahora',fn:stepHaz},{id:'p1',label:'1 · Prompt',fn:stepP1},{id:'p2',label:'2 · 4 partes',fn:stepP2},
+  {id:'p3',label:'3 · Qué falta',fn:stepP3},{id:'p4',label:'4 · Otra situación',fn:stepP4},{id:'guiada',label:'Guiada',fn:stepGuiada},{id:'cierre',label:'Cierre',fn:stepCierre}];
+
+/* ---------- navegación ---------- */
+const bar=$('steps');
+steps.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s.label;b.onclick=()=>go(i);bar.appendChild(b)});
+function go(i){clear();cur=Math.max(0,Math.min(steps.length-1,i));steps[cur].fn();
+  [...bar.children].forEach((b,j)=>j===cur?b.setAttribute('aria-current','step'):b.removeAttribute('aria-current'));
+  $('prev').disabled=cur===0;$('next').disabled=cur===steps.length-1;$('pos').textContent='Paso '+(cur+1)+' de '+steps.length;
+  try{history.replaceState(null,'','#'+steps[cur].id)}catch(e){}}
+$('prev').onclick=()=>go(cur-1);
+$('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{const t=e.target.tagName;if(t==='TEXTAREA'||t==='INPUT'||t==='SELECT')return;if(t==='BUTTON'&&e.key===' ')return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+$('planb').innerHTML=D.planB.map(x=>`<details><summary>«${x.t}»</summary><p><b>Respuesta al prompt débil:</b></p>${x.debil.map(s=>`<blockquote>${s}</blockquote>`).join('')}<p><b>Respuesta al prompt con las 4 partes:</b></p>${x.mejorada.map(s=>`<blockquote>${s}</blockquote>`).join('')}</details>`).join('');
+const ini=steps.findIndex(s=>'#'+s.id===location.hash);
+go(ini>=0?ini:0);
+</script>
+</body>
+</html>
+'''
+
+html = PLANTILLA.replace("__DATOS__", json.dumps(DATOS, ensure_ascii=False))
+DESTINO.parent.mkdir(parents=True, exist_ok=True)
+DESTINO.write_text(html, encoding="utf-8")
+print("Listo:", DESTINO, f"({len(html) // 1024} KB)")

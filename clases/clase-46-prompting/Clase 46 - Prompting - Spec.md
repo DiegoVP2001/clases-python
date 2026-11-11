@@ -1,77 +1,66 @@
 # Clase 46 — Prompting: guiar a la IA y evaluar bien su respuesta
 
-**Estado:** Spec v3 **pendiente de gate de Diego** (2026-11-11). Cambios (Diego): objetivo reescrito; **se descartaron por completo las «Instrucciones personalizadas» de ChatGPT** (de esta clase y de las futuras: alterarían las respuestas de la Prueba 2); el ICN vuelve a 4 conceptos.
+**Estado:** Spec v4 (2026-11-11). v3 aprobada por Diego; **v4 = reestructura pedida por Diego** (pendiente de gate junto con el Colab): (1) el paso 1 define qué es un prompt y es con ChatGPT (mismo prompt dos veces, **sin citas**); (2) el paso 2 se **construye con el curso** (el prompt modelo queda solo en el Solucionario); (3) el paso 3 es de identificar qué falta (una, varias o ninguna parte); (4) el paso 4 es **otra situación** para probar ahora; (5) **un solo lugar**: la página `clase-46/` es el guion (🎬 para mostrar + 🧪 actividad) y el **Colab es solo para escribir**, con una hoja de ruta; (6) el duelo pasa a **opcional**.
 **Clase Picuino:** N/A — fila de IA (calendario v6) · **Fecha:** lun 23-nov-2026 · **Curso:** 3ro medio · **Duración:** 80 min
-**Flujo:** liviano (Spec → Colab + Solucionario + Guía Docente Voz + slides + laboratorio + Ticket al Form → gate → push de la carpeta; el `Ticket de Salida.pptx` NO se pushea antes de dictar).
-**Modalidad:** no se menciona en ningún material; la anuncia Diego.
-**Regla de la clase:** hay **ChatGPT en vivo** (cada estudiante con su cuenta) y mucha interactividad: laboratorio en el sitio, constructor de prompt y duelo de prompts. El único código es el verificador `check_evidencia()`; lo demás es escribir prompts y analizar respuestas.
+**Flujo:** liviano. **Modalidad:** no se menciona en ningún material; la anuncia Diego. **Regla permanente:** sin «Instrucciones personalizadas» de ChatGPT.
 
 ## Objetivo
 Escribir prompts de IA de forma correcta con flexibilidad.
 
-**OAs:** OA1, OA3 (por confirmar). **Actitud: Flexibilidad** (Diego, 2026-11-11): si la primera forma de pedir no funcionó, cambio mi prompt en vez de insistir con el mismo.
+**OAs:** OA1, OA3 (por confirmar). **Actitud: Flexibilidad:** si la primera forma de pedir no funcionó, cambio mi prompt en vez de insistir con el mismo.
 
 ## ¿Por qué lo veremos?
 Pedirle a ChatGPT que te ayude a estudiar sirve o no según cómo se lo pidas. Como ChatGPT responde con azar (lo vimos ayer), **tu prompt es lo que guía el camino**.
 
-## Estructura de un buen prompt (4 partes mínimas; mismos nombres que el Temario y la Prueba 2)
-- **Rol:** quién es la IA. · **Contexto:** situación, para qué, a quién. · **Formato:** lista, tabla, extensión, tono. · **Restricción:** qué debe respetar o evitar.
+## Dónde se hace cada cosa (un solo lugar)
+- **Página `https://clases-ia-mario-bertero.vercel.app/clase-46/`** = el guion de la clase. Cada paso tiene **🎬 Para mostrar** (lo proyecta Diego) y **🧪 Actividad** (lo hacen los estudiantes, con enlaces `#p1`…`#guiada`). Incluye el constructor de prompt (botón Copiar), las actividades de «qué falta» y un **Plan B** con respuestas preparadas.
+- **Colab** = solo para escribir las respuestas; abre con una **hoja de ruta** (Paso → qué hacemos → página / ChatGPT / Colab).
+- **ChatGPT** = cada estudiante con su cuenta, en otra pestaña, siempre en **conversación nueva**.
 
-## Escenario continuo
-**Una estudiante ficticia prepara la prueba de Biología del jueves y le pide ayuda a ChatGPT.** Tema distinto al de la Prueba 2 (nada de reconocimiento facial, cámaras ni asistencia).
-- **Débil 1 (Haz Ahora, ICN, laboratorio):** «Explícame la fotosíntesis». Falta Rol, Contexto y Formato → respuesta genérica, larga y de nivel universitario.
-- **Débil 2 (guiada, espejo de la Parte A de la prueba):** «¿Es mejor estudiar de noche o de día? Dame una recomendación.» Falta Contexto y Restricción → postura sin matices.
-- **Débil 3 (duelo en vivo):** «Hazme preguntas para la prueba de historia». Falta nivel, cantidad y formato.
+## Escenario
+Una estudiante ficticia prepara la **prueba de Biología del jueves** y le pide ayuda a ChatGPT. Ningún tema toca cámaras, reconocimiento facial ni asistencia (Prueba 2).
+- **Pasos 1–3:** «Explícame la fotosíntesis» (respuesta de ejemplo técnica, 3 párrafos).
+- **Paso 4:** el curso tiene **tres pruebas el mismo jueves** y quiere pedirle al **profesor jefe** que cambie una → «Escribe un correo para cambiar una prueba».
+- **Guiada:** «¿Es mejor estudiar de noche o de día? Dame una recomendación.» (espejo de la Parte A).
+- **Duelo (opcional):** «Hazme preguntas para la prueba de historia».
 
 ## Mapa de tiempos (80 min)
-Bienvenida 5 (colega) · Haz Ahora 7 · Puente 3 · ICN 25 · Guiada 20 · Duelo 8 · Ticket 5 · Cierre 5 (≈78). Extras sin tiempo.
+Bienvenida 5 (colega) · Haz Ahora 7 · Puente 3 · Paso 1: 8 · Paso 2: 10 · Paso 3: 8 · Paso 4: 12 · Guiada 15 · Ticket 5 · Cierre 5 (≈78). Duelo y extras sin tiempo.
 
 ## Estructura
 
 ### Haz Ahora (colega como la compañera que pide ayuda; sin código)
-Se proyecta el débil 1 y una respuesta de ejemplo (preparada). Preguntas cerradas:
-1. ¿La respuesta dice para qué curso o nivel es?
-2. ¿Menciona para cuándo es la prueba?
-3. ¿Cuántos párrafos tiene?
-4. ¿La entenderías en 5 minutos de estudio?
+Se proyecta «Explícame la fotosíntesis» y la respuesta de ejemplo. Preguntas: ¿dice para qué curso o nivel es? · ¿menciona para cuándo es la prueba? · ¿cuántos párrafos? · ¿la entenderías en 5 minutos? Respuestas en el Colab.
 
-### Recordatorio puente
-🔁 **Ayer (44):** ChatGPT predice la siguiente palabra y es estocástico · 🔀 **Hoy es distinto:** como tiene azar, el **prompt guía el camino** · ➡️ **Próxima clase (mar 24):** ética y 4D.
+### Puente
+🔁 Ayer: ChatGPT predice la siguiente palabra y es estocástico · 🔀 Hoy: como tiene azar, el prompt guía el camino · ➡️ Martes 24: ética y 4D.
 
-### ICN (4 conceptos; cada uno con Idea clave y fila de Resumen tabla)
-Sin código Python: el «Escríbelo tú» consiste en escribir prompts.
-1. **Misma pregunta, dos respuestas.** Cada estudiante envía el débil 2 en **dos conversaciones nuevas** y anota una cosa que cambió y una que se mantuvo, con cita entre comillas, usando «estocástico». *(Ensayo de la Parte B.)*
-2. **Las 4 partes de un buen prompt.** Rol, Contexto, Formato, Restricción, con el débil 1 reescrito. → **Laboratorio A1:** clasificar frases en las 4 partes.
-3. **Diagnosticar un prompt débil.** Qué parte falta + qué consecuencia se nota + **una cita** de la respuesta. Marco: «Le falta ___; por eso la respuesta ___, por ejemplo: "___"». → **Laboratorio A2 y A3:** elegir la parte que falta y la cita que lo prueba. *(Verificación del colega.)*
-4. **Mejorar, comprobar y dejar evidencia.** *(Cierre del ciclo y puente a la guiada.)* Reescribir con el **Constructor de prompt** (4 casillas + botón Copiar), reenviar, citar lo que mejoró y decir **qué falta aún**; botón *Compartir* y comprobar que el link abre sin pedir permiso.
-- **Resumen tabla (ICN):** Misma pregunta, dos respuestas · Rol / Contexto / Formato / Restricción · Diagnóstico (falta + consecuencia + cita) · Mejora y comprobación · Evidencia (link + cita).
-- **Errores típicos:** decir «es mala» sin nombrar la parte · citar algo que no prueba nada · cambiar todo a la vez · link que pide permiso · parafrasear en vez de citar entre comillas.
-- **Verificamos lo aprendido:** 2 preguntas por concepto en el Colab; respuestas solo en el Solucionario.
+### ICN (4 pasos; cada uno con Idea clave; verificación del colega; sin código)
+1. **¿Qué es un prompt?** Definición: *el texto que le escribes a una IA para pedirle algo*. Cada estudiante envía **«Explícame la fotosíntesis»** en **dos conversaciones nuevas**. Colab: **qué cambió, qué se mantuvo y por qué** («estocástico»). **Sin citas.**
+2. **Las 4 partes (Rol, Contexto, Formato, Restricción): se construye con el curso.** En la página, Diego pregunta al curso por cada parte («¿quién queremos que sea la IA?»…) y escribe lo que decidan; el prompt modelo («Eres un profesor de Biología…») **no se muestra**, queda solo en el Solucionario. Los estudiantes pegan el prompt armado en una conversación nueva. Colab: el prompt y **qué cambió** frente a la primera respuesta.
+3. **¿Qué le falta a este prompt?** Qué parte falta + qué consecuencia + **cita**. Actividad en la página: ① marcan lo que falta en 4 prompts (**una parte, varias o ninguna**); ② eligen la cita que prueba la consecuencia. Colab: su diagnóstico de la respuesta del Paso 1 (con cita).
+4. **Otra situación: mejorar y comprobar.** Se envía el prompt débil de la situación nueva, cada estudiante **arma su prompt** en el constructor (campos vacíos), lo envía en otra conversación nueva y compara. Colab: cita de antes, prompt con las 4 partes, cita de ahora, **qué mejoró** y **qué falta aún**.
+- **Resumen tabla** y **errores típicos** en el Colab (con «no creer que el link sirve si pide permiso» y «no parafrasear»).
 
-### Práctica guiada (único ejercicio obligatorio, 20 min)
-El ciclo completo de la Parte A con el débil 2: **Link 1 → Diagnóstico → Prompt mejorado → Link 2 → ¿Funcionó?** (cita + qué falta aún). Formato canónico: narrativa + «El programa debe» (aquí «Tu entrega debe») + pistas 1–2 en `<details>` + resultado esperado (ejemplo de entrega, no la respuesta modelo). Celdas de texto abiertas para escribir; celda de código con `check_evidencia()` **opcional** que solo verifica la forma: el link empieza con `https://chatgpt.com/share/`, y diagnóstico y análisis tienen al menos una cita entre comillas (✅/⚠️ + pista; no juzga calidad). Respuestas modelo solo en el Solucionario. Revisión a viva voz con una pareja al frente.
+### Práctica guiada (único ejercicio obligatorio, 15 min)
+El ciclo completo de la Parte A con «noche o día»: Link 1 → Diagnóstico → Prompt mejorado → Link 2 → ¿Funcionó? Se escribe **en la celda de código** (variables con triples comillas) y `check_evidencia()` revisa solo la forma (links `https://chatgpt.com/share/…` y citas entre comillas). Pistas 1–2. Revisión a viva voz.
 
-### Duelo de prompts en vivo (8 min, sin código)
-Dos estudiantes mejoran el **débil 3** por separado con el Constructor; Diego proyecta ambas respuestas; el curso vota cuál resolvió mejor el problema, justificando con **una cita**.
+### Duelo de prompts (opcional, si sobra tiempo)
+Dos estudiantes mejoran por separado «Hazme preguntas para la prueba de historia»; el curso vota cuál resolvió mejor con una cita.
 
-### Extras (sin tiempo, con pistas)
-1. Ciclo completo con el débil 1. 2. Flexibilidad: cambiar **una sola** parte del prompt y anotar qué cambió en la respuesta.
+### Extras (sin tiempo)
+1. Ciclo completo con el prompt de historia. 2. Flexibilidad: cambiar una sola parte.
 
 ### Ticket de Salida (Form + PPT local)
-Colab: solo el link `https://forms.gle/sjRpbgmQzrpkEBsH9` y el tema «Prompting». **3 preguntas A–D con respuestas en letras distintas**, con bloque breve: (1) dado un prompt, qué parte falta; (2) dado un prompt débil y un fragmento de respuesta, qué cita prueba la consecuencia; (3) qué evidencia es válida (link que abre + cita textual). + autoevaluación 1–5 solo en el Form (no se proyecta). Genera `Ticket de Salida Respuestas.json`.
+Link `https://forms.gle/sjRpbgmQzrpkEBsH9`, tema «Prompting». 3 preguntas A–D (respuestas D, C, A): qué parte falta · qué cita prueba la consecuencia · qué evidencia es válida. + autoevaluación 1–5 solo en el Form. Nunca en el Colab.
 
 ### Cierre (a viva voz)
-Comprensión 1–5; «¿En qué momento cambiaste tu forma de pedir y qué pasó con la respuesta?»; aviso de logística: próxima clase ética y 4D.
+Comprensión 1–5; «¿En qué momento cambiaste tu forma de pedir y qué pasó con la respuesta?».
 
-## Colega (detalle en la Guía Docente Voz)
-Solo habla cuando Diego la activa: bienvenida, Haz Ahora como la compañera que pide ayuda, verificación tras el concepto 3 («¿qué tres cosas tiene un buen diagnóstico?»). Nunca protagonista en guiada, duelo ni cierre. No inventa datos ni cifras. Nombre en material de estudiantes: «el colega del profesor».
-
-## Interactivos — `sitio-hub/clase-46/`
-- **Slides animadas** (modelo 42b/44): Haz Ahora · una por concepto 1–4 («Concepto N del cuaderno») · «Para pensar» · resumen en viñetas.
-- **Laboratorio** (actividades en cadena, completar una abre la siguiente, sin contraseñas): **A1** clasificar frases en Rol/Contexto/Formato/Restricción · **A2** ¿qué parte falta? (débiles 1 y 3) · **A3** elegir la cita que prueba la consecuencia · **A4 Constructor de prompt** (4 casillas que arman el prompt completo + Copiar, para pegarlo en ChatGPT). Respuestas de ejemplo preparadas y rotuladas como tales; sirven de **plan B** si a alguien no le funciona ChatGPT.
+## Colega
+Solo habla cuando Diego la activa: bienvenida, Haz Ahora, verificación tras el paso 3. Nunca en la guiada, el duelo ni el cierre. Nombre en material de estudiantes: «el colega del profesor».
 
 ## Pendientes para el gate
 - Confirmar OAs (OA1, OA3).
-- Confirmar que el lunes todos tienen acceso a ChatGPT (Diego dijo que sí; el plan B queda igual).
-- Las respuestas de ejemplo del laboratorio se redactan a mano y se rotulan como preparadas.
-- **Regla permanente (Diego, 2026-11-11):** no se enseñan ni se usan las instrucciones personalizadas de ChatGPT en ninguna clase del bloque ni en las pruebas (cambiarían las respuestas que se diagnostican y comparan en la Prueba 2). La Prueba 2 no se modifica.
+- Confirmar con ChatGPT real el prefijo de los links compartidos.
+- Deploy a Vercel y commit/push tras la aprobación (el `Ticket de Salida.pptx` queda solo local).
