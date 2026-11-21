@@ -1,0 +1,111 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=13mm]{geometry}
+\usepackage{fontspec}
+\usepackage[table]{xcolor}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\definecolor{azul}{HTML}{1F4E79}
+\definecolor{verde}{HTML}{2E7D32}
+\definecolor{ambar}{HTML}{B26A00}
+\definecolor{rojo}{HTML}{B71C1C}
+\definecolor{gris}{HTML}{F2F2F2}
+\newcommand{\seccion}[1]{\vspace{4pt}{\large\bfseries\color{azul}#1}\par\vspace{-2pt}{\color{azul}\hrule height 0.8pt}\vspace{3pt}}
+\newcommand{\caja}[1]{\par\vspace{2pt}\noindent\fcolorbox{azul}{gris}{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{#1}}\par\vspace{2pt}}
+\renewcommand{\arraystretch}{1.25}
+\begin{document}
+
+{\LARGE\bfseries\color{azul} Cómo se evalúa la recuperación}\\[1mm]
+{\large Inteligencia Artificial · 3ro medio · semana del 23 al 26 de noviembre}
+
+\seccion{1. Qué vamos a hacer esta semana}
+\begin{tabularx}{\textwidth}{|>{\bfseries}l|X|c|}
+\hline
+\rowcolor{azul}\color{white}Día & \color{white}Qué trabajamos & \color{white}Pesa \\
+\hline
+Lunes 23 & Guía de la Prueba 1: la rehacemos paso a paso, con caso y preguntas nuevas & 10 \% \\
+\hline
+Martes 24 & Guía de entrenamiento: un caso nuevo, trabajado de forma autónoma & 10 \% \\
+\hline
+Jueves 26 & \textbf{Prueba larga} (70 minutos, individual, puedes usar tus cuadernos) & 70 \% \\
+\hline
+\end{tabularx}
+
+La Prueba 1 que ya rendimos pesa el 10 \% restante. En las dos guías cada uno entrega \textbf{su propio cuaderno}.
+
+\seccion{2. Cómo se corrige: tres niveles}
+Cada pregunta se divide en partes pequeñas, y cada parte se evalúa con uno de tres niveles. Lo que importa es \textbf{lo que tu código y tus respuestas logran}, no cómo está escrito.
+
+\begin{tabularx}{\textwidth}{|>{\columncolor{gris}}l|X|c|}
+\hline
+\textcolor{verde}{\textbf{Cumple}} & La parte está lograda. & Puntaje completo \\
+\hline
+\textcolor{ambar}{\textbf{Por cumplir}} & Vas por buen camino, pero falta un detalle. & La mitad del puntaje \\
+\hline
+\textcolor{rojo}{\textbf{No cumple}} & La parte no está hecha o no funciona. & 0 solo en esa parte \\
+\hline
+\end{tabularx}
+
+\vspace{2pt}
+\textbf{Reglas que nos favorecen a todos:}
+\begin{itemize}[leftmargin=14pt,itemsep=1pt,topsep=2pt]
+\item Si hay duda entre dos niveles, \textbf{se elige el más alto}.
+\item Un error \textbf{no se cobra dos veces}: si te equivocas en una lista, lo que sigue se corrige con \emph{tus} listas.
+\item No importa el nombre de tus variables, el orden de tus líneas ni si tu solución es corta o larga.
+\item Las guías son de \textbf{avance}: cada parte que alcanzas suma, aunque no llegues a la última.
+\end{itemize}
+
+\seccion{3. De los puntos a la nota}
+Cada guía y la prueba larga se corrigen sobre \textbf{100 puntos}, con exigencia del 50 \% (50 puntos = nota 4,0).
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\rowcolor{gris}\textbf{Puntos} & 0 & 25 & 50 & 60 & 75 & 90 & 100 \\
+\hline
+\textbf{Nota} & 2,0 & 3,0 & 4,0 & 4,6 & 5,5 & 6,4 & 7,0 \\
+\hline
+\end{tabular}
+\end{center}
+
+\seccion{4. Ponderación de la nota final}
+\caja{\centering\large $\textbf{Nota final} = 10\%\ \text{Prueba 1} + 10\%\ \text{Lunes} + 10\%\ \text{Martes} + 70\%\ \text{Prueba larga}$}
+
+\textbf{Ejemplo:} Prueba 1 con 4,0 · lunes con 5,0 · martes con 5,0 · prueba larga con 5,5.\\
+Nota final $= 0{,}1\cdot4{,}0 + 0{,}1\cdot5{,}0 + 0{,}1\cdot5{,}0 + 0{,}7\cdot5{,}5 = 5{,}25$, es decir, \textbf{5,3}.
+
+\textbf{Si faltas a alguna instancia}, el peso de esa instancia \textbf{pasa a la prueba larga}. Por ejemplo, si faltas al lunes, la prueba larga vale 80 \%.
+
+\textbf{La prueba larga es la que más pesa.} Las dos guías son tu mejor entrenamiento para ella.
+
+\seccion{5. Qué trae la prueba larga (100 puntos)}
+\begin{tabularx}{\textwidth}{|>{\bfseries}l|X|c|}
+\hline
+\rowcolor{gris}Parte & Qué se trabaja & Puntos \\
+\hline
+A & Preparar los datos: armar las listas de entrenamiento y de prueba & 25 \\
+\hline
+B & Entrenar un árbol de decisión y una neurona, y desplegar el árbol & 25 \\
+\hline
+C & Analizar los resultados: leer las predicciones, comparar y razonar & 30 \\
+\hline
+D & Cómo predice un modelo de lenguaje: tokens, bolsa de fichas y probabilidad & 20 \\
+\hline
+\end{tabularx}
+
+\seccion{6. Cómo prepararte}
+\begin{itemize}[leftmargin=14pt,itemsep=1pt,topsep=2pt]
+\item \textbf{Cuida el tiempo.} Armar las listas es la parte que más tiempo se come: avanza de a una fila y comprueba el largo con \texttt{len()}.
+\item \textbf{Fíjate en qué filas pide el enunciado.} El entrenamiento y la prueba pueden ser cualquier fila, no siempre las primeras o las últimas.
+\item \textbf{Errores que ya vimos:} \texttt{accuracy\_score} es una \emph{función} (le damos primero las etiquetas reales y después las predicciones), no un método del modelo. Y las respuestas de texto van como comentarios, con \texttt{\#}.
+\item \textbf{«X de Y veces»:} Y es el total de fichas de la bolsa de esa palabra.
+\item \textbf{Si te atascas, sigue.} Cada parte suma por separado: es mejor llegar a todas que quedarte en una.
+\end{itemize}
+
+\vfill
+\caja{\centering\bfseries Perseverancia: seguir intentándolo aunque cueste es lo que mejor se nota en estas tres instancias.}
+\end{document}
