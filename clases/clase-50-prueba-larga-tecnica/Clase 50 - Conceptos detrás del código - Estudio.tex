@@ -1,0 +1,77 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=13mm]{geometry}
+\usepackage{fontspec}
+\usepackage[table]{xcolor}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\definecolor{azul}{HTML}{1F4E79}
+\definecolor{verde}{HTML}{2E7D32}
+\definecolor{ambar}{HTML}{B26A00}
+\definecolor{gris}{HTML}{F2F2F2}
+\newcommand{\cod}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\seccion}[1]{\vspace{5pt}{\large\bfseries\color{azul}#1}\par\vspace{-2pt}{\color{azul}\hrule height 0.8pt}\vspace{3pt}}
+\newcommand{\caja}[2][azul]{\par\vspace{2pt}\noindent\fcolorbox{#1}{gris}{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{#2}}\par\vspace{2pt}}
+\setlist[itemize]{leftmargin=14pt,itemsep=1pt,topsep=2pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{document}
+
+{\LARGE\bfseries\color{azul} Los conceptos detrás del código}\\[1mm]
+{\large Inteligencia Artificial · 3ro medio · estudio para la prueba larga del jueves 26}
+
+\caja{\textbf{Para qué sirve este documento.} En la prueba no solo hay que \emph{escribir} el código: también hay que \emph{entender por qué funciona} y \textbf{qué pasaría si algo cambia}. Aquí se explican las ideas que están detrás de cada línea, desde cómo se arma la base de datos hasta cómo se evalúa un modelo.\\[2pt]
+\textbf{No sirve memorizar frases:} las preguntas llegan con otro caso, otros datos y otras palabras. Sirve entender la idea y poder explicarla con las tuyas.}
+
+\textbf{Caso de ejemplo en todo el documento: la Prueba 1} (la sala de estudio del liceo). Cada fila es un día, y queremos predecir \cod{se_llena} (1 = se llenó, 0 = no). Usamos tres columnas: \cod{dias_para_prueba}, \cod{reservas_de_puesto} y \cod{asistencia_dia_anterior}. Entrenamiento = las 16 primeras filas; prueba = las filas 17 a 20.
+
+\seccion{1. La base de datos: filas, columnas y etiqueta}
+\begin{itemize}
+\item \textbf{Fila} = un caso (un día). \textbf{Columnas} = lo que sabemos \emph{antes} de que ocurra el caso. \textbf{Etiqueta} = lo que queremos predecir (la respuesta correcta de ese día).
+\item \textbf{Todas las filas deben traer las mismas columnas}, y \textbf{cada fila necesita su etiqueta}: la etiqueta número $i$ pertenece a la fila número $i$. Si las listas no calzan en tamaño, Python da error.
+\item \textbf{El orden importa.} Si se mueven las etiquetas pero no las filas (o al revés), no hay error, pero cada día queda con la respuesta de otro día: el modelo aprende cosas sin sentido y el número final puede ni delatarlo.
+\item \textbf{Elegir columnas es una decisión.} Una columna ayuda si trae información sobre lo que queremos predecir. En la Prueba 1, con las columnas que no informan (\cod{piso_del_casillero}, \cod{minutos_de_recreo}, \cod{dia_del_mes}) el árbol baja de 1.0 a 0.5: es como adivinar.
+\item \textbf{La respuesta nunca puede ser una columna.} Si a las entradas se les agregara \cod{se_llena}, el modelo solo leería la respuesta que le regalamos y se vería perfecto. Pero en un día real, por la mañana, nadie sabe todavía si la sala se llenará: esa columna no existiría y el modelo no serviría. Se llama \textbf{fuga de la respuesta}: el modelo ve de antemano lo que debería adivinar.
+\end{itemize}
+
+\seccion{2. Separar en entrenamiento (train) y prueba (test)}
+\begin{itemize}
+\item \textbf{Train} = los días con los que el modelo \emph{aprende}. \textbf{Test} = un examen con días que \emph{no vio}. Lo que importa es cómo le va con días nuevos, no con los que ya conoce.
+\item \textbf{Train y test pueden ser cualquier fila}: no siempre son «las primeras» y «las últimas». Lee bien qué filas pide cada enunciado y arma las listas con eso.
+\item \textbf{Si el test también está dentro del train}, el modelo ya vio esas respuestas. Su resultado puede verse igual de bueno, y justamente por eso engaña: ya no podemos distinguir un modelo que predice bien de uno que solo recuerda. Pasa lo mismo si se mide el \cod{accuracy} sobre los datos de train (en la Prueba 1 da 1.0 aunque eso no demuestra nada).
+\item \textbf{Ningún dato de test entra al entrenamiento.} Es la regla que protege la honestidad del examen.
+\end{itemize}
+
+\seccion{3. Entrenar y predecir: el flujo del modelo}
+\caja{\centering\textbf{crear el modelo}\ $\rightarrow$\ \textbf{\cod{fit}} con train\ $\rightarrow$\ \textbf{\cod{predict}} sobre test\ $\rightarrow$\ \textbf{\cod{accuracy_score}}(reales, predicciones)}
+\begin{itemize}
+\item \cod{fit} es el momento en que el modelo \emph{aprende}. Si se predice sin entrenar, Python da error: todavía no hay nada aprendido. \cod{accuracy_score} es una \emph{función} (no un método del modelo) y se le entregan primero las etiquetas reales y después las predicciones.
+\item \textbf{Árbol de decisión:} aprende una cadena de preguntas de sí/no, cada una con una columna y un corte. \cod{max_depth} es \textbf{cuántas preguntas seguidas} puede encadenar. Profundidad 1 = una sola pregunta (árbol simple, fácil de leer, con menos matices); más profundidad = más detalle, pero también más riesgo de memorizar el train. En la Prueba 1 bastó una pregunta: \cod{dias_para_prueba <= 6.5}.
+\item \textbf{Neurona:} da un peso a cada columna y los va ajustando con vueltas de práctica. \cod{max_iter} es \textbf{cuántas vueltas} puede dar: con muy pocas no alcanza a aprender (en la Prueba 1, con 5 vueltas el resultado bajó de 0.75 a 0.5).
+\item \textbf{La semilla (\cod{random_state})} fija el azar interno del modelo. Con el mismo número, \textbf{el resultado se repite} y todos pueden compararlo. Con otro número, un modelo que usa azar al partir (la neurona) puede dar un resultado distinto: en la Prueba 1 la neurona dio entre 0.5 y 1.0 según la semilla. Esa variación no es un error: es el azar, y por eso se fija.
+\end{itemize}
+
+\seccion{4. Medir: qué dice (y qué no dice) el accuracy}
+\begin{itemize}
+\item \textbf{Accuracy = aciertos $\div$ total de filas del test.} Con 4 filas de test cada fila vale 25~\%: una sola equivocación baja de 1.0 a 0.75. Con una sola fila de test el accuracy solo podría ser 0 o 1.
+\item \textbf{Un solo número con un test chico es frágil.} Con otro reparto de filas el resultado puede cambiar sin que el modelo sea distinto. Para estar más seguros: probar con otros repartos, más filas de test o más datos.
+\item \textbf{Mirar fila por fila} (predicciones junto a etiquetas reales) dice \emph{dónde} se equivocó el modelo, no solo cuánto. Un accuracy alto no se interpreta igual si el error cae justo en un caso importante.
+\item \textbf{«Mejor» no es solo «más accuracy».} También importa si podemos \emph{explicar} lo que hace el modelo: el árbol se puede leer pregunta por pregunta; la neurona acierta, pero su razonamiento es más difícil de ver.
+\end{itemize}
+
+\seccion{5. Leer el árbol desplegado (\cod{export_text})}
+\begin{itemize}
+\item Cada línea del despliegue es una pregunta (\cod{columna <= corte}) o un resultado (\cod{class: 0} o \cod{class: 1}). Se lee de arriba hacia abajo, siguiendo el camino que corresponde a la fila que queremos predecir.
+\item \textbf{Los nombres se asignan por posición.} El primer nombre de \cod{feature_names} se pega a la primera columna de las entradas, el segundo a la segunda, y así. Python no sabe cuál columna es cuál: confía en que \textbf{el orden de los nombres sea el mismo que el de las columnas}.
+\item Si se cambia el orden de las columnas en las listas y los nombres se dejan como estaban, \textbf{el árbol y su accuracy son idénticos, pero el despliegue queda mal etiquetado}. En la Prueba 1, con las columnas reordenadas y los nombres originales, el despliegue dice \cod{asistencia_dia_anterior <= 6.5}, algo absurdo (¿6,5 estudiantes?), cuando el corte era sobre \cod{dias_para_prueba}. No da error y todo parece normal, y por eso es peligroso. Si no pasas los nombres, aparecen como \cod{feature_0}, \cod{feature_1}…: el árbol es el mismo, solo cuesta más interpretarlo.
+\end{itemize}
+
+\caja[verde]{\textbf{Un truco para responder cuando algo cambia.} Antes de contestar, pregúntate tres cosas:\\
+\textbf{1)} ¿Qué cambió: los \emph{datos}, el \emph{modelo} o la forma de \emph{medir}?\quad
+\textbf{2)} ¿Python daría \emph{error}, o daría un resultado que \emph{parece normal pero engaña}?\quad
+\textbf{3)} ¿Puedo explicar \emph{por qué} con mis propias palabras?\\
+Una buena respuesta dice \textbf{qué pasa} y \textbf{por qué}, en una o dos líneas.}
+
+\end{document}
